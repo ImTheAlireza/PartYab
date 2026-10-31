@@ -239,16 +239,23 @@ function fitMessage(p, v) {
 
 /* place the garage dropdown inside the viewport (RTL-safe) */
 function placeVehicleMenu() {
-  const wrap = $('.vehicle-wrap');
+  const wrap = $('#vehicleSlot');
   const menu = $('#vehicleMenu');
   if (!wrap || !menu || menu.hidden) return;
-  const w = Math.min(330, window.innerWidth - 24);
+  const w = Math.min(340, window.innerWidth - 24);
   const r = wrap.getBoundingClientRect();
-  const left = Math.max(12, Math.min(r.right - w, window.innerWidth - 12 - w));
+  const left = Math.max(12, Math.min(r.left, window.innerWidth - 12 - w));
   menu.style.width = w + 'px';
   menu.style.insetInlineStart = 'auto';
   menu.style.insetInlineEnd = 'auto';
   menu.style.left = (left - r.left) + 'px';
+}
+
+function coverageFor(v) {
+  if (!v) return null;
+  const total = PRODUCTS.length;
+  const ok = PRODUCTS.filter(p => ['fit', 'conditional', 'universal'].includes(fitInfo(p, v).state)).length;
+  return { ok, total, pct: Math.round((ok / total) * 100) };
 }
 
 /* ---------------- Toast ---------------- */
@@ -325,51 +332,46 @@ function productCard(p) {
   const v = getVehicle();
   const info = fitInfo(p, v);
   const off = p.oldPrice ? Math.round((1 - p.price / p.oldPrice) * 100) : 0;
+  const fitText = (() => {
+    if (info.state === 'fit') return v ? `سازگار با ${esc(v.modelName)} ${fa(v.year)}` : 'سازگار';
+    if (info.state === 'conditional') return `سازگار با شرط${info.note ? ` · ${esc(info.note)}` : ''}`;
+    if (info.state === 'no') return `ناسازگار با ${esc(v.modelName)}`;
+    if (info.state === 'unknown') return 'سازگاری ثبت نشده';
+    if (info.state === 'universal') return 'عمومی برای همهٔ خودروها';
+    return 'سازگاری را بررسی کنید';
+  })();
+  const eq = (p.equivalents || []).filter(c => c && c !== '—').length;
   return `
   <article class="p-card ${info.state === 'no' ? 'p-card--dim' : ''}" data-product="${p.id}">
+    <span class="p-rail p-rail--${info.state}" aria-hidden="true"></span>
     <a class="p-media" href="product.html?id=${p.id}" aria-label="${esc(p.name)}">
       <img src="assets/img/${p.img}" alt="${esc(p.name)}" loading="lazy">
-      ${fitBadge(info.state)}
-      ${off ? `<span class="off-badge">${fa(off)}٪</span>` : ''}
+      <span class="p-code">${esc(p.oem)}</span>
+      ${off ? `<span class="off-badge">−${fa(off)}٪</span>` : ''}
     </a>
     <div class="p-body">
-      <div class="p-brand-row">
+      <div class="p-head">
         <span class="p-brand">${p.brand}</span>
+        ${eq > 1 ? `<span class="p-equiv">${icon('copy')} ${fa(eq)} کد</span>` : ''}
       </div>
       <h3 class="p-title"><a href="product.html?id=${p.id}">${p.name}</a></h3>
-      <div class="p-meta">کد فنی: <b>${p.oem}</b></div>
-      <div class="p-stock ${p.stock < 6 ? 'p-stock--low' : ''}">${p.stock < 6 ? `${fa(p.stock)} عدد باقی مانده` : 'موجود در انبار'}</div>
-      <div class="p-price-row">
+      <div class="p-fit p-fit--${info.state}">${icon(FIT[info.state].icon)} ${fitText}</div>
+      <div class="p-foot">
         <div class="p-price">
           ${p.oldPrice ? `<span class="old">${money(p.oldPrice)}</span>` : ''}
           <strong>${money(p.price)} <small>تومان</small></strong>
         </div>
         <button class="p-add" data-add="${p.id}" aria-label="افزودن ${esc(p.name)} به سبد خرید">${icon('plus')}</button>
       </div>
-      ${p.equivalents && p.equivalents.length > 1 ? `<div class="p-equiv">${icon('copy')} ${fa(p.equivalents.length)} کد معادل دارد</div>` : ''}
     </div>
   </article>`;
 }
 
-/* ---------------- Header / overlays ---------------- */
 function headerHTML() {
   const page = document.body.dataset.page;
+  const link = (href, label, key) =>
+    `<a href="${href}" class="${page === key ? 'is-active' : ''}">${label}</a>`;
   return `
-  <div class="topbar">
-    <div class="container topbar-inner">
-      <div class="topbar-group">
-        <a class="topbar-item" href="tel:02191002233">${icon('phone', 'icon--sm')} ۰۲۱–۹۱۰۰۲۲۳۳</a>
-        <span class="topbar-sep"></span>
-        <span class="topbar-item">${icon('clock', 'icon--sm')} شنبه تا پنجشنبه، ۹ تا ۱۸</span>
-        <span class="topbar-sep"></span>
-        <a class="topbar-item" href="#">پیگیری سفارش</a>
-      </div>
-      <div class="topbar-group">
-        <span class="topbar-badge">${icon('truck', 'icon--sm')} ارسال رایگان سفارش‌های بالای ۳ میلیون تومان</span>
-      </div>
-    </div>
-  </div>
-
   <header class="site-header">
     <div class="container header-main">
       <a class="logo" href="index.html" aria-label="پارت‌یاب، صفحه اصلی">
@@ -384,13 +386,10 @@ function headerHTML() {
         <span class="logo-text"><strong>پارت‌یاب</strong><span>PARTYAB.COM</span></span>
       </a>
 
-      <div class="vehicle-wrap" id="vehicleSlot"></div>
-
       <div class="header-search">
         <form role="search" data-search-form>
-          ${icon('search', 'icon-search')}
-          <input type="search" name="q" placeholder="نام قطعه، برند یا کد فنی را وارد کنید" aria-label="جست‌وجو">
-          <button class="search-kbd" type="button" data-open-cmd aria-label="جست‌وجوی سریع (Ctrl+K)"><kbd dir="ltr">⌘K</kbd></button>
+          <input type="search" name="q" placeholder="کد فنی، نام قطعه یا برند" aria-label="جست‌وجو">
+          <button class="search-kbd" type="button" data-open-cmd aria-label="جست‌وجوی سریع"><kbd dir="ltr">⌘K</kbd></button>
           <button class="search-submit" type="submit" aria-label="جست‌وجو">${icon('search')}<span>جست‌وجو</span></button>
         </form>
       </div>
@@ -405,15 +404,17 @@ function headerHTML() {
       </div>
     </div>
 
-    <div class="subnav">
-      <div class="container subnav-inner">
-        <a href="index.html" class="${page === 'home' ? 'is-active' : ''}">${icon('grid')} خانه</a>
-        <a href="shop.html" class="${page === 'shop' || page === 'product' ? 'is-active' : ''}">${icon('box')} فروشگاه قطعات</a>
-        <a href="shop.html?cat=filter">${icon('filter')} فیلترها و روغن</a>
-        <a href="shop.html?cat=brake">${icon('brake')} ترمز</a>
-        <a href="shop.html?cat=suspension">${icon('shock')} جلوبندی</a>
-        <a href="index.html#guides">${icon('file')} راهنمای خرید</a>
-        <a href="#" data-open-vehicle class="nav-pill">${icon('spark')} انتخاب خودرو</a>
+    <div class="passport-bar">
+      <div class="container passport-inner">
+        <div class="passport-slot" id="vehicleSlot"></div>
+        <nav class="passport-nav" aria-label="ناوبری اصلی">
+          ${link('index.html', 'خانه', 'home')}
+          ${link('shop.html', 'فروشگاه قطعات', 'shop')}
+          ${link('shop.html?cat=filter', 'فیلتر و روغن')}
+          ${link('shop.html?cat=brake', 'ترمز')}
+          ${link('shop.html?cat=suspension', 'جلوبندی')}
+          ${link('index.html#guides', 'راهنمای خرید')}
+        </nav>
       </div>
     </div>
   </header>`;
@@ -445,17 +446,17 @@ function overlaysHTML() {
     </aside>
   </div>
 
-  <div class="modal" id="vehicleModal" aria-hidden="true">
+  <div class="modal modal--sheet" id="vehicleModal" aria-hidden="true">
     <div class="modal-backdrop" data-close-vehicle-modal></div>
-    <div class="modal-card modal-card--wide" role="dialog" aria-modal="true" aria-labelledby="vmTitle">
-      <div class="modal-head">
+    <div class="modal-card sheet-card" role="dialog" aria-modal="true" aria-labelledby="vmTitle">
+      <div class="sheet-head">
         <div>
-          <h3 id="vmTitle">خودروی خود را انتخاب کنید</h3>
-          <p>پوشش فعلی: خودروهای ایرانی و وارداتی‌های رایج. دادهٔ سازگاری را فروشگاه ثبت می‌کند.</p>
+          <span class="sheet-eyebrow">${icon('garage')} پاسپورت خودرو</span>
+          <h3 id="vmTitle">انتخاب خودرو</h3>
         </div>
         <button class="modal-close" data-close-vehicle-modal aria-label="بستن">${icon('x')}</button>
       </div>
-      <div class="modal-body" id="vehicleModalBody"></div>
+      <div class="modal-body sheet-body" id="vehicleModalBody"></div>
     </div>
   </div>
 
@@ -559,21 +560,37 @@ function footerHTML() {
 }
 
 /* ---------------- Vehicle UI ---------------- */
-function vehicleTriggerHTML() {
+function passportHTML() {
   const v = getVehicle();
   const g = garageLoad();
   const count = g.vehicles.length;
-  if (v) {
-    return `<button class="vehicle-trigger is-set" data-garage-toggle aria-expanded="false" aria-haspopup="true" aria-label="گاراژ من: ${esc(v.modelName)} ${fa(v.year)}">
-      ${icon('car')}
-      <span class="vt-text"><small>خودروی من${count > 1 ? ` · ${fa(count)} خودرو` : ''}</small><b>${esc(v.modelName)} · ${fa(v.year)}</b></span>
-      <span class="vt-chevron">${icon('chevron-down')}</span>
+
+  if (!v) {
+    return `<button class="pp pp--empty" data-open-vehicle aria-label="ثبت خودرو">
+      <span class="pp-plate pp-plate--empty">${icon('car')}</span>
+      <span class="pp-id">
+        <small>پلاک خودرو خالی است</small>
+        <b>خودرو خود را ثبت کنید</b>
+      </span>
+      <span class="pp-cov">با ثبت خودرو فقط قطعات سازگار نمایش داده می‌شود</span>
+      <span class="pp-btn pp-btn--amber">${icon('plus')} ثبت خودرو</span>
     </button>`;
   }
-  return `<button class="vehicle-trigger" data-open-vehicle>
-    ${icon('car')}
-    <span class="vt-text"><small>خودرویتان را انتخاب کنید</small><b>انتخاب خودرو</b></span>
-  </button>`;
+
+  const cov = coverageFor(v);
+  return `<div class="pp is-set">
+    <button class="pp-main" data-garage-toggle aria-expanded="false" aria-haspopup="true" aria-label="گاراژ من">
+      <span class="pp-plate">${icon('car')}</span>
+      <span class="pp-id">
+        <small>خودروی من${count > 1 ? ` · ${fa(count)} خودرو` : ''}</small>
+        <b>${esc(v.modelName)} <span class="pp-year">${fa(v.year)}</span>${v.engine ? ` <span class="pp-eng">${esc(v.engine)}</span>` : ''}</b>
+      </span>
+      <span class="pp-chev">${icon('chevron-down')}</span>
+    </button>
+    <span class="pp-meter" role="img" aria-label="پوشش کاتالوگ ${fa(cov.pct)} درصد"><i style="width:${cov.pct}%"></i></span>
+    <span class="pp-cov">${fa(cov.ok)} از ${fa(cov.total)} قطعه سازگار</span>
+    <button class="pp-btn" data-open-vehicle>${icon('refresh')} تغییر</button>
+  </div>`;
 }
 
 function vehicleMenuHTML() {
@@ -604,7 +621,7 @@ function vehicleMenuHTML() {
 function refreshVehicleUI() {
   const slot = $('#vehicleSlot');
   if (slot) {
-    slot.innerHTML = vehicleTriggerHTML() + `<div class="vehicle-menu" id="vehicleMenu" hidden>${vehicleMenuHTML()}</div>`;
+    slot.innerHTML = passportHTML() + `<div class="vehicle-menu" id="vehicleMenu" hidden>${vehicleMenuHTML()}</div>`;
   }
   $$('.vchip-slot').forEach(el => {
     const v = getVehicle();
@@ -652,6 +669,15 @@ function updateModalFocus() {
   if (el) el.focus({ preventScroll: true });
 }
 
+function pickerStepsHTML(active) {
+  const items = [['۱', 'مدل'], ['۲', 'سال'], ['۳', 'تیپ']];
+  return `<ol class="pp-steps" aria-label="مراحل انتخاب خودرو">${items.map((it, i) => {
+    const n = i + 1;
+    const cls = n < active ? 'is-done' : n === active ? 'is-current' : '';
+    return `<li class="${cls}"><span>${n < active ? icon('check') : it[0]}</span>${it[1]}</li>`;
+  }).join('')}</ol>`;
+}
+
 function pickerSearchHTML() {
   const g = garageLoad();
   const garage = g.vehicles.length ? `
@@ -677,10 +703,11 @@ function pickerSearchHTML() {
     </div>` : '';
 
   return `
+    ${pickerStepsHTML(1)}
     ${garage}
     <div class="picker-search">
       <label class="picker-label" for="vSearchInput">${icon('search')} مدل خودرو را بنویسید</label>
-      <div class="combo" id="pickerCombo">
+      <div class="combo combo--inline" id="pickerCombo">
         ${icon('search', 'combo-icon')}
         <input id="vSearchInput" type="text" placeholder="مثلاً ۲۰۶، پراید، سمند، کرولا…" autocomplete="off"
                role="combobox" aria-expanded="false" aria-controls="vResults" aria-autocomplete="list" data-autofocus>
@@ -704,6 +731,7 @@ function pickerYearsHTML() {
   const years = [];
   for (let y = m.years[1]; y >= m.years[0]; y--) years.push(y);
   return `
+    ${pickerStepsHTML(picker.year ? 3 : 2)}
     <button class="picker-back" data-picker-back>${icon('chevron-right')} تغییر خودرو</button>
     <div class="picker-model">
       <span class="pm-icon">${icon('car')}</span>
@@ -1190,12 +1218,14 @@ function initHome() {
   }
   const catGrid = $('#catGrid');
   if (catGrid) {
-    catGrid.innerHTML = CATEGORIES.map(c => {
+    catGrid.innerHTML = CATEGORIES.map((c, i) => {
       const count = PRODUCTS.filter(p => p.cat === c.id).length;
       return `<a class="cat-card" href="shop.html?cat=${c.id}">
+        <span class="cat-num">${fa(String(i + 1).padStart(2, '0'))}</span>
         <span class="cat-icon">${icon(c.icon)}</span>
-        <b>${c.name}</b>
-        <span>${count ? `${fa(count * 37)} قطعه` : 'به‌زودی'}</span>
+        <span class="cat-name">${c.name}</span>
+        <span class="cat-lead" aria-hidden="true"></span>
+        <span class="cat-count">${count ? `${fa(count * 37)} قطعه` : 'به‌زودی'}</span>
         <span class="cat-arrow">${icon('chevron-left')}</span>
       </a>`;
     }).join('');
@@ -1563,7 +1593,7 @@ function pdpHTML(p) {
   const info = fitInfo(p, v);
   const off = p.oldPrice ? Math.round((1 - p.price / p.oldPrice) * 100) : 0;
   let related = PRODUCTS.filter(x => x.cat === p.cat && x.id !== p.id).slice(0, 4);
-  if (related.length < 2) related = related.concat(PRODUCTS.filter(x => x.id !== p.id && !related.includes(x)).slice(0, 4 - related.length));
+  if (related.length < 4) related = related.concat(PRODUCTS.filter(x => x.id !== p.id && !related.includes(x)).slice(0, 4 - related.length));
 
   const fits = p.fits.map(f => {
     const m = findModel(f.model);
@@ -1632,8 +1662,9 @@ function pdpHTML(p) {
           ${[p, ...kit].map(item => `
             <a class="kit-item" href="product.html?id=${item.id}">
               <img src="assets/img/${item.img}" alt="${esc(item.name)}" loading="lazy">
-              <div class="ki-text"><b>${esc(item.name)}</b><small>${item.brand} · ${money(item.price)} تومان</small></div>
+              <div class="ki-text"><b>${esc(item.name)}</b><small>${item.brand}</small></div>
               ${item.id === p.id ? '<span class="ki-tag">این قطعه</span>' : ''}
+              <span class="ki-price">${money(item.price)} <small>تومان</small></span>
             </a>`).join('')}
         </div>
         <div class="kit-summary">

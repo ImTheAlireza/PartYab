@@ -14,8 +14,8 @@
   <main id="main">
   <!-- Hero -->
   <section class="hero">
-    <div class="container hero-inner">
-      <div class="hero-content">
+    <div class="container hero-grid">
+      <div class="hero-copy">
         <span class="hero-eyebrow"><span class="icon" data-icon="spark"></span> فقط قطعه‌ای که به خودروی شما می‌خورد</span>
         <h1>قطعهٔ درست،<br>برای <em>خودروی درست</em></h1>
         <p class="hero-lead">
@@ -27,8 +27,8 @@
           <div class="vehicle-card-head">
             <span class="vc-icon"><span class="icon" data-icon="garage"></span></span>
             <div>
-              <strong>خودروی خود را انتخاب کنید</strong>
-              <span>نام مدل را بنویسید؛ سال و تیپ را انتخاب کنید</span>
+              <strong>پلاک خودرو</strong>
+              <span>مدل را بنویسید؛ سال و تیپ را انتخاب کنید</span>
             </div>
           </div>
 
@@ -66,20 +66,52 @@
             <a href="shop.html" data-hero-oem>با کد فنی / OEM جست‌وجو کنید</a>
           </div>
         </div>
-
-        <div class="hero-stats">
-          <div class="hero-stat"><span class="icon" data-icon="box"></span> <strong>۱۲٬۴۰۰</strong> قطعه</div>
-          <div class="hero-stat"><span class="icon" data-icon="shield"></span> <strong>۳۸</strong> برند</div>
-          <div class="hero-stat"><span class="icon" data-icon="car"></span> <strong>۱٬۲۰۰</strong> خودرو</div>
-        </div>
       </div>
-    </div>
 
-    <div class="hero-float">
-      <span class="icon" data-icon="check"></span>
-      <div>
-        <div>سازگاری با خودروی انتخابی تأیید شد</div>
-        <small>این اطلاعات را فروشگاه ثبت کرده است</small>
+      <div class="hero-visual">
+        <div class="car-map">
+          <div class="car-map-head">
+            <b><span class="icon" data-icon="car"></span> نقشهٔ قطعات خودرو</b>
+            <span>روی هر بخش بزنید</span>
+          </div>
+          <div class="car-stage">
+            <svg class="car-svg" viewBox="0 0 640 300" role="img" aria-label="نقشهٔ بخش‌های خودرو">
+              <path class="ground" d="M24 262H616"/>
+              <path class="body" d="M74 228C56 228 46 218 46 204V184C46 170 52 162 64 158L192 142C204 140 212 134 220 124L254 80C264 66 278 60 294 60H386C402 60 414 66 426 78L458 114C466 124 478 130 492 133L560 146C578 150 588 160 588 176V206C588 218 578 228 562 228Z"/>
+              <path class="glass" d="M264 74H314V136L234 140Z"/>
+              <path class="glass" d="M328 74H384L416 114V136H328Z"/>
+              <path class="line" d="M320 136V224M430 136V216"/>
+              <path class="detail" d="M296 162H312M372 162H388"/>
+              <path class="detail" d="M46 212H74M46 190H62"/>
+              <rect class="detail" x="48" y="166" width="16" height="12" rx="3"/>
+              <rect class="detail" x="574" y="152" width="10" height="20" rx="3"/>
+              <path class="detail" d="M238 112l16-7 4 7z"/>
+              <circle class="wheel" cx="152" cy="222" r="33"/>
+              <circle class="rim" cx="152" cy="222" r="15"/>
+              <path class="rim" d="M152 207v-6M152 237v6M137 222h-6M167 222h6"/>
+              <circle class="wheel" cx="488" cy="222" r="33"/>
+              <circle class="rim" cx="488" cy="222" r="15"/>
+              <path class="rim" d="M488 207v-6M488 237v6M473 222h-6M503 222h6"/>
+            </svg>
+
+            <a class="hotspot" style="--x:24%;--y:74%" href="shop.html?cat=brake" aria-label="ترمز و ABS">
+              <span class="hs-dot"></span><span class="hs-label">ترمز و ABS</span>
+            </a>
+            <a class="hotspot" style="--x:73%;--y:74%" href="shop.html?cat=suspension" aria-label="جلوبندی و تعلیق">
+              <span class="hs-dot"></span><span class="hs-label">جلوبندی</span>
+            </a>
+            <a class="hotspot" style="--x:26%;--y:40%" href="shop.html?cat=filter" aria-label="فیلتر و روغن">
+              <span class="hs-dot"></span><span class="hs-label">فیلتر و روغن</span>
+            </a>
+            <a class="hotspot" style="--x:9%;--y:58%" href="shop.html?cat=electrical" aria-label="برق و روشنایی">
+              <span class="hs-dot"></span><span class="hs-label">برق و روشنایی</span>
+            </a>
+          </div>
+          <div class="car-map-foot">
+            <span><b>۴</b> دستهٔ اصلی روی نقشه</span>
+            <span>انتخاب خودرو، فیلتر خودکار</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
