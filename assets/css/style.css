@@ -1735,6 +1735,43 @@ input[type="range"] { width: 100%; accent-color: var(--amber); }
 .mobile-nav a.is-active, .mobile-nav a:hover, .mobile-nav button:hover { color: var(--navy); }
 .mobile-nav a.is-active .icon { color: var(--amber-700); }
 
+/* combobox rendered inline (inside the picker modal) */
+.combo--inline .combo-list {
+  position: static; inset: auto; margin-top: 6px;
+  box-shadow: none; border-radius: var(--r); max-height: 250px;
+}
+.combo--inline .combo-list.is-open { display: block; }
+
+/* filter rows: keep the count from being squeezed */
+.check > span:not(.count) { flex: 1 1 auto; min-width: 0; }
+.check .count {
+  flex: 0 0 auto; min-width: 18px; text-align: end; font-size: 11px;
+  color: var(--muted); font-variant-numeric: tabular-nums;
+}
+
+/* search field: one magnifier, text submit, subtle shortcut hint */
+.header-search .search-submit { width: auto; padding: 0 13px; gap: 6px; font-size: 12.5px; font-weight: 600; }
+.header-search .search-submit .icon { width: 16px; height: 16px; }
+.search-kbd { padding: 0 6px; }
+.search-kbd kbd {
+  border: 1px dashed #D7DFEA; background: transparent; color: var(--muted-2);
+  font-size: 10px; letter-spacing: .5px; padding: 3px 6px;
+}
+@media (max-width: 1180px) {
+  .header-search .search-submit span { display: none; }
+  .header-search .search-submit { width: 38px; padding: 0; }
+}
+
+/* category card: tighter, no dead space */
+.cat-card { gap: 9px; padding: 15px 16px 14px; }
+.cat-card .cat-icon { width: 42px; height: 42px; border-radius: 12px; }
+.cat-card .cat-icon .icon { width: 21px; height: 21px; }
+.cat-card b { font-size: 13px; }
+.cat-card span { margin-top: -3px; }
+
+/* equivalent codes under the buybox */
+.pdp-info .codes-card { margin-top: 12px; }
+
 /* leftovers from dynamic markup */
 .p-card--dim { opacity: .55; filter: saturate(.6); }
 .p-card--dim:hover, .p-card--dim:focus-within { opacity: 1; filter: none; }

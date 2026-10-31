@@ -335,7 +335,6 @@ function productCard(p) {
     <div class="p-body">
       <div class="p-brand-row">
         <span class="p-brand">${p.brand}</span>
-        ${p.verified ? `<span class="p-verified">${icon('check')} تأییدشده</span>` : ''}
       </div>
       <h3 class="p-title"><a href="product.html?id=${p.id}">${p.name}</a></h3>
       <div class="p-meta">کد فنی: <b>${p.oem}</b></div>
@@ -391,8 +390,8 @@ function headerHTML() {
         <form role="search" data-search-form>
           ${icon('search', 'icon-search')}
           <input type="search" name="q" placeholder="نام قطعه، برند یا کد فنی را وارد کنید" aria-label="جست‌وجو">
-          <button class="search-kbd" type="button" data-open-cmd aria-label="جست‌وجوی سریع (Ctrl+K)"><kbd>⌘K</kbd></button>
-          <button class="search-submit" type="submit" aria-label="جست‌وجو">${icon('search')}</button>
+          <button class="search-kbd" type="button" data-open-cmd aria-label="جست‌وجوی سریع (Ctrl+K)"><kbd dir="ltr">⌘K</kbd></button>
+          <button class="search-submit" type="submit" aria-label="جست‌وجو">${icon('search')}<span>جست‌وجو</span></button>
         </form>
       </div>
 
@@ -410,7 +409,6 @@ function headerHTML() {
       <div class="container subnav-inner">
         <a href="index.html" class="${page === 'home' ? 'is-active' : ''}">${icon('grid')} خانه</a>
         <a href="shop.html" class="${page === 'shop' || page === 'product' ? 'is-active' : ''}">${icon('box')} فروشگاه قطعات</a>
-        <a href="#" data-open-vehicle>${icon('car')} خودروی من</a>
         <a href="shop.html?cat=filter">${icon('filter')} فیلترها و روغن</a>
         <a href="shop.html?cat=brake">${icon('brake')} ترمز</a>
         <a href="shop.html?cat=suspension">${icon('shock')} جلوبندی</a>
@@ -777,9 +775,10 @@ function comboResultsHTML(query) {
 
 function bindCombobox(input, list, onPick) {
   let items = [];
-  const render = q => {
+  const render = (q, open = true) => {
     list.innerHTML = comboResultsHTML(q);
     items = $$('.combo-opt', list);
+    if (!open) return;
     list.classList.add('is-open');
     input.setAttribute('aria-expanded', 'true');
   };
@@ -816,7 +815,7 @@ function bindCombobox(input, list, onPick) {
   document.addEventListener('click', e => {
     if (!input.parentElement.contains(e.target)) close();
   });
-  render('');
+  render('', false);
 }
 
 /* ---------------- Request / inquiry modal ---------------- */
@@ -1196,7 +1195,7 @@ function initHome() {
       return `<a class="cat-card" href="shop.html?cat=${c.id}">
         <span class="cat-icon">${icon(c.icon)}</span>
         <b>${c.name}</b>
-        <span>${fa(count * 37)} قطعه</span>
+        <span>${count ? `${fa(count * 37)} قطعه` : 'به‌زودی'}</span>
         <span class="cat-arrow">${icon('chevron-left')}</span>
       </a>`;
     }).join('');
@@ -1451,6 +1450,7 @@ function renderShop(rebuildFilters = false) {
   /* vehicle bar */
   const bar = $('#vehicleBar');
   if (bar) {
+    bar.className = v ? 'vbar' : 'vbar vbar--empty';
     const g = garageLoad();
     bar.innerHTML = v
       ? `<div class="vbar-left">
@@ -1677,14 +1677,7 @@ function pdpHTML(p) {
           <span>${icon('truck')} ارسال ۲۴ ساعته</span>
           <span>${icon('refresh')} ۷ روز بازگشت</span>
         </div>
-        ${codes.length ? `
-        <div class="codes-card">
-          <div class="codes-head">${icon('copy')} کدهای فنی معادل <span>${fa(codes.length)} کد</span></div>
-          <div class="codes-list">
-            ${codes.map(c => `<button class="code-chip" data-copy="${esc(c)}" title="کپی ${esc(c)}">${esc(c)} ${icon('copy')}</button>`).join('')}
-          </div>
-          <p class="codes-note">اگر کد قدیمی قطعه را دارید، با یکی از این کدها جست‌وجو کنید.</p>
-        </div>` : ''}
+
       </div>
 
       <div class="pdp-info">
@@ -1703,8 +1696,8 @@ function pdpHTML(p) {
         <p class="pdp-sub">${p.desc}</p>
 
         <div class="code-table">
-          <div class="code-cell"><span>کد فنی (OEM)</span><b>${p.oem}</b></div>
-          <div class="code-cell"><span>کد کالا (SKU)</span><b>${p.sku}</b></div>
+          <div class="code-cell"><span>کد فنی <bdi dir="ltr">OEM</bdi></span><b>${p.oem}</b></div>
+          <div class="code-cell"><span>کد کالا <bdi dir="ltr">SKU</bdi></span><b>${p.sku}</b></div>
           <div class="code-cell"><span>برند</span><b style="font-family:Vazirmatn;direction:ltr">${p.brand}</b></div>
         </div>
 
@@ -1734,6 +1727,15 @@ function pdpHTML(p) {
             <span>${icon('refresh')} بازگشت ۷ روزه</span>
           </div>
         </div>
+
+        ${codes.length ? `
+        <div class="codes-card">
+          <div class="codes-head">${icon('copy')} کدهای فنی معادل <span>${fa(codes.length)} کد</span></div>
+          <div class="codes-list">
+            ${codes.map(c => `<button class="code-chip" data-copy="${esc(c)}" title="کپی ${esc(c)}">${esc(c)} ${icon('copy')}</button>`).join('')}
+          </div>
+          <p class="codes-note">اگر کد قدیمی قطعه را دارید، با یکی از این کدها جست‌وجو کنید.</p>
+        </div>` : ''}
       </div>
     </div>
 
