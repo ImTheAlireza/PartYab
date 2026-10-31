@@ -11,6 +11,7 @@
 
   <div id="site-header"></div>
 
+  <main id="main">
   <!-- Hero -->
   <section class="hero">
     <div class="container hero-inner">
@@ -24,26 +25,38 @@
 
         <div class="vehicle-card">
           <div class="vehicle-card-head">
-            <span class="vc-icon"><span class="icon" data-icon="car"></span></span>
+            <span class="vc-icon"><span class="icon" data-icon="garage"></span></span>
             <div>
               <strong>خودروی خود را انتخاب کنید</strong>
-              <span>سه مرحله، کمتر از ۱۰ ثانیه</span>
+              <span>نام مدل را بنویسید؛ سال و تیپ را انتخاب کنید</span>
             </div>
           </div>
-          <div class="vehicle-steps">
-            <div class="field">
-              <label for="heroMake"><span class="step-dot">۱</span> سازنده</label>
-              <div class="select-wrap"><select id="heroMake" aria-label="سازنده خودرو"></select></div>
-            </div>
-            <div class="field">
-              <label for="heroModel"><span class="step-dot">۲</span> مدل</label>
-              <div class="select-wrap"><select id="heroModel" disabled aria-label="مدل خودرو"></select></div>
-            </div>
-            <div class="field">
-              <label for="heroYear"><span class="step-dot">۳</span> سال ساخت</label>
-              <div class="select-wrap"><select id="heroYear" disabled aria-label="سال ساخت"></select></div>
+
+          <div class="field field--full">
+            <label for="heroCar"><span class="step-dot">۱</span> مدل خودرو</label>
+            <div class="combo combo--hero">
+              <span class="icon combo-icon" data-icon="search"></span>
+              <input id="heroCar" type="text" placeholder="مثلاً ۲۰۶، پراید، سمند، کرولا…" autocomplete="off"
+                     role="combobox" aria-expanded="false" aria-controls="heroResults" aria-autocomplete="list">
+              <div class="combo-list" id="heroResults" role="listbox" aria-label="نتایج خودرو"></div>
             </div>
           </div>
+
+          <div class="vehicle-steps vehicle-steps--2">
+            <div class="field">
+              <label for="heroYear"><span class="step-dot">۲</span> سال ساخت</label>
+              <div class="select-wrap">
+                <select id="heroYear" disabled aria-label="سال ساخت"><option value="">سال ساخت</option></select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="heroEngine"><span class="step-dot">۳</span> تیپ / موتور <em>اختیاری</em></label>
+              <div class="select-wrap">
+                <select id="heroEngine" disabled aria-label="تیپ یا موتور"><option value="">تیپ / موتور</option></select>
+              </div>
+            </div>
+          </div>
+
           <button class="btn btn-amber btn-block" data-hero-go>
             <span class="icon" data-icon="search"></span>
             جست‌وجوی قطعات سازگار
@@ -157,7 +170,7 @@
           <span class="v-num">۰۲</span>
           <span class="v-icon"><span class="icon" data-icon="check"></span></span>
           <b>وضعیت سازگاری، شفاف</b>
-          <p>هر محصول یکی از سه وضعیت «سازگار»، «ناسازگار» یا «سازگاری ثبت نشده» را نشان می‌دهد؛ با متن و آیکون، نه فقط رنگ.</p>
+          <p>هر محصول یکی از پنج وضعیت «سازگار»، «سازگار با شرط»، «ناسازگار»، «ثبت نشده» یا «عمومی» را نشان می‌دهد؛ با متن، آیکون و یادداشت شرط.</p>
         </div>
         <div class="value-card">
           <span class="v-num">۰۳</span>
@@ -170,28 +183,28 @@
   </section>
 
   <!-- Split / legend -->
-  <section class="section section--paper">
+  <section class="section section--paper" id="states">
     <div class="container">
       <div class="split">
         <div>
-          <span class="eyebrow" style="display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:600;color:var(--amber-700);margin-bottom:8px">تمایز پارت‌یاب</span>
+          <span class="eyebrow" style="display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:600;color:var(--amber-700);margin-bottom:8px">تمایز پارتیاب</span>
           <h2 class="section-title" style="font-size:clamp(21px,2.4vw,30px)">فراتر از یک قالب فروشگاهی با عکس خودرو</h2>
           <p style="font-size:13px;color:var(--muted);line-height:2;margin-top:10px">
             ارزش اصلی، مدیریت اطلاعات سازگاری است: ورود گروهی از CSV، ویرایش سریع، گزارش خطا
-            و نمایش قابل‌اعتماد وضعیت روی کارت و صفحهٔ محصول.
+            و نمایش قابلاعتماد وضعیت روی کارت و صفحهٔ محصول.
           </p>
           <div class="feature-list">
             <div class="feature-item">
               <span class="f-check"><span class="icon" data-icon="check"></span></span>
-              <div><b>ورود گروهی سازگاری‌ها</b><p>نگاشت ستون‌ها، پیش‌نمایش، اجرای آزمایشی (Dry run) و گزارش خطای قابل‌دانلود.</p></div>
+              <div><b>ورود گروهی سازگاریها</b><p>نگاشت ستونها، پیشنمایش، اجرای آزمایشی (Dry run) و گزارش خطای قابلدانلود.</p></div>
             </div>
             <div class="feature-item">
               <span class="f-check"><span class="icon" data-icon="check"></span></span>
-              <div><b>افزونهٔ مستقل از قالب</b><p>دادهٔ سازگاری در افزونه می‌ماند؛ تغییر قالب، ارتباط محصول و خودرو را از بین نمی‌برد.</p></div>
+              <div><b>افزونهٔ مستقل از قالب</b><p>دادهٔ سازگاری در افزونه میماند؛ تغییر قالب، ارتباط محصول و خودرو را از بین نمیبرد.</p></div>
             </div>
             <div class="feature-item">
               <span class="f-check"><span class="icon" data-icon="check"></span></span>
-              <div><b>سازگار با موبایل و راست‌چین</b><p>انتخاب خودرو و فیلترها با یک دست، بدون اسکرول افقی و بدون پنهان‌شدن اطلاعات مهم.</p></div>
+              <div><b>پنج حالت بهجای «میخورد / نمیخورد»</b><p>شرطها و موارد ثبتنشده جدا دیده میشوند تا خریدار تصمیم دقیقتری بگیرد.</p></div>
             </div>
           </div>
           <a class="btn btn-navy" href="shop.html" style="margin-top:22px">
@@ -202,23 +215,31 @@
           <div class="legend-card">
             <div class="legend-head">
               <span class="icon" data-icon="info"></span>
-              سه حالت سازگاری در کارت محصول
+              وضعیت سازگاری در کارت و صفحهٔ محصول
             </div>
             <div class="legend-row legend-row--fit">
               <span class="legend-mark"><span class="icon" data-icon="check"></span></span>
-              <div><b>سازگار</b><span>سازگاری با خودروی انتخابی در فروشگاه ثبت شده است.</span></div>
+              <div><b>سازگار</b><span>سازگاری با خودروی انتخابی در فروشگاه تأیید شده است.</span></div>
+            </div>
+            <div class="legend-row legend-row--conditional">
+              <span class="legend-mark"><span class="icon" data-icon="alert"></span></span>
+              <div><b>سازگار با شرط</b><span>مثلاً «فقط تیپ ۵ و ۶»؛ شرط را همانجا میخوانید.</span></div>
             </div>
             <div class="legend-row legend-row--no">
               <span class="legend-mark"><span class="icon" data-icon="x"></span></span>
               <div><b>ناسازگار</b><span>این خودرو در فهرست سازگاری محصول نیست.</span></div>
             </div>
             <div class="legend-row legend-row--unknown">
-              <span class="legend-mark"><span class="icon" data-icon="alert"></span></span>
-              <div><b>سازگاری ثبت نشده</b><span>فروشنده هنوز داده‌ای وارد نکرده؛ یعنی نامشخص، نه منفی.</span></div>
+              <span class="legend-mark"><span class="icon" data-icon="info"></span></span>
+              <div><b>ثبت نشده</b><span>یعنی نامشخص، نه منفی؛ با استعلام روشن میشود.</span></div>
+            </div>
+            <div class="legend-row legend-row--universal">
+              <span class="legend-mark"><span class="icon" data-icon="box"></span></span>
+              <div><b>عمومی</b><span>قطعهٔ عمومی مثل روغن یا تیغهٔ برفپاککن.</span></div>
             </div>
             <div class="legend-foot">
               <span class="icon" data-icon="shield"></span>
-              هیچ سازگاری‌ای حدس زده نمی‌شود؛ منبع همهٔ داده‌ها خود فروشگاه است.
+              هیچ سازگاریای حدس زده نمیشود؛ منبع همهٔ دادهها خود فروشگاه است.
             </div>
           </div>
         </div>
@@ -251,6 +272,8 @@
       </div>
     </div>
   </section>
+
+  </main>
 
   <div id="site-footer"></div>
 
