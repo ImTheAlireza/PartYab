@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>فروشگاه قطعات | پارت‌یاب</title>
+  <meta name="description" content="فهرست قطعات خودرو با فیلتر سازگاری، برند، قیمت و موجودی.">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="shop">
+
+  <div id="site-header"></div>
+
+  <div class="page-head">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="index.html">خانه</a><span class="sep">/</span>
+        <a href="shop.html">فروشگاه قطعات</a><span class="sep">/</span>
+        <span class="current" id="shopTitle">همهٔ قطعات خودرو</span>
+      </nav>
+      <h1 id="pageHeading">همهٔ قطعات خودرو</h1>
+      <p>خودرویتان را انتخاب کنید تا فقط قطعاتی را ببینید که فروشگاه سازگاری‌شان را تأیید کرده است.</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div id="vehicleBar"></div>
+
+    <div class="shop-layout">
+      <aside>
+        <div class="filters" id="filtersDesktop"></div>
+      </aside>
+
+      <div class="shop-main">
+        <div class="shop-toolbar">
+          <div class="result-count" id="resultCount"></div>
+          <div class="toolbar-right">
+            <button class="filter-btn" data-open-filters>
+              <span class="icon" data-icon="sliders"></span> فیلترها
+            </button>
+            <label class="sr-only" for="sortSelect">مرتب‌سازی</label>
+            <select class="sort-select" id="sortSelect">
+              <option value="relevance">مرتبط‌ترین</option>
+              <option value="price-asc">ارزان‌ترین</option>
+              <option value="price-desc">گران‌ترین</option>
+              <option value="rating">بیشترین امتیاز</option>
+              <option value="newest">جدیدترین</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="active-chips" id="activeChips"></div>
+        <div class="p-grid p-grid--3" id="shopGrid"></div>
+
+        <nav class="pagination" aria-label="صفحه‌بندی">
+          <a href="#" data-page="prev" aria-label="صفحه قبل"><span class="icon" data-icon="chevron-right"></span></a>
+          <span class="is-current">۱</span>
+          <a href="#" data-page="2">۲</a>
+          <a href="#" data-page="3">۳</a>
+          <span>…</span>
+          <a href="#" data-page="next" aria-label="صفحه بعد"><span class="icon" data-icon="chevron-left"></span></a>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <div class="drawer" id="filtersDrawer" aria-hidden="true">
+    <div class="drawer-backdrop" data-close-filters></div>
+    <aside class="drawer-panel" role="dialog" aria-label="فیلترها">
+      <div class="drawer-head">
+        <b>فیلترها</b>
+        <button class="modal-close" data-close-filters aria-label="بستن"><span class="icon" data-icon="x"></span></button>
+      </div>
+      <div class="drawer-body" id="filtersDrawerBody"></div>
+      <div class="drawer-foot">
+        <button class="btn btn-amber btn-block" data-close-filters>نمایش نتایج</button>
+      </div>
+    </aside>
+  </div>
+
+  <div id="site-footer"></div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
