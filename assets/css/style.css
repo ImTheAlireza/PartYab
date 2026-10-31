@@ -2873,3 +2873,99 @@ body {
   .vbar-left { width: 100%; justify-content: flex-start; text-align: start; }
   .vbar-left b, .vbar-left span { text-align: start; }
 }
+
+/* ---------- hero fixes ---------- */
+.header-search .search-submit {
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.hero h1 em::after { display: none; }
+.car-stage { padding: 4px 0 0; }
+@media (max-width: 640px) {
+  .vehicle-card .vehicle-steps--2 { grid-template-columns: 1fr; }
+  .vehicle-card .vehicle-steps--2 .field:last-child { grid-column: auto; }
+}
+
+/* hotspot: pin the dot exactly on the part, label floats below */
+.hotspot {
+  width: 12px; height: 12px; padding: 0;
+  display: block; transform: translate(50%, -50%);
+}
+.hs-dot { display: block; width: 12px; height: 12px; }
+.hs-label {
+  position: absolute; inset-block-start: 15px; left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap; opacity: 0;
+}
+.hotspot:hover .hs-label, .hotspot:focus-visible .hs-label { opacity: 1; transform: translateX(-50%); }
+
+/* ---------- hero v2: map plate fills the column ---------- */
+.car-wrap { position: relative; width: 100%; }
+.car-stage { padding: 6px 0 0; }
+.map-legend { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 0 8px; }
+.map-legend a {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 10px; font-weight: 600; color: rgba(255, 255, 255, .78);
+  border: 1px solid rgba(255, 255, 255, .13); border-radius: 999px;
+  padding: 4px 9px; background: rgba(255, 255, 255, .03);
+  transition: color .15s, border-color .15s, background .15s;
+}
+.map-legend i {
+  width: 5px; height: 5px; border-radius: 50%; background: var(--amber);
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, .2);
+}
+.map-legend a:hover { color: #fff; border-color: rgba(245, 158, 11, .5); background: rgba(245, 158, 11, .09); }
+@media (min-width: 861px) {
+  .hero-visual { display: flex; }
+  .car-map { display: flex; flex-direction: column; width: 100%; }
+  .car-stage { flex: 1 1 auto; display: flex; align-items: center; }
+  .map-legend { margin-top: auto; }
+}
+
+/* hero: two columns share one baseline → map plate stretches, stage gets a blueprint grid */
+@media (min-width: 861px) {
+  .hero-grid { align-items: stretch; }
+  .hero-copy { align-self: center; }
+  .car-stage {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, .045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, .045) 1px, transparent 1px);
+    background-size: 30px 30px; background-position: center;
+    border-radius: 10px; margin-top: 6px;
+    -webkit-mask-image: radial-gradient(120% 90% at 50% 45%, #000 55%, transparent 100%);
+            mask-image: radial-gradient(120% 90% at 50% 45%, #000 55%, transparent 100%);
+  }
+}
+
+/* hero: legend must not steal the stage's free space */
+@media (min-width: 861px) {
+  .map-legend { margin-top: 0; }
+  .car-stage { background-image:
+      linear-gradient(rgba(255, 255, 255, .035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, .035) 1px, transparent 1px); }
+}
+
+/* hero mobile: keep year/type side by side so the plate stays compact */
+@media (max-width: 640px) {
+  .vehicle-card .vehicle-steps--2 { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .hero-grid { padding-block: 24px 28px; }
+}
+@media (max-width: 380px) {
+  .vehicle-card .vehicle-steps--2 { grid-template-columns: 1fr; }
+}
+
+/* 1024–1180: the two columns still fit, so don't fall back to a stacked hero */
+@media (min-width: 1024px) {
+  .hero-grid { grid-template-columns: 1.02fr .98fr; gap: 40px; }
+  .hero-copy { order: 0; }
+  .car-map { order: 0; max-width: none; }
+}
+
+/* hero map: drafting dimension line under the car */
+.car-svg .dim path { fill: none; stroke: rgba(255, 255, 255, .22); stroke-width: 1; }
+.car-svg .dim text {
+  font-family: var(--mono); font-size: 9px; letter-spacing: .1em;
+  fill: rgba(255, 255, 255, .38); text-transform: uppercase;
+}
+@media (max-width: 640px) { .car-svg .dim { display: none; } }
+.car-svg .dim path { stroke: rgba(255, 255, 255, .28); }
+.car-svg .dim text { fill: rgba(255, 255, 255, .45); }
