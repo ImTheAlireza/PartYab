@@ -18,7 +18,7 @@ python3 -m http.server 3000 --bind 0.0.0.0
 # http://localhost:3000
 ```
 
-صفحه‌ها: `index.html` · `shop.html` · `product.html?id=p1` · `checkout.html` · `garage.html`
+صفحه‌ها: `index.html` (گالری هیرو) · `home.html` (صفحهٔ اصلی) · `shop.html` · `product.html?id=p1` · `checkout.html` · `garage.html`
 
 این همان طراحی است که در قالب پیاده شده؛ فقط داده‌اش در `assets/js/data.js` است و در وردپرس از دیتابیس می‌آید.
 برای دیدن «وضعیت‌های سازگاری» سریع‌ترین راه: در `product.html` بین `p1`، `p4`، `p8`، `p10` جابه‌جا شو و خودرو را عوض کن.

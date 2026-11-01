@@ -1,353 +1,329 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>پارت‌یاب | قطعهٔ درست، برای خودروی درست</title>
-  <meta name="description" content="فروشگاه تخصصی قطعات خودرو با انتخاب خودرو، نمایش وضعیت سازگاری و جست‌وجوی کد فنی.">
-  <link rel="stylesheet" href="assets/css/style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>پنج هیرو سکشن — دموی پارت‌یاب</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  body.gal {
+    background:
+      radial-gradient(900px 420px at 88% -10%, #E9EFF8, transparent 62%),
+      radial-gradient(760px 400px at 0% 104%, #FDF3E3, transparent 62%),
+      var(--bg);
+    font-family: 'Vazirmatn', system-ui, sans-serif; color: var(--ink);
+    padding-bottom: 86px;
+  }
+  .gal-wrap { max-width: 1360px; margin: 0 auto; padding: 0 20px; }
+
+  /* ---------- header ---------- */
+  .gal-top { padding: 30px 0 4px; }
+  .gal-kicker {
+    display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 600;
+    color: var(--amber-700); background: var(--amber-50); border: 1px solid #FBE2B5;
+    border-radius: 999px; padding: 5px 12px;
+  }
+  .gal-top h1 { font-size: clamp(23px, 3.2vw, 36px); font-weight: 800; margin: 14px 0 8px; line-height: 1.32; letter-spacing: -.02em; }
+  .gal-top h1 em { font-style: normal; color: var(--amber-600); }
+  .gal-top p { margin: 0; font-size: 14px; line-height: 2; color: var(--ink-2); max-width: 76ch; }
+  .gal-steps { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .gal-steps span {
+    display: inline-flex; align-items: center; gap: 7px; font-size: 11.5px; color: var(--ink-2);
+    background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px;
+  }
+  .gal-steps b {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #fff; background: var(--navy);
+    width: 17px; height: 17px; border-radius: 5px; display: grid; place-items: center;
+  }
+
+  /* ---------- demo block ---------- */
+  .demo { margin-top: 34px; scroll-margin-top: 12px; }
+  .demo-head {
+    display: flex; align-items: flex-start; gap: 13px; flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+  .demo-num {
+    flex: none; width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center;
+    font-family: 'IBM Plex Mono', monospace; font-size: 15px; font-weight: 600;
+    background: var(--navy); color: #fff; box-shadow: var(--sh-sm);
+  }
+  .demo-txt { min-width: 240px; flex: 1; }
+  .demo-txt h2 { font-size: 17px; font-weight: 800; margin: 0 0 4px; letter-spacing: -.01em; }
+  .demo-txt p { margin: 0; font-size: 12.5px; line-height: 1.9; color: var(--muted); max-width: 76ch; }
+  .demo-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .demo-tags span {
+    font-size: 10px; font-weight: 600; color: var(--ink-2); background: #fff;
+    border: 1px solid var(--line); border-radius: 999px; padding: 2px 8px;
+  }
+  .demo-tags span.hot { color: var(--amber-700); background: var(--amber-50); border-color: #FBE2B5; }
+
+  .demo-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .vbtn {
+    display: inline-flex; align-items: center; gap: 5px; cursor: pointer;
+    background: #fff; border: 1px solid var(--line); color: var(--ink-2);
+    border-radius: 9px; padding: 8px 11px; font: inherit; font-size: 11.5px; font-weight: 600;
+  }
+  .vbtn[aria-pressed="true"] { background: var(--navy); border-color: var(--navy); color: #fff; }
+  .vbtn svg { width: 14px; height: 14px; }
+  .open-link {
+    display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 700;
+    color: var(--navy); background: #fff; border: 1px solid var(--line);
+    border-radius: 9px; padding: 8px 11px;
+  }
+  .open-link:hover { border-color: var(--amber); color: var(--amber-700); }
+  .pick {
+    cursor: pointer; font: inherit; font-size: 11.5px; font-weight: 700;
+    background: var(--amber); color: #241703; border: 1px solid transparent;
+    border-radius: 9px; padding: 8px 13px; box-shadow: 0 8px 18px -10px rgba(245, 158, 11, .8);
+  }
+  .demo.is-picked .pick { background: var(--green); color: #fff; box-shadow: none; }
+  .demo.is-picked .pick::after { content: " ✓"; }
+  .demo.is-picked .demo-frame { box-shadow: 0 0 0 3px var(--amber), var(--sh-lg); }
+
+  .demo-frame {
+    background: var(--surface-2); border-radius: var(--r-xl); overflow: hidden;
+    box-shadow: var(--sh-md); transition: box-shadow .2s; padding: 0;
+  }
+  .demo-frame iframe {
+    display: block; width: 100%; height: 620px; border: 0; background: #fff;
+    transition: width .2s;
+  }
+  .demo-frame.is-mobile { padding: 16px; background: #E7ECF3; }
+  .demo-frame.is-mobile iframe {
+    width: 390px; max-width: 100%; margin-inline: auto; height: 760px;
+    border-radius: 22px; box-shadow: 0 0 0 8px #0B1728, 0 18px 40px -18px rgba(8, 19, 32, .6);
+  }
+
+  /* ---------- sticky bar ---------- */
+  .gal-bar {
+    position: fixed; inset-inline: 0; inset-block-end: 0; z-index: 40;
+    display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap;
+    padding: 11px 16px; font-size: 12.5px; color: #fff;
+    background: rgba(8, 19, 32, .95); border-top: 1px solid rgba(255, 255, 255, .1);
+    backdrop-filter: blur(8px);
+  }
+  .gal-bar b { color: #FBBF24; }
+  .gal-bar .hint { color: #9FB1C6; font-size: 11.5px; }
+
+  @media (max-width: 760px) {
+    .gal-wrap { padding: 0 12px; }
+    .demo-actions { width: 100%; }
+    .demo-frame iframe { height: 520px; }
+    .demo-frame.is-mobile iframe { width: 100%; height: 640px; }
+  }
+</style>
 </head>
-<body data-page="home">
+<body class="gal">
 
-  <div id="site-header"></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="i-desk"><rect x="2.5" y="4" width="19" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9 20.5h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></g>
+    <g id="i-phone"><rect x="7" y="2.5" width="10" height="19" rx="2.4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M11 18.6h2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></g>
+    <g id="i-ext"><path d="M14 4h6v6M20 4l-8.5 8.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 14.5V19a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 19V7.5A1.5 1.5 0 0 1 5 6h4.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></g>
+    <g id="i-layers"><path d="M12 3l8 4.4-8 4.4-8-4.4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M4 12.4l8 4.4 8-4.4M4 16.8l8 4.4 8-4.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></g>
+  </defs>
+</svg>
 
-  <main id="main">
-  <!-- Hero -->
-  <section class="hero">
-    <div class="container hero-grid">
-      <div class="hero-copy">
-        <span class="hero-eyebrow"><span class="icon" data-icon="spark"></span> فقط قطعه‌ای که به خودروی شما می‌خورد</span>
-        <h1>قطعهٔ درست،<br>برای <em>خودروی درست</em></h1>
-        <p class="hero-lead">
-          خودرویتان را انتخاب کنید و به‌جای جست‌وجو بین هزاران کالا، فقط قطعاتی را ببینید
-          که فروشگاه سازگاری‌شان را تأیید کرده است.
-        </p>
+<div class="gal-wrap">
 
-        <div class="vehicle-card">
-          <div class="vehicle-card-head">
-            <span class="vc-icon"><span class="icon" data-icon="garage"></span></span>
-            <div>
-              <strong>پلاک خودرو</strong>
-              <span>مدل را بنویسید؛ سال و تیپ را انتخاب کنید</span>
-            </div>
-          </div>
+  <header class="gal-top">
+    <span class="gal-kicker"><svg style="width:13px;height:13px"><use href="#i-layers"/></svg> دمؤ هیرو · پارت‌یاب</span>
+    <h1>پنج هیرو سکشن، <em>همه زنده و قابل کلیک</em></h1>
+    <p>
+      هر بلوک یک دموی واقعی است، نه تصویر. با دکمه‌های «دسکتاپ / موبایل» همان دمو را در عرض ۳۹۰ پیکسل ببین
+      (همان چیزی که کاربر موبایل می‌بیند)، یا با «تمام‌صفحه» در تب جدا بازش کن. اسلایدر ایدهٔ B خودکار می‌چرخد و
+      تایمرهای B و C زنده‌اند.
+    </p>
+    <div class="gal-steps">
+      <span><b>۱</b> هر پنج دمو را ببین</span>
+      <span><b>۲</b> «این را می‌خواهم» را بزن</span>
+      <span><b>۳</b> اسم گزینه را بگو تا در وردپرس پیاده شود</span>
+      <a href="home.html" style="display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:var(--navy);background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 12px">صفحهٔ اصلی پروتوتایپ ↗</a>
+      <a href="hero-lab.html" style="display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:var(--ink-2);background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 12px">آزمایشگاه + نقشهٔ قابلیت‌ها</a>
+    </div>
+  </header>
 
-          <div class="field field--full">
-            <label for="heroCar"><span class="step-dot">۱</span> مدل خودرو</label>
-            <div class="combo combo--hero">
-              <span class="icon combo-icon" data-icon="search"></span>
-              <input id="heroCar" type="text" placeholder="مثلاً ۲۰۶، پراید، سمند، کرولا…" autocomplete="off"
-                     role="combobox" aria-expanded="false" aria-controls="heroResults" aria-autocomplete="list">
-              <div class="combo-list" id="heroResults" role="listbox" aria-label="نتایج خودرو"></div>
-            </div>
-          </div>
-
-          <div class="vehicle-steps vehicle-steps--2">
-            <div class="field">
-              <label for="heroYear"><span class="step-dot">۲</span> سال ساخت</label>
-              <div class="select-wrap">
-                <select id="heroYear" disabled aria-label="سال ساخت"><option value="">سال ساخت</option></select>
-              </div>
-            </div>
-            <div class="field">
-              <label for="heroEngine"><span class="step-dot">۳</span> تیپ / موتور <em>اختیاری</em></label>
-              <div class="select-wrap">
-                <select id="heroEngine" disabled aria-label="تیپ یا موتور"><option value="">تیپ / موتور</option></select>
-              </div>
-            </div>
-          </div>
-
-          <button class="btn btn-amber btn-block" data-hero-go>
-            <span class="icon" data-icon="search"></span>
-            جست‌وجوی قطعات سازگار
-          </button>
-          <div class="vehicle-card-foot">
-            <span>یا</span>
-            <a href="shop.html" data-hero-oem>با کد فنی / OEM جست‌وجو کنید</a>
-          </div>
-        </div>
+  <!-- ================= A ================= -->
+  <section class="demo" id="demo-a" data-idea="A" data-name="پلاک / گاراژ">
+    <div class="demo-head">
+      <span class="demo-num">A</span>
+      <div class="demo-txt">
+        <h2>«پلاک» — هیرو گاراژمحور</h2>
+        <p>پلاک ایران را می‌زنی یا از گاراژ خودرو انتخاب می‌کنی؛ همان لحظه فهرست فیلترشده با وضعیت سازگاری هر ردیف نمایش داده می‌شود. سریع‌ترین مسیر از ورود تا محصول.</p>
+        <div class="demo-tags"><span class="hot">ایران‌محور</span><span>کمترین کلیک</span><span>گاراژ چندخودرویی</span><span>روشن</span></div>
       </div>
-
-      <div class="hero-visual">
-        <div class="hero-demo">
-          <div class="hero-demo-head">
-            <b><span class="icon" data-icon="check-shield"></span>کارت محصول در پارت‌یاب</b>
-            <span class="hero-demo-tag">نمونه</span>
-          </div>
-
-          <article class="p-card hero-demo-card" aria-hidden="true">
-            <span class="p-rail p-rail--conditional"></span>
-            <div class="p-media">
-              <img src="assets/img/p-brake.jpg" alt="" width="480" height="360" loading="eager">
-              <span class="p-code">4253.42</span>
-              <span class="off-badge">−۱۴٪</span>
-            </div>
-            <div class="p-body">
-              <div class="p-head">
-                <span class="p-brand">TRW</span>
-                <span class="p-equiv"><span class="icon" data-icon="copy"></span>۳ کد</span>
-              </div>
-              <h3 class="p-title">لنت ترمز جلو پژو ۲۰۶ / سمند / دنا</h3>
-              <div class="p-fit p-fit--conditional">
-                <span class="icon" data-icon="alert"></span>
-                <span>سازگار با شرط · فقط تیپ ۵ و ۶ با ABS</span>
-              </div>
-              <div class="p-foot">
-                <div class="p-price">
-                  <span class="old">۲٬۱۵۰٬۰۰۰</span>
-                  <strong>۱٬۸۵۰٬۰۰۰ <small>تومان</small></strong>
-                </div>
-                <span class="p-add"><span class="icon" data-icon="plus"></span></span>
-              </div>
-            </div>
-          </article>
-
-          <p class="hero-demo-note">هر کارت: کد فنی، برند، کدهای معادل و وضعیت سازگاری با خودروی انتخاب‌شده.</p>
-
-          <div class="hero-mini-stats">
-            <span><b>۳۳</b>مدل خودرو</span>
-            <span><b>۱۰</b>سازنده</span>
-            <span><b>۵</b>حالت سازگاری</span>
-          </div>
-        </div>
+      <div class="demo-actions">
+        <button class="vbtn" data-view="desktop" aria-pressed="true"><svg><use href="#i-desk"/></svg> دسکتاپ</button>
+        <button class="vbtn" data-view="mobile" aria-pressed="false"><svg><use href="#i-phone"/></svg> موبایل</button>
+        <a class="open-link" href="hero-a.html" target="_blank" rel="noopener">تمام‌صفحه <svg style="width:12px;height:12px"><use href="#i-ext"/></svg></a>
+        <button class="pick" data-pick="A">این را می‌خواهم</button>
       </div>
-      </div>
+    </div>
+    <div class="demo-frame">
+      <iframe src="hero-a.html?embed=1" title="هیرو A — پلاک و گاراژ" loading="lazy" data-auto></iframe>
     </div>
   </section>
 
-  <!-- Flash sale -->
-  <section class="section flash-section" id="flash">
-    <div class="container">
-      <div class="flash-band">
-        <div class="flash-head">
-          <div class="flash-title">
-            <span class="flash-badge"><span class="icon" data-icon="clock"></span> فروش ویژهٔ امروز</span>
-            <h2>پیشنهادهایی که تا نیمه‌شب تمام می‌شوند</h2>
-            <p>قیمت روی کارت، قیمت نهایی است؛ بدون کد تخفیف و بدون شرط پنهان.</p>
-          </div>
-          <div class="flash-side">
-            <div class="flash-clock" data-flash-clock aria-label="زمان باقی‌مانده">
-              <div><b data-cd="h">۰۰</b><span>ساعت</span></div>
-              <div><b data-cd="m">۰۰</b><span>دقیقه</span></div>
-              <div><b data-cd="s">۰۰</b><span>ثانیه</span></div>
-            </div>
-            <a class="flash-all" href="shop.html">همهٔ پیشنهادها <span class="icon" data-icon="arrow-left"></span></a>
-          </div>
-        </div>
-        <div class="p-grid p-grid--flash" id="flashGrid"></div>
+  <!-- ================= B ================= -->
+  <section class="demo" id="demo-b" data-idea="B" data-name="اسلایدر ویترینی">
+    <div class="demo-head">
+      <span class="demo-num">B</span>
+      <div class="demo-txt">
+        <h2>«ویترین گردان» — هیرو اسلایدری</h2>
+        <p>سه اسلاید با سه پیام: فروش ویژهٔ ۴۸ ساعته با تایمر، آموزش پنج حالت سازگاری، و کیت تعمیر کامل. فلش و نقطه دارند، خودکار می‌چرخند و با هاور می‌ایستند.</p>
+        <div class="demo-tags"><span class="hot">اسلایدر</span><span class="hot">فروش ویژه</span><span>آموزش سازگاری</span><span>کیت تعمیر</span></div>
       </div>
+      <div class="demo-actions">
+        <button class="vbtn" data-view="desktop" aria-pressed="true"><svg><use href="#i-desk"/></svg> دسکتاپ</button>
+        <button class="vbtn" data-view="mobile" aria-pressed="false"><svg><use href="#i-phone"/></svg> موبایل</button>
+        <a class="open-link" href="hero-b.html" target="_blank" rel="noopener">تمام‌صفحه <svg style="width:12px;height:12px"><use href="#i-ext"/></svg></a>
+        <button class="pick" data-pick="B">این را می‌خواهم</button>
+      </div>
+    </div>
+    <div class="demo-frame">
+      <iframe src="hero-b.html?embed=1" title="هیرو B — اسلایدر ویترینی" loading="lazy" data-auto></iframe>
     </div>
   </section>
 
-  <!-- Trust -->
-  <section class="trust">
-    <div class="container trust-inner">
-      <div class="trust-item">
-        <span class="t-icon"><span class="icon" data-icon="shield"></span></span>
-        <div><strong>اصالت کالا</strong><span>تأیید اصالت توسط فروشگاه</span></div>
+  <!-- ================= C ================= -->
+  <section class="demo" id="demo-c" data-idea="C" data-name="حراج با تایمر">
+    <div class="demo-head">
+      <span class="demo-num">C</span>
+      <div class="demo-txt">
+        <h2>«حراج ساعت» — هیرو کمپینی</h2>
+        <p>هیرو یک کمپین است: تایمر بزرگ، نوار «۳۴ از ۵۰ فروش رفت» و سه پیشنهاد داغ. حس فوریت می‌سازد؛ مناسب کمپین‌های دوره‌ای و قابل خاموش‌شدن.</p>
+        <div class="demo-tags"><span class="hot">فروش ویژه</span><span class="hot">تایمر زنده</span><span>نوار ظرفیت</span><span>کمپینی</span></div>
       </div>
-      <div class="trust-item">
-        <span class="t-icon"><span class="icon" data-icon="truck"></span></span>
-        <div><strong>ارسال سریع</strong><span>تهران ۲۴ ساعته، شهرستان ۲ تا ۴ روز</span></div>
+      <div class="demo-actions">
+        <button class="vbtn" data-view="desktop" aria-pressed="true"><svg><use href="#i-desk"/></svg> دسکتاپ</button>
+        <button class="vbtn" data-view="mobile" aria-pressed="false"><svg><use href="#i-phone"/></svg> موبایل</button>
+        <a class="open-link" href="hero-c.html" target="_blank" rel="noopener">تمام‌صفحه <svg style="width:12px;height:12px"><use href="#i-ext"/></svg></a>
+        <button class="pick" data-pick="C">این را می‌خواهم</button>
       </div>
-      <div class="trust-item">
-        <span class="t-icon"><span class="icon" data-icon="refresh"></span></span>
-        <div><strong>بازگشت ۷ روزه</strong><span>در صورت عدم تطابق قطعه</span></div>
-      </div>
-      <div class="trust-item">
-        <span class="t-icon"><span class="icon" data-icon="headset"></span></span>
-        <div><strong>مشاورهٔ فنی</strong><span>بررسی سازگاری پیش از خرید</span></div>
-      </div>
+    </div>
+    <div class="demo-frame">
+      <iframe src="hero-c.html?embed=1" title="هیرو C — حراج با تایمر" loading="lazy" data-auto></iframe>
     </div>
   </section>
 
-  <!-- Categories -->
-  <section class="section">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <span class="eyebrow">دسته‌بندی‌ها</span>
-          <h2 class="section-title">از کدام بخش خودرو شروع کنیم؟</h2>
-          <p class="section-sub">دسته‌ها را انتخاب کنید تا قطعات سازگار با خودروی شما فیلتر شوند.</p>
-        </div>
-        <a class="link-more" href="shop.html">همهٔ قطعات <span class="icon" data-icon="arrow-left"></span></a>
+  <!-- ================= D ================= -->
+  <section class="demo" id="demo-d" data-idea="D" data-name="کنسول کد فنی">
+    <div class="demo-head">
+      <span class="demo-num">D</span>
+      <div class="demo-txt">
+        <h2>«کنسول» — هیرو کد فنی</h2>
+        <p>جست‌وجوی کد فنی با خروجی زندهٔ سه کد معادل، برند و وضعیت سازگاری، به‌همراه پنل «زنجیرهٔ کدهای معادل». بیشترین تمایز با بازار و جذب مخاطب فنی.</p>
+        <div class="demo-tags"><span class="hot">تمایز حداکثری</span><span>کد معادل</span><span>مونواسپیس</span><span>مخاطب فنی</span></div>
       </div>
-      <div class="cat-grid" id="catGrid"></div>
+      <div class="demo-actions">
+        <button class="vbtn" data-view="desktop" aria-pressed="true"><svg><use href="#i-desk"/></svg> دسکتاپ</button>
+        <button class="vbtn" data-view="mobile" aria-pressed="false"><svg><use href="#i-phone"/></svg> موبایل</button>
+        <a class="open-link" href="hero-d.html" target="_blank" rel="noopener">تمام‌صفحه <svg style="width:12px;height:12px"><use href="#i-ext"/></svg></a>
+        <button class="pick" data-pick="D">این را می‌خواهم</button>
+      </div>
+    </div>
+    <div class="demo-frame">
+      <iframe src="hero-d.html?embed=1" title="هیرو D — کنسول کد فنی" loading="lazy" data-auto></iframe>
     </div>
   </section>
 
-  <!-- Featured products -->
-  <section class="section section--paper">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <span class="eyebrow">پرفروش‌های این هفته</span>
-          <h2 class="section-title">قطعات پرمصرف با سازگاری مشخص</h2>
-          <p class="section-sub">نشان سبز روی هر کارت یعنی فروشگاه سازگاری آن قطعه را با خودروی شما ثبت کرده است.</p>
-        </div>
-        <a class="link-more" href="shop.html">مشاهدهٔ فروشگاه <span class="icon" data-icon="arrow-left"></span></a>
+  <!-- ================= E ================= -->
+  <section class="demo" id="demo-e" data-idea="E" data-name="کارت حاشیه‌نویسی‌شده">
+    <div class="demo-head">
+      <span class="demo-num">E</span>
+      <div class="demo-txt">
+        <h2>«پروندهٔ قطعه» — هیرو آموزشی</h2>
+        <p>روشن و آرام؛ کارت محصول بزرگ می‌شود و چهار حاشیه‌نویسی خط‌چین نشان می‌دهد هر عدد و برچسب کارت چه معنایی دارد. ساده‌ترین و سبک‌ترین گزینه.</p>
+        <div class="demo-tags"><span class="hot">روشن</span><span>آموزشی</span><span>سبک و سریع</span><span>بدون شلوغی</span></div>
       </div>
-      <div class="p-grid" id="featuredGrid"></div>
+      <div class="demo-actions">
+        <button class="vbtn" data-view="desktop" aria-pressed="true"><svg><use href="#i-desk"/></svg> دسکتاپ</button>
+        <button class="vbtn" data-view="mobile" aria-pressed="false"><svg><use href="#i-phone"/></svg> موبایل</button>
+        <a class="open-link" href="hero-e.html" target="_blank" rel="noopener">تمام‌صفحه <svg style="width:12px;height:12px"><use href="#i-ext"/></svg></a>
+        <button class="pick" data-pick="E">این را می‌خواهم</button>
+      </div>
+    </div>
+    <div class="demo-frame">
+      <iframe src="hero-e.html?embed=1" title="هیرو E — کارت حاشیه‌نویسی‌شده" loading="lazy" data-auto></iframe>
     </div>
   </section>
 
-  <!-- Brands -->
-  <section class="section--tight">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <span class="eyebrow">برندهای قطعه</span>
-          <h2 class="section-title">قطعات از برندهای شناخته‌شده</h2>
-        </div>
-      </div>
-      <div class="brand-strip" id="brandStrip"></div>
-    </div>
-  </section>
+</div>
 
-  <!-- Value -->
-  <section class="section">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <span class="eyebrow">چرا پارت‌یاب؟</span>
-          <h2 class="section-title">مسیر خرید، از خودرو شروع می‌شود</h2>
-          <p class="section-sub">جست‌وجو بر اساس نام قطعه همیشه جواب نمی‌دهد؛ چون یک قطعه می‌تواند ده‌ها نام داشته باشد.</p>
-        </div>
-      </div>
-      <div class="value-grid">
-        <div class="value-card">
-          <span class="v-num">۰۱</span>
-          <span class="v-icon"><span class="icon" data-icon="car"></span></span>
-          <b>خودرو را انتخاب کنید</b>
-          <p>سازنده، مدل، سال و در صورت نیاز موتور یا تیپ. انتخاب شما در نوار بالای سایت می‌ماند تا هر لحظه بتوانید فقط قطعات سازگار را ببینید.</p>
-        </div>
-        <div class="value-card value-card--feature">
-          <span class="v-num">۰۲</span>
-          <span class="v-icon"><span class="icon" data-icon="check"></span></span>
-          <b>وضعیت سازگاری، شفاف</b>
-          <p>هر محصول یکی از پنج وضعیت «سازگار»، «سازگار با شرط»، «ناسازگار»، «ثبت نشده» یا «عمومی» را نشان می‌دهد؛ با متن، آیکون و یادداشت شرط.</p>
-        </div>
-        <div class="value-card">
-          <span class="v-num">۰۳</span>
-          <span class="v-icon"><span class="icon" data-icon="search"></span></span>
-          <b>کد فنی را جست‌وجو کنید</b>
-          <p>شمارهٔ OEM روی قطعه یا بسته‌بندی را وارد کنید؛ اگر خودرو انتخاب نشده باشد، از شما می‌پرسیم سازگاری را برای کدام خودرو بررسی کنیم.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+<div class="gal-bar">
+  <span>انتخاب فعلی: <b id="picked">—</b></span>
+  <span class="hint">فقط بگو «گزینهٔ A / B / C / D / E» — یا ترکیب، مثل «بدنهٔ A + اسلاید فروش ویژه».</span>
+</div>
 
-  <!-- Split / legend -->
-  <section class="section section--paper" id="states">
-    <div class="container">
-      <div class="split">
-        <div>
-          <span class="eyebrow" style="display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:600;color:var(--amber-700);margin-bottom:8px">تمایز پارتیاب</span>
-          <h2 class="section-title" style="font-size:clamp(21px,2.4vw,30px)">فراتر از یک قالب فروشگاهی با عکس خودرو</h2>
-          <p style="font-size:13px;color:var(--muted);line-height:2;margin-top:10px">
-            ارزش اصلی، مدیریت اطلاعات سازگاری است: ورود گروهی از CSV، ویرایش سریع، گزارش خطا
-            و نمایش قابلاعتماد وضعیت روی کارت و صفحهٔ محصول.
-          </p>
-          <div class="feature-list">
-            <div class="feature-item">
-              <span class="f-check"><span class="icon" data-icon="check"></span></span>
-              <div><b>ورود گروهی سازگاریها</b><p>نگاشت ستونها، پیشنمایش، اجرای آزمایشی (Dry run) و گزارش خطای قابلدانلود.</p></div>
-            </div>
-            <div class="feature-item">
-              <span class="f-check"><span class="icon" data-icon="check"></span></span>
-              <div><b>افزونهٔ مستقل از قالب</b><p>دادهٔ سازگاری در افزونه میماند؛ تغییر قالب، ارتباط محصول و خودرو را از بین نمیبرد.</p></div>
-            </div>
-            <div class="feature-item">
-              <span class="f-check"><span class="icon" data-icon="check"></span></span>
-              <div><b>پنج حالت بهجای «میخورد / نمیخورد»</b><p>شرطها و موارد ثبتنشده جدا دیده میشوند تا خریدار تصمیم دقیقتری بگیرد.</p></div>
-            </div>
-          </div>
-          <a class="btn btn-navy" href="shop.html" style="margin-top:22px">
-            <span class="icon" data-icon="box"></span> مشاهدهٔ نمونهٔ فروشگاه
-          </a>
-        </div>
-        <div class="split-media split-media--panel">
-          <div class="legend-card">
-            <div class="legend-head">
-              <span class="icon" data-icon="info"></span>
-              وضعیت سازگاری در کارت و صفحهٔ محصول
-            </div>
-            <div class="legend-row legend-row--fit">
-              <span class="legend-mark"><span class="icon" data-icon="check"></span></span>
-              <div><b>سازگار</b><span>سازگاری با خودروی انتخابی در فروشگاه تأیید شده است.</span></div>
-            </div>
-            <div class="legend-row legend-row--conditional">
-              <span class="legend-mark"><span class="icon" data-icon="alert"></span></span>
-              <div><b>سازگار با شرط</b><span>مثلاً «فقط تیپ ۵ و ۶»؛ شرط را همانجا میخوانید.</span></div>
-            </div>
-            <div class="legend-row legend-row--no">
-              <span class="legend-mark"><span class="icon" data-icon="x"></span></span>
-              <div><b>ناسازگار</b><span>این خودرو در فهرست سازگاری محصول نیست.</span></div>
-            </div>
-            <div class="legend-row legend-row--unknown">
-              <span class="legend-mark"><span class="icon" data-icon="info"></span></span>
-              <div><b>ثبت نشده</b><span>یعنی نامشخص، نه منفی؛ با استعلام روشن میشود.</span></div>
-            </div>
-            <div class="legend-row legend-row--universal">
-              <span class="legend-mark"><span class="icon" data-icon="box"></span></span>
-              <div><b>عمومی</b><span>قطعهٔ عمومی مثل روغن یا تیغهٔ برفپاککن.</span></div>
-            </div>
-            <div class="legend-foot">
-              <span class="icon" data-icon="shield"></span>
-              هیچ سازگاریای حدس زده نمیشود؛ منبع همهٔ دادهها خود فروشگاه است.
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<script>
+(function () {
+  /* ---------- fit each iframe to its content ---------- */
+  function fit(frame) {
+    var doc;
+    try { doc = frame.contentDocument; } catch (e) { return; }
+    if (!doc || !doc.documentElement) return;
+    // measure the demo host, not the viewport (the demo pages use min-height:100vh)
+    var host = doc.querySelector('.hero-host');
+    var h = host
+      ? Math.ceil(host.getBoundingClientRect().height)
+      : Math.max(doc.documentElement.scrollHeight, doc.body ? doc.body.scrollHeight : 0);
+    h += 2;
+    if (!h) return;
+    var current = parseInt(frame.style.height, 10) || 0;
+    if (Math.abs(h - current) > 4) frame.style.height = h + 'px';
+  }
 
-  <!-- Guides -->
-  <section class="section" id="guides">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <span class="eyebrow">راهنمای خرید</span>
-          <h2 class="section-title">قبل از خرید، مطمئن شوید</h2>
-          <p class="section-sub">کوتاه و کاربردی؛ برای وقتی که مطمئن نیستید کدام قطعه به خودروی شما می‌خورد.</p>
-        </div>
-        <a class="link-more" href="#">همهٔ مقاله‌ها <span class="icon" data-icon="arrow-left"></span></a>
-      </div>
-      <div class="guide-grid" id="guideGrid"></div>
+  function fitAll() {
+    document.querySelectorAll('iframe[data-auto]').forEach(fit);
+  }
 
-      <div class="newsletter" style="margin-top:30px">
-        <div>
-          <h3>راهنمای انتخاب قطعه را از دست ندهید</h3>
-          <p>هر دو هفته یک ایمیل کوتاه: نکات انتخاب قطعه، کدهای فنی و هشدارهای سرویس دوره‌ای.</p>
-        </div>
-        <form >
-          <input type="email" placeholder="ایمیل خود را وارد کنید" aria-label="ایمیل" required>
-          <button class="btn btn-amber" type="submit">عضویت</button>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  </main>
-
-  <div id="site-footer"></div>
-
-  <script src="assets/js/data.js"></script>
-  <script src="assets/js/app.js"></script>
-  <script>
-    /* toast برای خبرنامهٔ نمونه */
-    document.querySelector('.newsletter form')?.addEventListener('submit', e => {
-      e.preventDefault();
-      window.pyToast('ایمیل شما ثبت شد (نمایشی)', 'success');
-      e.target.reset();
+  document.querySelectorAll('iframe[data-auto]').forEach(function (frame) {
+    frame.addEventListener('load', function () {
+      var again = function () { fit(frame); };
+      again();
+      setTimeout(again, 300);
+      setTimeout(again, 1200);
+      try {
+        new ResizeObserver(again).observe(frame.contentDocument.documentElement);
+      } catch (e) {}
+      try {
+        frame.contentWindow.addEventListener('resize', again);
+      } catch (e) {}
     });
-  </script>
+  });
 
-  <!-- دمو: پرش سریع به گالری ایده‌های هیرو (فقط در پروتوتایپ) -->
-  <div class="demo-switch" id="demoSwitch">
-    <a href="heroes.html">۵ ایدهٔ هیرو</a>
-    <a href="hero-lab.html">آزمایشگاه</a>
-    <a href="shop.html">فروشگاه</a>
-  </div>
+  window.addEventListener('resize', function () {
+    clearTimeout(window.__fitT);
+    window.__fitT = setTimeout(fitAll, 180);
+  });
+
+  /* ---------- desktop / mobile view toggle ---------- */
+  document.querySelectorAll('.demo').forEach(function (demo) {
+    var frameBox = demo.querySelector('.demo-frame');
+    demo.querySelectorAll('.vbtn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        demo.querySelectorAll('.vbtn').forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
+        btn.setAttribute('aria-pressed', 'true');
+        frameBox.classList.toggle('is-mobile', btn.dataset.view === 'mobile');
+        setTimeout(fitAll, 260);
+        setTimeout(fitAll, 800);
+      });
+    });
+  });
+
+  /* ---------- picker ---------- */
+  var picked = document.getElementById('picked');
+  document.querySelectorAll('.pick').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var key = btn.dataset.pick;
+      var demo = document.querySelector('.demo[data-idea="' + key + '"]');
+      document.querySelectorAll('.demo').forEach(function (d) { d.classList.remove('is-picked'); });
+      demo.classList.add('is-picked');
+      picked.textContent = key + ' — ' + demo.dataset.name;
+      demo.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    });
+  });
+})();
+</script>
 </body>
 </html>

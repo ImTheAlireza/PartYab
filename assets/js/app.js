@@ -426,7 +426,7 @@ function headerHTML() {
   return `
   <header class="site-header">
     <div class="container header-main">
-      <a class="logo" href="index.html" aria-label="پارت‌یاب، صفحه اصلی">
+      <a class="logo" href="home.html" aria-label="پارت‌یاب، صفحه اصلی">
         <span class="logo-mark">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <circle cx="10.4" cy="10.4" r="6.6" stroke="#F59E0B" stroke-width="2"/>
@@ -460,12 +460,12 @@ function headerHTML() {
       <div class="container passport-inner">
         <div class="passport-slot" id="vehicleSlot"></div>
         <nav class="passport-nav" aria-label="ناوبری اصلی">
-          ${link('index.html', 'خانه', 'home')}
+          ${link('home.html', 'خانه', 'home')}
           ${link('shop.html', 'فروشگاه قطعات', 'shop')}
           ${link('shop.html?cat=filter', 'فیلتر و روغن')}
           ${link('shop.html?cat=brake', 'ترمز')}
           ${link('shop.html?cat=suspension', 'جلوبندی')}
-          ${link('index.html#guides', 'راهنمای خرید')}
+          ${link('home.html#guides', 'راهنمای خرید')}
         </nav>
       </div>
     </div>
@@ -482,14 +482,14 @@ function overlaysHTML() {
         <button class="modal-close" data-close-nav aria-label="بستن">${icon('x')}</button>
       </div>
       <div class="drawer-body">
-        <a class="drawer-link" href="index.html">${icon('grid')} خانه</a>
+        <a class="drawer-link" href="home.html">${icon('grid')} خانه</a>
         <a class="drawer-link" href="shop.html">${icon('box')} فروشگاه قطعات</a>
         <a class="drawer-link" href="garage.html">${icon('garage')} گاراژ من</a>
         <a class="drawer-link" href="shop.html?cat=brake">${icon('brake')} ترمز و ABS</a>
         <a class="drawer-link" href="shop.html?cat=filter">${icon('filter')} فیلتر و روغن</a>
         <a class="drawer-link" href="shop.html?cat=suspension">${icon('shock')} جلوبندی و تعلیق</a>
         <a class="drawer-link" href="shop.html?cat=electrical">${icon('light')} برق و روشنایی</a>
-        <a class="drawer-link" href="index.html#guides">${icon('file')} راهنمای خرید</a>
+        <a class="drawer-link" href="home.html#guides">${icon('file')} راهنمای خرید</a>
         <a class="drawer-link" href="#">${icon('user')} حساب کاربری</a>
       </div>
       <div class="drawer-foot">
@@ -554,7 +554,7 @@ function overlaysHTML() {
   </div>
 
   <nav class="mobile-nav" aria-label="ناوبری موبایل">
-    <a href="index.html" class="${document.body.dataset.page === 'home' ? 'is-active' : ''}">${icon('grid')}<span>خانه</span></a>
+    <a href="home.html" class="${document.body.dataset.page === 'home' ? 'is-active' : ''}">${icon('grid')}<span>خانه</span></a>
     <a href="shop.html" class="${document.body.dataset.page === 'shop' ? 'is-active' : ''}">${icon('box')}<span>دسته‌ها</span></a>
     <a href="garage.html" class="${document.body.dataset.page === 'garage' ? 'is-active' : ''}">${icon('garage')}<span>گاراژ</span></a>
     <button data-cart>${icon('cart')}<span>سبد</span></button>
@@ -566,7 +566,7 @@ function footerHTML() {
   <footer class="site-footer">
     <div class="container footer-top">
       <div class="footer-brand">
-        <a class="logo" href="index.html">
+        <a class="logo" href="home.html">
           <span class="logo-mark">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <circle cx="10.4" cy="10.4" r="6.6" stroke="#F59E0B" stroke-width="2"/>
@@ -594,9 +594,9 @@ function footerHTML() {
       <div class="footer-col">
         <b>راهنما</b>
         <a href="garage.html">گاراژ من</a>
-        <a href="index.html#guides">انتخاب خودرو</a>
-        <a href="index.html#guides">کد فنی یا OEM چیست؟</a>
-        <a href="index.html#states">معنی نشان‌های سازگاری</a>
+        <a href="home.html#guides">انتخاب خودرو</a>
+        <a href="home.html#guides">کد فنی یا OEM چیست؟</a>
+        <a href="home.html#states">معنی نشان‌های سازگاری</a>
         <a href="#">شرایط ارسال</a>
         <a href="#">بازگشت کالا</a>
       </div>
@@ -1789,7 +1789,7 @@ function pdpHTML(p) {
   return `
   <div class="container">
     <nav class="breadcrumb" style="padding-block:14px">
-      <a href="index.html">خانه</a><span class="sep">/</span>
+      <a href="home.html">خانه</a><span class="sep">/</span>
       <a href="shop.html">فروشگاه قطعات</a><span class="sep">/</span>
       <a href="shop.html?cat=${p.cat}">${(CATEGORIES.find(c => c.id === p.cat) || {}).name || 'دسته'}</a><span class="sep">/</span>
       <span class="current">${p.name}</span>
