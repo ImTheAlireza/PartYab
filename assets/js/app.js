@@ -347,6 +347,10 @@ function cartBadge() {
   });
 }
 function addToCart(p, qty = 1, silent = false) {
+  if (p.priceOnRequest) {
+    toast('قیمت این قطعه استعلامی است؛ برای ثبت سفارش تماس بگیرید', 'warn');
+    return;
+  }
   const items = cartLoad();
   const line = items.find(it => it.id === p.id);
   if (line) line.qty = Math.min(99, line.qty + qty);
@@ -1174,6 +1178,10 @@ function initHeader() {
     const add = e.target.closest('[data-add]');
     if (add) {
       const p = PRODUCTS.find(x => x.id === add.dataset.add);
+      if (p && p.priceOnRequest) {
+        toast('قیمت این قطعه استعلامی است؛ برای ثبت سفارش تماس بگیرید', 'warn');
+        return;
+      }
       if (p) addToCart(p);
       return;
     }
@@ -1383,8 +1391,8 @@ function initShop() {
     q: (params.get('q') || '').trim(),
     cats: new Set(params.get('cat') ? [params.get('cat')] : []),
     brands: new Set(),
-    quality: new Set(),
-    engines: new Set(),
+    quality: new Set((params.get('quality') || '').split(',').filter(Boolean)),
+    engines: new Set((params.get('engine') || '').split(',').filter(Boolean)),
     compatOnly: !!v,
     stockOnly: false,
     maxPrice: 5000000,
@@ -1950,6 +1958,15 @@ function pdpHTML(p) {
           </div>
           <p class="codes-note">اگر کد قدیمی قطعه را دارید، در <a href="code.html?code=${encodeURIComponent(p.oem || codes[0] || '')}">قطعه‌یاب کد فنی</a> جست‌وجو کنید تا معادل‌ها و سازگاری را ببینید.</p>
         </div>` : ''}
+
+        ${(p.engines || []).length ? `
+        <div class="codes-card">
+          <div class="codes-head">${icon('engine')} مناسب این تیپ‌ها <span>${fa(p.engines.length)} تیپ</span></div>
+          <div class="codes-list">
+            ${p.engines.map(en => `<a class="code-chip" href="shop.html?engine=${encodeURIComponent(en)}" title="دیدن قطعات تیپ ${esc(en)}">${esc(en)} ${icon('arrow-left')}</a>`).join('')}
+          </div>
+          <p class="codes-note">تیپ موتور روی سازگاری اثر می‌گذارد؛ با انتخاب تیپ، قطعات همان موتور را ببینید.</p>
+        </div>` : ''}
       </div>
     </div>
 
@@ -2045,11 +2062,14 @@ function pdpHTML(p) {
   </div>
 
   <div class="mobile-buybar">
-    <div class="price-big">
-      ${p.oldPrice ? `<span class="old">${money(p.oldPrice)}</span>` : ''}
-      <strong>${money(p.price)} <small>تومان</small></strong>
-    </div>
-    <button class="btn btn-amber" data-buy>${icon('cart')} افزودن به سبد</button>
+    ${p.priceOnRequest
+      ? `<div class="price-big"><span class="p-ask">استعلام قیمت</span></div>
+         <a class="btn btn-amber" href="tel:${SHOP_PHONE}">${icon('phone')} تماس برای قیمت</a>`
+      : `<div class="price-big">
+           ${p.oldPrice ? `<span class="old">${money(p.oldPrice)}</span>` : ''}
+           <strong>${money(p.price)} <small>تومان</small></strong>
+         </div>
+         <button class="btn btn-amber" data-buy>${icon('cart')} افزودن به سبد</button>`}
   </div>`;
 }
 

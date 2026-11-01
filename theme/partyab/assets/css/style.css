@@ -3710,3 +3710,7 @@ a.trust-item:hover strong { color: var(--amber-700); }
 
 /* anchor targets clear the sticky header */
 .trust-page [id], #guides, #states, #fit { scroll-margin-top: 96px; }
+
+/* code chips used as links (engine suitability on PDP) */
+.codes-list a.code-chip { text-decoration: none; }
+.codes-list a.code-chip:hover { border-color: var(--amber-600); color: var(--amber-700); }

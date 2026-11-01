@@ -112,6 +112,7 @@
       if (!q) return;
       const hits = PRODUCTS.filter(p => allCodes(p).some(c => normCode(c).includes(q)) || (p.engines || []).some(e => normCode(e) === q));
 
+      try { history.replaceState(null, '', `?code=${encodeURIComponent(qRaw)}`); } catch (err) { /* file:// */ }
       title.textContent = `نتیجه برای «${qRaw}»`;
       sub.textContent = hits.length
         ? `${fa(hits.length)} قطعه پیدا شد؛ کدهای معادل هر کدام پایین‌تر آمده است.`
