@@ -109,24 +109,41 @@
   </section>
 
   <!-- Trust -->
-  <section class="trust">
+  <section class="trust" aria-label="ضمانت‌های فروشگاه">
     <div class="container trust-inner">
-      <div class="trust-item">
+      <a class="trust-item" href="trust.html">
         <span class="t-icon"><span class="icon" data-icon="shield"></span></span>
         <div><strong>اصالت کالا</strong><span>تأیید اصالت توسط فروشگاه</span></div>
-      </div>
-      <div class="trust-item">
+      </a>
+      <a class="trust-item" href="trust.html">
         <span class="t-icon"><span class="icon" data-icon="truck"></span></span>
         <div><strong>ارسال سریع</strong><span>تهران ۲۴ ساعته، شهرستان ۲ تا ۴ روز</span></div>
-      </div>
-      <div class="trust-item">
+      </a>
+      <a class="trust-item" href="trust.html">
         <span class="t-icon"><span class="icon" data-icon="refresh"></span></span>
         <div><strong>بازگشت ۷ روزه</strong><span>در صورت عدم تطابق قطعه</span></div>
-      </div>
-      <div class="trust-item">
+      </a>
+      <a class="trust-item" href="trust.html">
         <span class="t-icon"><span class="icon" data-icon="headset"></span></span>
         <div><strong>مشاورهٔ فنی</strong><span>بررسی سازگاری پیش از خرید</span></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Code finder band -->
+  <section class="code-band">
+    <div class="container code-band-inner">
+      <div class="cb-copy">
+        <span class="eyebrow-line"><span class="icon" data-icon="search"></span> قطعه‌یاب کد فنی</span>
+        <h2>فقط کد فنی قطعه را دارید؟</h2>
+        <p>کد را وارد کنید تا معادل‌های برندهای دیگر، سازگاری با خودروی شما و قیمت را همان لحظه ببینید.</p>
       </div>
+      <form class="code-band-form" action="code.html" method="get" role="search">
+        <span class="icon" data-icon="copy"></span>
+        <label class="sr-only" for="homeCode">کد فنی قطعه</label>
+        <input id="homeCode" type="text" name="code" placeholder="مثلاً 4253.42" dir="ltr" spellcheck="false">
+        <button class="btn btn-amber" type="submit">پیدا کن</button>
+      </form>
     </div>
   </section>
 
@@ -280,7 +297,7 @@
           <h2 class="section-title">قبل از خرید، مطمئن شوید</h2>
           <p class="section-sub">کوتاه و کاربردی؛ برای وقتی که مطمئن نیستید کدام قطعه به خودروی شما می‌خورد.</p>
         </div>
-        <a class="link-more" href="#">همهٔ مقاله‌ها <span class="icon" data-icon="arrow-left"></span></a>
+        <a class="link-more" href="#guides">همهٔ مقاله‌ها <span class="icon" data-icon="arrow-left"></span></a>
       </div>
       <div class="guide-grid" id="guideGrid"></div>
 

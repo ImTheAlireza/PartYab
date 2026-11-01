@@ -82,7 +82,7 @@ defined( 'ABSPATH' ) || exit;
 			<b><?php esc_html_e( 'ارتباط با ما', 'partyab' ); ?></b>
 			<ul class="footer-contact">
 				<li><?php partyab_the_icon( 'map-pin' ); ?><span><?php echo esc_html( get_theme_mod( 'partyab_address', __( 'تهران، خیابان ولیعصر، پلاک ۱۲۴۵، طبقهٔ سوم', 'partyab' ) ) ); ?></span></li>
-				<li><?php partyab_the_icon( 'phone' ); ?><span class="mono" dir="ltr"><?php echo esc_html( get_theme_mod( 'partyab_phone', '021-91002233' ) ); ?></span></li>
+				<li><?php partyab_the_icon( 'phone' ); ?><span class="mono" dir="ltr"><?php echo esc_html( get_theme_mod( 'partyab_phone', '021-33947195' ) ); ?></span></li>
 				<li><?php partyab_the_icon( 'mail' ); ?><span class="mono" dir="ltr"><?php echo esc_html( get_theme_mod( 'partyab_email', 'support@partyab.ir' ) ); ?></span></li>
 			</ul>
 		</div>

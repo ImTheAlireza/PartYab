@@ -994,6 +994,16 @@ class Partyab_Setup {
 		$garage  = self::ensure_page( 'garage', 'گاراژ من', '', 'page-garage.php' );
 		$guides  = self::ensure_page( 'guides', 'راهنما', '', '' );
 		$about   = self::ensure_page( 'about-partyab', 'دربارهٔ پارت‌یاب', self::about_content(), '' );
+		$code    = self::ensure_page( 'code-finder', 'جست‌وجوی کد فنی', '', 'page-code.php' );
+		$trust   = self::ensure_page( 'trust', 'ضمانت و بازگشت کالا', '', 'page-trust.php' );
+
+		if ( $code ) {
+			self::add( 'قطعه‌یاب کد فنی', 'ok', __( 'برگهٔ «جست‌وجوی کد فنی» ساخته شد.', 'partyab' ) );
+		}
+
+		if ( $trust ) {
+			self::add( 'ضمانت و بازگشت', 'ok', __( 'برگهٔ «ضمانت و بازگشت کالا» ساخته شد.', 'partyab' ) );
+		}
 
 		if ( $home ) {
 			update_option( 'show_on_front', 'page' );

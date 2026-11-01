@@ -104,6 +104,22 @@ get_header();
 		</div>
 	</section>
 
+	<section class="code-band">
+		<div class="container code-band-inner">
+			<div class="cb-copy">
+				<span class="eyebrow-line"><?php partyab_the_icon( 'search' ); ?> <?php esc_html_e( 'قطعه‌یاب کد فنی', 'partyab' ); ?></span>
+				<h2><?php esc_html_e( 'فقط کد فنی قطعه را دارید؟', 'partyab' ); ?></h2>
+				<p><?php esc_html_e( 'کد را وارد کنید تا قطعه، کدهای معادل و سازگاری‌اش با خودروی شما مشخص شود.', 'partyab' ); ?></p>
+			</div>
+			<form class="code-band-form" role="search" method="get" action="<?php echo esc_url( partyab_code_url() ); ?>">
+				<?php partyab_the_icon( 'copy' ); ?>
+				<label class="sr-only" for="homeCode"><?php esc_html_e( 'کد فنی قطعه', 'partyab' ); ?></label>
+				<input id="homeCode" type="text" name="code" placeholder="<?php esc_attr_e( 'مثلاً 4253.42', 'partyab' ); ?>" spellcheck="false" dir="ltr">
+				<button class="btn btn-amber" type="submit"><?php esc_html_e( 'پیدا کن', 'partyab' ); ?></button>
+			</form>
+		</div>
+	</section>
+
 	<?php if ( function_exists( 'wc_get_page_permalink' ) ) : ?>
 		<section class="section section--tight">
 			<div class="container">

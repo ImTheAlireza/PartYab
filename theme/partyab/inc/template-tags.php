@@ -228,6 +228,45 @@ function partyab_passport_bar() {
 	<?php
 }
 
+
+/**
+ * URL of a page by slug, with a graceful fallback.
+ *
+ * @param string $slug     Page slug.
+ * @param string $fallback Fallback URL (defaults to the page permalink guess).
+ * @return string
+ */
+function partyab_page_url( $slug, $fallback = '' ) {
+	$page = get_page_by_path( $slug, OBJECT, 'page' );
+
+	if ( $page ) {
+		$url = get_permalink( $page );
+		if ( $url ) {
+			return $url;
+		}
+	}
+
+	return $fallback ? $fallback : home_url( '/' . $slug . '/' );
+}
+
+/**
+ * URL of the OEM / equivalent-code finder page.
+ *
+ * @return string
+ */
+function partyab_code_url() {
+	return partyab_page_url( 'code-finder', home_url( '/?s=&post_type=product' ) );
+}
+
+/**
+ * URL of the trust / returns page.
+ *
+ * @return string
+ */
+function partyab_trust_url() {
+	return partyab_page_url( 'trust', home_url( '/' ) );
+}
+
 /**
  * Fallback menu when no menu is assigned yet.
  */
@@ -237,6 +276,7 @@ function partyab_nav_fallback() {
 	$links = array(
 		array( home_url( '/' ), __( 'خانه', 'partyab' ) ),
 		array( $shop, __( 'فروشگاه قطعات', 'partyab' ) ),
+		array( partyab_code_url(), __( 'کد فنی', 'partyab' ) ),
 	);
 
 	foreach ( $links as $link ) {
@@ -433,6 +473,8 @@ function partyab_footer_help() {
 		array( wc_get_page_permalink( 'shop' ), __( 'همهٔ قطعات', 'partyab' ) ),
 		array( wc_get_cart_url(), __( 'سبد خرید', 'partyab' ) ),
 		array( wc_get_checkout_url(), __( 'تسویهٔ سفارش', 'partyab' ) ),
+		array( partyab_code_url(), __( 'جست‌وجوی کد فنی', 'partyab' ) ),
+		array( partyab_trust_url(), __( 'ضمانت و بازگشت کالا', 'partyab' ) ),
 	);
 
 	foreach ( $links as $link ) {

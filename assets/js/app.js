@@ -53,7 +53,13 @@ const ICONS = {
   send: '<path d="m21 3-9.4 18-2.2-7-7-2.2L21 3Z"/><path d="m9.4 14 5.2-5.2"/>',
   key: '<circle cx="8.2" cy="15.8" r="3.4"/><path d="m10.8 13.2 8-8M16.4 5.2l2.4 2.4M14.4 7.2l2.4 2.4"/>',
   'check-shield': '<path d="M12 3.2 18.6 6v5.2c0 4.1-2.8 7.2-6.6 9-3.8-1.8-6.6-4.9-6.6-9V6L12 3.2Z"/><path d="m9 12 2 2 4-4"/>',
-  layers: '<path d="m12 3.4 8.4 4.4-8.4 4.4-8.4-4.4 8.4-4.4Z"/><path d="m3.6 12 8.4 4.4 8.4-4.4M3.6 16.4 12 20.8l8.4-4.4"/>'
+  layers: '<path d="m12 3.4 8.4 4.4-8.4 4.4-8.4-4.4 8.4-4.4Z"/><path d="m3.6 12 8.4 4.4 8.4-4.4M3.6 16.4 12 20.8l8.4-4.4"/>',
+  'arrow-left': '<path d="M19.5 12H5"/><path d="m11 5.8-6.2 6.2 6.2 6.2"/>',
+  'arrow-right': '<path d="M4.5 12H19"/><path d="m13 5.8 6.2 6.2L13 18.2"/>',
+  'chevron-down': '<path d="m6.2 9.2 5.8 5.8 5.8-5.8"/>',
+  'chevron-left': '<path d="M14.8 6.2 9 12l5.8 5.8"/>',
+  'chevron-right': '<path d="M9.2 6.2 15 12l-5.8 5.8"/>',
+  'map-pin': '<path d="M12 21.3s6.5-6.2 6.5-10.6a6.5 6.5 0 1 0-13 0c0 4.4 6.5 10.6 6.5 10.6Z"/><circle cx="12" cy="10.4" r="2.4"/>'
 };
 
 function icon(name, cls = '') {
@@ -194,6 +200,17 @@ function recentModels() {
 })();
 
 /* ---------------- Fitment (5 states) ---------------- */
+const QUALITY = {
+  orig:  { label: 'اورجینال', hint: 'اصالت کارخانه', cls: 'q--orig' },
+  after: { label: 'شرکتی',   hint: 'تولید برند معتبر', cls: 'q--after' },
+  plan:  { label: 'طرح',     hint: 'کپی باکیفیت', cls: 'q--plan' },
+  used:  { label: 'استوک',   hint: 'کارکردهٔ سالم', cls: 'q--used' }
+};
+const ENGINES = ['TU5', 'XU7', 'EF7', 'K4M'];
+const SHOP_PHONE = '+982133947195';
+const SHOP_PHONE_FA = '۰۲۱-۳۳۹۴۷۱۹۵';
+const SHOP_WA = 'https://wa.me/989121234567';
+
 const FIT = {
   fit: { short: 'سازگار', long: 'با خودروی شما سازگار است', icon: 'check', tone: 'fit' },
   conditional: { short: 'با شرط', long: 'سازگار است، با شرط', icon: 'alert', tone: 'conditional' },
@@ -393,6 +410,8 @@ function productCard(p) {
     return 'سازگاری را بررسی کنید';
   })();
   const eq = (p.equivalents || []).filter(c => c && c !== '—').length;
+  const q = QUALITY[p.quality];
+  const askPrice = !!p.priceOnRequest;
   return `
   <article class="p-card ${info.state === 'no' ? 'p-card--dim' : ''}" data-product="${p.id}">
     <span class="p-rail p-rail--${info.state}" aria-hidden="true"></span>
@@ -404,16 +423,21 @@ function productCard(p) {
     <div class="p-body">
       <div class="p-head">
         <span class="p-brand">${p.brand}</span>
+        ${q ? `<span class="p-q ${q.cls}" title="${q.hint}">${q.label}</span>` : ''}
         ${eq > 1 ? `<span class="p-equiv">${icon('copy')} ${fa(eq)} کد</span>` : ''}
       </div>
       <h3 class="p-title"><a href="product.html?id=${p.id}">${p.name}</a></h3>
       <div class="p-fit p-fit--${info.state}">${icon(FIT[info.state].icon)} ${fitText}</div>
       <div class="p-foot">
-        <div class="p-price">
+        ${askPrice ? `<div class="p-price p-price--ask">
+          <span class="p-ask">استعلام قیمت</span>
+          <small>قیمت این قطعه نوسانی است</small>
+        </div>
+        <a class="p-call" href="tel:${SHOP_PHONE}" aria-label="تماس برای استعلام قیمت ${esc(p.name)}">${icon('phone')}</a>` : `<div class="p-price">
           ${p.oldPrice ? `<span class="old">${money(p.oldPrice)}</span>` : ''}
           <strong>${money(p.price)} <small>تومان</small></strong>
         </div>
-        <button class="p-add" data-add="${p.id}" aria-label="افزودن ${esc(p.name)} به سبد خرید">${icon('plus')}</button>
+        <button class="p-add" data-add="${p.id}" aria-label="افزودن ${esc(p.name)} به سبد خرید">${icon('plus')}</button>`}
       </div>
     </div>
   </article>`;
@@ -448,7 +472,7 @@ function headerHTML() {
 
       <div class="header-actions">
         <button class="nav-toggle icon-btn" data-open-nav aria-label="منو">${icon('menu')}</button>
-        <a class="icon-btn" href="#" aria-label="حساب کاربری">${icon('user')}</a>
+        <a class="icon-btn" href="garage.html" aria-label="حساب کاربری و گاراژ من">${icon('user')}</a>
         <button class="cart-btn" data-cart aria-label="سبد خرید">
           ${icon('cart')}<span class="cart-label">سبد خرید</span>
           <span class="cart-count">${fa(cartCount())}</span>
@@ -462,6 +486,7 @@ function headerHTML() {
         <nav class="passport-nav" aria-label="ناوبری اصلی">
           ${link('index.html', 'خانه', 'home')}
           ${link('shop.html', 'فروشگاه قطعات', 'shop')}
+          ${link('code.html', 'کد فنی', 'code')}
           ${link('shop.html?cat=filter', 'فیلتر و روغن')}
           ${link('shop.html?cat=brake', 'ترمز')}
           ${link('shop.html?cat=suspension', 'جلوبندی')}
@@ -484,16 +509,18 @@ function overlaysHTML() {
       <div class="drawer-body">
         <a class="drawer-link" href="index.html">${icon('grid')} خانه</a>
         <a class="drawer-link" href="shop.html">${icon('box')} فروشگاه قطعات</a>
+        <a class="drawer-link" href="code.html">${icon('search')} جست‌وجوی کد فنی</a>
         <a class="drawer-link" href="garage.html">${icon('garage')} گاراژ من</a>
         <a class="drawer-link" href="shop.html?cat=brake">${icon('brake')} ترمز و ABS</a>
         <a class="drawer-link" href="shop.html?cat=filter">${icon('filter')} فیلتر و روغن</a>
         <a class="drawer-link" href="shop.html?cat=suspension">${icon('shock')} جلوبندی و تعلیق</a>
         <a class="drawer-link" href="shop.html?cat=electrical">${icon('light')} برق و روشنایی</a>
         <a class="drawer-link" href="index.html#guides">${icon('file')} راهنمای خرید</a>
-        <a class="drawer-link" href="#">${icon('user')} حساب کاربری</a>
+        <a class="drawer-link" href="trust.html">${icon('shield')} ضمانت و بازگشت</a>
+        <a class="drawer-link" href="garage.html">${icon('user')} حساب کاربری و گاراژ</a>
       </div>
       <div class="drawer-foot">
-        <a class="btn btn-amber btn-block" href="tel:02191002233">${icon('phone')} تماس با پشتیبانی</a>
+        <a class="btn btn-amber btn-block" href="tel:${SHOP_PHONE}">${icon('phone')} تماس با پشتیبانی</a>
       </div>
     </aside>
   </div>
@@ -578,9 +605,9 @@ function footerHTML() {
         </a>
         <p>فروشگاه نمونهٔ قطعات خودرو با تمرکز بر خودروهای ایرانی و پشتیبانی از وارداتی‌ها؛ از انتخاب خودرو تا نمایش شفاف وضعیت سازگاری.</p>
         <div class="footer-social">
-          <a href="#" aria-label="اینستاگرام">${icon('instagram')}</a>
-          <a href="#" aria-label="تلگرام">${icon('telegram')}</a>
-          <a href="#" aria-label="واتساپ">${icon('whatsapp')}</a>
+          <a href="#" data-soon="صفحهٔ اینستاگرام پارت‌یاب به‌زودی" aria-label="اینستاگرام">${icon('instagram')}</a>
+          <a href="#" data-soon="کانال تلگرام پارت‌یاب به‌زودی" aria-label="تلگرام">${icon('telegram')}</a>
+          <a href="${SHOP_WA}" target="_blank" rel="noopener" aria-label="واتساپ پارت‌یاب">${icon('whatsapp')}</a>
         </div>
       </div>
       <div class="footer-col">
@@ -595,24 +622,25 @@ function footerHTML() {
         <b>راهنما</b>
         <a href="garage.html">گاراژ من</a>
         <a href="index.html#guides">انتخاب خودرو</a>
+        <a href="code.html">جست‌وجوی کد فنی</a>
         <a href="index.html#guides">کد فنی یا OEM چیست؟</a>
         <a href="index.html#states">معنی نشان‌های سازگاری</a>
-        <a href="#">شرایط ارسال</a>
-        <a href="#">بازگشت کالا</a>
+        <a href="trust.html#shipping">شرایط ارسال</a>
+        <a href="trust.html#returns">بازگشت کالا</a>
       </div>
       <div class="footer-col footer-col--hide">
         <b>پارت‌یاب</b>
-        <a href="#">دربارهٔ ما</a>
-        <a href="#">تماس با ما</a>
-        <a href="#">قوانین و مقررات</a>
-        <a href="#">حریم خصوصی</a>
-        <a href="#">همکاری با ما</a>
+        <a href="trust.html#about">دربارهٔ ما</a>
+        <a href="trust.html#support">تماس با ما</a>
+        <a href="trust.html#rules">قوانین و مقررات</a>
+        <a href="trust.html#privacy">حریم خصوصی</a>
+        <a href="trust.html#support">همکاری با ما</a>
       </div>
       <div class="footer-col">
         <b>ارتباط با ما</b>
         <ul class="footer-contact">
           <li>${icon('map-pin')}<span>تهران، خیابان ولیعصر، پلاک ۱۲۴۵، طبقهٔ سوم</span></li>
-          <li>${icon('phone')}<span>۰۲۱–۹۱۰۰۲۲۳۳</span></li>
+          <li>${icon('phone')}<span>${SHOP_PHONE_FA}</span></li>
           <li>${icon('mail')}<span>support@partyab.ir</span></li>
           <li>${icon('clock')}<span>شنبه تا پنجشنبه، ۹ تا ۱۸</span></li>
         </ul>
@@ -1334,7 +1362,7 @@ function initHome() {
 
   const guides = $('#guideGrid');
   if (guides) {
-    guides.innerHTML = GUIDES.map(g => `<a class="guide-card" href="#">
+    guides.innerHTML = GUIDES.map(g => `<a class="guide-card" href="#" data-soon="مقالهٔ «${g.title}» به‌زودی منتشر می‌شود">
       <div class="guide-top"><span class="guide-tag">${g.tag}</span>${icon(g.icon)}</div>
       <div class="guide-body">
         <b>${g.title}</b>
@@ -1355,6 +1383,8 @@ function initShop() {
     q: (params.get('q') || '').trim(),
     cats: new Set(params.get('cat') ? [params.get('cat')] : []),
     brands: new Set(),
+    quality: new Set(),
+    engines: new Set(),
     compatOnly: !!v,
     stockOnly: false,
     maxPrice: 5000000,
@@ -1388,6 +1418,8 @@ function initShop() {
       if (removeChip === 'compat') shopState.compatOnly = false;
       if (removeChip.startsWith('cat:')) shopState.cats.delete(removeChip.slice(4));
       if (removeChip.startsWith('brand:')) shopState.brands.delete(removeChip.slice(6));
+      if (removeChip.startsWith('quality:')) shopState.quality.delete(removeChip.slice(8));
+      if (removeChip.startsWith('engine:')) shopState.engines.delete(removeChip.slice(7));
       if (removeChip === 'stock') shopState.stockOnly = false;
       renderFilters();
       renderShop(true);
@@ -1395,6 +1427,8 @@ function initShop() {
     if (e.target.closest('[data-clear-filters]')) {
       shopState.cats.clear();
       shopState.brands.clear();
+      shopState.quality.clear();
+      shopState.engines.clear();
       shopState.q = '';
       shopState.stockOnly = false;
       shopState.compatOnly = !!getVehicle();
@@ -1446,6 +1480,32 @@ function filterHTML() {
       </div>
     </div>
     <div class="f-group is-open">
+      <div class="f-group-title">کیفیت قطعه</div>
+      <div class="f-group-body">
+        ${Object.keys(QUALITY).map(k => {
+          const n = PRODUCTS.filter(p => p.quality === k).length;
+          if (!n) return '';
+          return `<label class="check check--q">
+            <input type="checkbox" data-f="quality" value="${k}" ${st.quality.has(k) ? 'checked' : ''}>
+            <span class="q-dot ${QUALITY[k].cls}"></span>
+            <span>${QUALITY[k].label}</span><span class="count">${fa(n)}</span>
+          </label>`;
+        }).join('')}
+      </div>
+    </div>
+    <div class="f-group is-open">
+      <div class="f-group-title">تیپ / موتور</div>
+      <div class="f-group-body">
+        ${ENGINES.map(en => {
+          const n = PRODUCTS.filter(p => (p.engines || []).includes(en)).length;
+          return `<label class="check">
+            <input type="checkbox" data-f="engine" value="${en}" ${st.engines.has(en) ? 'checked' : ''}>
+            <span class="mono" style="font-size:11px">${en}</span><span class="count">${fa(n)}</span>
+          </label>`;
+        }).join('')}
+      </div>
+    </div>
+    <div class="f-group is-open">
       <div class="f-group-title">برند قطعه</div>
       <div class="f-group-body">
         ${BRANDS.filter(b => brandCounts[b]).map(b => `<label class="check">
@@ -1477,10 +1537,22 @@ function filterHTML() {
 }
 
 function renderFilters() {
-  const a = $('#filtersDesktop');
-  const b = $('#filtersDrawerBody');
-  if (a) a.innerHTML = filterHTML();
-  if (b) b.innerHTML = filterHTML();
+  /* بازسازی پنل فیلتر نباید اسکرول و فوکوس کاربر را از بین ببرد */
+  const act = document.activeElement;
+  const key = act && act.dataset && act.dataset.f
+    ? `[data-f="${act.dataset.f}"]${act.value ? `[value="${act.value}"]` : ''}`
+    : null;
+  ['#filtersDesktop', '#filtersDrawerBody'].forEach(sel => {
+    const box = $(sel);
+    if (!box) return;
+    const top = box.scrollTop;
+    box.innerHTML = filterHTML();
+    box.scrollTop = top;
+  });
+  if (key) {
+    const el = document.querySelector(key);
+    if (el) el.focus({ preventScroll: true });
+  }
 }
 
 function matchesQuery(p, q) {
@@ -1496,6 +1568,8 @@ function filteredProducts() {
     if (!matchesQuery(p, st.q)) return false;
     if (st.cats.size && !st.cats.has(p.cat)) return false;
     if (st.brands.size && !st.brands.has(p.brand)) return false;
+    if (st.quality.size && !st.quality.has(p.quality)) return false;
+    if (st.engines.size && !(p.engines || []).some(en => st.engines.has(en))) return false;
     if (st.stockOnly && p.stock <= 0) return false;
     if (p.price > st.maxPrice) return false;
     if (st.compatOnly && v) {
@@ -1570,6 +1644,8 @@ function renderShop(rebuildFilters = false) {
       if (cat) items.push(`<span class="chip">${cat.name} <button data-remove-chip="cat:${c}" aria-label="حذف">${icon('x')}</button></span>`);
     });
     st.brands.forEach(b => items.push(`<span class="chip" style="direction:ltr">${b} <button data-remove-chip="brand:${b}" aria-label="حذف">${icon('x')}</button></span>`));
+    st.quality.forEach(q => items.push(`<span class="chip">${QUALITY[q].label} <button data-remove-chip="quality:${q}" aria-label="حذف">${icon('x')}</button></span>`));
+    st.engines.forEach(en => items.push(`<span class="chip mono" style="font-size:11px">${en} <button data-remove-chip="engine:${en}" aria-label="حذف">${icon('x')}</button></span>`));
     if (st.stockOnly) items.push(`<span class="chip">موجود در انبار <button data-remove-chip="stock" aria-label="حذف">${icon('x')}</button></span>`);
     if (items.length) items.push('<button class="chip chip--clear" data-clear-filters>حذف همه</button>');
     chips.innerHTML = items.join('');
@@ -1625,6 +1701,8 @@ document.addEventListener('change', e => {
   if (f === 'stock') { shopState.stockOnly = el.checked; renderShop(true); }
   if (f === 'cat') { el.checked ? shopState.cats.add(el.value) : shopState.cats.delete(el.value); renderShop(true); }
   if (f === 'brand') { el.checked ? shopState.brands.add(el.value) : shopState.brands.delete(el.value); renderShop(true); }
+  if (f === 'quality') { el.checked ? shopState.quality.add(el.value) : shopState.quality.delete(el.value); renderShop(true); }
+  if (f === 'engine') { el.checked ? shopState.engines.add(el.value) : shopState.engines.delete(el.value); renderShop(true); }
 });
 document.addEventListener('input', e => {
   if (!shopState) return;
@@ -1814,6 +1892,7 @@ function pdpHTML(p) {
         <div class="pdp-top">
           <div class="pdp-brandline">
             <span class="brand-chip">${p.brand}</span>
+            ${QUALITY[p.quality] ? `<span class="p-q ${QUALITY[p.quality].cls}">${QUALITY[p.quality].label}</span>` : ''}
             <span>${p.verified ? 'برند تأییدشدهٔ فروشگاه' : 'برند ثبت‌شده'}</span>
           </div>
           <div class="rating">
@@ -1837,24 +1916,29 @@ function pdpHTML(p) {
         <div class="buybox">
           <div class="buybox-row">
             <div class="price-big">
-              ${p.oldPrice ? `<span class="old">${money(p.oldPrice)} تومان</span>` : ''}
+              ${p.priceOnRequest ? `<span class="p-ask">استعلام قیمت</span>
+              <div class="stock-line">قیمت این قطعه نوسانی است؛ برای آخرین قیمت تماس بگیرید.</div>` : `${p.oldPrice ? `<span class="old">${money(p.oldPrice)} تومان</span>` : ''}
               <strong>${money(p.price)} <small>تومان</small></strong>
-              <div class="stock-line">${p.stock < 6 ? `فقط ${fa(p.stock)} عدد در انبار` : 'موجود در انبار فروشگاه'}</div>
+              <div class="stock-line">${p.stock < 6 ? `فقط ${fa(p.stock)} عدد در انبار` : 'موجود در انبار فروشگاه'}</div>`}
             </div>
-            ${off ? `<span class="off-tag">${fa(off)}٪ تخفیف</span>` : ''}
+            ${off && !p.priceOnRequest ? `<span class="off-tag">${fa(off)}٪ تخفیف</span>` : ''}
           </div>
-          <div class="buy-actions">
+          ${p.priceOnRequest ? `<div class="ask-actions">
+            <a class="btn btn-navy" href="tel:${SHOP_PHONE}">${icon('phone')} تماس و استعلام</a>
+            <a class="btn btn-ghost" href="${SHOP_WA}" target="_blank" rel="noopener">${icon('whatsapp')} واتساپ</a>
+            <span class="ask-note">${icon('clock')} پاسخ در ساعات کاری · ${SHOP_PHONE_FA}</span>
+          </div>` : `<div class="buy-actions">
             <div class="qty">
               <button data-qty="+" aria-label="افزودن تعداد">${icon('plus')}</button>
               <span class="qty-val">${fa(pdpQty)}</span>
               <button data-qty="-" aria-label="کاهش تعداد">${icon('minus')}</button>
             </div>
             <button class="btn btn-amber" data-buy>${icon('cart')} افزودن به سبد خرید</button>
-          </div>
+          </div>`}
           <div class="buy-meta">
-            <span>${icon('shield')} ضمانت اصالت</span>
-            <span>${icon('truck')} ارسال سراسری</span>
-            <span>${icon('refresh')} بازگشت ۷ روزه</span>
+            <a href="trust.html">${icon('shield')} ضمانت اصالت</a>
+            <a href="trust.html">${icon('truck')} ارسال سراسری</a>
+            <a href="trust.html">${icon('refresh')} بازگشت ۷ روزه</a>
           </div>
         </div>
 
@@ -1864,7 +1948,7 @@ function pdpHTML(p) {
           <div class="codes-list">
             ${codes.map(c => `<button class="code-chip" data-copy="${esc(c)}" title="کپی ${esc(c)}">${esc(c)} ${icon('copy')}</button>`).join('')}
           </div>
-          <p class="codes-note">اگر کد قدیمی قطعه را دارید، با یکی از این کدها جست‌وجو کنید.</p>
+          <p class="codes-note">اگر کد قدیمی قطعه را دارید، در <a href="code.html?code=${encodeURIComponent(p.oem || codes[0] || '')}">قطعه‌یاب کد فنی</a> جست‌وجو کنید تا معادل‌ها و سازگاری را ببینید.</p>
         </div>` : ''}
       </div>
     </div>
@@ -2114,7 +2198,7 @@ function renderCart() {
       <a class="btn btn-amber btn-block cart-cta ${canGo ? '' : 'is-blocked'}" href="checkout.html" data-cart-cta ${canGo ? '' : 'aria-disabled="true"'}>
         ${icon('check-shield')} ادامهٔ سفارش
       </a>
-      <div class="cart-trust">${icon('refresh')} ۷ روز ضمانت بازگشت · ${icon('truck')} ارسال به سراسر کشور</div>`;
+      <div class="cart-trust"><a href="trust.html">${icon('refresh')} ۷ روز ضمانت بازگشت</a> · <a href="trust.html">${icon('truck')} ارسال به سراسر کشور</a></div>`;
   }
 }
 
@@ -2246,7 +2330,7 @@ function coSummaryHTML(v, lines, t) {
     <button class="btn btn-amber btn-block co-submit" type="submit" form="coForm" data-co-submit ${bad && !coState.ack ? 'aria-disabled="true"' : ''}>
       ${icon('check-shield')} ثبت سفارش
     </button>
-    <div class="cart-trust">${icon('refresh')} ۷ روز ضمانت بازگشت · ${icon('phone')} پشتیبانی ۰۲۱-۹۱۰۰۲۲۳۳</div>
+    <div class="cart-trust"><a href="trust.html">${icon('refresh')} ۷ روز ضمانت بازگشت</a> · <a href="tel:${SHOP_PHONE}">${icon('phone')} پشتیبانی ${SHOP_PHONE_FA}</a></div>
   </div>`;
 }
 
@@ -2707,6 +2791,26 @@ function initGarage() {
 }
 
 /* ---------------- Boot ---------------- */
+/* ---------------- sticky contact (call / whatsapp) ---------------- */
+function initContactFab() {
+  if (document.querySelector('.contact-fab')) return;
+  const el = document.createElement('div');
+  el.className = 'contact-fab';
+  el.innerHTML = `
+    <a class="cfab cfab--call" href="tel:${SHOP_PHONE}" aria-label="تماس با فروشگاه ${SHOP_PHONE_FA}">${icon('phone')}<span>تماس</span></a>
+    <a class="cfab cfab--wa" href="${SHOP_WA}" target="_blank" rel="noopener" aria-label="واتساپ فروشگاه">${icon('whatsapp')}<span>واتساپ</span></a>`;
+  document.body.appendChild(el);
+  hydrateIcons(el);
+}
+
+/* لینک‌های دمو که صفحه‌ای ندارند: به‌جای dead-link، پیام روشن بده */
+document.addEventListener('click', e => {
+  const soon = e.target.closest('[data-soon]');
+  if (!soon) return;
+  e.preventDefault();
+  toast(soon.dataset.soon || 'این بخش در نسخهٔ دمو فعال نیست');
+});
+
 document.addEventListener('DOMContentLoaded', () => {
   initHeader();
   initCart();
@@ -2716,6 +2820,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (page === 'product') initProduct();
   if (page === 'checkout') initCheckout();
   if (page === 'garage') initGarage();
+  initContactFab();
   hydrateIcons();
 });
 

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>جست‌وجوی کد فنی و کد معادل | پارت‌یاب</title>
+  <meta name="description" content="کد فنی قطعه را وارد کنید؛ کدهای معادل برندهای دیگر، سازگاری با خودروی شما و قیمت را همان لحظه ببینید.">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="code">
+
+  <div id="site-header"></div>
+
+  <main id="main">
+
+    <section class="code-hero">
+      <div class="container">
+        <span class="eyebrow-line"><span class="icon" data-icon="spark"></span> قطعه‌یاب کد فنی</span>
+        <h1>کد فنی را بزن،<br>معادل‌هایش را بگیر</h1>
+        <p>هر کدی که در دست دارید — روی قطعهٔ قدیمی، جعبه، یا فاکتور — وارد کنید. ما کدهای معادل برندهای دیگر، وضعیت سازگاری با خودروی شما و قیمت را همان لحظه نشان می‌دهیم.</p>
+
+        <form class="code-form" id="codeForm" role="search" autocomplete="off">
+          <div class="cf-field">
+            <span class="icon" data-icon="search"></span>
+            <label class="sr-only" for="codeInput">کد فنی یا کد معادل</label>
+            <input id="codeInput" type="text" placeholder="مثلاً 4253.42 یا 0986AB یا BRK-206-4415" spellcheck="false" dir="ltr">
+          </div>
+          <button class="btn btn-amber" type="submit"><span class="icon" data-icon="search"></span> پیدا کن</button>
+        </form>
+
+        <div class="code-hints">
+          <span>نمونه:</span>
+          <button type="button" data-code="4253.42">4253.42</button>
+          <button type="button" data-code="1444.F7">1444.F7</button>
+          <button type="button" data-code="1109.A7">1109.A7</button>
+          <button type="button" data-code="TU5">TU5</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">نتیجه</span>
+            <h2 class="section-title" id="codeTitle">کد فنی خود را جست‌وجو کنید</h2>
+            <p class="section-sub" id="codeSub">۳۶ کد ثبت‌شده در کاتالوگ دمو؛ همه در یک جا با معادل‌ها و وضعیت سازگاری.</p>
+          </div>
+          <a class="link-more" href="shop.html">همهٔ قطعات <span class="icon" data-icon="arrow-left"></span></a>
+        </div>
+
+        <div id="codeResults">
+          <div class="code-empty">
+            <b>کد را نمی‌دانید؟</b>
+            مدل و سال خودرو را در <a href="shop.html">فروشگاه</a> انتخاب کنید، یا عکس قطعه/کد را برای ما بفرستید تا بگوییم چیست.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--paper">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">کد پیدا نشد؟</span>
+            <h2 class="section-title">کد را برای ما بفرستید</h2>
+            <p class="section-sub">عکس قطعه، جعبه یا فاکتور قدیمی کافی است؛ کارشناس ما کد معادل و سازگاری را برمی‌گرداند.</p>
+          </div>
+        </div>
+        <div class="trust-grid">
+          <div class="trust-card">
+            <div class="tc-icon"><span class="icon" data-icon="whatsapp"></span></div>
+            <h2>واتساپ</h2>
+            <p>عکس یا کد را در واتساپ بفرستید؛ در ساعات کاری سریع‌ترین راه است.</p>
+            <p style="margin-top:10px"><a class="btn btn-navy btn-sm" href="https://wa.me/989121234567" target="_blank" rel="noopener">ارسال در واتساپ</a></p>
+          </div>
+          <div class="trust-card">
+            <div class="tc-icon"><span class="icon" data-icon="phone"></span></div>
+            <h2>تلفن</h2>
+            <p>اگر عجله دارید، زنگ بزنید و کد را بخوانید؛ همان تماس قیمت و موجودی را هم می‌گوییم.</p>
+            <p style="margin-top:10px"><a class="btn btn-ghost btn-sm" href="tel:+982133947195">۰۲۱-۳۳۹۴۷۱۹۵</a></p>
+          </div>
+          <div class="trust-card">
+            <div class="tc-icon"><span class="icon" data-icon="shield"></span></div>
+            <h2>تضمین سازگاری کد</h2>
+            <p>اگر کد معادلی که گفتیم با خودروی شما نخورد، بازگشت کالا رایگان است.</p>
+            <p style="margin-top:10px"><a class="link-more" href="trust.html">شرایط بازگشت <span class="icon" data-icon="arrow-left"></span></a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+  (function () {
+    const input = document.getElementById('codeInput');
+    const results = document.getElementById('codeResults');
+    const title = document.getElementById('codeTitle');
+    const sub = document.getElementById('codeSub');
+    if (!input || !results) return;
+
+    const normCode = v => String(v || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+    const allCodes = p => [p.oem, p.sku, ...(p.equivalents || [])].filter(Boolean);
+
+    function render(qRaw) {
+      const q = normCode(qRaw);
+      if (!q) return;
+      const hits = PRODUCTS.filter(p => allCodes(p).some(c => normCode(c).includes(q)) || (p.engines || []).some(e => normCode(e) === q));
+
+      title.textContent = `نتیجه برای «${qRaw}»`;
+      sub.textContent = hits.length
+        ? `${fa(hits.length)} قطعه پیدا شد؛ کدهای معادل هر کدام پایین‌تر آمده است.`
+        : 'چیزی پیدا نشد — می‌توانید کد را برای کارشناس بفرستید.';
+
+      if (!hits.length) {
+        results.innerHTML = `<div class="code-empty">
+          <b>این کد در کاتالوگ دمو نیست</b>
+          ممکن است کد قدیمی/جایگزین باشد. کد را در <a href="https://wa.me/989121234567" target="_blank" rel="noopener">واتساپ</a> بفرستید یا با ۰۲۱-۳۳۹۴۷۱۹۵ تماس بگیرید تا معادلش را پیدا کنیم.
+        </div>`;
+        return;
+      }
+
+      results.innerHTML = hits.map(p => {
+        const chain = [p.oem, ...(p.equivalents || []).filter(c => c && c !== p.oem)];
+        const fit = fitInfo(p, getVehicle());
+        const q = QUALITY[p.quality];
+        return `<article class="code-result">
+          <a href="product.html?id=${p.id}"><img src="assets/img/${p.img}" alt="${esc(p.name)}"></a>
+          <div>
+            <div class="meta">
+              <span class="brand-chip">${p.brand}</span>
+              ${q ? `<span class="p-q ${q.cls}">${q.label}</span>` : ''}
+              <span class="p-fit p-fit--${fit.state}" style="font-size:10px">${icon(FIT[fit.state].icon)} ${FIT[fit.state].short}</span>
+            </div>
+            <h3><a href="product.html?id=${p.id}">${p.name}</a></h3>
+            <div class="chain" aria-label="کدهای معادل">
+              ${chain.map((c, i) => `${i ? '<span class="chain-sep" aria-hidden="true">↔</span>' : ''}<span class="chain-node ${c === p.oem ? 'is-main' : ''}">${esc(c)}</span>`).join('')}
+            </div>
+          </div>
+          <div class="price">
+            ${p.priceOnRequest
+              ? `<b style="color:var(--amber-700)">استعلام</b><small><a href="tel:+982133947195">تماس بگیرید</a></small>`
+              : `<b>${money(p.price)}</b><small>تومان</small>`}
+          </div>
+        </article>`;
+      }).join('');
+    }
+
+    document.getElementById('codeForm').addEventListener('submit', e => {
+      e.preventDefault();
+      render(input.value);
+    });
+    document.querySelectorAll('[data-code]').forEach(b => {
+      b.addEventListener('click', () => { input.value = b.dataset.code; render(b.dataset.code); });
+    });
+
+    const initial = new URLSearchParams(location.search).get('code');
+    if (initial) { input.value = initial; render(initial); }
+  })();
+  </script>
+</body>
+</html>

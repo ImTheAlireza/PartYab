@@ -115,7 +115,8 @@ const BRANDS = ['MANN-FILTER', 'BOSCH', 'TRW', 'VALEO', 'NGK', 'KYB', 'HELLA', '
 const PRODUCTS = [
   {
     id: 'p1', name: 'لنت ترمز جلو پژو ۲۰۶ / سمند / دنا', brand: 'TRW', sku: 'BRK-206-4415',
-    oem: '4253.42', cat: 'brake', price: 1850000, oldPrice: 2150000,
+    oem: '4253.42', quality: 'orig', engines: ['TU5','XU7'],
+    cat: 'brake', price: 1850000, oldPrice: 2150000,
     stock: 12, rating: 4.7, reviews: 38, img: 'p-brake.jpg', featured: true,
     fitmentKnown: true, verified: true, equivalents: ['4253.42', '4253.43', 'BP-1134'],
     kit: ['p9', 'p13'], kitNote: 'تعویض لنت بدون بررسی دیسک و روغن ترمز توصیه نمی‌شود.',
@@ -131,7 +132,8 @@ const PRODUCTS = [
   },
   {
     id: 'p2', name: 'فیلتر روغن MANN مناسب موتور TU5', brand: 'MANN-FILTER', sku: 'OIL-MF-7700',
-    oem: '1109.A7', cat: 'filter', price: 420000, oldPrice: 480000,
+    oem: '1109.A7', quality: 'orig', engines: ['TU5'],
+    cat: 'filter', price: 420000, oldPrice: 480000,
     stock: 54, rating: 4.8, reviews: 126, img: 'p-oilfilter.jpg', featured: true,
     fitmentKnown: true, verified: true, equivalents: ['1109.A7', '1109.CL', 'HU-7011'],
     kit: ['p11', 'p3'], kitNote: 'فیلتر روغن را همیشه همراه روغن موتور تعویض کنید.',
@@ -151,7 +153,8 @@ const PRODUCTS = [
   },
   {
     id: 'p3', name: 'فیلتر هوا پژو ۲۰۶ و پارس', brand: 'BOSCH', sku: 'AIR-BS-1402',
-    oem: '1444.F7', cat: 'filter', price: 380000, oldPrice: 450000,
+    oem: '1444.F7', quality: 'after', engines: ['TU5','XU7'],
+    cat: 'filter', price: 380000, oldPrice: 450000,
     stock: 31, rating: 4.6, reviews: 74, img: 'p-airfilter.jpg', featured: true,
     fitmentKnown: true, verified: true, equivalents: ['1444.F7', '1444.F8'],
     kit: ['p2', 'p11'], kitNote: 'فیلتر هوا و روغن را در یک سرویس تعویض کنید.',
@@ -166,7 +169,8 @@ const PRODUCTS = [
   },
   {
     id: 'p4', name: 'شمع ایریدیوم NGK مناسب TU5', brand: 'NGK', sku: 'SPK-NGK-ILZ',
-    oem: '5960.9F', cat: 'engine', price: 1250000, oldPrice: 0,
+    oem: '5960.9F', quality: 'orig', engines: ['TU5','EF7'],
+    cat: 'engine', price: 1250000, oldPrice: 0,
     stock: 18, rating: 4.9, reviews: 61, img: 'p-sparkplug.jpg', featured: true,
     fitmentKnown: true, verified: true, equivalents: ['5960.9F', 'ILZKR7B11', '267700-6160'],
     kit: ['p2', 'p11'], kitNote: 'شمع را همراه فیلتر هوا و روغن تعویض کنید.',
@@ -183,7 +187,8 @@ const PRODUCTS = [
   },
   {
     id: 'p5', name: 'کمک فنر جلو گازی پژو ۲۰۶', brand: 'KYB', sku: 'SHK-KYB-3390',
-    oem: '5202.7V', cat: 'suspension', price: 3850000, oldPrice: 4300000,
+    oem: '5202.7V', quality: 'plan', engines: ['TU5','XU7'],
+    cat: 'suspension', price: 3850000, oldPrice: 4300000,
     stock: 6, rating: 4.5, reviews: 22, img: 'p-shock.jpg', featured: false,
     fitmentKnown: true, verified: true, equivalents: ['5202.7V', '5202.7W'],
     kit: ['p1'], kitNote: 'پس از تعویض کمک فنر، تراز و بررسی لنت‌ها توصیه می‌شود.',
@@ -196,7 +201,8 @@ const PRODUCTS = [
   },
   {
     id: 'p6', name: 'چراغ جلوی راست پژو ۲۰۶', brand: 'TYC', sku: 'LGT-HL-206R',
-    oem: '6205.P2', cat: 'electrical', price: 2950000, oldPrice: 0,
+    oem: '6205.P2', quality: 'after', engines: ['TU5'], priceOnRequest: true,
+    cat: 'electrical', price: 2950000, oldPrice: 0,
     stock: 4, rating: 4.3, reviews: 15, img: 'p-headlight.jpg', featured: false,
     fitmentKnown: true, verified: false, equivalents: ['6205.P2', '6205.P3'],
     kit: [],
@@ -208,7 +214,8 @@ const PRODUCTS = [
   },
   {
     id: 'p7', name: 'تیغه برف‌پاک‌کن Bosch Aerotwin', brand: 'BOSCH', sku: 'WPR-BS-A555',
-    oem: '3397.00', cat: 'accessory', price: 890000, oldPrice: 1050000,
+    oem: '3397.00', quality: 'after', engines: [],
+    cat: 'accessory', price: 890000, oldPrice: 1050000,
     stock: 40, rating: 4.6, reviews: 53, img: 'p-wiper.jpg', featured: false,
     fitmentKnown: false, verified: false, universal: true,
     universalNote: 'قطعهٔ عمومی با اتصال چندگانه؛ اندازه را با تیغهٔ فعلی خودرو مقایسه کنید.',
@@ -219,7 +226,8 @@ const PRODUCTS = [
   },
   {
     id: 'p8', name: 'کیت تسمه تایم گیتس + تسمه دینام', brand: 'GATES', sku: 'TBK-GT-K015603',
-    oem: '0831.J0', cat: 'engine', price: 4650000, oldPrice: 5200000,
+    oem: '0831.J0', quality: 'orig', engines: ['TU5'], priceOnRequest: true,
+    cat: 'engine', price: 4650000, oldPrice: 5200000,
     stock: 8, rating: 4.7, reviews: 19, img: 'p-timingbelt.jpg', featured: false,
     fitmentKnown: false, verified: false, equivalents: ['0831.J0', 'K015603XS'],
     kit: [], fits: [],
@@ -228,7 +236,8 @@ const PRODUCTS = [
   },
   {
     id: 'p9', name: 'دیسک ترمز جلو پژو ۲۰۶ (جفت)', brand: 'TRW', sku: 'DSC-TRW-2401',
-    oem: '4246.9Q', cat: 'brake', price: 2650000, oldPrice: 0,
+    oem: '4246.9Q', quality: 'orig', engines: ['TU5','XU7'],
+    cat: 'brake', price: 2650000, oldPrice: 0,
     stock: 10, rating: 4.6, reviews: 27, img: 'p-brake.jpg', featured: false,
     fitmentKnown: true, verified: true, equivalents: ['4246.9Q', '4246.9R', 'DF-4184'],
     kit: ['p1', 'p13'], kitNote: 'دیسک و لنت را همیشه با هم تعویض کنید.',
@@ -241,7 +250,8 @@ const PRODUCTS = [
   },
   {
     id: 'p10', name: 'فیلتر کابین کربن‌اکتیو پراید و تیبا', brand: 'VALEO', sku: 'CAB-VL-1102',
-    oem: '6447.G2', cat: 'filter', price: 340000, oldPrice: 395000,
+    oem: '6447.G2', quality: 'after', engines: [],
+    cat: 'filter', price: 340000, oldPrice: 395000,
     stock: 25, rating: 4.4, reviews: 33, img: 'p-airfilter.jpg', featured: false,
     fitmentKnown: true, verified: true, equivalents: ['6447.G2'],
     kit: ['p11'], kitNote: 'همراه سرویس روغن تعویض شود.',
@@ -256,7 +266,8 @@ const PRODUCTS = [
   },
   {
     id: 'p11', name: 'روغن موتور تمام سنتتیک ۵W-30', brand: 'TOTAL', sku: 'OIL-TT-5W30',
-    oem: '—', cat: 'filter', price: 2150000, oldPrice: 2400000,
+    oem: '—', quality: 'orig', engines: [],
+    cat: 'filter', price: 2150000, oldPrice: 2400000,
     stock: 60, rating: 4.8, reviews: 147, img: 'p-oilfilter.jpg', featured: false,
     fitmentKnown: false, verified: false, universal: true,
     universalNote: 'گرید را با دفترچهٔ خودرو تطبیق دهید؛ برای موتورهای بنزینی مدرن مناسب است.',
@@ -266,7 +277,8 @@ const PRODUCTS = [
   },
   {
     id: 'p12', name: 'کمک فنر عقب سمند و پارس', brand: 'MONROE', sku: 'SHK-MN-7721',
-    oem: '5206.3E', cat: 'suspension', price: 3200000, oldPrice: 3600000,
+    oem: '5206.3E', quality: 'plan', engines: ['XU7'],
+    cat: 'suspension', price: 3200000, oldPrice: 3600000,
     stock: 3, rating: 4.4, reviews: 12, img: 'p-shock.jpg', featured: false,
     fitmentKnown: true, verified: true, equivalents: ['5206.3E'],
     kit: [], fits: [
@@ -279,7 +291,8 @@ const PRODUCTS = [
   },
   {
     id: 'p13', name: 'روغن ترمز DOT4 (۵۰۰ میلی‌لیتر)', brand: 'BOSCH', sku: 'FLU-BS-DOT4',
-    oem: '1 987 479 108', cat: 'brake', price: 290000, oldPrice: 0,
+    oem: '1 987 479 108', quality: 'after', engines: [],
+    cat: 'brake', price: 290000, oldPrice: 0,
     stock: 42, rating: 4.7, reviews: 41, img: 'p-brakefluid.jpg', featured: true,
     fitmentKnown: false, verified: false, universal: true,
     universalNote: 'برای اکثر خودروها؛ نوع DOT را با دفترچهٔ خودرو تطبیق دهید.',
