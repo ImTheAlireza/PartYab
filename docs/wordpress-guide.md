@@ -16,11 +16,13 @@
 | ۳ | `theme/partyab` → `wp-content/themes/partyab` و فعال‌سازی | `front-page.php`، آرشیو و صفحهٔ محصول با طراحی پارت‌یاب |
 | ۴ | `plugin/partyab-fitment` → `wp-content/plugins/partyab-fitment` و فعال‌سازی | جدول `{prefix}partyab_fitment` + متاباکس + REST `partyab/v1` |
 | ۵ | «تنظیمات → پیوندهای یکتا → نام نوشته» | مسیرهای REST و آرشیو درست می‌شوند |
-| ۶ | «ابزارها → سازگاری پارت‌یاب» → ایمپورت [`sample/fitment.csv`](../plugin/partyab-fitment/sample/fitment.csv) | ۳۶ ردیف سازگاری نمونه |
-| ۷ | «محصولات → درون‌ریزی» → [`sample/products.csv`](../plugin/partyab-fitment/sample/products.csv) | ۱۳ محصول نمونه با کد OEM و کدهای معادل |
+| ۶ | «محصولات → درون‌ریزی» → [`sample/products.csv`](../plugin/partyab-fitment/sample/products.csv) | ۱۳ محصول نمونه با کد OEM و کدهای معادل |
+| ۷ | «ابزارها → سازگاری پارت‌یاب» → ایمپورت [`sample/fitment.csv`](../plugin/partyab-fitment/sample/fitment.csv) | ۳۶ ردیف سازگاری (SKU ها باید از گام ۶ موجود باشند) |
 | ۸ | برگهٔ «گاراژ» بسازید و الگوی «گاراژ پارت‌یاب» را انتخاب کنید | صفحهٔ گاراژ با پاسپورت خودرو |
 | ۹ | «نمایش → فهرست‌ها»: منوی اصلی، دسته‌های فوتر، راهنمای فوتر | ناوبری کامل |
 | ۱۰ | «تنظیمات → خواندن»: صفحهٔ اصلی = یک برگهٔ خالی | `front-page.php` اجرا می‌شود |
+
+راهنمای نصب محتاطانه (staging، کش، بکاپ، بازگردانی، عیب‌یابی): [`install-guide.md`](install-guide.md).
 
 پس از نصب، انتخاب خودرو را با این سناریوها امتحان کنید:
 `p1` + ۲۰۶ (سازگار با شرط)، `p4` + ۲۰۶ (سازگار)، `p10` + ۲۰۶ (ناسازگار)،
