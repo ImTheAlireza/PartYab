@@ -277,19 +277,71 @@ function toast(msg, type = 'info') {
   toastTimer = setTimeout(() => el.classList.remove('is-show'), 3600);
 }
 
-/* ---------------- Cart ---------------- */
-const KEY_CART = 'py_cart_v1';
-const cartCount = () => Number(localStorage.getItem(KEY_CART) || 0);
-function addToCart(p, qty = 1, silent = false) {
-  localStorage.setItem(KEY_CART, cartCount() + qty);
-  const el = $('.cart-count');
-  if (el) {
-    el.textContent = fa(cartCount());
+/* ---------------- Cart (line items) ---------------- */
+const KEY_CART = 'py_cart_v2';
+const KEY_CART_LEGACY = 'py_cart_v1';
+let cartAck = false;
+
+function cartLoad() {
+  let items = [];
+  try { items = JSON.parse(localStorage.getItem(KEY_CART) || '[]'); } catch (err) { items = []; }
+  if (!Array.isArray(items)) items = [];
+  items = items
+    .filter(it => it && PRODUCTS.some(p => p.id === it.id) && Number(it.qty) > 0)
+    .map(it => ({ id: it.id, qty: Math.min(99, Math.max(1, Math.round(Number(it.qty) || 1))) }));
+  if (!items.length) {
+    const legacy = Number(localStorage.getItem(KEY_CART_LEGACY) || 0);
+    if (legacy > 0) {
+      items = PRODUCTS.slice(0, Math.min(legacy, 3)).map(p => ({ id: p.id, qty: 1 }));
+      localStorage.removeItem(KEY_CART_LEGACY);
+      localStorage.setItem(KEY_CART, JSON.stringify(items));
+    }
+  }
+  return items;
+}
+function cartSave(items) {
+  const clean = items
+    .filter(it => Number(it.qty) > 0)
+    .map(it => ({ id: it.id, qty: Math.min(99, Math.round(it.qty)) }));
+  localStorage.setItem(KEY_CART, JSON.stringify(clean));
+  cartAck = false;
+  cartBadge();
+  return clean;
+}
+const cartLines = () => cartLoad()
+  .map(it => ({ ...it, product: PRODUCTS.find(p => p.id === it.id) }))
+  .filter(it => it.product);
+const cartCount = () => cartLoad().reduce((s, it) => s + it.qty, 0);
+const cartTotals = () => cartLines().reduce((t, it) => {
+  t.qty += it.qty;
+  t.sum += it.product.price * it.qty;
+  t.old += (it.product.oldPrice || it.product.price) * it.qty;
+  return t;
+}, { qty: 0, sum: 0, old: 0 });
+
+function cartBadge() {
+  const n = cartCount();
+  $$('.cart-count').forEach(el => {
+    el.textContent = fa(n);
+    el.classList.toggle('is-zero', n === 0);
     el.style.animation = 'none';
     void el.offsetWidth;
     el.style.animation = 'pop .35s ease';
+  });
+}
+function addToCart(p, qty = 1, silent = false) {
+  const items = cartLoad();
+  const line = items.find(it => it.id === p.id);
+  if (line) line.qty = Math.min(99, line.qty + qty);
+  else items.push({ id: p.id, qty: Math.min(99, qty) });
+  cartSave(items);
+  const state = fitInfo(p, getVehicle()).state;
+  if (!silent) {
+    const warn = state === 'no' ? ' — با خودروی شما سازگار نیست' : state === 'conditional' ? ' — سازگار با شرط' : '';
+    toast(`«${p.name}» به سبد اضافه شد${warn}`, state === 'no' ? 'info' : 'success');
+    openCart();
   }
-  if (!silent) toast(`«${p.name}» به سبد خرید اضافه شد`, 'success');
+  renderCart();
 }
 
 /* ---------------- Modals ---------------- */
@@ -485,6 +537,20 @@ function overlaysHTML() {
       <div class="cmd-results" id="cmdResults"></div>
       <div class="cmd-foot"><span>جابه‌جایی با ↑ ↓</span><span>انتخاب با Enter</span></div>
     </div>
+  </div>
+
+  <div class="drawer drawer--cart" id="cartDrawer" aria-hidden="true">
+    <div class="drawer-backdrop" data-close-cart></div>
+    <aside class="drawer-panel cart-panel" role="dialog" aria-modal="true" aria-label="سبد خرید">
+      <div class="drawer-head">
+        <b>سبد خرید</b>
+        <span class="cart-head-note" id="cartHeadNote"></span>
+        <button class="modal-close" data-close-cart aria-label="بستن">${icon('x')}</button>
+      </div>
+      <div class="cart-passport" id="cartPassport"></div>
+      <div class="drawer-body cart-body" id="cartBody"></div>
+      <div class="drawer-foot cart-foot" id="cartFoot"></div>
+    </aside>
   </div>
 
   <nav class="mobile-nav" aria-label="ناوبری موبایل">
@@ -1008,6 +1074,7 @@ function initHeader() {
     if (e.target.closest('[data-add-vehicle]') || e.target.closest('[data-manage-garage]') || e.target.closest('[data-open-vehicle]')) {
       e.preventDefault();
       toggleGarageMenu(false);
+      closeCart();
       openVehiclePicker();
       return;
     }
@@ -1081,7 +1148,7 @@ function initHeader() {
       return;
     }
     if (e.target.closest('[data-cart]')) {
-      toast(`سبد خرید شما ${fa(cartCount())} قلم کالا دارد`, 'success');
+      openCart();
       return;
     }
     if (e.target.closest('[data-request-part]')) {
@@ -1089,6 +1156,7 @@ function initHeader() {
       return;
     }
     if (e.target.closest('[data-request-fitment]')) {
+      closeCart();
       openRequestModal({ mode: 'fitment' });
       return;
     }
@@ -1110,6 +1178,7 @@ function initHeader() {
       toggleGarageMenu(false);
       const d = $('#navDrawer');
       if (d) d.classList.remove('is-open');
+      if ($('#cartDrawer')?.classList.contains('is-open')) closeCart();
       document.body.style.overflow = '';
     }
   });
@@ -1148,6 +1217,8 @@ function initHeader() {
     refreshVehicleUI();
     if (document.body.dataset.page === 'shop') renderShop(true);
     if (document.body.dataset.page === 'product') renderPDP();
+    if ($('#cartDrawer')) renderCart();
+    if (document.body.dataset.page === 'checkout') renderCheckout();
   });
 }
 
@@ -1877,13 +1948,542 @@ function renderPDP() {
   document.title = `${p.name} | پارت‌یاب`;
 }
 
+/* ---------------- Cart drawer ---------------- */
+function openCart() {
+  const d = $('#cartDrawer');
+  if (!d) return;
+  renderCart();
+  d.classList.add('is-open');
+  d.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  const close = $('.modal-close', d);
+  if (close) close.focus({ preventScroll: true });
+}
+function closeCart() {
+  const d = $('#cartDrawer');
+  if (!d) return;
+  d.classList.remove('is-open');
+  d.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+function cartFitText(p, v, long = true) {
+  const info = fitInfo(p, v);
+  const car = v ? `${v.modelName} ${fa(v.year)}` : '';
+  if (info.state === 'fit') return long ? `سازگار با ${car}` : `سازگار با ${v.modelName}`;
+  if (info.state === 'conditional') return info.note ? `سازگار با شرط: ${info.note}` : 'سازگار با شرط';
+  if (info.state === 'no') return `ناسازگار با ${car}`;
+  if (info.state === 'unknown') return 'سازگاری ثبت نشده — نامشخص، نه ناسازگار';
+  return 'قطعهٔ عمومی برای همهٔ خودروها';
+}
+
+function cartIssueCount(lines, v) {
+  return lines.reduce((acc, it) => {
+    const st = fitInfo(it.product, v).state;
+    acc[st] = (acc[st] || 0) + 1;
+    return acc;
+  }, {});
+}
+
+function cartCanCheckout(lines, v) {
+  if (!lines.length) return false;
+  const bad = lines.some(it => fitInfo(it.product, v).state === 'no');
+  return !bad || cartAck;
+}
+
+function cartRowHTML(it, v) {
+  const p = it.product;
+  const info = fitInfo(p, v);
+  return `
+  <article class="cart-row" data-line="${p.id}">
+    <span class="p-rail p-rail--${info.state}" aria-hidden="true"></span>
+    <a class="cart-thumb" href="product.html?id=${p.id}" tabindex="-1" aria-hidden="true">
+      <img src="assets/img/${p.img}" alt="">
+    </a>
+    <div class="cart-main">
+      <div class="cart-top">
+        <a class="cart-name" href="product.html?id=${p.id}">${esc(p.name)}</a>
+        <button class="cart-del" type="button" data-remove-line aria-label="حذف ${esc(p.name)} از سبد">${icon('x')}</button>
+      </div>
+      <div class="cart-meta">
+        <span class="mono" dir="ltr">${esc(p.oem)}</span>
+        <span>${esc(p.brand)}</span>
+      </div>
+      <div class="p-fit p-fit--${info.state}">${icon(FIT[info.state].icon)}<span>${esc(cartFitText(p, v))}</span></div>
+      <div class="cart-bottom">
+        <div class="qty" role="group" aria-label="تعداد ${esc(p.name)}">
+          <button type="button" data-qty-inc aria-label="افزودن یکی">${icon('plus')}</button>
+          <span class="mono" aria-live="polite">${fa(it.qty)}</span>
+          <button type="button" data-qty-dec aria-label="کم کردن یکی" ${it.qty <= 1 ? 'data-qty-min' : ''}>${icon('minus')}</button>
+        </div>
+        <div class="cart-price">
+          ${p.oldPrice ? `<span class="old">${money(p.oldPrice * it.qty)}</span>` : ''}
+          <strong>${money(p.price * it.qty)}</strong>
+          <small>تومان</small>
+        </div>
+      </div>
+    </div>
+  </article>`;
+}
+
+function renderCart() {
+  const body = $('#cartBody');
+  if (!body) return;
+  const foot = $('#cartFoot');
+  const pass = $('#cartPassport');
+  const note = $('#cartHeadNote');
+  const v = getVehicle();
+  const lines = cartLines();
+  const t = cartTotals();
+
+  if (note) note.textContent = lines.length ? `${fa(t.qty)} قلم` : 'خالی';
+
+  if (pass) {
+    pass.innerHTML = v
+      ? `<span class="cp-icon">${icon('car')}</span>
+         <div class="cp-txt"><b>${esc(v.modelName)} ${fa(v.year)}</b><span>${esc(v.makeName || '')}${v.engine ? ` · ${esc(v.engine)}` : ''}</span></div>
+         <button class="cp-change" type="button" data-open-vehicle>تغییر</button>`
+      : `<span class="cp-icon cp-icon--empty">${icon('car')}</span>
+         <div class="cp-txt"><b>خودرو انتخاب نشده</b><span>برای بررسی سازگاری، خودرو را ثبت کنید</span></div>
+         <button class="cp-change" type="button" data-open-vehicle>انتخاب</button>`;
+  }
+
+  if (!lines.length) {
+    body.innerHTML = `
+      <div class="cart-empty">
+        <span class="ce-icon">${icon('cart')}</span>
+        <b>سبد خرید خالی است</b>
+        <p>قطعهٔ مناسب خودروی خود را از فروشگاه انتخاب کنید؛ سازگاری هر قطعه روی کارتش نوشته شده است.</p>
+        <a class="btn btn-amber" href="shop.html">رفتن به فروشگاه</a>
+      </div>`;
+    if (foot) foot.innerHTML = '';
+    return;
+  }
+
+  const issues = cartIssueCount(lines, v);
+  body.innerHTML = `<div class="cart-list">${lines.map(it => cartRowHTML(it, v)).join('')}</div>`;
+
+  const bad = issues.no || 0;
+  const unknown = issues.unknown || 0;
+  const ask = issues.ask || 0;
+  const canGo = cartCanCheckout(lines, v);
+  const save = t.old - t.sum;
+
+  if (foot) {
+    foot.innerHTML = `
+      <div class="cart-sum">
+        <div class="cs-row"><span>جمع کالاها (${fa(t.qty)} قلم)</span><b>${money(t.sum)} تومان</b></div>
+        ${save > 0 ? `<div class="cs-row cs-row--save"><span>سود شما از این خرید</span><b>−${money(save)} تومان</b></div>` : ''}
+        <div class="cs-row cs-row--muted"><span>هزینهٔ ارسال</span><span>در مرحلهٔ بعد</span></div>
+      </div>
+      ${bad ? `<div class="cart-warn" id="cartWarn">
+        <div class="cw-head">${icon('alert')} <b>${fa(bad)} قطعه با ${esc(v.modelName)} شما سازگار نیست</b></div>
+        <p>این قطعات را حذف کنید یا با آگاهی ادامه دهید. سفارش‌های ناسازگار مشمول ضمانت بازگشت سازگاری نیستند.</p>
+        <label class="cw-check"><input type="checkbox" data-ack-mismatch ${cartAck ? 'checked' : ''}><span>با وجود ناسازگاری ادامه می‌دهم</span></label>
+      </div>` : ''}
+      ${unknown ? `<div class="cart-note">${icon('info')}<span>${fa(unknown)} قطعه سازگاری ثبت‌شده ندارد (نامشخص، نه ناسازگار).</span><button type="button" data-request-fitment>درخواست بررسی</button></div>` : ''}
+      ${ask ? `<div class="cart-note">${icon('car')}<span>خودرو انتخاب نشده؛ سازگاری قابل بررسی نیست.</span><button type="button" data-open-vehicle>انتخاب خودرو</button></div>` : ''}
+      <a class="btn btn-amber btn-block cart-cta ${canGo ? '' : 'is-blocked'}" href="checkout.html" data-cart-cta ${canGo ? '' : 'aria-disabled="true"'}>
+        ${icon('check-shield')} ادامهٔ سفارش
+      </a>
+      <div class="cart-trust">${icon('refresh')} ۷ روز ضمانت بازگشت · ${icon('truck')} ارسال به سراسر کشور</div>`;
+  }
+}
+
+function initCart() {
+  cartBadge();
+  document.addEventListener('click', e => {
+    const inc = e.target.closest('[data-qty-inc]');
+    const dec = e.target.closest('[data-qty-dec]');
+    const del = e.target.closest('[data-remove-line]');
+    const cta = e.target.closest('[data-cart-cta]');
+    if (inc || dec) {
+      e.preventDefault();
+      const row = (inc || dec).closest('[data-line]');
+      if (!row) return;
+      const items = cartLoad();
+      const line = items.find(it => it.id === row.dataset.line);
+      if (!line) return;
+      if (dec && line.qty <= 1) {
+        toast('برای حذف، از دکمهٔ ضربدر استفاده کنید');
+        return;
+      }
+      line.qty = Math.min(99, line.qty + (inc ? 1 : -1));
+      cartSave(items);
+      renderCart();
+      return;
+    }
+    if (del) {
+      e.preventDefault();
+      const row = del.closest('[data-line]');
+      if (!row) return;
+      const p = PRODUCTS.find(x => x.id === row.dataset.line);
+      cartSave(cartLoad().filter(it => it.id !== row.dataset.line));
+      renderCart();
+      toast(`«${p ? p.name : 'قطعه'}» از سبد حذف شد`);
+      return;
+    }
+    if (cta && cta.classList.contains('is-blocked')) {
+      e.preventDefault();
+      cartAck = false;
+      const w = $('#cartWarn');
+      if (w) {
+        w.classList.remove('is-pulse');
+        void w.offsetWidth;
+        w.classList.add('is-pulse');
+        w.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+      toast('اول ناسازگاری را تأیید کنید یا قطعه را حذف کنید');
+    }
+  });
+  document.addEventListener('change', e => {
+    if (e.target.matches('[data-ack-mismatch]')) {
+      cartAck = e.target.checked;
+      renderCart();
+    }
+  });
+}
+
+/* =========================================================
+   Checkout (demo) — آدرس، ارسال، پرداخت در محل، تأیید سفارش
+   ========================================================= */
+const PROVINCES = ['تهران', 'البرز', 'اصفهان', 'خراسان رضوی', 'فارس', 'آذربایجان شرقی', 'آذربایجان غربی', 'خوزستان', 'گیلان', 'مازندران', 'قم', 'کرمان', 'یزد', 'هرمزگان', 'کردستان', 'سایر استان‌ها'];
+
+const SHIP_OPTIONS = [
+  { id: 'peyk', label: 'پیک موتوری', price: 85000, note: 'تحویل ۲۴ ساعته · تهران و کرج', icon: 'truck' },
+  { id: 'post', label: 'پست پیشتاز', price: 45000, note: '۲ تا ۴ روز کاری · سراسر کشور', icon: 'box' },
+  { id: 'pickup', label: 'تحویل حضوری', price: 0, note: 'فروشگاه پارت‌یاب، تهران', icon: 'map-pin' }
+];
+const PAY_OPTIONS = [
+  { id: 'cod', label: 'پرداخت در محل', note: 'نقدی یا کارتخوان هنگام تحویل', icon: 'truck', badge: 'پیشنهاد ما' },
+  { id: 'card', label: 'کارت به کارت', note: 'شمارهٔ کارت پس از ثبت سفارش پیامک می‌شود', icon: 'copy' },
+  { id: 'online', label: 'پرداخت آنلاین', note: 'درگاه بانکی، همین حالا', icon: 'shield' }
+];
+const coState = { ship: 'peyk', pay: 'cod', ack: false };
+
+const latinDigits = s => String(s)
+  .replace(/[۰-۹]/g, d => String('۰۱۲۳۴۵۶۷۸۹'.indexOf(d)))
+  .replace(/[٠-٩]/g, d => String('٠١٢٣٤٥٦٧٨٩'.indexOf(d)));
+
+const coTotals = () => {
+  const t = cartTotals();
+  const ship = (SHIP_OPTIONS.find(x => x.id === coState.ship) || SHIP_OPTIONS[0]).price;
+  return { ...t, ship, pay: t.sum + ship, save: Math.max(0, t.old - t.sum) };
+};
+
+function coEmptyHTML() {
+  return `<div class="co-empty">
+    <span class="ce-icon">${icon('cart')}</span>
+    <h1>سبدی برای تسویه نیست</h1>
+    <p>اول قطعهٔ سازگار با خودرویتان را انتخاب کنید؛ بعد از اینجا سفارش را نهایی می‌کنید.</p>
+    <a class="btn btn-amber" href="shop.html">رفتن به فروشگاه</a>
+  </div>`;
+}
+
+function coRadioHTML(kind, opt, active) {
+  const price = kind !== 'ship' ? '' : (opt.price ? `${money(opt.price)} <small>تومان</small>` : 'رایگان');
+  return `<label class="co-opt ${active ? 'is-active' : ''}">
+    <input type="radio" name="${kind}" value="${opt.id}" ${active ? 'checked' : ''}>
+    <span class="co-opt-icon">${icon(opt.icon)}</span>
+    <span class="co-opt-txt"><b>${opt.label}${opt.badge ? `<em>${opt.badge}</em>` : ''}</b><span>${opt.note}</span></span>
+    ${price ? `<span class="co-opt-price">${price}</span>` : ''}
+  </label>`;
+}
+
+function coSummaryHTML(v, lines, t) {
+  const bad = lines.filter(it => fitInfo(it.product, v).state === 'no').length;
+  const fitNote = !v
+    ? `${icon('car')} خودرو انتخاب نشده؛ سازگاری بررسی نشده است.`
+    : bad
+      ? `${icon('alert')} ${fa(bad)} قطعه با ${esc(v.modelName)} شما سازگار نیست.`
+      : `${icon('check-shield')} همهٔ قطعات برای ${esc(v.modelName)} ${fa(v.year)} تأیید شده‌اند.`;
+  return `<div class="co-card co-summary">
+    <div class="co-card-head"><span class="co-num">${icon('box')}</span><h2>خلاصهٔ سفارش</h2><span class="co-count">${fa(t.qty)} قلم</span></div>
+    <div class="co-lines">
+      ${lines.map(it => `<div class="co-line">
+        <span class="co-thumb"><img src="assets/img/${it.product.img}" alt=""></span>
+        <span class="co-line-txt"><b>${esc(it.product.name)}</b><span class="mono" dir="ltr">${esc(it.product.oem)}</span></span>
+        <span class="co-line-qty">×${fa(it.qty)}</span>
+        <span class="co-line-price">${money(it.product.price * it.qty)}</span>
+      </div>`).join('')}
+    </div>
+    <div class="co-fitnote ${bad ? 'is-bad' : ''}">${fitNote}</div>
+    <div class="co-total-rows">
+      <div><span>جمع کالاها</span><b>${money(t.sum)} تومان</b></div>
+      <div><span>ارسال</span><b>${t.ship ? `${money(t.ship)} تومان` : 'رایگان'}</b></div>
+      ${t.save ? `<div class="is-save"><span>سود شما</span><b>−${money(t.save)} تومان</b></div>` : ''}
+      <div class="co-grand"><span>قابل پرداخت</span><b>${money(t.pay)} <small>تومان</small></b></div>
+    </div>
+    ${bad ? `<label class="cw-check cw-check--co"><input type="checkbox" data-ack-mismatch ${coState.ack ? 'checked' : ''}><span>با وجود ناسازگاری ادامه می‌دهم</span></label>` : ''}
+    <button class="btn btn-amber btn-block co-submit" type="submit" form="coForm" data-co-submit ${bad && !coState.ack ? 'aria-disabled="true"' : ''}>
+      ${icon('check-shield')} ثبت سفارش
+    </button>
+    <div class="cart-trust">${icon('refresh')} ۷ روز ضمانت بازگشت · ${icon('phone')} پشتیبانی ۰۲۱-۹۱۰۰۲۲۳۳</div>
+  </div>`;
+}
+
+function coFieldsHTML(v) {
+  return `<section class="co-card">
+    <div class="co-card-head"><span class="co-num">۱</span><h2>گیرنده</h2></div>
+    <div class="co-fields">
+      <label class="co-field" data-field="name"><span>نام و نام خانوادگی</span>
+        <input type="text" name="name" autocomplete="name" placeholder="مثلاً علی رضایی">
+        <em class="co-err"></em>
+      </label>
+      <label class="co-field" data-field="phone"><span>موبایل</span>
+        <input type="tel" name="phone" inputmode="numeric" autocomplete="tel" dir="ltr" placeholder="0912 345 6789">
+        <em class="co-err"></em>
+      </label>
+      <label class="co-field" data-field="province"><span>استان</span>
+        <select name="province">
+          <option value="">انتخاب کنید</option>
+          ${PROVINCES.map(x => `<option>${x}</option>`).join('')}
+        </select>
+        <em class="co-err"></em>
+      </label>
+      <label class="co-field" data-field="city"><span>شهر</span>
+        <input type="text" name="city" autocomplete="address-level2" placeholder="مثلاً تهران">
+        <em class="co-err"></em>
+      </label>
+      <label class="co-field co-field--full" data-field="address"><span>نشانی کامل</span>
+        <textarea name="address" rows="2" autocomplete="street-address" placeholder="خیابان، کوچه، پلاک، واحد"></textarea>
+        <em class="co-err"></em>
+      </label>
+      <label class="co-field" data-field="postal"><span>کد پستی <em class="co-opt-tag">اختیاری</em></span>
+        <input type="text" name="postal" inputmode="numeric" dir="ltr" placeholder="۱۰ رقم">
+        <em class="co-err"></em>
+      </label>
+      <label class="co-field" data-field="note"><span>یادداشت برای سفارش <em class="co-opt-tag">اختیاری</em></span>
+        <input type="text" name="note" placeholder="مثلاً زنگ واحد ۲ را بزنید">
+        <em class="co-err"></em>
+      </label>
+    </div>
+  </section>`;
+}
+
+function renderCheckout() {
+  const root = $('#checkoutRoot');
+  if (!root) return;
+  const stored = sessionStorage.getItem('py_last_order');
+  if (stored) {
+    try { renderOrderDone(JSON.parse(stored)); return; } catch (err) { sessionStorage.removeItem('py_last_order'); }
+  }
+  document.body.classList.remove('is-ordered');
+  const v = getVehicle();
+  const lines = cartLines();
+  if (!lines.length) {
+    root.innerHTML = coEmptyHTML();
+    return;
+  }
+  const t = coTotals();
+  root.innerHTML = `
+  <div class="co-grid">
+    <form class="co-form" id="coForm" novalidate>
+      ${coFieldsHTML(v)}
+      <section class="co-card">
+        <div class="co-card-head"><span class="co-num">۲</span><h2>روش ارسال</h2></div>
+        <div class="co-opts">${SHIP_OPTIONS.map(o => coRadioHTML('ship', o, coState.ship === o.id)).join('')}</div>
+      </section>
+      <section class="co-card">
+        <div class="co-card-head"><span class="co-num">۳</span><h2>روش پرداخت</h2></div>
+        <div class="co-opts">${PAY_OPTIONS.map(o => coRadioHTML('pay', o, coState.pay === o.id)).join('')}</div>
+        <p class="co-hint">${icon('info')} پرداخت در محل برای تهران و کرج فعال است؛ برای شهرهای دیگر پست پیشتاز با پرداخت آنلاین یا کارت به کارت.</p>
+      </section>
+      <button class="btn btn-amber btn-block co-submit co-submit--end" type="submit" data-co-submit ${lines.some(it => fitInfo(it.product, v).state === 'no') && !coState.ack ? 'aria-disabled="true"' : ''}>
+        ${icon('check-shield')} ثبت سفارش · ${money(t.pay)} تومان
+      </button>
+    </form>
+    <aside class="co-side">${coSummaryHTML(v, lines, t)}</aside>
+  </div>`;
+}
+
+function coReadForm() {
+  const f = $('#coForm');
+  const get = n => (f.elements[n] ? String(f.elements[n].value || '').trim() : '');
+  return {
+    name: get('name'), phone: latinDigits(get('phone')).replace(/[\s-]/g, ''),
+    province: get('province'), city: get('city'), address: get('address'),
+    postal: latinDigits(get('postal')).replace(/[\s-]/g, ''), note: get('note')
+  };
+}
+
+function coValidate(data) {
+  const errors = {};
+  if (data.name.length < 3) errors.name = 'نام و نام خانوادگی را کامل بنویسید';
+  if (!/^09\d{9}$/.test(data.phone)) errors.phone = 'شمارهٔ موبایل باید ۱۱ رقم و با ۰۹ شروع شود';
+  if (!data.province) errors.province = 'استان را انتخاب کنید';
+  if (data.city.length < 2) errors.city = 'نام شهر را بنویسید';
+  if (data.address.length < 10) errors.address = 'نشانی را کامل‌تر بنویسید';
+  if (data.postal && !/^\d{10}$/.test(data.postal)) errors.postal = 'کد پستی باید ۱۰ رقم باشد';
+  return errors;
+}
+
+function renderOrderDone(order) {
+  const root = $('#checkoutRoot');
+  if (!root) return;
+  document.body.classList.add('is-ordered');
+  const ship = SHIP_OPTIONS.find(o => o.id === order.ship) || SHIP_OPTIONS[0];
+  const pay = PAY_OPTIONS.find(o => o.id === order.pay) || PAY_OPTIONS[0];
+  const eta = new Date(Date.now() + (order.ship === 'peyk' ? 1 : order.ship === 'post' ? 3 : 0) * 86400000);
+  let etaText = ship.note;
+  try { etaText = eta.toLocaleDateString('fa-IR', { weekday: 'long', day: 'numeric', month: 'long' }); } catch (err) { /* keep note */ }
+  root.innerHTML = `
+  <div class="co-done">
+    <span class="done-ring">${icon('check')}</span>
+    <span class="done-eyebrow">سفارش ثبت شد</span>
+    <h1>ممنون، ${esc(order.name.split(' ')[0])} عزیز</h1>
+    <p class="done-sub">کد پیگیری سفارش شما</p>
+    <div class="done-code mono" dir="ltr">${esc(order.code)}</div>
+    <div class="done-meta">
+      <div><span>مبلغ</span><b>${money(order.total)} تومان</b></div>
+      <div><span>پرداخت</span><b>${pay.label}</b></div>
+      <div><span>تحویل</span><b>${etaText}</b></div>
+      <div><span>گیرنده</span><b>${esc(order.name)}</b></div>
+    </div>
+    <div class="done-addr">${icon('map-pin')} <span>${esc(order.province)}، ${esc(order.city)} — ${esc(order.address)}<br><span class="mono" dir="ltr">${esc(order.phone)}</span></span></div>
+    <div class="done-items">
+      ${order.items.map(it => `<div class="done-item">
+        <span class="done-thumb"><img src="assets/img/${it.img}" alt=""></span>
+        <span class="done-item-txt"><b>${esc(it.name)}</b><span class="mono" dir="ltr">${esc(it.oem)}</span></span>
+        <span class="mono">×${fa(it.qty)}</span>
+        <span>${money(it.price * it.qty)}</span>
+      </div>`).join('')}
+    </div>
+    <div class="done-note ${order.badFit ? 'is-bad' : ''}">${order.fitNote}</div>
+    <div class="done-actions">
+      <a class="btn btn-amber" href="shop.html">${icon('grid')} ادامهٔ خرید</a>
+      <button class="btn btn-ghost" type="button" data-new-order>سفارش جدید</button>
+    </div>
+  </div>`;
+}
+
+function placeOrder(data) {
+  const lines = cartLines();
+  const v = getVehicle();
+  const t = coTotals();
+  const bad = lines.filter(it => fitInfo(it.product, v).state === 'no').length;
+  const code = `PY-${Math.floor(100000 + Math.random() * 899999)}`;
+  const order = {
+    code, at: Date.now(),
+    name: data.name, phone: data.phone, province: data.province, city: data.city,
+    address: data.address, note: data.note, ship: coState.ship, pay: coState.pay,
+    total: t.pay,
+    items: lines.map(it => ({ id: it.product.id, name: it.product.name, oem: it.product.oem, img: it.product.img, qty: it.qty, price: it.product.price })),
+    badFit: bad,
+    fitNote: !v
+      ? `${icon('info')} خودرو انتخاب نشده بود؛ سازگاری این سفارش بررسی نشده است.`
+      : bad
+        ? `${icon('alert')} ${fa(bad)} قطعه با ${esc(v.modelName)} ${fa(v.year)} سازگار نیست و مشمول ضمانت بازگشت سازگاری نمی‌شود.`
+        : `${icon('check-shield')} همهٔ ${fa(lines.length)} قلم با ${esc(v.modelName)} ${fa(v.year)} تأیید شده‌اند.`
+  };
+  sessionStorage.setItem('py_last_order', JSON.stringify(order));
+  cartSave([]);
+  renderCart();
+  renderOrderDone(order);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function coRefreshSummary() {
+  const v = getVehicle();
+  const lines = cartLines();
+  const side = $('.co-side');
+  if (side && lines.length) side.innerHTML = coSummaryHTML(v, lines, coTotals());
+  const end = $('.co-submit--end');
+  if (end) {
+    const bad = lines.some(it => fitInfo(it.product, v).state === 'no');
+    end.setAttribute('aria-disabled', bad && !coState.ack ? 'true' : 'false');
+    end.innerHTML = `${icon('check-shield')} ثبت سفارش · ${money(coTotals().pay)} تومان`;
+  }
+}
+
+function initCheckout() {
+  renderCheckout();
+  const form = () => $('#coForm');
+
+  document.addEventListener('submit', e => {
+    const f = e.target;
+    if (!f.matches('#coForm')) return;
+    e.preventDefault();
+    const data = coReadForm();
+    const errors = coValidate(data);
+    const fields = $$('.co-field', f);
+    fields.forEach(el => {
+      const key = el.dataset.field;
+      const msg = errors[key];
+      el.classList.toggle('is-error', !!msg);
+      const em = $('.co-err', el);
+      if (em) em.textContent = msg || '';
+    });
+    if (Object.keys(errors).length) {
+      const first = $('.co-field.is-error', f);
+      if (first) first.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      const input = first && first.querySelector('input,select,textarea');
+      if (input) input.focus({ preventScroll: true });
+      toast('چند فیلد ناقص است؛ موارد قرمز را کامل کنید');
+      return;
+    }
+    placeOrder(data);
+  });
+
+  document.addEventListener('change', e => {
+    const t = e.target;
+    if (t.name === 'ship' && t.matches('#coForm input[name="ship"]')) {
+      coState.ship = t.value;
+      $$('#coForm input[name="ship"]').forEach(i => i.closest('.co-opt').classList.toggle('is-active', i.checked));
+      coRefreshSummary();
+      return;
+    }
+    if (t.name === 'pay' && t.matches('#coForm input[name="pay"]')) {
+      coState.pay = t.value;
+      $$('#coForm input[name="pay"]').forEach(i => i.closest('.co-opt').classList.toggle('is-active', i.checked));
+      coRefreshSummary();
+      return;
+    }
+    if (t.matches('[data-ack-mismatch]')) {
+      coState.ack = t.checked;
+      cartAck = t.checked;
+      coRefreshSummary();
+      return;
+    }
+    const field = t.closest('.co-field');
+    if (field && field.classList.contains('is-error')) {
+      field.classList.remove('is-error');
+      const em = $('.co-err', field);
+      if (em) em.textContent = '';
+    }
+  });
+
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('[data-co-submit]');
+    if (btn && btn.getAttribute('aria-disabled') === 'true') {
+      e.preventDefault();
+      const chk = $('.cw-check--co');
+      if (chk) {
+        chk.classList.remove('is-pulse');
+        void chk.offsetWidth;
+        chk.classList.add('is-pulse');
+        chk.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      }
+      toast('اول ناسازگاری را تأیید کنید یا قطعه را از سبد حذف کنید');
+      return;
+    }
+    if (e.target.closest('[data-new-order]')) {
+      sessionStorage.removeItem('py_last_order');
+      renderCheckout();
+      toast('سبد جدید آماده است');
+    }
+  });
+}
+
 /* ---------------- Boot ---------------- */
 document.addEventListener('DOMContentLoaded', () => {
   initHeader();
+  initCart();
   const page = document.body.dataset.page;
   if (page === 'home') { initHero(); initHome(); }
   if (page === 'shop') initShop();
   if (page === 'product') initProduct();
+  if (page === 'checkout') initCheckout();
   hydrateIcons();
 });
 
