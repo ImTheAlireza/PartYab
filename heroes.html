@@ -2,10 +2,328 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="utf-8">
-<title>گالری هیروها — پارت‌یاب</title>
-<meta http-equiv="refresh" content="0;url=index.html">
-<link rel="canonical" href="index.html">
-<style>body{font-family:Vazirmatn,system-ui,sans-serif;display:grid;place-items:center;min-height:100vh;margin:0;background:#F7F9FC;color:#132238}a{color:#B45309}</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>پنج هیرو سکشن — دموی پارت‌یاب</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  body.gal {
+    background:
+      radial-gradient(900px 420px at 88% -10%, #E9EFF8, transparent 62%),
+      radial-gradient(760px 400px at 0% 104%, #FDF3E3, transparent 62%),
+      var(--bg);
+    font-family: 'Vazirmatn', system-ui, sans-serif; color: var(--ink);
+    padding-bottom: 86px;
+  }
+  .gal-wrap { max-width: 1360px; margin: 0 auto; padding: 0 20px; }
+
+  /* ---------- header ---------- */
+  .gal-top { padding: 30px 0 4px; }
+  .gal-kicker {
+    display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 600;
+    color: var(--amber-700); background: var(--amber-50); border: 1px solid #FBE2B5;
+    border-radius: 999px; padding: 5px 12px;
+  }
+  .gal-top h1 { font-size: clamp(23px, 3.2vw, 36px); font-weight: 800; margin: 14px 0 8px; line-height: 1.32; letter-spacing: -.02em; }
+  .gal-top h1 em { font-style: normal; color: var(--amber-600); }
+  .gal-top p { margin: 0; font-size: 14px; line-height: 2; color: var(--ink-2); max-width: 76ch; }
+  .gal-steps { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .gal-steps span {
+    display: inline-flex; align-items: center; gap: 7px; font-size: 11.5px; color: var(--ink-2);
+    background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px;
+  }
+  .gal-steps b {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #fff; background: var(--navy);
+    width: 17px; height: 17px; border-radius: 5px; display: grid; place-items: center;
+  }
+
+  /* ---------- demo block ---------- */
+  .demo { margin-top: 34px; scroll-margin-top: 12px; }
+  .demo-head {
+    display: flex; align-items: flex-start; gap: 13px; flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+  .demo-num {
+    flex: none; width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center;
+    font-family: 'IBM Plex Mono', monospace; font-size: 15px; font-weight: 600;
+    background: var(--navy); color: #fff; box-shadow: var(--sh-sm);
+  }
+  .demo-txt { min-width: 240px; flex: 1; }
+  .demo-txt h2 { font-size: 17px; font-weight: 800; margin: 0 0 4px; letter-spacing: -.01em; }
+  .demo-txt p { margin: 0; font-size: 12.5px; line-height: 1.9; color: var(--muted); max-width: 76ch; }
+  .demo-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .demo-tags span {
+    font-size: 10px; font-weight: 600; color: var(--ink-2); background: #fff;
+    border: 1px solid var(--line); border-radius: 999px; padding: 2px 8px;
+  }
+  .demo-tags span.hot { color: var(--amber-700); background: var(--amber-50); border-color: #FBE2B5; }
+
+  .demo-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .vbtn {
+    display: inline-flex; align-items: center; gap: 5px; cursor: pointer;
+    background: #fff; border: 1px solid var(--line); color: var(--ink-2);
+    border-radius: 9px; padding: 8px 11px; font: inherit; font-size: 11.5px; font-weight: 600;
+  }
+  .vbtn[aria-pressed="true"] { background: var(--navy); border-color: var(--navy); color: #fff; }
+  .vbtn svg { width: 14px; height: 14px; }
+  .open-link {
+    display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 700;
+    color: var(--navy); background: #fff; border: 1px solid var(--line);
+    border-radius: 9px; padding: 8px 11px;
+  }
+  .open-link:hover { border-color: var(--amber); color: var(--amber-700); }
+  .pick {
+    cursor: pointer; font: inherit; font-size: 11.5px; font-weight: 700;
+    background: var(--amber); color: #241703; border: 1px solid transparent;
+    border-radius: 9px; padding: 8px 13px; box-shadow: 0 8px 18px -10px rgba(245, 158, 11, .8);
+  }
+  .demo.is-picked .pick { background: var(--green); color: #fff; box-shadow: none; }
+  .demo.is-picked .pick::after { content: " ✓"; }
+  .demo.is-picked .demo-frame { box-shadow: 0 0 0 3px var(--amber), var(--sh-lg); }
+
+  .demo-frame {
+    background: var(--surface-2); border-radius: var(--r-xl); overflow: hidden;
+    box-shadow: var(--sh-md); transition: box-shadow .2s; padding: 0;
+  }
+  .demo-frame iframe {
+    display: block; width: 100%; height: 620px; border: 0; background: #fff;
+    transition: width .2s;
+  }
+  .demo-frame.is-mobile { padding: 16px; background: #E7ECF3; }
+  .demo-frame.is-mobile iframe {
+    width: 390px; max-width: 100%; margin-inline: auto; height: 760px;
+    border-radius: 22px; box-shadow: 0 0 0 8px #0B1728, 0 18px 40px -18px rgba(8, 19, 32, .6);
+  }
+
+  /* ---------- sticky bar ---------- */
+  .gal-bar {
+    position: fixed; inset-inline: 0; inset-block-end: 0; z-index: 40;
+    display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap;
+    padding: 11px 16px; font-size: 12.5px; color: #fff;
+    background: rgba(8, 19, 32, .95); border-top: 1px solid rgba(255, 255, 255, .1);
+    backdrop-filter: blur(8px);
+  }
+  .gal-bar b { color: #FBBF24; }
+  .gal-bar .hint { color: #9FB1C6; font-size: 11.5px; }
+
+  @media (max-width: 760px) {
+    .gal-wrap { padding: 0 12px; }
+    .demo-actions { width: 100%; }
+    .demo-frame iframe { height: 520px; }
+    .demo-frame.is-mobile iframe { width: 100%; height: 640px; }
+  }
+</style>
 </head>
-<body><p>در حال رفتن به <a href="index.html">گالری پنج هیرو</a>…</p></body>
+<body class="gal">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="i-desk"><rect x="2.5" y="4" width="19" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9 20.5h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></g>
+    <g id="i-phone"><rect x="7" y="2.5" width="10" height="19" rx="2.4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M11 18.6h2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></g>
+    <g id="i-ext"><path d="M14 4h6v6M20 4l-8.5 8.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 14.5V19a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 19V7.5A1.5 1.5 0 0 1 5 6h4.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></g>
+    <g id="i-layers"><path d="M12 3l8 4.4-8 4.4-8-4.4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M4 12.4l8 4.4 8-4.4M4 16.8l8 4.4 8-4.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></g>
+  </defs>
+</svg>
+
+<div class="gal-wrap">
+
+  <header class="gal-top">
+    <span class="gal-kicker"><svg style="width:13px;height:13px"><use href="#i-layers"/></svg> دمؤ هیرو · پارت‌یاب</span>
+    <h1>پنج هیرو سکشن، <em>همه زنده و قابل کلیک</em></h1>
+    <p>
+      هر بلوک یک دموی واقعی است، نه تصویر. با دکمه‌های «دسکتاپ / موبایل» همان دمو را در عرض ۳۹۰ پیکسل ببین
+      (همان چیزی که کاربر موبایل می‌بیند)، یا با «تمام‌صفحه» در تب جدا بازش کن. اسلایدر ایدهٔ B خودکار می‌چرخد و
+      تایمرهای B و C زنده‌اند.
+    </p>
+    <div class="gal-steps">
+      <span><b>۱</b> هر پنج دمو را ببین</span>
+      <span><b>۲</b> «این را می‌خواهم» را بزن</span>
+      <span><b>۳</b> اسم گزینه را بگو تا در وردپرس پیاده شود</span>
+      <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:var(--navy);background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 12px">صفحهٔ اصلی پروتوتایپ ↗</a>
+      <a href="hero-lab.html" style="display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:var(--ink-2);background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 12px">آزمایشگاه + نقشهٔ قابلیت‌ها</a>
+    </div>
+  </header>
+
+  <!-- ================= A ================= -->
+  <section class="demo" id="demo-a" data-idea="A" data-name="پلاک / گاراژ">
+    <div class="demo-head">
+      <span class="demo-num">A</span>
+      <div class="demo-txt">
+        <h2>«پلاک» — هیرو گاراژمحور</h2>
+        <p>پلاک ایران را می‌زنی یا از گاراژ خودرو انتخاب می‌کنی؛ همان لحظه فهرست فیلترشده با وضعیت سازگاری هر ردیف نمایش داده می‌شود. سریع‌ترین مسیر از ورود تا محصول.</p>
+        <div class="demo-tags"><span class="hot">ایران‌محور</span><span>کمترین کلیک</span><span>گاراژ چندخودرویی</span><span>روشن</span></div>
+      </div>
+      <div class="demo-actions">
+        <button class="vbtn" data-view="desktop" aria-pressed="true"><svg><use href="#i-desk"/></svg> دسکتاپ</button>
+        <button class="vbtn" data-view="mobile" aria-pressed="false"><svg><use href="#i-phone"/></svg> موبایل</button>
+        <a class="open-link" href="hero-a.html" target="_blank" rel="noopener">تمام‌صفحه <svg style="width:12px;height:12px"><use href="#i-ext"/></svg></a>
+        <button class="pick" data-pick="A">این را می‌خواهم</button>
+      </div>
+    </div>
+    <div class="demo-frame">
+      <iframe src="hero-a.html?embed=1" title="هیرو A — پلاک و گاراژ" loading="lazy" data-auto></iframe>
+    </div>
+  </section>
+
+  <!-- ================= B ================= -->
+  <section class="demo" id="demo-b" data-idea="B" data-name="اسلایدر ویترینی">
+    <div class="demo-head">
+      <span class="demo-num">B</span>
+      <div class="demo-txt">
+        <h2>«ویترین گردان» — هیرو اسلایدری</h2>
+        <p>سه اسلاید با سه پیام: فروش ویژهٔ ۴۸ ساعته با تایمر، آموزش پنج حالت سازگاری، و کیت تعمیر کامل. فلش و نقطه دارند، خودکار می‌چرخند و با هاور می‌ایستند.</p>
+        <div class="demo-tags"><span class="hot">اسلایدر</span><span class="hot">فروش ویژه</span><span>آموزش سازگاری</span><span>کیت تعمیر</span></div>
+      </div>
+      <div class="demo-actions">
+        <button class="vbtn" data-view="desktop" aria-pressed="true"><svg><use href="#i-desk"/></svg> دسکتاپ</button>
+        <button class="vbtn" data-view="mobile" aria-pressed="false"><svg><use href="#i-phone"/></svg> موبایل</button>
+        <a class="open-link" href="hero-b.html" target="_blank" rel="noopener">تمام‌صفحه <svg style="width:12px;height:12px"><use href="#i-ext"/></svg></a>
+        <button class="pick" data-pick="B">این را می‌خواهم</button>
+      </div>
+    </div>
+    <div class="demo-frame">
+      <iframe src="hero-b.html?embed=1" title="هیرو B — اسلایدر ویترینی" loading="lazy" data-auto></iframe>
+    </div>
+  </section>
+
+  <!-- ================= C ================= -->
+  <section class="demo" id="demo-c" data-idea="C" data-name="حراج با تایمر">
+    <div class="demo-head">
+      <span class="demo-num">C</span>
+      <div class="demo-txt">
+        <h2>«حراج ساعت» — هیرو کمپینی</h2>
+        <p>هیرو یک کمپین است: تایمر بزرگ، نوار «۳۴ از ۵۰ فروش رفت» و سه پیشنهاد داغ. حس فوریت می‌سازد؛ مناسب کمپین‌های دوره‌ای و قابل خاموش‌شدن.</p>
+        <div class="demo-tags"><span class="hot">فروش ویژه</span><span class="hot">تایمر زنده</span><span>نوار ظرفیت</span><span>کمپینی</span></div>
+      </div>
+      <div class="demo-actions">
+        <button class="vbtn" data-view="desktop" aria-pressed="true"><svg><use href="#i-desk"/></svg> دسکتاپ</button>
+        <button class="vbtn" data-view="mobile" aria-pressed="false"><svg><use href="#i-phone"/></svg> موبایل</button>
+        <a class="open-link" href="hero-c.html" target="_blank" rel="noopener">تمام‌صفحه <svg style="width:12px;height:12px"><use href="#i-ext"/></svg></a>
+        <button class="pick" data-pick="C">این را می‌خواهم</button>
+      </div>
+    </div>
+    <div class="demo-frame">
+      <iframe src="hero-c.html?embed=1" title="هیرو C — حراج با تایمر" loading="lazy" data-auto></iframe>
+    </div>
+  </section>
+
+  <!-- ================= D ================= -->
+  <section class="demo" id="demo-d" data-idea="D" data-name="کنسول کد فنی">
+    <div class="demo-head">
+      <span class="demo-num">D</span>
+      <div class="demo-txt">
+        <h2>«کنسول» — هیرو کد فنی</h2>
+        <p>جست‌وجوی کد فنی با خروجی زندهٔ سه کد معادل، برند و وضعیت سازگاری، به‌همراه پنل «زنجیرهٔ کدهای معادل». بیشترین تمایز با بازار و جذب مخاطب فنی.</p>
+        <div class="demo-tags"><span class="hot">تمایز حداکثری</span><span>کد معادل</span><span>مونواسپیس</span><span>مخاطب فنی</span></div>
+      </div>
+      <div class="demo-actions">
+        <button class="vbtn" data-view="desktop" aria-pressed="true"><svg><use href="#i-desk"/></svg> دسکتاپ</button>
+        <button class="vbtn" data-view="mobile" aria-pressed="false"><svg><use href="#i-phone"/></svg> موبایل</button>
+        <a class="open-link" href="hero-d.html" target="_blank" rel="noopener">تمام‌صفحه <svg style="width:12px;height:12px"><use href="#i-ext"/></svg></a>
+        <button class="pick" data-pick="D">این را می‌خواهم</button>
+      </div>
+    </div>
+    <div class="demo-frame">
+      <iframe src="hero-d.html?embed=1" title="هیرو D — کنسول کد فنی" loading="lazy" data-auto></iframe>
+    </div>
+  </section>
+
+  <!-- ================= E ================= -->
+  <section class="demo" id="demo-e" data-idea="E" data-name="کارت حاشیه‌نویسی‌شده">
+    <div class="demo-head">
+      <span class="demo-num">E</span>
+      <div class="demo-txt">
+        <h2>«پروندهٔ قطعه» — هیرو آموزشی</h2>
+        <p>روشن و آرام؛ کارت محصول بزرگ می‌شود و چهار حاشیه‌نویسی خط‌چین نشان می‌دهد هر عدد و برچسب کارت چه معنایی دارد. ساده‌ترین و سبک‌ترین گزینه.</p>
+        <div class="demo-tags"><span class="hot">روشن</span><span>آموزشی</span><span>سبک و سریع</span><span>بدون شلوغی</span></div>
+      </div>
+      <div class="demo-actions">
+        <button class="vbtn" data-view="desktop" aria-pressed="true"><svg><use href="#i-desk"/></svg> دسکتاپ</button>
+        <button class="vbtn" data-view="mobile" aria-pressed="false"><svg><use href="#i-phone"/></svg> موبایل</button>
+        <a class="open-link" href="hero-e.html" target="_blank" rel="noopener">تمام‌صفحه <svg style="width:12px;height:12px"><use href="#i-ext"/></svg></a>
+        <button class="pick" data-pick="E">این را می‌خواهم</button>
+      </div>
+    </div>
+    <div class="demo-frame">
+      <iframe src="hero-e.html?embed=1" title="هیرو E — کارت حاشیه‌نویسی‌شده" loading="lazy" data-auto></iframe>
+    </div>
+  </section>
+
+</div>
+
+<div class="gal-bar">
+  <span>انتخاب فعلی: <b id="picked">—</b></span>
+  <span class="hint">فقط بگو «گزینهٔ A / B / C / D / E» — یا ترکیب، مثل «بدنهٔ A + اسلاید فروش ویژه».</span>
+</div>
+
+<script>
+(function () {
+  /* ---------- fit each iframe to its content ---------- */
+  function fit(frame) {
+    var doc;
+    try { doc = frame.contentDocument; } catch (e) { return; }
+    if (!doc || !doc.documentElement) return;
+    // measure the demo host, not the viewport (the demo pages use min-height:100vh)
+    var host = doc.querySelector('.hero-host');
+    var h = host
+      ? Math.ceil(host.getBoundingClientRect().height)
+      : Math.max(doc.documentElement.scrollHeight, doc.body ? doc.body.scrollHeight : 0);
+    h += 2;
+    if (!h) return;
+    var current = parseInt(frame.style.height, 10) || 0;
+    if (Math.abs(h - current) > 4) frame.style.height = h + 'px';
+  }
+
+  function fitAll() {
+    document.querySelectorAll('iframe[data-auto]').forEach(fit);
+  }
+
+  document.querySelectorAll('iframe[data-auto]').forEach(function (frame) {
+    frame.addEventListener('load', function () {
+      var again = function () { fit(frame); };
+      again();
+      setTimeout(again, 300);
+      setTimeout(again, 1200);
+      try {
+        new ResizeObserver(again).observe(frame.contentDocument.documentElement);
+      } catch (e) {}
+      try {
+        frame.contentWindow.addEventListener('resize', again);
+      } catch (e) {}
+    });
+  });
+
+  window.addEventListener('resize', function () {
+    clearTimeout(window.__fitT);
+    window.__fitT = setTimeout(fitAll, 180);
+  });
+
+  /* ---------- desktop / mobile view toggle ---------- */
+  document.querySelectorAll('.demo').forEach(function (demo) {
+    var frameBox = demo.querySelector('.demo-frame');
+    demo.querySelectorAll('.vbtn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        demo.querySelectorAll('.vbtn').forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
+        btn.setAttribute('aria-pressed', 'true');
+        frameBox.classList.toggle('is-mobile', btn.dataset.view === 'mobile');
+        setTimeout(fitAll, 260);
+        setTimeout(fitAll, 800);
+      });
+    });
+  });
+
+  /* ---------- picker ---------- */
+  var picked = document.getElementById('picked');
+  document.querySelectorAll('.pick').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var key = btn.dataset.pick;
+      var demo = document.querySelector('.demo[data-idea="' + key + '"]');
+      document.querySelectorAll('.demo').forEach(function (d) { d.classList.remove('is-picked'); });
+      demo.classList.add('is-picked');
+      picked.textContent = key + ' — ' + demo.dataset.name;
+      demo.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    });
+  });
+})();
+</script>
+</body>
 </html>

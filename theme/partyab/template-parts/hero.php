@@ -1,6 +1,8 @@
 <?php
 /**
- * Home hero: vehicle-first search card + car map.
+ * Home hero — the original composition: the parts photograph behind a navy
+ * gradient, one copy column with the vehicle picker, three catalogue counters
+ * and the floating fitment-verified chip.
  *
  * @package PartYab
  */
@@ -8,12 +10,28 @@
 defined( 'ABSPATH' ) || exit;
 
 $partyab_vehicle = partyab_vehicle();
-$partyab_visual  = get_theme_mod( 'partyab_hero_visual', 'demo' );
+
+$partyab_makes  = 0;
+$partyab_models = 0;
+
+if ( class_exists( 'Partyab_Vehicles' ) ) {
+	foreach ( Partyab_Vehicles::makes() as $partyab_make ) {
+		$partyab_makes++;
+		$partyab_models += count( (array) $partyab_make['models'] );
+	}
+}
+
+$partyab_products = 0;
+$partyab_counts   = wp_count_posts( 'product' );
+
+if ( $partyab_counts && isset( $partyab_counts->publish ) ) {
+	$partyab_products = (int) $partyab_counts->publish;
+}
 ?>
 
-<section class="hero<?php echo 'none' === $partyab_visual ? ' hero--text-only' : ''; ?>">
-	<div class="container hero-grid">
-		<div class="hero-copy">
+<section class="hero">
+	<div class="container hero-inner">
+		<div class="hero-content">
 			<span class="hero-eyebrow">
 				<?php partyab_the_icon( 'spark' ); ?>
 				<?php esc_html_e( 'فقط قطعه‌ای که به خودروی شما می‌خورد', 'partyab' ); ?>
@@ -85,12 +103,32 @@ $partyab_visual  = get_theme_mod( 'partyab_hero_visual', 'demo' );
 					<a href="<?php echo esc_url( partyab_shop_url() ); ?>#search"><?php esc_html_e( 'با کد فنی / OEM جست‌وجو کنید', 'partyab' ); ?></a>
 				</div>
 			</div>
-		</div>
 
-		<?php
-		if ( 'none' !== $partyab_visual ) {
-			get_template_part( 'template-parts/hero-' . ( 'photo' === $partyab_visual ? 'photo' : 'demo' ) );
-		}
-		?>
+			<div class="hero-stats">
+				<div class="hero-stat">
+					<?php partyab_the_icon( 'box' ); ?>
+					<strong><?php echo esc_html( partyab_num( $partyab_products ) ); ?></strong>
+					<?php esc_html_e( 'قطعه', 'partyab' ); ?>
+				</div>
+				<div class="hero-stat">
+					<?php partyab_the_icon( 'car' ); ?>
+					<strong><?php echo esc_html( partyab_num( $partyab_models ) ); ?></strong>
+					<?php esc_html_e( 'مدل خودرو', 'partyab' ); ?>
+				</div>
+				<div class="hero-stat">
+					<?php partyab_the_icon( 'shield' ); ?>
+					<strong><?php echo esc_html( partyab_num( $partyab_makes ) ); ?></strong>
+					<?php esc_html_e( 'سازنده', 'partyab' ); ?>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="hero-float">
+		<?php partyab_the_icon( 'check' ); ?>
+		<div>
+			<div><?php esc_html_e( 'سازگاری با خودروی انتخابی تأیید شد', 'partyab' ); ?></div>
+			<small><?php esc_html_e( 'این اطلاعات را فروشگاه ثبت کرده است', 'partyab' ); ?></small>
+		</div>
 	</div>
 </section>
