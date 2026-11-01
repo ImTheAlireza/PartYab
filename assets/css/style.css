@@ -3511,3 +3511,19 @@ body.is-ordered .page-head--co h1 { font-size: 16px; }
   .flash-side { width: 100%; justify-content: space-between; }
   .flash-clock div { min-width: 48px; }
 }
+
+/* ===== prototype-only quick nav (bottom-left) ===== */
+.demo-switch {
+  position: fixed; inset-block-end: 14px; inset-inline-start: 14px; z-index: 9998;
+  display: flex; gap: 6px; align-items: center;
+  padding: 6px; border-radius: 12px;
+  background: rgba(8, 19, 32, .92); border: 1px solid rgba(255,255,255,.14);
+  box-shadow: var(--sh-md); backdrop-filter: blur(8px);
+}
+.demo-switch a {
+  display: inline-flex; align-items: center; height: 28px; padding: 0 10px;
+  border-radius: 8px; background: rgba(255,255,255,.08);
+  color: #E9EFF7; font-size: 11px; font-weight: 600; text-decoration: none; white-space: nowrap;
+}
+.demo-switch a:hover { background: var(--amber); color: #241703; }
+@media (max-width: 620px) { .demo-switch { inset-block-end: 8px; inset-inline-start: 8px; padding: 5px; } .demo-switch a { font-size: 10px; padding: 0 8px; } }
