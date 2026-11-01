@@ -1,0 +1,611 @@
+{
+  "version": 1,
+  "updated": "2025-11-01",
+  "note": "کاتالوگ خودروها برای افزونهٔ سازگاری پارت‌یاب. قابل ویرایش یا جایگزینی با فایل رسمی.",
+  "groups": {
+    "iran": "خودروهای ایرانی",
+    "foreign": "خودروهای وارداتی"
+  },
+  "makes": [
+    {
+      "id": "ikco",
+      "name": "ایران‌خودرو",
+      "latin": "IKCO",
+      "group": "iran",
+      "models": [
+        {
+          "id": "206",
+          "name": "پژو ۲۰۶",
+          "years": [
+            1380,
+            1403
+          ],
+          "engines": [
+            "۱.۴ لیتری",
+            "۱.۶ لیتری TU5"
+          ],
+          "keywords": [
+            "206",
+            "پژو",
+            "peugeot",
+            "tu5",
+            "تیپ ۵"
+          ]
+        },
+        {
+          "id": "206sd",
+          "name": "پژو ۲۰۶ صندوقدار",
+          "years": [
+            1385,
+            1403
+          ],
+          "engines": [
+            "۱.۶ لیتری TU5"
+          ],
+          "keywords": [
+            "206 sd",
+            "صندوقدار",
+            "sd"
+          ]
+        },
+        {
+          "id": "207",
+          "name": "پژو ۲۰۷",
+          "years": [
+            1390,
+            1403
+          ],
+          "engines": [
+            "۱.۶ لیتری TU5"
+          ],
+          "keywords": [
+            "207",
+            "peugeot"
+          ]
+        },
+        {
+          "id": "samand",
+          "name": "سمند",
+          "years": [
+            1381,
+            1402
+          ],
+          "engines": [
+            "۱.۸ لیتری XU7",
+            "۱.۶ لیتری EF7"
+          ],
+          "keywords": [
+            "samand",
+            "ef7",
+            "xu7",
+            "سمند"
+          ]
+        },
+        {
+          "id": "dena",
+          "name": "دنا",
+          "years": [
+            1393,
+            1403
+          ],
+          "engines": [
+            "۱.۶ لیتری EF7",
+            "۱.۶ لیتری TU5"
+          ],
+          "keywords": [
+            "dena",
+            "دنا"
+          ]
+        },
+        {
+          "id": "rana",
+          "name": "رانا",
+          "years": [
+            1390,
+            1400
+          ],
+          "engines": [
+            "۱.۶ لیتری TU5"
+          ],
+          "keywords": [
+            "rana",
+            "رانا"
+          ]
+        },
+        {
+          "id": "pars",
+          "name": "پژو پارس",
+          "years": [
+            1382,
+            1403
+          ],
+          "engines": [
+            "۱.۸ لیتری XU7",
+            "۱.۶ لیتری ELX"
+          ],
+          "keywords": [
+            "pars",
+            "405",
+            "پارس"
+          ]
+        },
+        {
+          "id": "tara",
+          "name": "تارا",
+          "years": [
+            1399,
+            1403
+          ],
+          "engines": [
+            "۱.۶ لیتری TU5P"
+          ],
+          "keywords": [
+            "tara",
+            "تارا"
+          ]
+        },
+        {
+          "id": "arisun",
+          "name": "آریسان",
+          "years": [
+            1394,
+            1403
+          ],
+          "engines": [
+            "۱.۸ لیتری XU7"
+          ],
+          "keywords": [
+            "arisun",
+            "آریسان"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "saipa",
+      "name": "سایپا",
+      "latin": "SAIPA",
+      "group": "iran",
+      "models": [
+        {
+          "id": "pride",
+          "name": "پراید",
+          "years": [
+            1372,
+            1398
+          ],
+          "engines": [
+            "۱.۳ لیتری",
+            "۱.۵ لیتری"
+          ],
+          "keywords": [
+            "pride",
+            "پراید",
+            "131",
+            "111"
+          ]
+        },
+        {
+          "id": "tiba",
+          "name": "تیبا",
+          "years": [
+            1387,
+            1400
+          ],
+          "engines": [
+            "۱.۵ لیتری"
+          ],
+          "keywords": [
+            "tiba",
+            "تیبا"
+          ]
+        },
+        {
+          "id": "saina",
+          "name": "ساینا",
+          "years": [
+            1394,
+            1403
+          ],
+          "engines": [
+            "۱.۵ لیتری"
+          ],
+          "keywords": [
+            "saina",
+            "ساینا"
+          ]
+        },
+        {
+          "id": "quick",
+          "name": "کوییک",
+          "years": [
+            1397,
+            1403
+          ],
+          "engines": [
+            "۱.۵ لیتری"
+          ],
+          "keywords": [
+            "quick",
+            "کوییک"
+          ]
+        },
+        {
+          "id": "shahin",
+          "name": "شاهین",
+          "years": [
+            1399,
+            1403
+          ],
+          "engines": [
+            "۱.۵ لیتری توربو"
+          ],
+          "keywords": [
+            "shahin",
+            "شاهین"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mvm",
+      "name": "مدیران خودرو",
+      "latin": "MVM",
+      "group": "iran",
+      "models": [
+        {
+          "id": "tiggo7",
+          "name": "تیگو ۷",
+          "years": [
+            1397,
+            1403
+          ],
+          "engines": [
+            "۱.۵ لیتری توربو"
+          ],
+          "keywords": [
+            "tiggo",
+            "چری",
+            "chery"
+          ]
+        },
+        {
+          "id": "tiggo8",
+          "name": "تیگو ۸",
+          "years": [
+            1399,
+            1403
+          ],
+          "engines": [
+            "۱.۶ لیتری توربو"
+          ],
+          "keywords": [
+            "tiggo 8",
+            "چری"
+          ]
+        },
+        {
+          "id": "arrizo5",
+          "name": "آریزو ۵",
+          "years": [
+            1396,
+            1403
+          ],
+          "engines": [
+            "۱.۵ لیتری توربو"
+          ],
+          "keywords": [
+            "arrizo",
+            "آریزو"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kerman",
+      "name": "کرمان موتور",
+      "latin": "KERMAN",
+      "group": "iran",
+      "models": [
+        {
+          "id": "j5",
+          "name": "جک J5",
+          "years": [
+            1394,
+            1400
+          ],
+          "engines": [
+            "۱.۵ لیتری"
+          ],
+          "keywords": [
+            "j5",
+            "jac",
+            "جک"
+          ]
+        },
+        {
+          "id": "haima7",
+          "name": "هایما S7",
+          "years": [
+            1396,
+            1403
+          ],
+          "engines": [
+            "۱.۸ لیتری توربو"
+          ],
+          "keywords": [
+            "haima",
+            "هایما",
+            "s7"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bahman",
+      "name": "بهمن موتور",
+      "latin": "BAHMAN",
+      "group": "iran",
+      "models": [
+        {
+          "id": "dignity",
+          "name": "دیگنیتی",
+          "years": [
+            1399,
+            1403
+          ],
+          "engines": [
+            "۱.۵ لیتری توربو"
+          ],
+          "keywords": [
+            "dignity",
+            "دیگنیتی"
+          ]
+        },
+        {
+          "id": "fidelity",
+          "name": "فیدلیتی",
+          "years": [
+            1399,
+            1403
+          ],
+          "engines": [
+            "۱.۵ لیتری توربو"
+          ],
+          "keywords": [
+            "fidelity",
+            "فیدلیتی"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "renault",
+      "name": "رنو",
+      "latin": "RENAULT",
+      "group": "iran",
+      "models": [
+        {
+          "id": "l90",
+          "name": "ال ۹۰",
+          "years": [
+            1385,
+            1392
+          ],
+          "engines": [
+            "۱.۶ لیتری K7M"
+          ],
+          "keywords": [
+            "l90",
+            "رنو",
+            "renault",
+            "تندر"
+          ]
+        },
+        {
+          "id": "tondar90",
+          "name": "تندر ۹۰",
+          "years": [
+            1385,
+            1393
+          ],
+          "engines": [
+            "۱.۶ لیتری K4M"
+          ],
+          "keywords": [
+            "tondar",
+            "تندر"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "toyota",
+      "name": "تویوتا",
+      "latin": "TOYOTA",
+      "group": "foreign",
+      "models": [
+        {
+          "id": "corolla",
+          "name": "کرولا",
+          "years": [
+            1395,
+            1403
+          ],
+          "engines": [
+            "۱.۶ لیتری",
+            "۱.۸ لیتری هیبرید"
+          ],
+          "keywords": [
+            "corolla",
+            "کرولا",
+            "toyota"
+          ]
+        },
+        {
+          "id": "yaris",
+          "name": "یاریس",
+          "years": [
+            1395,
+            1400
+          ],
+          "engines": [
+            "۱.۵ لیتری"
+          ],
+          "keywords": [
+            "yaris",
+            "یاریس"
+          ]
+        },
+        {
+          "id": "camry",
+          "name": "کمری",
+          "years": [
+            1397,
+            1403
+          ],
+          "engines": [
+            "۲.۵ لیتری هیبرید"
+          ],
+          "keywords": [
+            "camry",
+            "کمری"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hyundai",
+      "name": "هیوندای",
+      "latin": "HYUNDAI",
+      "group": "foreign",
+      "models": [
+        {
+          "id": "tucson",
+          "name": "توسان",
+          "years": [
+            1394,
+            1403
+          ],
+          "engines": [
+            "۲.۰ لیتری",
+            "۲.۴ لیتری"
+          ],
+          "keywords": [
+            "tucson",
+            "توسان"
+          ]
+        },
+        {
+          "id": "elantra",
+          "name": "النترا",
+          "years": [
+            1395,
+            1403
+          ],
+          "engines": [
+            "۱.۶ لیتری",
+            "۲.۰ لیتری"
+          ],
+          "keywords": [
+            "elantra",
+            "النترا"
+          ]
+        },
+        {
+          "id": "santafe",
+          "name": "سانتافه",
+          "years": [
+            1395,
+            1403
+          ],
+          "engines": [
+            "۲.۴ لیتری"
+          ],
+          "keywords": [
+            "santa fe",
+            "سانتافه"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kia",
+      "name": "کیا",
+      "latin": "KIA",
+      "group": "foreign",
+      "models": [
+        {
+          "id": "cerato",
+          "name": "سراتو",
+          "years": [
+            1394,
+            1403
+          ],
+          "engines": [
+            "۱.۶ لیتری",
+            "۲.۰ لیتری"
+          ],
+          "keywords": [
+            "cerato",
+            "سراتو"
+          ]
+        },
+        {
+          "id": "sportage",
+          "name": "اسپورتیج",
+          "years": [
+            1395,
+            1403
+          ],
+          "engines": [
+            "۲.۰ لیتری"
+          ],
+          "keywords": [
+            "sportage",
+            "اسپورتیج"
+          ]
+        },
+        {
+          "id": "sorento",
+          "name": "سورنتو",
+          "years": [
+            1395,
+            1403
+          ],
+          "engines": [
+            "۲.۴ لیتری"
+          ],
+          "keywords": [
+            "sorento",
+            "سورنتو"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bmw",
+      "name": "بی‌ام‌و",
+      "latin": "BMW",
+      "group": "foreign",
+      "models": [
+        {
+          "id": "320i",
+          "name": "سری ۳ (۳۲۰i)",
+          "years": [
+            1395,
+            1403
+          ],
+          "engines": [
+            "۲.۰ لیتری توربو"
+          ],
+          "keywords": [
+            "320",
+            "bmw",
+            "بی ام و"
+          ]
+        }
+      ]
+    }
+  ]
+}
