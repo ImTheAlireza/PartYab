@@ -484,7 +484,7 @@ function overlaysHTML() {
       <div class="drawer-body">
         <a class="drawer-link" href="index.html">${icon('grid')} خانه</a>
         <a class="drawer-link" href="shop.html">${icon('box')} فروشگاه قطعات</a>
-        <a class="drawer-link" href="#" data-open-vehicle>${icon('garage')} گاراژ من</a>
+        <a class="drawer-link" href="garage.html">${icon('garage')} گاراژ من</a>
         <a class="drawer-link" href="shop.html?cat=brake">${icon('brake')} ترمز و ABS</a>
         <a class="drawer-link" href="shop.html?cat=filter">${icon('filter')} فیلتر و روغن</a>
         <a class="drawer-link" href="shop.html?cat=suspension">${icon('shock')} جلوبندی و تعلیق</a>
@@ -556,7 +556,7 @@ function overlaysHTML() {
   <nav class="mobile-nav" aria-label="ناوبری موبایل">
     <a href="index.html" class="${document.body.dataset.page === 'home' ? 'is-active' : ''}">${icon('grid')}<span>خانه</span></a>
     <a href="shop.html" class="${document.body.dataset.page === 'shop' ? 'is-active' : ''}">${icon('box')}<span>دسته‌ها</span></a>
-    <button data-open-vehicle>${icon('garage')}<span>خودرو</span></button>
+    <a href="garage.html" class="${document.body.dataset.page === 'garage' ? 'is-active' : ''}">${icon('garage')}<span>گاراژ</span></a>
     <button data-cart>${icon('cart')}<span>سبد</span></button>
   </nav>`;
 }
@@ -593,6 +593,7 @@ function footerHTML() {
       </div>
       <div class="footer-col">
         <b>راهنما</b>
+        <a href="garage.html">گاراژ من</a>
         <a href="index.html#guides">انتخاب خودرو</a>
         <a href="index.html#guides">کد فنی یا OEM چیست؟</a>
         <a href="index.html#states">معنی نشان‌های سازگاری</a>
@@ -655,6 +656,7 @@ function passportHTML() {
     </button>
     <span class="pp-meter" role="img" aria-label="پوشش کاتالوگ ${fa(cov.pct)} درصد"><i style="width:${cov.pct}%"></i></span>
     <span class="pp-cov">${fa(cov.ok)} از ${fa(cov.total)} قطعه سازگار</span>
+    <a class="pp-btn pp-btn--link" href="garage.html">${icon('garage')} گاراژ</a>
     <button class="pp-btn" data-open-vehicle>${icon('refresh')} تغییر</button>
   </div>`;
 }
@@ -2377,6 +2379,7 @@ function placeOrder(data) {
         : `${icon('check-shield')} همهٔ ${fa(lines.length)} قلم با ${esc(v.modelName)} ${fa(v.year)} تأیید شده‌اند.`
   };
   sessionStorage.setItem('py_last_order', JSON.stringify(order));
+  ordersPush(order);
   cartSave([]);
   renderCart();
   renderOrderDone(order);
@@ -2475,6 +2478,208 @@ function initCheckout() {
   });
 }
 
+/* =========================================================
+   Garage — پاسپورت‌های خودرو، قطعات تأییدشده، سرویس و سفارش‌ها
+   ========================================================= */
+const SERVICE_KEY = 'py_service_v1';
+const ORDERS_KEY = 'py_orders_v1';
+
+const SERVICE_TASKS = [
+  { id: 'oil', label: 'روغن موتور و فیلتر روغن', note: 'هر ۱۰٬۰۰۰ کیلومتر', cat: 'filter' },
+  { id: 'air', label: 'فیلتر هوا و کابین', note: 'هر ۲۰٬۰۰۰ کیلومتر', cat: 'filter' },
+  { id: 'brake', label: 'لنت و دیسک ترمز', note: 'هر ۳۰٬۰۰۰ کیلومتر یا ۲ سال', cat: 'brake' },
+  { id: 'spark', label: 'شمع و سیستم برق', note: 'هر ۴۰٬۰۰۰ کیلومتر', cat: 'electrical' }
+];
+
+function serviceLoad() {
+  try { return JSON.parse(localStorage.getItem(SERVICE_KEY)) || {}; } catch (e) { return {}; }
+}
+function serviceSave(all) { localStorage.setItem(SERVICE_KEY, JSON.stringify(all)); }
+
+function ordersLoad() {
+  try {
+    const list = JSON.parse(localStorage.getItem(ORDERS_KEY));
+    return Array.isArray(list) ? list : [];
+  } catch (e) { return []; }
+}
+function ordersPush(order) {
+  const list = ordersLoad();
+  list.unshift(order);
+  localStorage.setItem(ORDERS_KEY, JSON.stringify(list.slice(0, 8)));
+}
+
+function openPickerFor(modelId) {
+  picker.modelId = modelId;
+  picker.view = 'years';
+  picker.year = null;
+  picker.engine = '';
+  renderPicker();
+  openModal('#vehicleModal');
+}
+
+function garageCardHTML(v, active) {
+  const cov = coverageFor(v) || { ok: 0, total: PRODUCTS.length, pct: 0 };
+  return `<article class="gv-card ${active ? 'is-active' : ''}">
+    <div class="gv-top">
+      <span class="gv-plate">${icon('car')}</span>
+      <span class="gv-tag ${active ? 'is-active' : ''}">${active ? 'خودروی فعال' : 'ذخیره‌شده'}</span>
+    </div>
+    <h3 class="gv-name">${esc(v.modelName)} <span class="mono">${fa(v.year)}</span></h3>
+    <dl class="gv-specs">
+      <div><dt>سازنده</dt><dd>${esc(v.makeName || '—')}</dd></div>
+      <div><dt>تیپ موتور</dt><dd>${esc(v.engine || 'نامشخص')}</dd></div>
+      <div><dt>پوشش کاتالوگ</dt><dd class="mono">${fa(cov.ok)} از ${fa(cov.total)}</dd></div>
+    </dl>
+    <span class="gv-meter" role="img" aria-label="پوشش کاتالوگ ${fa(cov.pct)} درصد"><i style="width:${cov.pct}%"></i></span>
+    <div class="gv-actions">
+      ${active
+        ? `<span class="gv-active">${icon('check')} فعال</span>`
+        : `<button class="btn btn-ghost btn-sm" type="button" data-pick-vehicle="${v.key}">فعال کن</button>`}
+      <button class="gv-del" type="button" data-remove-vehicle="${v.key}" aria-label="حذف ${esc(v.modelName)} از گاراژ">${icon('x')}</button>
+    </div>
+  </article>`;
+}
+
+function garageEmptyHTML() {
+  const chips = ['206', 'pride', 'samand', 'quick', 'shahin', 'dena', 'tara', 'pars']
+    .map(id => findModel(id)).filter(Boolean)
+    .map(m => `<button class="make-pill" type="button" data-garage-model="${m.id}">${esc(m.name)}</button>`).join('');
+  return `<div class="g-empty">
+    <span class="g-empty-icon">${icon('garage')}</span>
+    <h2>گاراژ شما خالی است</h2>
+    <p>خودرویتان را ثبت کنید تا هر قطعه با پلاک شما بررسی شود، پوشش کاتالوگ و چک‌لیست سرویس هم همین‌جا ساخته می‌شود.</p>
+    <div class="g-empty-cta">
+      <button class="btn btn-amber" type="button" data-open-vehicle>${icon('plus')} ثبت خودرو</button>
+      <a class="btn btn-ghost" href="shop.html">${icon('box')} دیدن فروشگاه</a>
+    </div>
+    <div class="g-empty-models">
+      <span>پرجست‌وجوترین خودروها:</span>
+      <div class="make-pills">${chips}</div>
+    </div>
+  </div>`;
+}
+
+function serviceHTML(v) {
+  const all = serviceLoad();
+  const done = all[v.key] || {};
+  return `<section class="g-panel">
+    <div class="g-panel-head">
+      <h2>${icon('wrench')} سرویس دوره‌ای</h2>
+      <span class="g-panel-note">${fa(SERVICE_TASKS.filter(t => done[t.id]).length)} از ${fa(SERVICE_TASKS.length)} انجام شد</span>
+    </div>
+    <div class="svc-list">
+      ${SERVICE_TASKS.map(task => {
+        const p = PRODUCTS.find(x => x.cat === task.cat && ['fit', 'conditional', 'universal'].includes(fitInfo(x, v).state));
+        return `<label class="svc-row ${done[task.id] ? 'is-done' : ''}">
+          <input type="checkbox" data-service="${task.id}" ${done[task.id] ? 'checked' : ''}>
+          <span class="svc-tick">${icon('check')}</span>
+          <span class="svc-txt"><b>${task.label}</b><span>${task.note}${p ? ` · ${esc(p.name)}` : ''}</span></span>
+          ${p ? `<a class="svc-link" href="product.html?id=${p.id}" aria-label="دیدن ${esc(p.name)}">${icon('chevron-left')}</a>` : ''}
+        </label>`;
+      }).join('')}
+    </div>
+    <p class="g-panel-foot">${icon('info')} بازه‌ها تقریبی و بر اساس سرویس دوره‌ای رایج خودروهای ایرانی است.</p>
+  </section>`;
+}
+
+function ordersHTML() {
+  const list = ordersLoad();
+  if (!list.length) {
+    return `<section class="g-panel">
+      <div class="g-panel-head"><h2>${icon('box')} سفارش‌های من</h2></div>
+      <p class="g-empty-line">هنوز سفارشی ثبت نکرده‌اید. اولین سفارش را از سبد خرید نهایی کنید.</p>
+    </section>`;
+  }
+  return `<section class="g-panel">
+    <div class="g-panel-head"><h2>${icon('box')} سفارش‌های من</h2><span class="g-panel-note">${fa(list.length)} سفارش</span></div>
+    <div class="ord-list">
+      ${list.slice(0, 3).map(o => {
+        let date = '';
+        try { date = new Date(o.at).toLocaleDateString('fa-IR', { day: 'numeric', month: 'short' }); } catch (err) { date = ''; }
+        return `<div class="ord-row">
+          <span class="ord-code mono" dir="ltr">${esc(o.code)}</span>
+          <span class="ord-meta">${fa((o.items || []).length)} قلم · ${date}</span>
+          <span class="ord-total mono">${money(o.total)}</span>
+          <span class="ord-state">در حال پردازش</span>
+        </div>`;
+      }).join('')}
+    </div>
+  </section>`;
+}
+
+function renderGarage() {
+  const root = $('#garageRoot');
+  if (!root) return;
+  const g = garageLoad();
+  const v = getVehicle();
+
+  if (!g.vehicles.length) {
+    root.innerHTML = garageEmptyHTML();
+    return;
+  }
+
+  const fit = v ? PRODUCTS.filter(p => ['fit', 'conditional', 'universal'].includes(fitInfo(p, v).state)) : [];
+  const cov = v ? coverageFor(v) : null;
+
+  root.innerHTML = `
+  <div class="g-cards">
+    ${g.vehicles.map(x => garageCardHTML(x, x.key === g.active)).join('')}
+    ${g.vehicles.length < 3 ? `<button class="gv-add" type="button" data-open-vehicle>
+      <span>${icon('plus')}</span>
+      <b>افزودن خودرو</b>
+      <small>تا ۳ خودرو در گاراژ</small>
+    </button>` : ''}
+  </div>
+
+  <div class="g-body">
+    <div class="g-main">
+      <div class="g-section-head">
+        <div>
+          <span class="eyebrow">${icon('check-shield')} سازگاری تأییدشده</span>
+          <h2>قطعات مناسب ${v ? `${esc(v.modelName)} ${fa(v.year)}` : 'خودروی شما'}</h2>
+        </div>
+        <a class="lnk-more" href="shop.html">همهٔ قطعات سازگار ${icon('arrow-left')}</a>
+      </div>
+      ${fit.length
+        ? `<div class="p-grid">${fit.slice(0, 4).map(productCard).join('')}</div>`
+        : `<div class="g-empty-line">${icon('info')} برای این خودرو قطعهٔ تأییدشده‌ای در کاتالوگ نیست؛ از فروشگاه فیلتر را بردارید.</div>`}
+      ${cov ? `<div class="g-covbar">
+        <span class="g-cov-txt">${icon('car')} پوشش کاتالوگ برای ${esc(v.modelName)}: <b>${fa(cov.ok)} از ${fa(cov.total)}</b> قطعه (${fa(cov.pct)}٪)</span>
+        <span class="g-cov-meter"><i style="width:${cov.pct}%"></i></span>
+      </div>` : ''}
+    </div>
+    <aside class="g-side">
+      ${v ? serviceHTML(v) : ''}
+      ${ordersHTML()}
+    </aside>
+  </div>`;
+}
+
+function initGarage() {
+  renderGarage();
+  document.addEventListener('py:vehicle', () => renderGarage());
+  document.addEventListener('click', e => {
+    const chip = e.target.closest('[data-garage-model]');
+    if (chip) { openPickerFor(chip.dataset.garageModel); return; }
+  });
+  document.addEventListener('change', e => {
+    const box = e.target.closest('[data-service]');
+    if (!box) return;
+    const v = getVehicle();
+    if (!v) return;
+    const all = serviceLoad();
+    all[v.key] = all[v.key] || {};
+    all[v.key][box.dataset.service] = box.checked;
+    serviceSave(all);
+    const row = box.closest('.svc-row');
+    if (row) row.classList.toggle('is-done', box.checked);
+    const note = $('.g-panel-note', $('.g-side') || document);
+    const done = SERVICE_TASKS.filter(t => all[v.key][t.id]).length;
+    if (note && note.textContent.includes('از')) note.textContent = `${fa(done)} از ${fa(SERVICE_TASKS.length)} انجام شد`;
+    toast(box.checked ? 'سرویس انجام‌شده ثبت شد' : 'علامت سرویس برداشته شد', box.checked ? 'success' : 'info');
+  });
+}
+
 /* ---------------- Boot ---------------- */
 document.addEventListener('DOMContentLoaded', () => {
   initHeader();
@@ -2484,6 +2689,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (page === 'shop') initShop();
   if (page === 'product') initProduct();
   if (page === 'checkout') initCheckout();
+  if (page === 'garage') initGarage();
   hydrateIcons();
 });
 
