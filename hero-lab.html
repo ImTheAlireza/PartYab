@@ -1,0 +1,1034 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>پنج ایدهٔ هیرو — آزمایشگاه طراحی پارت‌یاب</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  /* ============ shell ============ */
+  .lab {
+    background:
+      radial-gradient(900px 420px at 85% -8%, #E8EEF7, transparent 60%),
+      radial-gradient(700px 380px at 0% 100%, #FDF3E2, transparent 60%),
+      var(--bg);
+    color: var(--ink);
+    font-family: 'Vazirmatn', system-ui, sans-serif;
+    padding-bottom: 88px;
+  }
+  .lab-wrap { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
+
+  .lab-top { padding: 34px 0 6px; }
+  .lab-kicker {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 11px; font-weight: 600; letter-spacing: .02em;
+    color: var(--amber-700); background: var(--amber-50);
+    border: 1px solid #FBE2B5; border-radius: 999px; padding: 5px 12px;
+  }
+  .lab-top h1 {
+    font-size: clamp(24px, 3.4vw, 40px); font-weight: 800; letter-spacing: -.02em;
+    margin: 16px 0 10px; line-height: 1.28;
+  }
+  .lab-top h1 em { font-style: normal; color: var(--amber-600); }
+  .lab-top p { color: var(--ink-2); font-size: 14.5px; line-height: 2; max-width: 74ch; margin: 0; }
+
+  .lab-nav {
+    display: flex; gap: 8px; flex-wrap: wrap; margin: 20px 0 0;
+    padding: 10px; background: #fff; border: 1px solid var(--line);
+    border-radius: var(--r); box-shadow: var(--sh-xs);
+  }
+  .lab-nav a {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 12.5px; font-weight: 600; color: var(--ink-2);
+    padding: 8px 12px; border-radius: 9px; border: 1px solid transparent;
+  }
+  .lab-nav a:hover { background: var(--surface-2); color: var(--navy); }
+  .lab-nav a b {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    background: var(--navy); color: #fff; width: 19px; height: 19px;
+    display: grid; place-items: center; border-radius: 5px;
+  }
+
+  /* ============ item frame ============ */
+  .lab-item { margin-top: 40px; scroll-margin-top: 16px; }
+  .lab-item.is-picked .lab-stage { box-shadow: 0 0 0 3px var(--amber), var(--sh-lg); }
+  .lab-item.is-picked .pick-btn { background: var(--amber); color: #241703; border-color: transparent; }
+  .lab-item.is-picked .pick-btn::after { content: " ✓"; }
+
+  .lab-head { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
+  .lab-num {
+    flex: none; width: 40px; height: 40px; border-radius: 12px;
+    display: grid; place-items: center;
+    font-family: 'IBM Plex Mono', monospace; font-size: 16px; font-weight: 600;
+    background: var(--navy); color: #fff; box-shadow: var(--sh-sm);
+  }
+  .lab-head h2 { font-size: 18px; font-weight: 800; margin: 0 0 5px; letter-spacing: -.01em; }
+  .lab-head p { margin: 0; font-size: 13px; line-height: 1.95; color: var(--muted); max-width: 78ch; }
+  .lab-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 9px; }
+  .lab-tags span {
+    font-size: 10.5px; font-weight: 600; color: var(--ink-2);
+    background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 3px 9px;
+  }
+  .lab-tags span.hot { color: var(--amber-700); background: var(--amber-50); border-color: #FBE2B5; }
+  .pick-btn {
+    margin-inline-start: auto; flex: none;
+    display: inline-flex; align-items: center; gap: 7px;
+    min-height: 40px; padding: 0 16px; border-radius: 10px; cursor: pointer;
+    background: #fff; border: 1px solid var(--line); color: var(--navy);
+    font-family: inherit; font-size: 12.5px; font-weight: 700;
+    box-shadow: var(--sh-xs); transition: transform .15s, background .15s;
+  }
+  .pick-btn:hover { transform: translateY(-1px); }
+
+  .lab-stage {
+    border-radius: var(--r-xl); overflow: hidden; background: var(--navy-950);
+    box-shadow: var(--sh-md); transition: box-shadow .2s;
+  }
+
+  /* ============ shared hero atoms ============ */
+  .hx { font-family: 'Vazirmatn', sans-serif; position: relative; overflow: hidden; }
+  .hx-eyebrow {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 11px; font-weight: 600; letter-spacing: .01em;
+  }
+  .hx h2 { margin: 0; font-weight: 800; letter-spacing: -.02em; line-height: 1.3; }
+  .hx p.sub { margin: 0; font-size: 13.5px; line-height: 2.05; }
+  .hx-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    min-height: 46px; padding: 0 20px; border-radius: 11px;
+    font-size: 13.5px; font-weight: 700; white-space: nowrap;
+    border: 1px solid transparent; cursor: pointer;
+  }
+  .hx-btn--amber { background: var(--amber); color: #241703; box-shadow: 0 12px 26px -12px rgba(245,158,11,.7); }
+  .hx-btn--ghost { background: rgba(255,255,255,.07); color: #fff; border-color: rgba(255,255,255,.2); }
+  .hx-btn--navy { background: var(--navy); color: #fff; }
+  .hx-btn--line { background: #fff; color: var(--navy); border-color: var(--line); }
+  .hx .icon { width: 18px; height: 18px; flex: none; }
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+
+  .chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 10.5px; font-weight: 600; border-radius: 999px; padding: 4px 10px;
+    border: 1px solid var(--line); background: #fff; color: var(--ink-2);
+  }
+  .chip--fit { background: var(--green-bg); border-color: var(--green-line); color: var(--green); }
+  .chip--cond { background: var(--warn-bg); border-color: var(--warn-line); color: var(--warn); }
+  .chip--unk { background: #F1F5F9; border-color: #E2E8F0; color: #64748B; }
+  .chip--uni { background: #EFF4FF; border-color: #C7D7FE; color: #1D4ED8; }
+  .chip--no { background: var(--red-bg); border-color: var(--red-line); color: var(--red); }
+
+  /* ============ A — plate / garage first (light) ============ */
+  .hA {
+    background: #fff; color: var(--ink);
+    padding: 44px 40px 46px;
+    display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 40px;
+    align-items: center;
+    border-bottom: 3px solid var(--amber);
+  }
+  .hA::before {
+    content: ""; position: absolute; inset-block: 0; inset-inline-end: 0; width: 46%;
+    background:
+      linear-gradient(120deg, rgba(19,34,56,.045) 1px, transparent 1px) 0 0/26px 26px,
+      radial-gradient(80% 60% at 80% 0%, #FFF6E5, transparent 70%);
+    pointer-events: none;
+  }
+  .hA > * { position: relative; }
+  .hA .hx-eyebrow { color: var(--amber-700); }
+  .hA h2 { font-size: clamp(26px, 3vw, 40px); margin: 14px 0 12px; }
+  .hA h2 span { color: var(--amber-600); }
+  .hA p.sub { color: var(--muted); max-width: 46ch; }
+
+  .plate-row { display: flex; gap: 8px; align-items: stretch; margin-top: 22px; max-width: 460px; }
+  .plate {
+    flex: 1; display: flex; align-items: stretch; min-width: 0;
+    background: #fff; border: 2px solid var(--navy); border-radius: 10px;
+    overflow: hidden; box-shadow: var(--sh-sm);
+  }
+  .plate-ir {
+    display: grid; place-content: center; gap: 1px; text-align: center;
+    background: #1E40AF; color: #fff; padding: 0 7px; flex: none;
+  }
+  .plate-ir small { font-size: 7.5px; font-weight: 600; letter-spacing: .04em; }
+  .plate-ir b { font-family: 'IBM Plex Mono', monospace; font-size: 11px; }
+  .plate-digits {
+    flex: 1; min-width: 0; display: flex; align-items: center; justify-content: center; gap: 4px;
+    padding: 8px 6px; font-family: 'IBM Plex Mono', monospace;
+    font-size: clamp(17px, 2.1vw, 22px); font-weight: 600; letter-spacing: .01em; color: var(--navy);
+  }
+  .plate-digits::after { content: ""; width: 1px; height: 60%; background: var(--line); }
+  .plate-letter {
+    flex: none; display: grid; place-items: center; padding: 0 9px;
+    font-size: 15px; font-weight: 800; color: var(--navy);
+  }
+  .plate-row .hx-btn { flex: none; }
+  .hA .hint { margin: 10px 0 0; font-size: 11.5px; color: var(--muted-2); }
+
+  .garage {
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    margin-top: 20px; padding-top: 18px; border-top: 1px dashed var(--line);
+  }
+  .garage-label { font-size: 11px; color: var(--muted); display: inline-flex; align-items: center; gap: 5px; }
+  .garage-car {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11.5px; font-weight: 600; color: var(--ink-2);
+    background: var(--surface-2); border: 1px solid var(--line);
+    border-radius: 999px; padding: 6px 11px; cursor: pointer;
+  }
+  .garage-car.is-on { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .garage-car .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+
+  .result-card {
+    background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg);
+    box-shadow: var(--sh-md); overflow: hidden;
+  }
+  .result-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    padding: 13px 15px; border-bottom: 1px solid var(--line-2); background: #FCFDFF;
+  }
+  .result-head b { font-size: 12.5px; font-weight: 700; }
+  .result-head span { font-size: 10.5px; color: var(--muted); }
+  .result-rows { padding: 6px; }
+  .result-row {
+    display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 10px;
+    align-items: center; padding: 9px 9px; border-radius: 10px;
+  }
+  .result-row + .result-row { border-top: 1px solid var(--line-2); border-radius: 0; }
+  .result-row img { width: 44px; height: 44px; border-radius: 8px; object-fit: cover; background: var(--surface-2); }
+  .result-row .n { font-size: 12px; font-weight: 600; line-height: 1.6; }
+  .result-row .m { font-size: 10px; color: var(--muted); margin-top: 3px; display: flex; gap: 6px; align-items: center; }
+  .result-row .pr { text-align: left; font-size: 12.5px; font-weight: 800; white-space: nowrap; }
+  .result-row .pr small { display: block; font-size: 9px; font-weight: 500; color: var(--muted-2); }
+
+  /* ============ B — slider (dark) ============ */
+  .hB { background: var(--navy-950); color: #fff; }
+  .hB-track {
+    display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+    scrollbar-width: none; -ms-overflow-style: none;
+  }
+  .hB-track::-webkit-scrollbar { display: none; }
+  .hB-slide {
+    flex: 0 0 100%; scroll-snap-align: start;
+    min-height: 430px; padding: 42px 40px;
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 36px; align-items: center;
+    position: relative; overflow: hidden;
+  }
+  .hB-slide::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(70% 80% at 88% 10%, rgba(245,158,11,.18), transparent 62%);
+  }
+  .hB-slide--2::after { background: radial-gradient(70% 80% at 12% 12%, rgba(56,189,248,.16), transparent 62%); }
+  .hB-slide--3::after { background: radial-gradient(70% 80% at 50% 100%, rgba(21,128,61,.22), transparent 60%); }
+  .hB-slide > * { position: relative; z-index: 1; }
+  .hB .hx-eyebrow { color: #FBBF24; }
+  .hB h2 { font-size: clamp(24px, 3vw, 38px); margin: 13px 0 12px; }
+  .hB p.sub { color: #B9C6D6; max-width: 44ch; }
+  .hB-cta { display: flex; gap: 9px; margin-top: 22px; flex-wrap: wrap; }
+
+  .clock-row { display: flex; gap: 8px; margin-top: 20px; }
+  .clock {
+    min-width: 62px; padding: 8px 6px 7px; border-radius: 11px; text-align: center;
+    background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14);
+  }
+  .clock b { display: block; font-family: 'IBM Plex Mono', monospace; font-size: 21px; font-weight: 600; color: #FBBF24; line-height: 1.2; }
+  .clock span { font-size: 9px; color: #9FB1C6; }
+
+  .slide-cards { display: grid; gap: 10px; }
+  .mini {
+    display: grid; grid-template-columns: 54px minmax(0,1fr) auto; gap: 11px; align-items: center;
+    padding: 9px; border-radius: 13px; background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.12);
+  }
+  .mini img { width: 54px; height: 54px; border-radius: 9px; object-fit: cover; }
+  .mini b { display: block; font-size: 11.5px; font-weight: 600; color: #fff; line-height: 1.6; }
+  .mini .st { font-size: 9.5px; color: #9FB1C6; display: flex; gap: 6px; align-items: center; margin-top: 3px; }
+  .mini .price { text-align: left; font-size: 12px; font-weight: 800; color: #fff; white-space: nowrap; }
+  .mini .price s { display: block; font-size: 9px; color: #7C8B9E; font-weight: 500; }
+
+  .state-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; }
+  .state-pill {
+    display: flex; align-items: center; gap: 8px; padding: 9px 11px; border-radius: 11px;
+    font-size: 11px; font-weight: 600; background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.12);
+  }
+  .state-pill i { width: 5px; height: 26px; border-radius: 3px; flex: none; }
+  .state-pill .t { color: #fff; }
+  .state-pill .d { font-size: 9px; color: #8E9EB2; font-weight: 500; display: block; margin-top: 2px; }
+  .s-fit i { background: var(--green); }
+  .s-cond i { background: repeating-linear-gradient(180deg, var(--amber) 0 4px, transparent 4px 8px); }
+  .s-ask i { background: repeating-linear-gradient(180deg, #CBD5E1 0 3px, transparent 3px 7px); }
+  .s-no i { background: var(--red); opacity: .75; }
+
+  .kit { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 9px; }
+  .kit div {
+    padding: 12px; border-radius: 13px; background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.12); text-align: center;
+  }
+  .kit img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 9px; background: #1a2b42; }
+  .kit b { display: block; font-size: 10.5px; margin-top: 7px; color: #fff; font-weight: 600; }
+  .kit span { font-size: 9.5px; color: #FBBF24; }
+
+  .hB-nav {
+    position: relative; display: flex; align-items: center; justify-content: space-between;
+    gap: 10px; padding: 12px 16px; background: var(--navy-900);
+    border-top: 1px solid rgba(255,255,255,.08);
+  }
+  .hB-dots { display: flex; gap: 6px; }
+  .hB-dots button {
+    width: 22px; height: 4px; border-radius: 3px; border: 0; cursor: pointer;
+    background: rgba(255,255,255,.25); padding: 0;
+  }
+  .hB-dots button.on { background: var(--amber); width: 34px; }
+  .hB-arrows { display: flex; gap: 6px; }
+  .hB-arrows button {
+    width: 30px; height: 30px; border-radius: 8px; cursor: pointer;
+    display: grid; place-items: center; border: 1px solid rgba(255,255,255,.2);
+    background: rgba(255,255,255,.06); color: #fff;
+  }
+  .hB-arrows button:hover { background: var(--amber); color: #241703; border-color: transparent; }
+  .hB-arrows .icon { width: 14px; height: 14px; }
+
+  /* ============ C — flash sale (amber) ============ */
+  .hC {
+    background: var(--navy); color: #fff; padding: 40px;
+    display: grid; grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr); gap: 34px; align-items: center;
+  }
+  .hC::before {
+    content: ""; position: absolute; inset-block: -30% ; inset-inline-start: -10%; width: 60%;
+    background: radial-gradient(closest-side, rgba(245,158,11,.28), transparent 70%);
+    transform: rotate(12deg); pointer-events: none;
+  }
+  .hC > * { position: relative; }
+  .hC h2 { font-size: clamp(24px, 3.1vw, 40px); margin: 12px 0 10px; }
+  .hC h2 em { font-style: normal; color: #FBBF24; }
+  .hC p.sub { color: #B9C6D6; max-width: 40ch; }
+  .hC .flash-badge {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: var(--amber); color: #241703; font-weight: 800; font-size: 11.5px;
+    border-radius: 999px; padding: 6px 12px;
+  }
+  .hC .clock-row { margin-top: 18px; }
+  .hC .clock { background: rgba(0,0,0,.25); border-color: rgba(245,158,11,.35); }
+
+  .bar-wrap { margin-top: 18px; max-width: 360px; }
+  .bar-label { display: flex; justify-content: space-between; font-size: 10.5px; color: #9FB1C6; margin-bottom: 6px; }
+  .bar-label b { color: #FBBF24; }
+  .bar { height: 7px; border-radius: 5px; background: rgba(255,255,255,.14); overflow: hidden; }
+  .bar i { display: block; height: 100%; border-radius: 5px; background: linear-gradient(90deg, var(--amber-600), #FBBF24); }
+
+  .deal-strip { display: grid; gap: 9px; }
+  .deal {
+    display: grid; grid-template-columns: 58px minmax(0,1fr) auto; gap: 12px; align-items: center;
+    padding: 10px; border-radius: 14px;
+    background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.13);
+    backdrop-filter: blur(2px);
+  }
+  .deal img { width: 58px; height: 58px; border-radius: 10px; object-fit: cover; }
+  .deal b { font-size: 11.5px; color: #fff; font-weight: 600; line-height: 1.65; display: block; }
+  .deal .off { display: inline-block; margin-top: 4px; font-size: 9px; font-weight: 700; color: #241703; background: var(--amber); border-radius: 5px; padding: 1px 6px; }
+  .deal .p { text-align: left; white-space: nowrap; }
+  .deal .p b { font-size: 12.5px; font-weight: 800; }
+  .deal .p s { display: block; font-size: 9px; color: #8794A6; }
+
+  /* ============ D — OEM console (dark) ============ */
+  .hD {
+    background: #060F1B; color: #fff; padding: 42px 40px;
+    display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr); gap: 36px; align-items: center;
+  }
+  .hD::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background:
+      linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px) 0 0/100% 34px,
+      linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px) 0 0/34px 100%;
+    mask-image: radial-gradient(80% 70% at 50% 30%, #000 40%, transparent 90%);
+  }
+  .hD > * { position: relative; }
+  .hD h2 { font-size: clamp(23px, 2.9vw, 36px); margin: 12px 0 10px; }
+  .hD p.sub { color: #93A7BD; max-width: 46ch; }
+  .hD .hx-eyebrow { color: #4ADE80; letter-spacing: .04em; }
+  .console { margin-top: 20px; }
+  .console-field {
+    display: flex; align-items: center; gap: 9px; padding: 6px 6px 6px 14px;
+    border-radius: 12px; background: #0C1929; border: 1px solid #21374F;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+  }
+  .console-field .tag {
+    font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: .08em;
+    color: #4ADE80; border: 1px solid rgba(74,222,128,.35); border-radius: 5px; padding: 3px 6px;
+  }
+  .console-field input {
+    flex: 1; min-width: 0; background: transparent; border: 0; outline: none;
+    color: #E6EFFA; font-family: 'IBM Plex Mono', monospace; font-size: 14px; padding: 8px 0;
+  }
+  .console-field input::placeholder { color: #5A7189; }
+  .console-field .hx-btn { min-height: 38px; padding: 0 14px; font-size: 12.5px; }
+  .console-out {
+    margin-top: 12px; border-radius: 12px; overflow: hidden;
+    border: 1px solid #1B2E44; background: #081422;
+  }
+  .console-out header {
+    display: flex; align-items: center; gap: 7px; padding: 8px 12px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #7E93A9;
+    border-bottom: 1px solid #14283C; background: #0B1828;
+  }
+  .console-out header i { width: 6px; height: 6px; border-radius: 50%; background: #4ADE80; }
+  .console-line {
+    display: grid; grid-template-columns: 92px 60px minmax(0,1fr) auto; gap: 10px; align-items: center;
+    padding: 9px 12px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #C7D7E8;
+  }
+  .console-line + .console-line { border-top: 1px solid #10202F; }
+  .console-line .c { color: #FBBF24; }
+  .console-line .b { color: #8FA5BB; font-family: 'Vazirmatn', sans-serif; font-size: 10.5px; }
+  .console-line .eq {
+    font-family: 'Vazirmatn', sans-serif; font-size: 10px; color: #7E93A9;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .chain { display: grid; gap: 8px; }
+  .chain-node {
+    display: flex; align-items: center; gap: 9px; padding: 10px 12px; border-radius: 11px;
+    background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1);
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #D7E4F2;
+  }
+  .chain-node small { font-family: 'Vazirmatn', sans-serif; font-size: 9.5px; color: #7E93A9; margin-inline-start: auto; }
+  .chain-node.main { border-color: rgba(245,158,11,.5); background: rgba(245,158,11,.1); color: #FBBF24; }
+  .chain-head { font-size: 10.5px; color: #7E93A9; margin-bottom: 2px; display: flex; align-items: center; gap: 6px; }
+
+  /* ============ E — annotated card (light) ============ */
+  .hE {
+    background: linear-gradient(180deg, #FAFCFF, #EFF4FA); color: var(--ink);
+    padding: 44px 40px; display: grid; grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
+    gap: 34px; align-items: center; border-bottom: 3px solid var(--navy);
+  }
+  .hE::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background:
+      linear-gradient(rgba(19,34,56,.05) 1px, transparent 1px) 0 0/100% 30px,
+      linear-gradient(90deg, rgba(19,34,56,.05) 1px, transparent 1px) 0 0/30px 100%;
+    mask-image: radial-gradient(70% 60% at 30% 40%, #000 30%, transparent 85%);
+  }
+  .hE > * { position: relative; }
+  .hE h2 { font-size: clamp(24px, 3vw, 38px); margin: 12px 0 12px; }
+  .hE p.sub { color: var(--muted); max-width: 42ch; }
+  .hE .feat { display: grid; gap: 9px; margin-top: 20px; }
+  .hE .feat div { display: flex; gap: 9px; align-items: flex-start; font-size: 12px; color: var(--ink-2); line-height: 1.85; }
+  .hE .feat .icon { width: 17px; height: 17px; color: var(--amber-600); margin-top: 2px; }
+  .hE .feat b { color: var(--ink); }
+
+  .annotated { position: relative; padding: 26px 18px 26px 18px; }
+  .annotated .p-card { max-width: 330px; margin: 0 auto; background: #fff; border-radius: var(--r-lg); box-shadow: var(--sh-lg); position: relative; }
+  .annotated .p-media { aspect-ratio: 4 / 3; border-radius: var(--r-lg) var(--r-lg) 0 0; }
+  .annotated .p-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .annotated .p-body { padding: 12px 14px 14px; display: grid; gap: 7px; }
+  .annotated .p-title { font-size: 13px; font-weight: 700; line-height: 1.7; margin: 0; }
+  .annotated .row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .annotated .price-line { display: flex; align-items: baseline; gap: 7px; }
+  .annotated .price-line b { font-size: 17px; font-weight: 800; }
+  .annotated .price-line s { font-size: 10px; color: var(--muted-2); }
+  .annotated .price-line small { font-size: 9.5px; color: var(--muted); }
+
+  .callout {
+    position: absolute; display: flex; align-items: center; gap: 7px;
+    background: #fff; border: 1px solid var(--line); border-radius: 999px;
+    box-shadow: var(--sh-md); padding: 5px 11px 5px 6px;
+    font-size: 10.5px; font-weight: 600; color: var(--ink-2); white-space: nowrap;
+  }
+  .callout i {
+    font-family: 'IBM Plex Mono', monospace; font-style: normal; font-size: 9.5px; font-weight: 600;
+    width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center;
+    background: var(--amber); color: #241703;
+  }
+  .callout::after {
+    content: ""; position: absolute; height: 1px; width: 46px;
+    background: repeating-linear-gradient(90deg, var(--muted-2) 0 4px, transparent 4px 8px);
+    top: 50%;
+  }
+  .co-1 { inset-block-start: 50px; inset-inline-start: 2px; }
+  .co-1::after { inset-inline-start: 100%; }
+  .co-2 { inset-block-start: 108px; inset-inline-start: 2px; }
+  .co-2::after { inset-inline-start: 100%; }
+  .co-3 { inset-block-start: 236px; inset-inline-end: 2px; }
+  .co-3::after { inset-inline-end: 100%; }
+  .co-4 { inset-block-start: 300px; inset-inline-end: 2px; }
+  .co-4::after { inset-inline-end: 100%; }
+
+  /* ============ mobile ============ */
+  @media (max-width: 1000px) {
+    .hA, .hB-slide, .hC, .hD, .hE { grid-template-columns: minmax(0, 1fr); gap: 26px; padding: 30px 22px; }
+    .hB-slide { min-height: 0; }
+    .hA::before { display: none; }
+    .annotated { padding: 6px 4px; }
+    .callout { display: none; }
+    .hD .chain { display: none; }
+  }
+  @media (max-width: 620px) {
+    .lab-head { flex-wrap: wrap; }
+    .pick-btn { margin-inline-start: 0; width: 100%; justify-content: center; }
+    .hA, .hB-slide, .hC, .hD, .hE { padding: 24px 16px; }
+    .plate-row { flex-direction: column; }
+    .plate { min-height: 54px; }
+    .kit { grid-template-columns: repeat(3, minmax(0,1fr)); gap: 6px; }
+    .state-grid { grid-template-columns: minmax(0,1fr); }
+    .console-line { grid-template-columns: 78px minmax(0,1fr) auto; }
+    .console-line .b { display: none; }
+    .results-head, .result-row { font-size: 11px; }
+  }
+
+  /* ============ features map ============ */
+  .feat-map { margin-top: 56px; background: #fff; border: 1px solid var(--line); border-radius: var(--r-xl); padding: 28px; box-shadow: var(--sh-sm); }
+  .feat-map h2 { font-size: 20px; font-weight: 800; margin: 0 0 6px; }
+  .feat-map > p { margin: 0 0 20px; font-size: 13px; color: var(--muted); line-height: 1.95; }
+  .feat-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 22px; }
+  .feat-col h3 {
+    font-size: 12px; font-weight: 700; color: var(--navy); margin: 0 0 9px;
+    display: flex; align-items: center; gap: 7px; padding-bottom: 7px; border-bottom: 1px solid var(--line-2);
+  }
+  .feat-col h3 .icon { width: 15px; height: 15px; color: var(--amber-600); }
+  .feat-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+  .feat-col li { display: flex; align-items: flex-start; gap: 7px; font-size: 11.5px; line-height: 1.75; color: var(--ink-2); }
+  .feat-col li small { font-size: 9px; font-weight: 700; border-radius: 4px; padding: 1px 5px; margin-inline-start: auto; white-space: nowrap; flex: none; }
+  .s-new { background: var(--amber-50); color: var(--amber-700); border: 1px solid #FBE2B5; }
+  .s-live { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-line); }
+  .s-next { background: #EEF2F7; color: var(--muted); border: 1px solid var(--line); }
+
+  /* ============ sticky picker ============ */
+  .pickbar {
+    position: fixed; inset-inline: 0; inset-block-end: 0; z-index: 50;
+    display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap;
+    padding: 11px 16px; background: rgba(8,19,32,.94); color: #fff;
+    backdrop-filter: blur(8px); border-top: 1px solid rgba(255,255,255,.1);
+    font-size: 12.5px;
+  }
+  .pickbar b { color: #FBBF24; }
+  .pickbar .mono { font-size: 11px; color: #9FB1C6; }
+  @media (max-width: 620px) { .pickbar { font-size: 11px; padding: 9px 12px; } }
+</style>
+</head>
+<body class="lab">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="i-car"><path d="M3 13l1.8-4.6A2 2 0 0 1 6.7 7h10.6a2 2 0 0 1 1.9 1.4L21 13v4a1 1 0 0 1-1 1h-1.5a2 2 0 0 1-4 0h-5a2 2 0 0 1-4 0H4a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="7.5" cy="16.5" r="1.6" fill="currentColor"/><circle cx="16.5" cy="16.5" r="1.6" fill="currentColor"/></g>
+    <g id="i-search"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M15.5 15.5L20 20" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></g>
+    <g id="i-shield"><path d="M12 3l7 3v6c0 4.4-2.9 7.6-7 9-4.1-1.4-7-4.6-7-9V6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8.8 12.2l2.2 2.2 4.2-4.4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="i-clock"><circle cx="12" cy="12" r="8.4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 7.6V12l3 1.8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></g>
+    <g id="i-bolt"><path d="M13.2 2 5 13.4h5l-.8 8.6L18 10.2h-5.1z" fill="currentColor"/></g>
+    <g id="i-plus"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></g>
+    <g id="i-chev-r"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="i-chev-l"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="i-code"><path d="M9 6l-5 6 5 6M15 6l5 6-5 6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="i-garage"><path d="M3 20V9.6L12 4l9 5.6V20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M7.5 20v-5.4h9V20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></g>
+    <g id="i-tag"><path d="M12.4 3H20v7.6L11 19.6l-7.6-7.6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="16.4" cy="6.6" r="1.3" fill="currentColor"/></g>
+    <g id="i-layers"><path d="M12 3l8 4.4-8 4.4-8-4.4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M4 12.4l8 4.4 8-4.4M4 16.8l8 4.4 8-4.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></g>
+    <g id="i-truck"><path d="M3 7h10v9H3z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 10h4l4 3.4V16h-8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="7" cy="18" r="1.7" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="17" cy="18" r="1.7" fill="none" stroke="currentColor" stroke-width="1.6"/></g>
+    <g id="i-star"><path d="M12 4l2.5 5.1 5.5.8-4 3.9 1 5.5-5-2.7-5 2.7 1-5.5-4-3.9 5.5-.8z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></g>
+  </defs>
+</svg>
+
+<div class="lab-wrap">
+
+  <header class="lab-top">
+    <span class="lab-kicker"><svg class="icon" style="width:13px;height:13px"><use href="#i-layers"/></svg> آزمایشگاه طراحی · نسخهٔ ۴</span>
+    <h1>پنج هیرو، پنج شخصیت. <em>کدامش را می‌خواهی؟</em></h1>
+    <p>
+      هر پنج نمونه واقعی و تعاملی‌اند (اسلایدر و تایمر کار می‌کنند). دکمهٔ «این را می‌خواهم» را بزن یا فقط شماره‌اش را بگو؛
+      بعد همان را تا آخر (موبایل، تبلت، لایت‌دارک و ووکامرس) پیاده می‌کنم و بقیه را کنار می‌گذارم.
+      زیر صفحه هم نقشهٔ کامل قابلیت‌های سایت را گذاشته‌ام: اسلایدر، فروش ویژه، حراج با تایمر، مقایسه، گاراژ چندخودرویی و…
+    </p>
+    <nav class="lab-nav">
+      <a href="#idea-a"><b>A</b> پلاک / گاراژ</a>
+      <a href="#idea-b"><b>B</b> اسلایدر ویترینی</a>
+      <a href="#idea-c"><b>C</b> حراج با تایمر</a>
+      <a href="#idea-d"><b>D</b> کنسول کد فنی</a>
+      <a href="#idea-e"><b>E</b> کارت حاشیه‌نویسی‌شده</a>
+      <a href="#features"><b>★</b> نقشهٔ قابلیت‌ها</a>
+    </nav>
+  </header>
+
+  <!-- ============================ A ============================ -->
+  <article class="lab-item" id="idea-a" data-idea="A" data-name="پلاک / گاراژ">
+    <div class="lab-head">
+      <span class="lab-num">A</span>
+      <div>
+        <h2>«پلاک» — هیرو گاراژمحور</h2>
+        <p>هیرو خودش یک ابزار است: پلاک را می‌زنی (یا از گاراژ انتخاب می‌کنی) و همان لحظه فهرست، فیلترشده نشان داده می‌شود. مناسب‌ترین گزینه برای «ایران‌محور» بودن؛ همان کاری که آدم در سایت قطعات دنبالش است.</p>
+        <div class="lab-tags"><span class="hot">ایران‌محور</span><span>کمترین کلیک تا محصول</span><span>گاراژ چندخودرویی</span><span>سبک</span></div>
+      </div>
+      <button class="pick-btn" data-pick="A">این را می‌خواهم</button>
+    </div>
+
+    <div class="lab-stage">
+      <section class="hx hA">
+        <div>
+          <span class="hx-eyebrow"><svg class="icon"><use href="#i-car"/></svg> سه ثانیه تا قطعهٔ درست</span>
+          <h2>پلاک بزن،<br><span>قطعهٔ خودت</span> را ببین</h2>
+          <p class="sub">کد فنی، کدهای معادل و وضعیت سازگاری هر قطعه با خودروی تو — قبل از اینکه سبد را ببینی.</p>
+
+          <form class="plate-row" onsubmit="return false">
+            <div class="plate" aria-hidden="true">
+              <div class="plate-ir"><small>ایران</small><b>۱۱</b></div>
+              <div class="plate-digits">۱۲ &nbsp;ب&nbsp; ۳۴۵</div>
+              <div class="plate-letter">۶</div>
+            </div>
+            <button class="hx-btn hx-btn--navy" type="button">
+              <svg class="icon"><use href="#i-search"/></svg> قطعات خودروی من
+            </button>
+          </form>
+          <p class="hint">یا با کد فنی ۱۲ رقمی جست‌وجو کن — بدون ثبت‌نام.</p>
+
+          <div class="garage">
+            <span class="garage-label"><svg class="icon" style="width:14px;height:14px"><use href="#i-garage"/></svg> گاراژ من:</span>
+            <span class="garage-car is-on"><i class="dot"></i> پژو ۲۰۶ تیپ ۵</span>
+            <span class="garage-car"><i class="dot"></i> سمند LX</span>
+            <span class="garage-car">+ افزودن</span>
+          </div>
+        </div>
+
+        <div class="result-card">
+          <div class="result-head">
+            <b>۴۲ قطعه برای پژو ۲۰۶ تیپ ۵</b>
+            <span>فیلترشده بر اساس خودرو</span>
+          </div>
+          <div class="result-rows">
+            <div class="result-row">
+              <img src="assets/img/p-brake.jpg" alt="">
+              <div>
+                <div class="n">لنت ترمز جلو TRW</div>
+                <div class="m"><span class="mono">4253.42</span> <span class="chip chip--fit">سازگار</span></div>
+              </div>
+              <div class="pr">۱٬۸۵۰٬۰۰۰<small>تومان</small></div>
+            </div>
+            <div class="result-row">
+              <img src="assets/img/p-shock.jpg" alt="">
+              <div>
+                <div class="n">کمک فنر جلو چپ</div>
+                <div class="m"><span class="mono">3120.08</span> <span class="chip chip--cond">با شرط · ABS</span></div>
+              </div>
+              <div class="pr">۳٬۲۴۰٬۰۰۰<small>تومان</small></div>
+            </div>
+            <div class="result-row">
+              <img src="assets/img/p-airfilter.jpg" alt="">
+              <div>
+                <div class="n">فیلتر هوا کاغذی</div>
+                <div class="m"><span class="mono">1444.90</span> <span class="chip chip--uni">عمومی</span></div>
+              </div>
+              <div class="pr">۳۸۵٬۰۰۰<small>تومان</small></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </article>
+
+  <!-- ============================ B ============================ -->
+  <article class="lab-item" id="idea-b" data-idea="B" data-name="اسلایدر ویترینی">
+    <div class="lab-head">
+      <span class="lab-num">B</span>
+      <div>
+        <h2>«ویترین گردان» — هیرو اسلایدری</h2>
+        <p>سه اسلاید که هر کدام یک کار می‌کند: فروش ویژه با تایمر، آموزش پنج حالت سازگاری، و کیت تعمیر کامل. همان اسلایدری که خواستی، اما هر اسلاید پیام خودش را دارد و تکراری نیست.</p>
+        <div class="lab-tags"><span class="hot">اسلایدر</span><span class="hot">فروش ویژه</span><span>آموزش سازگاری</span><span>کیت تعمیر</span></div>
+      </div>
+      <button class="pick-btn" data-pick="B">این را می‌خواهم</button>
+    </div>
+
+    <div class="lab-stage">
+      <section class="hx hB" data-slider>
+        <div class="hB-track" data-track>
+          <!-- slide 1 -->
+          <div class="hB-slide">
+            <div>
+              <span class="hx-eyebrow"><svg class="icon" style="width:14px;height:14px"><use href="#i-bolt"/></svg> فروش ویژه · ۴۸ ساعته</span>
+              <h2>تا ۳۵٪ ارزان‌تر،<br>فقط تا پایان فردا</h2>
+              <p class="sub">قطعات پرمصرف سرویس دوره‌ای — با گارانتی اصالت و سازگاری تضمین‌شده با خودروی انتخاب‌شده.</p>
+              <div class="clock-row" data-countdown>
+                <div class="clock"><b data-cd="h">۰۷</b><span>ساعت</span></div>
+                <div class="clock"><b data-cd="m">۴۲</b><span>دقیقه</span></div>
+                <div class="clock"><b data-cd="s">۱۸</b><span>ثانیه</span></div>
+              </div>
+              <div class="hB-cta">
+                <button class="hx-btn hx-btn--amber" type="button"><svg class="icon"><use href="#i-tag"/></svg> دیدن پیشنهادها</button>
+                <button class="hx-btn hx-btn--ghost" type="button">همهٔ فروش‌های ویژه</button>
+              </div>
+            </div>
+            <div class="slide-cards">
+              <div class="mini">
+                <img src="assets/img/p-brake.jpg" alt="">
+                <div><b>لنت ترمز جلو TRW</b><div class="st"><span class="chip chip--fit">سازگار</span> ۲۰۶ / سمند</div></div>
+                <div class="price">۱٬۸۵۰٬۰۰۰<s>۲٬۱۵۰٬۰۰۰</s></div>
+              </div>
+              <div class="mini">
+                <img src="assets/img/p-oilfilter.jpg" alt="">
+                <div><b>فیلتر روغن + واشر</b><div class="st"><span class="chip chip--fit">سازگار</span> ۲۰۶ / دنا</div></div>
+                <div class="price">۲۴۵٬۰۰۰<s>۳۲۰٬۰۰۰</s></div>
+              </div>
+              <div class="mini">
+                <img src="assets/img/p-wiper.jpg" alt="">
+                <div><b>تیغهٔ برف‌پاک‌کن ۲۶ اینچ</b><div class="st"><span class="chip chip--uni">عمومی</span> همهٔ خودروها</div></div>
+                <div class="price">۴۹۰٬۰۰۰<s>۶۲۰٬۰۰۰</s></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- slide 2 -->
+          <div class="hB-slide hB-slide--2">
+            <div>
+              <span class="hx-eyebrow"><svg class="icon" style="width:14px;height:14px"><use href="#i-shield"/></svg> پنج حالت سازگاری</span>
+              <h2>قبل از خرید بدان<br>قطعه <u style="text-decoration-color:var(--amber);text-decoration-thickness:3px">واقعاً</u> می‌خورد یا نه</h2>
+              <p class="sub">هیچ فروشگاه ایرانی این را شفاف نمی‌گوید. ما روی هر کارت، وضعیت را با رنگ + آیکن + الگوی خط نشان می‌دهیم.</p>
+              <div class="hB-cta">
+                <button class="hx-btn hx-btn--amber" type="button">راهنمای سازگاری</button>
+                <button class="hx-btn hx-btn--ghost" type="button">خودروی من را بررسی کن</button>
+              </div>
+            </div>
+            <div class="state-grid">
+              <div class="state-pill s-fit"><i></i><span><span class="t">سازگار</span><span class="d">مطابق کاتالوگ سازنده</span></span></div>
+              <div class="state-pill s-cond"><i></i><span><span class="t">سازگار با شرط</span><span class="d">فقط تیپ ۵ و ۶ با ABS</span></span></div>
+              <div class="state-pill s-ask"><i></i><span><span class="t">نیاز به استعلام</span><span class="d">کد فنی خودرو را بفرست</span></span></div>
+              <div class="state-pill s-no"><i></i><span><span class="t">ناسازگار</span><span class="d">این قطعه را نخر</span></span></div>
+            </div>
+          </div>
+
+          <!-- slide 3 -->
+          <div class="hB-slide hB-slide--3">
+            <div>
+              <span class="hx-eyebrow"><svg class="icon" style="width:14px;height:14px"><use href="#i-layers"/></svg> کیت تعمیر کامل</span>
+              <h2>همهٔ قطعات یک تعمیر،<br>در یک بستهٔ واحد</h2>
+              <p class="sub">تعویض تسمه تایم، سرویس ۱۰هزار کیلومتر یا تعمیر جلوبندی: بستهٔ آماده با تخفیف مجموعه‌ای و یک گارانتی.</p>
+              <div class="hB-cta">
+                <button class="hx-btn hx-btn--amber" type="button">دیدن کیت‌ها</button>
+                <button class="hx-btn hx-btn--ghost" type="button">کیت مخصوص خودروی من</button>
+              </div>
+            </div>
+            <div class="kit">
+              <div><img src="assets/img/p-timingbelt.jpg" alt=""><b>کیت تسمه تایم</b><span>۵ قطعه</span></div>
+              <div><img src="assets/img/p-sparkplug.jpg" alt=""><b>کیت سرویس</b><span>۶ قطعه</span></div>
+              <div><img src="assets/img/p-shock.jpg" alt=""><b>کیت جلوبندی</b><span>۴ قطعه</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hB-nav">
+          <div class="hB-dots" data-dots>
+            <button class="on" type="button" aria-label="اسلاید ۱"></button>
+            <button type="button" aria-label="اسلاید ۲"></button>
+            <button type="button" aria-label="اسلاید ۳"></button>
+          </div>
+          <div class="hB-arrows">
+            <button type="button" data-prev aria-label="اسلاید قبل"><svg class="icon"><use href="#i-chev-r"/></svg></button>
+            <button type="button" data-next aria-label="اسلاید بعد"><svg class="icon"><use href="#i-chev-l"/></svg></button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </article>
+
+  <!-- ============================ C ============================ -->
+  <article class="lab-item" id="idea-c" data-idea="C" data-name="حراج با تایمر">
+    <div class="lab-head">
+      <span class="lab-num">C</span>
+      <div>
+        <h2>«حراج ساعت» — هیرو کمپینی</h2>
+        <p>هیرو یک کمپین است، نه ویترین: تایمر بزرگ، نوار «۳۴ از ۵۰ فروش رفت» و سه پیشنهاد داغ. حس فوریت می‌سازد؛ خوب برای کمپین‌های ماهانه، بد برای روزمره (پس باید قابل خاموش‌شدن باشد).</p>
+        <div class="lab-tags"><span class="hot">فروش ویژه</span><span class="hot">تایمر زنده</span><span>حس فوریت</span><span>کمپینی</span></div>
+      </div>
+      <button class="pick-btn" data-pick="C">این را می‌خواهم</button>
+    </div>
+
+    <div class="lab-stage">
+      <section class="hx hC">
+        <div>
+          <span class="flash-badge"><svg class="icon" style="width:14px;height:14px"><use href="#i-bolt"/></svg> حراج پایان هفته</span>
+          <h2>۲۴ ساعت،<br><em>۲۴ درصد</em> تخفیف</h2>
+          <p class="sub">روی پرمصرف‌ترین قطعات سرویس دوره‌ای. بدون کد تخفیف — قیمت روی کارت، قیمت نهایی است.</p>
+          <div class="clock-row" data-countdown>
+            <div class="clock"><b data-cd="h">۱۱</b><span>ساعت</span></div>
+            <div class="clock"><b data-cd="m">۰۹</b><span>دقیقه</span></div>
+            <div class="clock"><b data-cd="s">۵۵</b><span>ثانیه</span></div>
+          </div>
+          <div class="bar-wrap">
+            <div class="bar-label"><span>ظرفیت این حراج</span><b>۳۴ از ۵۰ فروش رفت</b></div>
+            <div class="bar"><i style="width:68%"></i></div>
+          </div>
+        </div>
+
+        <div class="deal-strip">
+          <div class="deal">
+            <img src="assets/img/p-brake.jpg" alt="">
+            <div><b>لنت ترمز جلو TRW</b><span class="off">۱۴٪ تخفیف</span></div>
+            <div class="p"><b>۱٬۸۵۰٬۰۰۰</b><s>۲٬۱۵۰٬۰۰۰</s></div>
+          </div>
+          <div class="deal">
+            <img src="assets/img/p-brakefluid.jpg" alt="">
+            <div><b>مایع ترمز DOT4 — ۱ لیتر</b><span class="off">۲۴٪ تخفیف</span></div>
+            <div class="p"><b>۳۸۰٬۰۰۰</b><s>۵۰۰٬۰۰۰</s></div>
+          </div>
+          <div class="deal">
+            <img src="assets/img/p-headlight.jpg" alt="">
+            <div><b>چراغ جلو کامل — راست</b><span class="off">۱۸٪ تخفیف</span></div>
+            <div class="p"><b>۴٬۲۵۰٬۰۰۰</b><s>۵٬۲۰۰٬۰۰۰</s></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </article>
+
+  <!-- ============================ D ============================ -->
+  <article class="lab-item" id="idea-d" data-idea="D" data-name="کنسول کد فنی">
+    <div class="lab-head">
+      <span class="lab-num">D</span>
+      <div>
+        <h2>«کنسول» — هیرو کد فنی</h2>
+        <p>هیرو را از «خرید» به «تشخیص» می‌برد: یک کنسول جست‌وجوی کد فنی با خروجی زندهٔ کدهای معادل. بیشترین تمایز را می‌سازد و مخاطب فنی/تعمیرکار را جذب می‌کند؛ اما برای خریدارِ عادی باید یک راه دوم (پلاک/خودرو) هم کنارش باشد.</p>
+        <div class="lab-tags"><span class="hot">تمایز حداکثری</span><span>کد معادل</span><span>مخاطب فنی</span><span>مونواسپیس</span></div>
+      </div>
+      <button class="pick-btn" data-pick="D">این را می‌خواهم</button>
+    </div>
+
+    <div class="lab-stage">
+      <section class="hx hD">
+        <div>
+          <span class="hx-eyebrow mono"><svg class="icon" style="width:14px;height:14px"><use href="#i-code"/></svg> PARTYAB.OEM / v4</span>
+          <h2>کد فنی را بزن،<br>معادل‌هایش را بگیر</h2>
+          <p class="sub">یک کد را وارد کن؛ ما کدهای معادل برندهای دیگر، وضعیت انبار و سازگاری با خودروی تو را همان لحظه نشان می‌دهیم.</p>
+
+          <div class="console">
+            <div class="console-field">
+              <span class="tag">OEM</span>
+              <input type="text" value="4253.42" aria-label="کد فنی" spellcheck="false">
+              <button class="hx-btn hx-btn--amber" type="button"><svg class="icon"><use href="#i-search"/></svg> جست‌وجو</button>
+            </div>
+
+            <div class="console-out">
+              <header><i></i> ۳ کد معادل پیدا شد · ۰٫۲۴ ثانیه</header>
+              <div class="console-line"><span class="c">4253.42</span><span class="b">TRW</span><span class="eq">لنت ترمز جلو پژو ۲۰۶ / سمند / دنا</span><span class="chip chip--fit">سازگار</span></div>
+              <div class="console-line"><span class="c">0986AB</span><span class="b">Bosch</span><span class="eq">لنت ترمز جلو — همان کالیپر</span><span class="chip chip--cond">با شرط</span></div>
+              <div class="console-line"><span class="c">FR-2052</span><span class="b">Textar</span><span class="eq">لنت ترمز جلو — تیپ ۵ و ۶</span><span class="chip chip--unk">استعلام</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chain">
+          <div class="chain-head"><svg class="icon" style="width:13px;height:13px"><use href="#i-layers"/></svg> زنجیرهٔ کدهای معادل</div>
+          <div class="chain-node main">4253.42 <small>TRW · موجود</small></div>
+          <div class="chain-node">0986AB...<small>Bosch</small></div>
+          <div class="chain-node">FR-2052<small>Textar</small></div>
+          <div class="chain-node">D1060<small>Nissan OE</small></div>
+          <p style="font-size:10.5px;color:#7E93A9;line-height:1.9;margin:2px 0 0">
+            خریدار با هر کدی که در دست دارد به محصول درست می‌رسد — این همان چیزی است که نرخ مرجوعی را از ۲۵٪ به زیر ۵٪ می‌آورد.
+          </p>
+        </div>
+      </section>
+    </div>
+  </article>
+
+  <!-- ============================ E ============================ -->
+  <article class="lab-item" id="idea-e" data-idea="E" data-name="کارت حاشیه‌نویسی‌شده">
+    <div class="lab-head">
+      <span class="lab-num">E</span>
+      <div>
+        <h2>«پروندهٔ قطعه» — هیرو آموزشی</h2>
+        <p>روشن و آرام؛ کارت محصول بزرگ می‌شود و با چهار خط‌چین حاشیه‌نویسی، به کاربر یاد می‌دهد کارت را چطور بخواند. هیچ ادعای اضافه‌ای ندارد، فقط محصول را نشان می‌دهد — برای کاربری که به اسلایدر و شلوغی علاقه ندارد.</p>
+        <div class="lab-tags"><span class="hot">روشن</span><span>آموزشی</span><span>ساده</span><span>سرعت بالا</span></div>
+      </div>
+      <button class="pick-btn" data-pick="E">این را می‌خواهم</button>
+    </div>
+
+    <div class="lab-stage">
+      <section class="hx hE">
+        <div>
+          <span class="hx-eyebrow" style="color:var(--amber-700)"><svg class="icon"><use href="#i-shield"/></svg> هر کارت، یک پروندهٔ کامل</span>
+          <h2>قیمت تنها نیست؛<br>سازگاری هم هست</h2>
+          <p class="sub">چهار چیزی که روی هر کارت پارت‌یاب می‌بینی و در هیچ فروشگاه دیگری کنار هم نیستند.</p>
+          <div class="feat">
+            <div><svg class="icon"><use href="#i-code"/></svg><span><b>کد فنی</b> — همان کدی که روی قطعهٔ قدیمی حک شده.</span></div>
+            <div><svg class="icon"><use href="#i-layers"/></svg><span><b>کدهای معادل</b> — تا با هر برندی که موجود است بخری.</span></div>
+            <div><svg class="icon"><use href="#i-shield"/></svg><span><b>وضعیت سازگاری</b> — با رنگ، آیکن و الگوی خط؛ نه فقط رنگ.</span></div>
+            <div><svg class="icon"><use href="#i-truck"/></svg><span><b>موجودی و ارسال</b> — امروز می‌رسد یا فردا؟</span></div>
+          </div>
+        </div>
+
+        <div class="annotated">
+          <article class="p-card">
+            <span class="p-rail p-rail--conditional" style="position:absolute;inset-block:0;inset-inline-start:0;width:3px;background:repeating-linear-gradient(180deg,#F59E0B 0 5px,transparent 5px 9px)"></span>
+            <div class="p-media" style="position:relative">
+              <img src="assets/img/p-brake.jpg" alt="">
+              <span class="mono" style="position:absolute;top:8px;inset-inline-start:8px;background:rgba(8,19,32,.82);color:#fff;font-size:9.5px;padding:3px 7px;border-radius:5px">4253.42</span>
+              <span style="position:absolute;top:8px;inset-inline-end:8px;background:var(--amber);color:#241703;font-size:9.5px;font-weight:700;padding:3px 7px;border-radius:5px">−۱۴٪</span>
+            </div>
+            <div class="p-body">
+              <div class="row" style="font-size:10px;color:var(--muted)">
+                <b style="font-size:11.5px;color:var(--navy)">TRW</b>
+                <span style="display:inline-flex;gap:4px;align-items:center"><svg class="icon" style="width:11px;height:11px"><use href="#i-layers"/></svg> ۳ کد معادل</span>
+              </div>
+              <h3 class="p-title">لنت ترمز جلو پژو ۲۰۶ / سمند / دنا</h3>
+              <div class="chip chip--cond" style="justify-content:center">سازگار با شرط · فقط تیپ ۵ و ۶ با ABS</div>
+              <div class="row">
+                <div class="price-line"><b>۱٬۸۵۰٬۰۰۰</b> <small>تومان</small><s>۲٬۱۵۰٬۰۰۰</s></div>
+                <span style="width:32px;height:32px;border-radius:7px;background:var(--navy);color:#fff;display:grid;place-items:center"><svg class="icon" style="width:16px;height:16px"><use href="#i-plus"/></svg></span>
+              </div>
+            </div>
+          </article>
+
+          <span class="callout co-1"><i>۱</i> کد فنی</span>
+          <span class="callout co-2"><i>۲</i> کدهای معادل</span>
+          <span class="callout co-3"><i>۳</i> وضعیت سازگاری</span>
+          <span class="callout co-4"><i>۴</i> قیمت نهایی</span>
+        </div>
+      </section>
+    </div>
+  </article>
+
+  <!-- ============================ features ============================ -->
+  <section class="feat-map" id="features">
+    <h2>نقشهٔ قابلیت‌های سایت</h2>
+    <p>قابلیت‌ها را دسته‌بندی کردم تا بدانی چه چیزی هست و چه چیزی می‌آید. «آماده» یعنی در نسخهٔ فعلی کار می‌کند، «در ساخت» یعنی همین حالا اضافه می‌کنم، «بعدی» یعنی بعد از انتخاب هیرو نوبتش است.</p>
+    <div class="feat-cols">
+
+      <div class="feat-col">
+        <h3><svg class="icon"><use href="#i-tag"/></svg> فروش و کمپین</h3>
+        <ul>
+          <li>اسلایدر هیرو (خودکار + دستی) <small class="s-new">در ساخت</small></li>
+          <li>فروش ویژه با تایمر و نوار ظرفیت <small class="s-new">در ساخت</small></li>
+          <li>حراج روزانه/هفتگی با شمارش معکوس <small class="s-new">در ساخت</small></li>
+          <li>پیشنهاد شگفت‌انگیز با محدودیت موجودی <small class="s-next">بعدی</small></li>
+          <li>کد تخفیف و تخفیف پله‌ای سبد <small class="s-next">بعدی</small></li>
+          <li>بستهٔ «کیت تعمیر» با تخفیف مجموعه‌ای <small class="s-next">بعدی</small></li>
+        </ul>
+      </div>
+
+      <div class="feat-col">
+        <h3><svg class="icon"><use href="#i-shield"/></svg> سازگاری و گاراژ</h3>
+        <ul>
+          <li>پنج حالت سازگاری روی هر کارت <small class="s-live">آماده</small></li>
+          <li>گاراژ چندخودرویی + انتخاب سریع <small class="s-live">آماده</small></li>
+          <li>نوار پاسپورت خودرو در همهٔ صفحات <small class="s-live">آماده</small></li>
+          <li>جست‌وجو با پلاک / کد فنی / کد معادل <small class="s-live">آماده</small></li>
+          <li>هشدار «قطعه برای خودروی من نیست» <small class="s-next">بعدی</small></li>
+          <li>یادآور سرویس دوره‌ای بر اساس کارکرد <small class="s-next">بعدی</small></li>
+        </ul>
+      </div>
+
+      <div class="feat-col">
+        <h3><svg class="icon"><use href="#i-layers"/></svg> خرید و کاتالوگ</h3>
+        <ul>
+          <li>کشوی سبد + گاردریل سازگاری <small class="s-live">آماده</small></li>
+          <li>مقایسهٔ ۲ تا ۴ قطعه در یک جدول <small class="s-new">در ساخت</small></li>
+          <li>فیلتر پیشرفته (برند، خودرو، قیمت، موجودی) <small class="s-live">آماده</small></li>
+          <li>دسته‌بندی ساده + ۱۸ دستهٔ تخصصی <small class="s-live">آماده</small></li>
+          <li>لیست علاقه‌مندی و بازدیدهای اخیر <small class="s-next">بعدی</small></li>
+          <li>خرید با یک کلیک از کارت محصول <small class="s-new">در ساخت</small></li>
+        </ul>
+      </div>
+
+      <div class="feat-col">
+        <h3><svg class="icon"><use href="#i-star"/></svg> اعتماد و محتوا</h3>
+        <ul>
+          <li>راهنمای تصویری «کارت را چطور بخوانم» <small class="s-live">آماده</small></li>
+          <li>برچسب اصالت، گارانتی و مرجوعی <small class="s-live">آماده</small></li>
+          <li>امتیاز و نظر خریداران با تأیید خرید <small class="s-next">بعدی</small></li>
+          <li>مجلهٔ فنی (مقالات تعمیر و انتخاب قطعه) <small class="s-next">بعدی</small></li>
+          <li>پرسش و پاسخ زیر محصول <small class="s-next">بعدی</small></li>
+          <li>نشان «تعمیرکار تأییدشده» برای همکاران <small class="s-next">بعدی</small></li>
+        </ul>
+      </div>
+
+      <div class="feat-col">
+        <h3><svg class="icon"><use href="#i-truck"/></svg> عملیات و پنل</h3>
+        <ul>
+          <li>نصب خودکار قالب + افزونه با یک فرمان <small class="s-live">آماده</small></li>
+          <li>مجموعهٔ تست `wp partyab verify` <small class="s-live">آماده</small></li>
+          <li>ورود گروهی CSV محصولات و سازگاری <small class="s-live">آماده</small></li>
+          <li>پنل مدیریت سازگاری (ویرایش گروهی) <small class="s-live">آماده</small></li>
+          <li>ارسال پویا بر اساس شهر/وزن <small class="s-next">بعدی</small></li>
+          <li>پرداخت اقساطی و کیف پول <small class="s-next">بعدی</small></li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<div class="pickbar">
+  <span>انتخاب فعلی: <b id="picked">—</b></span>
+  <span class="mono">|</span>
+  <span>همین را بگو: «گزینهٔ <b id="pickedKey">A تا E</b>» — یا بنویس چه چیزی را از کدام ایده برداشته‌ام.</span>
+</div>
+
+<script>
+  /* ---- countdowns ---- */
+  function fa(n) { return String(n).padStart(2, '0').replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]); }
+  const targets = [...document.querySelectorAll('[data-countdown]')].map(el => {
+    const end = Date.now() + (7 * 3600 + 42 * 60 + 18) * 1000;
+    return { el, end };
+  });
+  function tick() {
+    targets.forEach(({ el, end }) => {
+      let left = Math.max(0, Math.floor((end - Date.now()) / 1000));
+      const h = Math.floor(left / 3600), m = Math.floor((left % 3600) / 60), s = left % 60;
+      el.querySelector('[data-cd=h]').textContent = fa(h);
+      el.querySelector('[data-cd=m]').textContent = fa(m);
+      el.querySelector('[data-cd=s]').textContent = fa(s);
+    });
+  }
+  tick(); setInterval(tick, 1000);
+
+  /* ---- slider ---- */
+  document.querySelectorAll('[data-slider]').forEach(slider => {
+    const track = slider.querySelector('[data-track]');
+    const slides = [...track.children];
+    const dots = [...slider.querySelectorAll('[data-dots] button')];
+    let index = 0, timer = null;
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function go(i) {
+      index = (i + slides.length) % slides.length;
+      slides[index].scrollIntoView({ block: 'nearest', inline: 'start', behavior: reduce ? 'auto' : 'smooth' });
+      dots.forEach((d, k) => d.classList.toggle('on', k === index));
+    }
+    dots.forEach((d, i) => d.addEventListener('click', () => { go(i); restart(); }));
+    slider.querySelector('[data-next]').addEventListener('click', () => { go(index + 1); restart(); });
+    slider.querySelector('[data-prev]').addEventListener('click', () => { go(index - 1); restart(); });
+
+    function start() { if (reduce) return; timer = setInterval(() => go(index + 1), 6500); }
+    function restart() { clearInterval(timer); start(); }
+    // pause while hovering
+    slider.addEventListener('mouseenter', () => clearInterval(timer));
+    slider.addEventListener('mouseleave', start);
+    // keep dots in sync with manual scrolling
+    let raf;
+    track.addEventListener('scroll', () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const mid = track.scrollLeft + track.clientWidth / 2;
+        let best = 0, bestD = Infinity;
+        slides.forEach((s, k) => {
+          const c = s.offsetLeft + s.offsetWidth / 2;
+          const d = Math.abs(c - mid);
+          if (d < bestD) { bestD = d; best = k; }
+        });
+        index = best;
+        dots.forEach((d, k) => d.classList.toggle('on', k === index));
+      });
+    }, { passive: true });
+    start();
+  });
+
+  /* ---- picker ---- */
+  const picked = document.getElementById('picked');
+  const pickedKey = document.getElementById('pickedKey');
+  document.querySelectorAll('.pick-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const key = btn.dataset.pick;
+      const item = document.querySelector('.lab-item[data-idea="' + key + '"]');
+      document.querySelectorAll('.lab-item').forEach(i => i.classList.remove('is-picked'));
+      item.classList.add('is-picked');
+      item.scrollIntoView({ block: 'start', behavior: 'smooth' });
+      picked.textContent = key + ' — ' + item.dataset.name;
+      pickedKey.textContent = key;
+      try { location.hash = '#idea-' + key.toLowerCase(); } catch (e) {}
+    });
+  });
+</script>
+</body>
+</html>

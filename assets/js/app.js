@@ -1283,11 +1283,37 @@ function initHero() {
   });
 }
 
+/* countdown to local midnight, used by the flash-sale band */
+function startFlashClock() {
+  const el = $('[data-flash-clock]');
+  if (!el) return;
+  const pad = n => fa(String(n).padStart(2, '0'));
+  const tick = () => {
+    const now = new Date();
+    const end = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
+    const left = Math.max(0, Math.floor((end - now) / 1000));
+    el.querySelector('[data-cd=h]').textContent = pad(Math.floor(left / 3600));
+    el.querySelector('[data-cd=m]').textContent = pad(Math.floor((left % 3600) / 60));
+    el.querySelector('[data-cd=s]').textContent = pad(left % 60);
+  };
+  tick();
+  setInterval(tick, 1000);
+}
+
 function initHome() {
   const grid = $('#featuredGrid');
   if (grid) {
     const list = [...PRODUCTS].filter(p => p.featured).concat(PRODUCTS.filter(p => !p.featured)).slice(0, 8);
     grid.innerHTML = list.map(productCard).join('');
+  }
+  const flashGrid = $('#flashGrid');
+  if (flashGrid) {
+    const deals = [...PRODUCTS]
+      .filter(p => p.oldPrice && p.oldPrice > p.price)
+      .sort((a, b) => (1 - b.price / b.oldPrice) - (1 - a.price / a.oldPrice))
+      .slice(0, 4);
+    flashGrid.innerHTML = (deals.length ? deals : PRODUCTS.slice(0, 4)).map(productCard).join('');
+    startFlashClock();
   }
   const catGrid = $('#catGrid');
   if (catGrid) {
