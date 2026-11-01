@@ -3,7 +3,7 @@
  * Plugin Name:       PartYab Fitment — سازگاری قطعه و خودرو
  * Plugin URI:        https://github.com/ImTheAlireza/PartYab
  * Description:       کاتالوگ خودروهای ایرانی و وارداتی، جدول سازگاری قطعه، پنج حالت سازگاری، فیلتر «فقط سازگار» در فروشگاه و ایمپورت CSV.
- * Version:           1.0.0
+ * Version:           1.1.0
  * Requires at least: 6.2
  * Requires PHP:      7.4
  * Author:            PartYab
@@ -19,7 +19,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'PARTYAB_FITMENT_VERSION', '1.0.0' );
+define( 'PARTYAB_FITMENT_VERSION', '1.1.0' );
 define( 'PARTYAB_FITMENT_FILE', __FILE__ );
 define( 'PARTYAB_FITMENT_DIR', plugin_dir_path( __FILE__ ) );
 define( 'PARTYAB_FITMENT_URL', plugin_dir_url( __FILE__ ) );
@@ -32,6 +32,7 @@ require_once PARTYAB_FITMENT_DIR . 'includes/class-partyab-admin.php';
 require_once PARTYAB_FITMENT_DIR . 'includes/class-partyab-rest.php';
 require_once PARTYAB_FITMENT_DIR . 'includes/class-partyab-csv.php';
 require_once PARTYAB_FITMENT_DIR . 'includes/class-partyab-query.php';
+require_once PARTYAB_FITMENT_DIR . 'includes/class-partyab-setup.php';
 
 /**
  * Boot the plugin once WooCommerce (or at least WordPress) is ready.
@@ -45,6 +46,7 @@ function partyab_fitment_boot() {
 	Partyab_REST::init();
 	Partyab_CSV::init();
 	Partyab_Query::init();
+	Partyab_Setup::init();
 }
 add_action( 'plugins_loaded', 'partyab_fitment_boot' );
 
