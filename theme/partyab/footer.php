@@ -26,6 +26,17 @@ defined( 'ABSPATH' ) || exit;
 				</span>
 			</a>
 			<p><?php bloginfo( 'description' ); ?></p>
+			<?php
+			wp_nav_menu(
+				array(
+					'theme_location' => 'footer-about',
+					'container'      => false,
+					'items_wrap'     => '<nav class="footer-links">%3$s</nav>',
+					'fallback_cb'    => false,
+					'depth'          => 1,
+				)
+			);
+			?>
 			<div class="footer-social">
 				<a href="<?php echo esc_url( get_theme_mod( 'partyab_instagram', '#' ) ); ?>" aria-label="اینستاگرام"><?php partyab_the_icon( 'instagram' ); ?></a>
 				<a href="<?php echo esc_url( get_theme_mod( 'partyab_telegram', '#' ) ); ?>" aria-label="تلگرام"><?php partyab_the_icon( 'telegram' ); ?></a>

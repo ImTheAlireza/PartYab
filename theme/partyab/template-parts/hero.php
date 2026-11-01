@@ -8,9 +8,10 @@
 defined( 'ABSPATH' ) || exit;
 
 $partyab_vehicle = partyab_vehicle();
+$partyab_visual  = get_theme_mod( 'partyab_hero_visual', 'demo' );
 ?>
 
-<section class="hero">
+<section class="hero<?php echo 'none' === $partyab_visual ? ' hero--text-only' : ''; ?>">
 	<div class="container hero-grid">
 		<div class="hero-copy">
 			<span class="hero-eyebrow">
@@ -86,6 +87,10 @@ $partyab_vehicle = partyab_vehicle();
 			</div>
 		</div>
 
-		<?php get_template_part( 'template-parts/car-map' ); ?>
+		<?php
+		if ( 'none' !== $partyab_visual ) {
+			get_template_part( 'template-parts/hero-' . ( 'photo' === $partyab_visual ? 'photo' : 'demo' ) );
+		}
+		?>
 	</div>
 </section>

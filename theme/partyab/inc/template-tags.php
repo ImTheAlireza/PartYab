@@ -146,13 +146,24 @@ function partyab_card_line( $product ) {
  * @return void
  */
 function partyab_passport_bar() {
-	$vehicle = partyab_vehicle();
-	$count   = 0;
+	$vehicle          = partyab_vehicle();
+	$coverage_defaults = array(
+		'ok'    => 0,
+		'total' => 0,
+		'pct'   => 0,
+	);
 
-	if ( function_exists( 'Partyab_Fitment' ) ) {
+	$coverage = array(
+		'ok'    => 0,
+		'total' => 0,
+		'pct'   => 0,
+	);
+
+	if ( class_exists( 'Partyab_Fitment' ) ) {
 		$coverage = Partyab_Fitment::coverage( $vehicle );
-		$count    = $coverage;
 	}
+
+	$count = wp_parse_args( is_array( $coverage ) ? $coverage : array(), $coverage_defaults );
 	?>
 	<div class="passport-bar">
 		<div class="container passport-inner">
@@ -193,7 +204,7 @@ function partyab_passport_bar() {
 							);
 							?>
 						</span>
-						<a class="pp-btn pp-btn--link" href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>"><?php partyab_the_icon( 'garage' ); ?><?php esc_html_e( 'گاراژ', 'partyab' ); ?></a>
+						<a class="pp-btn pp-btn--link" href="<?php echo esc_url( partyab_garage_url() ); ?>"><?php partyab_the_icon( 'garage' ); ?><?php esc_html_e( 'گاراژ', 'partyab' ); ?></a>
 						<button type="button" class="pp-btn" data-open-vehicle><?php partyab_the_icon( 'refresh' ); ?><?php esc_html_e( 'تغییر', 'partyab' ); ?></button>
 					</div>
 				<?php endif; ?>
@@ -380,6 +391,7 @@ function partyab_category_index() {
 			<span class="cat-num mono"><?php echo esc_html( partyab_num( $i ) ); ?></span>
 			<span class="cat-icon"><?php partyab_the_icon( $icon ); ?></span>
 			<span class="cat-name"><?php echo esc_html( $term->name ); ?></span>
+			<span class="cat-lead" aria-hidden="true"></span>
 			<span class="cat-count mono"><?php echo esc_html( partyab_num( $term->count ) ); ?></span>
 			<span class="cat-arrow"><?php partyab_the_icon( 'chevron-left' ); ?></span>
 		</a>
