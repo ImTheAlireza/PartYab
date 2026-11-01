@@ -319,7 +319,7 @@
 
 		var popular = [];
 		if (catalog && catalog.models) {
-			['m-206', 'm-pride', 'm-samand', 'm-corolla', 'm-tara'].forEach(function (id) {
+			['206', 'pride', 'samand', 'corolla', 'tara'].forEach(function (id) {
 				var model = findModel(id);
 				if (model) {
 					popular.push(model);

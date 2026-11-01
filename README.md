@@ -165,6 +165,7 @@ bash bin/build-zips.sh
 
 ## مستندات
 
+- [`docs/testing.md`](docs/testing.md) — **چطور تست کنم**: سه سطح تست، محیط‌های لوکال/Docker/wp-env، تست خودکار `wp partyab verify`، چک‌لیست ۱۵ موردی و معیار قبولی
 - [`docs/install-guide.md`](docs/install-guide.md) — **راهنمای نصب بی‌خطر**: نیازمندی‌ها، staging، گام‌به‌گام با تأیید، کش و کوکی، بکاپ و بازگردانی، چک‌لیست ۱۵ موردی تست و عیب‌یابی
 - [`docs/wordpress-guide.md`](docs/wordpress-guide.md) — راهنمای کامل تبدیل این UI به قالب وردپرس + افزونهٔ سازگاری (محیط تست، اسکلت قالب، نقشهٔ تبدیل صفحه‌ها، فیلتر سمت سرور، ایمپورت CSV، چک‌لیست تست)
 

@@ -33,6 +33,7 @@ require_once PARTYAB_FITMENT_DIR . 'includes/class-partyab-rest.php';
 require_once PARTYAB_FITMENT_DIR . 'includes/class-partyab-csv.php';
 require_once PARTYAB_FITMENT_DIR . 'includes/class-partyab-query.php';
 require_once PARTYAB_FITMENT_DIR . 'includes/class-partyab-setup.php';
+require_once PARTYAB_FITMENT_DIR . 'includes/class-partyab-verify.php';
 
 /**
  * Boot the plugin once WooCommerce (or at least WordPress) is ready.
@@ -47,6 +48,7 @@ function partyab_fitment_boot() {
 	Partyab_CSV::init();
 	Partyab_Query::init();
 	Partyab_Setup::init();
+	Partyab_Verify::init();
 }
 add_action( 'plugins_loaded', 'partyab_fitment_boot' );
 
