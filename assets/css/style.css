@@ -3346,3 +3346,107 @@ body.is-ordered .page-head--co h1 { font-size: 16px; }
 /* passport bar: garage shortcut link */
 .pp-btn--link { text-decoration: none; }
 @media (max-width: 640px) { .pp .pp-btn--link { display: none; } }
+
+/* hero v3.1 — product-card preview instead of the car map */
+.hero-visual { min-width: 0; }
+
+.hero-demo {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	padding: 16px;
+	border-radius: 20px;
+	border: 1px solid rgba(255, 255, 255, .13);
+	background:
+		radial-gradient(120% 80% at 15% 0%, rgba(245, 158, 11, .12), transparent 60%),
+		linear-gradient(160deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, .02));
+	box-shadow: 0 24px 60px rgba(3, 10, 20, .35);
+}
+
+.hero-demo-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+	font-size: 11px;
+	color: #B9C6D6;
+}
+.hero-demo-head b {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	color: #fff;
+	font-size: 11.5px;
+	font-weight: 600;
+}
+.hero-demo-head .icon { width: 15px; height: 15px; color: var(--amber); }
+.hero-demo-tag {
+	font-size: 9.5px;
+	font-weight: 600;
+	color: var(--amber);
+	background: rgba(245, 158, 11, .12);
+	border: 1px solid rgba(245, 158, 11, .3);
+	border-radius: 999px;
+	padding: 2px 8px;
+}
+
+.hero-demo-card { box-shadow: 0 18px 40px rgba(3, 10, 20, .35); }
+.hero-demo-card .p-media { aspect-ratio: 16 / 9; }
+.hero-demo-card .p-title { font-size: 13px; }
+.hero-demo-card .p-fit { font-size: 10.5px; }
+
+.hero-demo-note {
+	font-size: 11px;
+	line-height: 1.9;
+	color: #9FB1C6;
+	margin: 0;
+}
+
+.hero-mini-stats { display: flex; gap: 8px; flex-wrap: wrap; }
+.hero-mini-stats span {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	padding: 5px 10px;
+	border-radius: 999px;
+	border: 1px solid rgba(255, 255, 255, .13);
+	background: rgba(255, 255, 255, .05);
+	font-size: 10.5px;
+	color: #D7E1EC;
+}
+.hero-mini-stats b { color: #fff; font-weight: 700; }
+
+/* 2b — photo variant (theme mod partyab_hero_visual = photo) */
+.hero-photo {
+	position: relative;
+	margin: 0;
+	border-radius: 20px;
+	overflow: hidden;
+	border: 1px solid rgba(255, 255, 255, .14);
+	box-shadow: 0 24px 60px rgba(3, 10, 20, .35);
+	aspect-ratio: 4 / 3;
+}
+.hero-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hero-photo::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(180deg, rgba(8, 19, 32, .1) 40%, rgba(8, 19, 32, .78));
+}
+.hero-photo figcaption {
+	position: absolute;
+	inset-inline: 16px;
+	inset-block-end: 14px;
+	z-index: 1;
+	display: flex;
+	align-items: center;
+	gap: 7px;
+	font-size: 11.5px;
+	font-weight: 600;
+	color: #fff;
+}
+.hero-photo figcaption .icon { width: 15px; height: 15px; color: var(--amber); }
+
+/* 2c — no visual at all: one wide copy column */
+.hero--text-only .hero-grid { grid-template-columns: minmax(0, 1fr); }
+.hero--text-only .hero-copy { max-width: 760px; }
