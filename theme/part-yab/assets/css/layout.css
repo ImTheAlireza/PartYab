@@ -1,0 +1,598 @@
+/**
+ * PartYab — چیدمان: هدر، ناوبری، صفحه اصلی، فوتر
+ * همه رنگ‌ها از توکن‌های base.css.
+ */
+
+/* ============ هدر ============ */
+.pb-topbar {
+	background: var(--pb-ink);
+	color: #d1d5db;
+	font-size: var(--pb-fs-xs);
+}
+
+.pb-topbar__inner {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--pb-3);
+	min-height: 36px;
+	flex-wrap: wrap;
+}
+
+.pb-topbar__links {
+	display: flex;
+	gap: var(--pb-4);
+}
+
+.pb-topbar a {
+	color: #e5e7eb;
+}
+
+.pb-topbar a:hover {
+	color: var(--pb-orange-50);
+}
+
+.pb-header__main {
+	background: #fff;
+	border-bottom: 1px solid var(--pb-border);
+	position: sticky;
+	top: 0;
+	z-index: 50;
+}
+
+.pb-header__row {
+	display: flex;
+	align-items: center;
+	gap: var(--pb-4);
+	min-height: 76px;
+}
+
+.pb-brand img {
+	max-height: 42px;
+	width: auto;
+}
+
+.pb-search {
+	display: none;
+	flex: 1;
+	align-items: center;
+	background: var(--pb-surface);
+	border: 1px solid var(--pb-border-strong);
+	border-radius: var(--pb-radius);
+	overflow: hidden;
+}
+
+.pb-search input[type="search"] {
+	flex: 1;
+	border: 0;
+	background: transparent;
+	padding: 0 var(--pb-4);
+	min-height: 44px;
+	font: inherit;
+	font-size: var(--pb-fs-sm);
+	color: var(--pb-ink);
+}
+
+.pb-search input[type="search"]:focus {
+	outline: none;
+}
+
+.pb-search button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	min-height: 44px;
+	border: 0;
+	background: var(--pb-orange);
+	color: #fff;
+	cursor: pointer;
+}
+
+.pb-search button:hover {
+	background: var(--pb-orange-600);
+}
+
+.pb-actions {
+	display: flex;
+	align-items: center;
+	gap: var(--pb-4);
+	margin-inline-start: auto;
+}
+
+.pb-action {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	color: var(--pb-ink-700);
+	font-size: var(--pb-fs-xs);
+	font-weight: 700;
+	white-space: nowrap;
+}
+
+.pb-action:hover {
+	color: var(--pb-orange);
+}
+
+.pb-action__count {
+	background: var(--pb-orange);
+	color: #fff;
+	border-radius: 999px;
+	min-width: 20px;
+	height: 20px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 11px;
+	padding: 0 5px;
+}
+
+.pb-nav-toggle {
+	display: inline-flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 4px;
+	width: 40px;
+	height: 40px;
+	padding: 0 8px;
+	border: 1px solid var(--pb-border-strong);
+	border-radius: var(--pb-radius-sm);
+	background: #fff;
+	cursor: pointer;
+}
+
+.pb-nav-toggle span {
+	display: block;
+	height: 2px;
+	background: var(--pb-ink);
+	border-radius: 2px;
+}
+
+/* نوار منو */
+.pb-nav {
+	background: #fff;
+	border-bottom: 1px solid var(--pb-border);
+}
+
+.pb-nav__inner {
+	display: none;
+}
+
+.pb-nav.is-open .pb-nav__inner {
+	display: block;
+}
+
+.pb-nav__menu {
+	list-style: none;
+	margin: 0;
+	padding: var(--pb-2) 0;
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.pb-nav__menu > li > a {
+	display: block;
+	padding: 10px var(--pb-2);
+	color: var(--pb-ink-700);
+	font-weight: 700;
+	font-size: var(--pb-fs-sm);
+	border-radius: var(--pb-radius-sm);
+}
+
+.pb-nav__menu > li > a:hover {
+	color: var(--pb-orange-600);
+	background: var(--pb-orange-50);
+}
+
+.pb-nav__menu .sub-menu {
+	list-style: none;
+	margin: 0;
+	padding-inline-start: var(--pb-4);
+}
+
+/* ============ هیرو ============ */
+.pb-hero {
+	background: radial-gradient(circle at 85% 20%, #1f2937 0%, var(--pb-ink) 55%);
+	color: #fff;
+	padding-block: var(--pb-7);
+}
+
+.pb-hero__inner {
+	display: grid;
+	gap: var(--pb-6);
+}
+
+.pb-hero__eyebrow {
+	display: inline-block;
+	background: rgb(234 88 12 / 18%);
+	color: #fdba74;
+	border: 1px solid rgb(234 88 12 / 40%);
+	border-radius: 999px;
+	padding: 4px 12px;
+	font-size: var(--pb-fs-xs);
+	font-weight: 700;
+	margin-bottom: var(--pb-4);
+}
+
+.pb-hero__title {
+	color: #fff;
+	font-size: var(--pb-fs-2xl);
+	line-height: 1.35;
+	margin: 0 0 var(--pb-3);
+}
+
+.pb-hero__lead {
+	color: #d1d5db;
+	max-width: 52ch;
+	margin-bottom: var(--pb-5);
+}
+
+.pb-hero__search {
+	display: flex;
+	gap: var(--pb-2);
+	background: #fff;
+	border-radius: var(--pb-radius);
+	padding: 6px;
+	max-width: 560px;
+}
+
+.pb-hero__search input {
+	flex: 1;
+	border: 0;
+	padding: 0 var(--pb-3);
+	min-height: 44px;
+	font: inherit;
+	color: var(--pb-ink);
+	background: transparent;
+}
+
+.pb-hero__search input:focus {
+	outline: none;
+}
+
+.pb-hero__cta {
+	display: flex;
+	align-items: center;
+	gap: var(--pb-4);
+	margin-top: var(--pb-4);
+	flex-wrap: wrap;
+}
+
+.pb-hero .pb-btn--ghost {
+	border-color: rgb(255 255 255 / 40%);
+	color: #fff;
+}
+
+.pb-hero .pb-btn--ghost:hover {
+	background: rgb(255 255 255 / 10%);
+	color: #fff;
+}
+
+.pb-hero__link {
+	color: #fdba74;
+	font-weight: 700;
+	font-size: var(--pb-fs-sm);
+}
+
+.pb-hero__card {
+	background: rgb(255 255 255 / 6%);
+	border: 1px solid rgb(255 255 255 / 12%);
+	border-radius: var(--pb-radius-lg);
+	padding: var(--pb-5);
+}
+
+.pb-hero__card-head {
+	font-weight: 800;
+	color: #fff;
+	margin-bottom: var(--pb-3);
+}
+
+.pb-hero__list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	gap: var(--pb-3);
+	color: #d1d5db;
+	font-size: var(--pb-fs-sm);
+}
+
+.pb-hero__list li {
+	padding-inline-start: var(--pb-5);
+	position: relative;
+}
+
+.pb-hero__list li::before {
+	content: "✓";
+	position: absolute;
+	inset-inline-start: 0;
+	top: 0;
+	color: var(--pb-orange);
+	font-weight: 800;
+}
+
+/* ============ سکشن‌ها ============ */
+.pb-section {
+	padding-block: var(--pb-7);
+}
+
+.pb-section--muted {
+	background: var(--pb-surface);
+}
+
+.pb-section--car {
+	padding-block: var(--pb-6);
+}
+
+.pb-section__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--pb-4);
+	margin-bottom: var(--pb-5);
+}
+
+.pb-section__head h2 {
+	margin: 0;
+	font-size: var(--pb-fs-lg);
+}
+
+.pb-section__head a {
+	font-size: var(--pb-fs-sm);
+	font-weight: 700;
+}
+
+/* دسته‌بندی‌ها */
+.pb-cats {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: var(--pb-3);
+}
+
+.pb-cat {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	padding: var(--pb-4);
+	background: #fff;
+	border: 1px solid var(--pb-border);
+	border-radius: var(--pb-radius-lg);
+	transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.pb-cat:hover {
+	border-color: var(--pb-orange);
+	box-shadow: var(--pb-shadow);
+	transform: translateY(-2px);
+}
+
+.pb-cat__name {
+	color: var(--pb-ink);
+	font-weight: 800;
+	font-size: var(--pb-fs-base);
+}
+
+.pb-cat__count {
+	color: var(--pb-ink-500);
+	font-size: var(--pb-fs-xs);
+}
+
+/* سه مرحله */
+.pb-steps {
+	display: grid;
+	gap: var(--pb-5);
+}
+
+.pb-step {
+	position: relative;
+	padding: var(--pb-5);
+	background: #fff;
+	border: 1px solid var(--pb-border);
+	border-radius: var(--pb-radius-lg);
+}
+
+.pb-step__num {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	border-radius: 999px;
+	background: var(--pb-orange-50);
+	color: var(--pb-orange-600);
+	font-weight: 800;
+	margin-bottom: var(--pb-3);
+}
+
+.pb-step p {
+	margin: 0;
+	color: var(--pb-ink-500);
+	font-size: var(--pb-fs-sm);
+}
+
+/* ============ فوتر ============ */
+.pb-trust {
+	background: var(--pb-orange-50);
+	border-top: 1px solid #fed7aa;
+	border-bottom: 1px solid #fed7aa;
+}
+
+.pb-trust__grid {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: var(--pb-4);
+	padding-block: var(--pb-5);
+}
+
+.pb-trust__item {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.pb-trust__item strong {
+	color: #9a3412;
+	font-size: var(--pb-fs-sm);
+}
+
+.pb-trust__item span {
+	color: #b45309;
+	font-size: var(--pb-fs-xs);
+}
+
+.pb-footer__main {
+	background: var(--pb-ink);
+	color: #9ca3af;
+	padding-block: var(--pb-7);
+}
+
+.pb-footer__grid {
+	display: grid;
+	gap: var(--pb-6);
+}
+
+.pb-footer h3 {
+	color: #fff;
+	font-size: var(--pb-fs-sm);
+	margin: 0 0 var(--pb-3);
+}
+
+.pb-footer__col p {
+	font-size: var(--pb-fs-sm);
+	line-height: 2;
+	color: #9ca3af;
+	margin: var(--pb-3) 0 0;
+}
+
+.pb-footer__menu {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	gap: 10px;
+	font-size: var(--pb-fs-sm);
+}
+
+.pb-footer a {
+	color: #d1d5db;
+}
+
+.pb-footer a:hover {
+	color: var(--pb-orange);
+}
+
+.pb-footer__bottom {
+	background: #0b1220;
+	color: #6b7280;
+	font-size: var(--pb-fs-xs);
+}
+
+.pb-footer__bottom-inner {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--pb-4);
+	min-height: 56px;
+	flex-wrap: wrap;
+}
+
+/* بازگشت به بالا */
+.pb-top {
+	position: fixed;
+	inset-inline-start: 18px;
+	bottom: 18px;
+	width: 44px;
+	height: 44px;
+	border-radius: 999px;
+	border: 1px solid var(--pb-border);
+	background: #fff;
+	color: var(--pb-ink);
+	font-size: 18px;
+	cursor: pointer;
+	box-shadow: var(--pb-shadow);
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.2s ease;
+	z-index: 60;
+}
+
+.pb-top.is-visible {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+/* ============ بریک‌پوینت‌ها ============ */
+@media (min-width: 768px) {
+	.pb-search {
+		display: flex;
+	}
+
+	.pb-nav-toggle {
+		display: none;
+	}
+
+	.pb-nav__inner {
+		display: block;
+	}
+
+	.pb-nav__menu {
+		flex-direction: row;
+		gap: var(--pb-2);
+	}
+
+	.pb-nav__menu .sub-menu {
+		position: absolute;
+		background: #fff;
+		border: 1px solid var(--pb-border);
+		border-radius: var(--pb-radius);
+		box-shadow: var(--pb-shadow);
+		padding: var(--pb-2);
+		min-width: 200px;
+		display: none;
+		z-index: 40;
+	}
+
+	.pb-nav__menu li:hover > .sub-menu {
+		display: block;
+	}
+
+	.pb-hero__inner {
+		grid-template-columns: 1.4fr 1fr;
+		align-items: center;
+	}
+
+	.pb-hero__title {
+		font-size: 40px;
+	}
+
+	.pb-cats {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.pb-steps {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.pb-trust__grid {
+		grid-template-columns: repeat(4, 1fr);
+	}
+
+	.pb-footer__grid {
+		grid-template-columns: 1.6fr 1fr 1fr 1fr;
+	}
+}
+
+@media (min-width: 1024px) {
+	.pb-hero {
+		padding-block: var(--pb-8);
+	}
+
+	.pb-hero__title {
+		font-size: var(--pb-fs-3xl);
+	}
+
+	.pb-cats {
+		grid-template-columns: repeat(6, 1fr);
+	}
+}

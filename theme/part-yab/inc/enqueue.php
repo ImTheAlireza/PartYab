@@ -43,6 +43,14 @@ function partyab_enqueue_assets(): void {
 		)
 	);
 
+	// استایل چیدمان: هدر، ناوبری، صفحه اصلی، فوتر.
+	wp_enqueue_style(
+		'partyab-layout',
+		PARTYAB_URI . '/assets/css/layout.css',
+		array( 'partyab-base' ),
+		partyab_asset_version( 'assets/css/layout.css' )
+	);
+
 	// استایل رابط سازگاری خودرو (سبک، همیشه لازم است).
 	wp_enqueue_style(
 		'partyab-compat-ui',
