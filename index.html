@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>چک‌لیست ساخت قالب وردپرس فروشگاه لوازم یدکی با المنتور</title>
+<style>
+  :root{
+    --bg:#f4f5f7;
+    --panel:#ffffff;
+    --ink:#14171c;
+    --ink-2:#4b5361;
+    --ink-3:#7b8494;
+    --line:#e3e6ec;
+    --line-2:#eef0f4;
+    --accent:#e8641a;
+    --accent-2:#fff1e8;
+    --accent-ink:#b84a0c;
+    --crit:#d92d20;
+    --crit-bg:#fef3f2;
+    --imp:#b54708;
+    --imp-bg:#fffaeb;
+    --later:#475467;
+    --later-bg:#f2f4f7;
+    --ok:#067647;
+    --ok-bg:#ecfdf3;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(16,24,40,.05),0 1px 3px rgba(16,24,40,.06);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Vazirmatn","IRANSans","IRANYekan",Tahoma,"Segoe UI",sans-serif;
+    font-size:15px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  .num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+  a{color:inherit}
+  button{font-family:inherit;font-size:inherit;cursor:pointer}
+
+  /* ---------- header ---------- */
+  .top{background:#101318;color:#fff;padding:26px 0 0;position:relative;overflow:hidden}
+  .top:after{content:"";position:absolute;inset:auto -10% -60% 20%;height:220px;background:radial-gradient(closest-side,rgba(232,100,26,.35),transparent);pointer-events:none}
+  .wrap{max-width:1280px;margin:0 auto;padding:0 20px}
+  .brand{display:flex;align-items:center;gap:10px;font-size:12.5px;letter-spacing:.02em;color:#9aa4b2}
+  .brand b{color:#fff;font-weight:600}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);display:inline-block}
+  h1{font-size:26px;line-height:1.5;margin:14px 0 6px;font-weight:800;letter-spacing:-.01em}
+  .sub{color:#b8c0cc;max-width:720px;margin:0 0 22px;font-size:14px}
+  .kpis{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px}
+  .kpi{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:8px 14px;display:flex;gap:8px;align-items:baseline}
+  .kpi b{font-size:18px;font-weight:800}
+  .kpi span{font-size:12px;color:#9aa4b2}
+
+  .progress-shell{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:16px 16px 0 0;padding:16px 18px 18px;display:flex;flex-wrap:wrap;align-items:center;gap:16px 24px}
+  .ring{flex:0 0 auto;position:relative;width:64px;height:64px}
+  .ring svg{transform:rotate(-90deg)}
+  .ring .pct{position:absolute;inset:0;display:grid;place-items:center;font-size:15px;font-weight:800;color:#fff}
+  .pmeta{flex:1 1 260px;min-width:220px}
+  .pmeta .lbl{display:flex;justify-content:space-between;font-size:12.5px;color:#b8c0cc;margin-bottom:7px}
+  .bar{height:8px;border-radius:99px;background:rgba(255,255,255,.13);overflow:hidden}
+  .bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,#ff8a3d,#e8641a);border-radius:99px;transition:width .35s ease}
+  .ptxt{font-size:12.5px;color:#cbd2dd;margin-top:8px}
+
+  /* ---------- toolbar ---------- */
+  .toolbar{position:sticky;top:0;z-index:30;background:rgba(244,245,247,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);margin-top:0}
+  .toolbar .wrap{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}
+  .search{flex:1 1 220px;position:relative;min-width:180px}
+  .search input{width:100%;padding:9px 38px 9px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;font-family:inherit;font-size:14px;color:var(--ink);outline:none;transition:.15s}
+  .search input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-2)}
+  .search svg{position:absolute;right:12px;top:50%;transform:translateY(-50%);opacity:.45}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{border:1px solid var(--line);background:#fff;color:var(--ink-2);border-radius:99px;padding:7px 13px;font-size:12.5px;font-weight:600;transition:.15s;display:flex;align-items:center;gap:6px}
+  .chip:hover{border-color:#c9cfda}
+  .chip.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  .chip .c{font-size:11px;opacity:.7}
+  .btn{border:1px solid var(--line);background:#fff;color:var(--ink-2);border-radius:10px;padding:8px 12px;font-size:12.5px;font-weight:600;transition:.15s}
+  .btn:hover{border-color:#c9cfda;color:var(--ink)}
+  .btn.danger:hover{border-color:#f5b5b0;color:var(--crit);background:var(--crit-bg)}
+
+  /* ---------- layout ---------- */
+  .layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:24px;align-items:start;padding:24px 0 80px}
+  nav.toc{position:sticky;top:70px;display:flex;flex-direction:column;gap:4px;max-height:calc(100vh - 100px);overflow:auto;padding:2px}
+  nav.toc a{display:grid;grid-template-columns:26px 1fr auto;align-items:center;gap:8px;text-decoration:none;padding:8px 10px;border-radius:9px;font-size:13px;color:var(--ink-2);transition:.15s;border:1px solid transparent}
+  nav.toc a:hover{background:#fff;border-color:var(--line)}
+  nav.toc a.active{background:#fff;border-color:var(--line);color:var(--ink);font-weight:700;box-shadow:var(--shadow)}
+  nav.toc .n{font-size:11px;color:var(--ink-3);text-align:center;background:var(--line-2);border-radius:6px;line-height:20px}
+  nav.toc a.active .n{background:var(--accent-2);color:var(--accent-ink)}
+  nav.toc .mini{width:34px;height:4px;border-radius:99px;background:var(--line);overflow:hidden}
+  nav.toc .mini i{display:block;height:100%;width:0;background:var(--accent)}
+  nav.toc .mini.full i{background:var(--ok)}
+
+  main{min-width:0}
+  .phase{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:20px;overflow:hidden;scroll-margin-top:76px}
+  .phase-head{padding:20px 22px 18px;border-bottom:1px solid var(--line-2);display:flex;gap:16px;align-items:flex-start}
+  .pnum{flex:0 0 auto;width:46px;height:46px;border-radius:12px;background:#101318;color:#fff;display:grid;place-items:center;font-size:19px;font-weight:800}
+  .phase.done .pnum{background:var(--ok)}
+  .phead-main{flex:1;min-width:0}
+  .ptitle{display:flex;align-items:center;gap:8px;font-size:19px;font-weight:800;letter-spacing:-.01em;margin:0}
+  .ptitle .ico{font-size:17px}
+  .pgoal{color:var(--ink-2);font-size:13.5px;margin:6px 0 12px}
+  .pmeta-row{display:flex;flex-wrap:wrap;gap:6px 8px;margin-bottom:14px}
+  .pill{font-size:11.5px;background:var(--line-2);color:var(--ink-2);border-radius:7px;padding:3px 9px;display:flex;align-items:center;gap:5px;border:1px solid transparent}
+  .pill b{color:var(--ink);font-weight:700}
+  .pill.acc{background:var(--accent-2);color:var(--accent-ink)}
+  .pill.acc b{color:var(--accent-ink)}
+  .pbar{display:flex;align-items:center;gap:10px}
+  .pbar .bar{background:var(--line-2);height:7px;flex:1;max-width:340px}
+  .pbar .bar>i{background:linear-gradient(90deg,#ff9a56,var(--accent))}
+  .phase.done .pbar .bar>i{background:var(--ok)}
+  .pbar .val{font-size:12px;color:var(--ink-3);font-weight:700}
+
+  .sec{padding:4px 6px 6px}
+  .sec-t{display:flex;align-items:center;gap:10px;padding:14px 16px 8px;font-size:13px;font-weight:800;color:var(--ink-3);letter-spacing:.01em}
+  .sec-t:after{content:"";flex:1;height:1px;background:var(--line-2)}
+
+  .item{display:grid;grid-template-columns:26px minmax(0,1fr);gap:12px;padding:11px 16px;border-radius:10px;transition:background .15s}
+  .item:hover{background:#fafbfc}
+  .item.hide{display:none}
+  .item.checked .it-title{color:var(--ink-3);text-decoration:line-through;text-decoration-color:#c7cdd7}
+  .item.checked .it-note{opacity:.6}
+  .box{width:22px;height:22px;border:1.8px solid #c7cdd7;border-radius:7px;display:grid;place-items:center;cursor:pointer;background:#fff;transition:.15s;margin-top:3px;flex:0 0 auto;padding:0}
+  .box:hover{border-color:var(--accent)}
+  .box svg{opacity:0;transform:scale(.6);transition:.15s;color:#fff}
+  .item.checked .box{background:var(--ok);border-color:var(--ok)}
+  .item.checked .box svg{opacity:1;transform:scale(1)}
+  .it-body{min-width:0}
+  .it-top{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px}
+  .it-id{font-size:10.5px;color:var(--ink-3);font-weight:700;letter-spacing:.02em;background:var(--line-2);border-radius:5px;padding:1px 6px;line-height:1.7;flex:0 0 auto}
+  .it-title{font-size:14px;font-weight:600;line-height:1.65}
+  .it-note{font-size:12.5px;color:var(--ink-2);margin:3px 0 0;line-height:1.75}
+  .tags{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap}
+  .tag{font-size:10.5px;font-weight:700;border-radius:5px;padding:1px 7px;line-height:1.8}
+  .tag.crit{background:var(--crit-bg);color:var(--crit)}
+  .tag.imp{background:var(--imp-bg);color:var(--imp)}
+  .tag.later{background:var(--later-bg);color:var(--later)}
+  .tag.cat{background:#f8f9fb;color:var(--ink-3);border:1px solid var(--line-2)}
+
+  .empty{display:none;padding:40px 20px;text-align:center;color:var(--ink-3);font-size:13.5px}
+  .empty.show{display:block}
+
+  .footnote{background:#101318;color:#9aa4b2;border-radius:var(--radius);padding:22px 24px;font-size:13px;margin-top:26px}
+  .footnote b{color:#fff}
+  .footnote p{margin:0 0 8px}
+
+  @media (max-width:1000px){
+    .layout{grid-template-columns:1fr;gap:16px}
+    nav.toc{position:static;max-height:none;flex-direction:row;overflow-x:auto;padding-bottom:6px;gap:6px}
+    nav.toc a{grid-template-columns:auto auto;white-space:nowrap;border:1px solid var(--line);background:#fff;padding:6px 11px}
+    nav.toc .mini{display:none}
+  }
+  @media (max-width:600px){
+    h1{font-size:20px}
+    .top{padding-top:18px}
+    .phase-head{padding:16px;gap:12px}
+    .pnum{width:38px;height:38px;font-size:16px;border-radius:10px}
+    .ptitle{font-size:16.5px}
+    .item{padding:10px 12px;gap:10px}
+    .it-title{font-size:13.5px}
+    .sec-t{padding:12px 12px 6px}
+    .wrap{padding:0 14px}
+    .kpi{padding:6px 11px}
+  }
+  @media print{
+    .top,.toolbar,nav.toc,.box,.footnote{display:none!important}
+    body{background:#fff;font-size:11pt}
+    .phase{box-shadow:none;break-inside:avoid;border-color:#ddd}
+    .item:hover{background:none}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand"><span class="dot"></span><b>PartYab</b> <span>— چک‌لیست ساخت قالب</span></div>
+    <h1>چک‌لیست ساخت قالب وردپرس فروشگاه لوازم یدکی با المنتور</h1>
+    <p class="sub">۱۶ قطعه پازل، از تصمیم‌های بنیادی تا انتشار. هر قطعه قابل تحویل و مستقل است؛ به ترتیب برو و هر جا تیک خورد، برگرد سراغ قطعه بعد.</p>
+    <div class="kpis">
+      <div class="kpi"><b class="num" id="k-total">۰</b><span>کار</span></div>
+      <div class="kpi"><b class="num" id="k-done">۰</b><span>انجام‌شده</span></div>
+      <div class="kpi"><b class="num" id="k-crit">۰</b><span>کار بحرانی</span></div>
+      <div class="kpi"><b class="num" id="k-crit-done">۰</b><span>بحرانی انجام‌شده</span></div>
+    </div>
+    <div class="progress-shell">
+      <div class="ring">
+        <svg width="64" height="64" viewBox="0 0 64 64">
+          <circle cx="32" cy="32" r="27" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="7"/>
+          <circle id="ring-fg" cx="32" cy="32" r="27" fill="none" stroke="#ff8a3d" stroke-width="7" stroke-linecap="round" stroke-dasharray="169.6" stroke-dashoffset="169.6" style="transition:stroke-dashoffset .4s ease"/>
+        </svg>
+        <div class="pct num" id="ring-pct">۰٪</div>
+      </div>
+      <div class="pmeta">
+        <div class="lbl"><span>پیشرفت کل پروژه</span><span class="num" id="prog-text">۰ از ۰</span></div>
+        <div class="bar"><i id="prog-fill"></i></div>
+        <div class="ptxt" id="prog-hint">از قطعه ۰ شروع کن.</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="wrap">
+    <div class="search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="جستجو در کل چک‌لیست… (مثلاً فیلتر، سازگاری، موبایل)">
+    </div>
+    <div class="chips" id="filters">
+      <button class="chip on" data-f="all">همه</button>
+      <button class="chip" data-f="crit">بحرانی</button>
+      <button class="chip" data-f="todo">باقی‌مانده</button>
+      <button class="chip" data-f="done">انجام‌شده</button>
+    </div>
+    <button class="btn" id="expand">بستن همه</button>
+    <button class="btn" id="export">خروجی پیشرفت</button>
+    <button class="btn danger" id="reset">شروع از نو</button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="layout">
+    <nav class="toc" id="toc"></nav>
+    <main id="main"></main>
+  </div>
+  <div class="footnote">
+    <p><b>قاعده‌ی کار:</b> ترتیب قطعات را عوض نکن. قطعه ۲ (مدل داده و سازگاری خودرو) اگر اشتباه ساخته شود، تقریباً همه قطعات بعدی باید بازنویسی شوند.</p>
+    <p><b>تعریف «انجام‌شده»:</b> یک کار وقتی تیک می‌خورد که روی سایت ساخته شده، در ۳۶۰px و دسکتاپ تست شده و یک نفر دیگر آن را دیده باشد.</p>
+    <p>پیشرفت به‌صورت خودکار در همین مرورگر ذخیره می‌شود. با دکمه «خروجی پیشرفت» یک فایل JSON می‌گیری و می‌توانی در دستگاه دیگر واردش کنی.</p>
+  </div>
+</div>
+
+<script>
+const DATA = {"phases":[{"id":"p0","num":"۰","title":"تصمیم‌های بنیادی","icon":"🧭","goal":"قبل از یک خط طراحی، بدانیم چه می‌سازیم، برای چه کسی و با چه ابزاری. هر تصمیم این قطعه، روی ۱۵ قطعه بعدی اثر می‌گذارد.","output":"یک فایل «brief» یک‌صفحه‌ای + لیست افزونه‌های نهایی","time":"۳ تا ۶ ساعت","depends":"—","sections":[{"title":"استک و ابزار","items":[{"id":"0-01","t":"انتخاب پایه: قالب Hello Elementor + چایلد تم","n":"سبک‌ترین گزینه و بهترین کنترل. تم‌های چندمنظوره را برای این پروژه کنار بگذار.","tag":"فنی","pr":"crit"},{"id":"0-02","t":"خرید و فعال‌سازی لایسنس Elementor Pro","n":"بدون Pro، Theme Builder، WooCommerce Builder، Loop Grid و Popup را نداری — این پروژه بدون آن‌ها معنا ندارد.","tag":"فنی","pr":"crit"},{"id":"0-03","t":"نسخه دقیق WordPress / PHP / MySQL را ثبت کن","n":"پیشنهاد: WP آخرین نسخه پایدار، PHP 8.2 یا 8.3، MySQL 8، memory_limit حداقل 256M.","tag":"فنی","pr":"crit"},{"id":"0-04","t":"سه محیط بساز: لوکال، Staging، Production","n":"هرگز مستقیم روی سایت اصلی طراحی نکن. مسیر انتشار باید یک‌طرفه و تکرارشدنی باشد.","tag":"فنی","pr":"crit"},{"id":"0-05","t":"لیست افزونه‌های مجاز را قفل کن","n":"حداکثر ۱۲ افزونه. هر افزونه جدید فقط با تست سرعت و تداخل تأیید شود.","tag":"فنی","pr":"imp"},{"id":"0-06","t":"تصمیم بگیر دموها با «Template Kit» تحویل شوند یا داخل یک قالب","n":"Template Kit برای فروش/تحویل تمیزتر است؛ قالب یکپارچه برای مشتری نهایی ساده‌تر.","tag":"کسب‌وکار","pr":"imp"}]},{"title":"مخاطب و کسب‌وکار","items":[{"id":"0-07","t":"سه پرسونای اصلی را بنویس","n":"مکانیک حرفه‌ای (سرعت و شماره فنی)، راننده عادی (نمی‌داند چه می‌خواهد)، تعمیرگاه/عمده‌فروش (تعداد و فاکتور).","tag":"کسب‌وکار","pr":"crit"},{"id":"0-08","t":"هدف هر ۵ دمو را به یک پرسونا وصل کن","n":"هر دمو باید یک جواب متفاوت به «چه کسی می‌خرد» بدهد، نه فقط رنگ متفاوت.","tag":"کسب‌وکار","pr":"crit"},{"id":"0-09","t":"مدل فروش را روشن کن: خرده، عمده، یا هر دو","n":"اگر عمده هست، فیلدهای نقش کاربری و قیمت پله‌ای از همین حالا در مدل داده لحاظ شود.","tag":"کسب‌وکار","pr":"imp"},{"id":"0-10","t":"سیاست‌های اصلی را مکتوب کن","n":"ارسال (پیک/پست/باربری)، مرجوعی، گارانتی، اصالت کالا، زمان ارسال، حداقل سفارش.","tag":"کسب‌وکار","pr":"imp"},{"id":"0-11","t":"KPI را تعیین کن","n":"مثلاً: نرخ تبدیل ۲٪، AOV، نرخ رهاکردن سبد زیر ۶۵٪، نرخ جستجوی بی‌نتیجه زیر ۵٪.","tag":"کسب‌وکار","pr":"later"}]},{"title":"هویت و زبان بصری","items":[{"id":"0-12","t":"نام برند، تگ‌لاین و لحن نوشتاری","n":"لحن فنی و مطمئن بهتر از لحن شوخ است؛ مخاطب دنبال «قطعه درست» است.","tag":"محتوا","pr":"imp"},{"id":"0-13","t":"لوگو در سه نسخه: افقی، عمودی، تک‌رنگ","n":"نسخه تک‌رنگ برای هدر شفاف و فوتر تیره لازم می‌شود.","tag":"طراحی","pr":"imp"},{"id":"0-14","t":"انتخاب و لایسنس فونت فارسی","n":"مثلاً وزیرمتن یا ایران‌سنس؛ حتماً self-host کن، نه لود از CDN.","tag":"طراحی","pr":"crit"},{"id":"0-15","t":"۵ سایت مرجع (فارسی و خارجی) در فایل الهام ذخیره کن","n":"برای هر صفحه یک مرجع؛ بعداً بحث سلیقه‌ای با مشتری را تمام می‌کند.","tag":"طراحی","pr":"imp"}]},{"title":"تصمیم‌های فنی سرنوشت‌ساز","items":[{"id":"0-16","t":"سازگاری خودرو را چگونه ذخیره کنیم؟","n":"سه گزینه: افزونه آماده، جدول سفارشی در دیتابیس، یا CPT + متا. این تصمیم را قبل از ورود محصول بگیر.","tag":"فنی","pr":"crit"},{"id":"0-17","t":"مقایسه و علاقه‌مندی: افزونه یا کد سفارشی؟","n":"افزونه سریع‌تر است اما استایل و RTL آن معمولاً باید بازنویسی شود.","tag":"فنی","pr":"crit"},{"id":"0-18","t":"زبان سایت: تک‌زبانه فارسی یا چندزبانه","n":"اگر چندزبانه، از روز اول Polylang/WPML نصب شود، نه بعد از ساخت قالب‌ها.","tag":"فنی","pr":"imp"},{"id":"0-19","t":"ساختار URL را تعیین کن","n":"مثل /product/، /part-category/، /brand/، /compatibility/؛ slug فارسی یا لاتین، اما یک‌دست.","tag":"سئو","pr":"imp"},{"id":"0-20","t":"بریک‌پوینت‌ها را قفل کن","n":"پیشنهاد: ۳۶۰ / ۷۶۸ / ۱۰۲۴ / ۱۴۴۰. تغییر بعدی بریک‌پوینت یعنی بازبینی همه صفحات.","tag":"طراحی","pr":"crit"},{"id":"0-21","t":"بودجه عملکرد را بنویس","n":"مثلاً LCP زیر ۲.۵ ثانیه روی موبایل و صفحه زیر ۱.۵ مگابایت.","tag":"سرعت","pr":"imp"}]}]},{"id":"p1","num":"۱","title":"زیرساخت فنی","icon":"⚙️","goal":"یک زمین بازی تمیز و قابل بازگشت. چیزی نصب نکنیم که بعداً مجبور شویم حذفش کنیم.","output":"چایلد تم فعال، ووکامرس تنظیم‌شده، گیت راه‌اندازی‌شده، بک‌آپ خودکار","time":"۴ تا ۸ ساعت","depends":"قطعه ۰","sections":[{"title":"نصب و پایه","items":[{"id":"1-01","t":"نصب وردپرس با زبان فارسی و منطقه زمانی تهران","n":"ساعت سایت برای شمارش معکوس و سفارش‌ها حیاتی است.","tag":"فنی","pr":"crit"},{"id":"1-02","t":"نصب Hello Elementor و ساخت چایلد تم","n":"فایل‌ها: style.css، functions.php، screenshot.png، پوشه assets.","tag":"فنی","pr":"crit"},{"id":"1-03","t":"enqueue درست استایل و اسکریپت با نسخه‌گذاری","n":"برای دور زدن کش مرورگر در هر آپلود نسخه را عوض کن.","tag":"فنی","pr":"crit"},{"id":"1-04","t":"شماره نسخه قالب را در style.css و functions.php ناهماهنگ نگذار","n":"خطای رایج که باعث می‌شود updates تشخیص داده نشوند.","tag":"فنی","pr":"later"}]},{"title":"تنظیمات المنتور","items":[{"id":"1-05","t":"فعال‌سازی Flexbox Container و غیرفعال‌سازی بخش‌های قدیمی","n":"از روز اول با Container بساز؛ مهاجرت بعدی همه صفحات را خراب می‌کند.","tag":"فنی","pr":"crit"},{"id":"1-06","t":"فعال‌سازی WooCommerce Builder در تنظیمات Elementor","n":"بدون آن، قالب محصول و آرشیو و سبد ساخته نمی‌شود.","tag":"فنی","pr":"crit"},{"id":"1-07","t":"خاموش‌کردن فونت و رنگ پیش‌فرض Elementor و تم","n":"تا فقط توکن‌های خودمان اعمال شود و استایل‌ها قابل پیش‌بینی بمانند.","tag":"طراحی","pr":"crit"},{"id":"1-08","t":"تعریف Global Colors و Global Fonts","n":"همه رنگ‌ها و فونت‌ها فقط از اینجا؛ هیچ رنگ دستی در ویجت‌ها.","tag":"طراحی","pr":"crit"},{"id":"1-09","t":"تنظیم بریک‌پوینت‌ها و عرض Container سراسری","n":"مثلاً محتوا ۱۲۴۰px با پدینگ ۲۴px در موبایل.","tag":"طراحی","pr":"imp"},{"id":"1-10","t":"آپلود فونت فارسی و تعریف Custom Font","n":"وزن‌های ۴۰۰، ۵۰۰، ۷۰۰ و ۸۰۰ کافی است؛ هر وزن اضافه یعنی حجم بیشتر.","tag":"طراحی","pr":"imp"},{"id":"1-11","t":"غیرفعال‌کردن ویجت‌های بی‌استفاده المنتور","n":"کاهش بار پنل و کاهش ریسک استفاده اشتباه تیم.","tag":"سرعت","pr":"later"}]},{"title":"ووکامرس","items":[{"id":"1-12","t":"اجرای ویزارد و تنظیم واحد پول، وزن، ابعاد","n":"تومان، وزن کیلوگرم، ابعاد سانتی‌متر.","tag":"فنی","pr":"crit"},{"id":"1-13","t":"تعریف مناطق ارسال و روش‌های ارسال","n":"پیک تهران، پست پیشتاز، تیپاکس، باربری برای اقلام سنگین.","tag":"فنی","pr":"crit"},{"id":"1-14","t":"اتصال درگاه پرداخت و حالت تست","n":"زرین‌پال/آیدی‌پی + حالت سندباکس فعال تا پایان پروژه.","tag":"فنی","pr":"crit"},{"id":"1-15","t":"تنظیم ایمیل‌های ووکامرس با SMTP","n":"ایمیل‌های سفارش با ایمیل هاست تقریباً همیشه اسپم می‌شوند.","tag":"فنی","pr":"imp"},{"id":"1-16","t":"افزودن theme support های لازم","n":"woocommerce، wc-product-gallery-zoom، wc-product-gallery-lightbox، wc-product-gallery-slider، post-thumbnails.","tag":"فنی","pr":"crit"},{"id":"1-17","t":"تعریف اندازه تصاویر سفارشی","n":"کارت محصول ۴۰۰×۴۰۰، بنر ۱۹۲۰×۶۰۰، دسته‌بندی ۶۰۰×۶۰۰، گالری ۱۰۰۰×۱۰۰۰.","tag":"فنی","pr":"imp"},{"id":"1-18","t":"انتخاب و تست افزونه‌های فروشگاهی","n":"علاقه‌مندی، مقایسه، فیلتر محصول، جستجوی AJAX، سواچ متغیر، عمده‌فروشی — فقط موارد تأییدشده.","tag":"فنی","pr":"imp"}]},{"title":"نسخه‌گذاری و ایمنی","items":[{"id":"1-19","t":"راه‌اندازی Git روی چایلد تم","n":"فقط قالب و اسنیپت‌ها؛ آپلودها و افزونه‌ها را در گیت نگه ندار.","tag":"فنی","pr":"imp"},{"id":"1-20","t":"بک‌آپ خودکار روزانه + بک‌آپ دستی قبل از هر تغییر بزرگ","n":"دو مقصد: هاست و فضای ابری.","tag":"فنی","pr":"crit"},{"id":"1-21","t":"فعال‌سازی SSL، ریدایرکت https و غیرفعال‌کردن نمایش خطاها","n":"WP_DEBUG در محیط تولید خاموش باشد.","tag":"فنی","pr":"crit"},{"id":"1-22","t":"سخت‌سازی امنیتی پایه","n":"تغییر پیشوند دیتابیس نو، محدودیت تلاش ورود، حذف کاربر admin.","tag":"فنی","pr":"imp"}]}]},{"id":"p2","num":"۲","title":"مدل داده فروشگاه لوازم یدکی","icon":"🗂️","goal":"مهم‌ترین قطعه پازل. در فروشگاه یدکی، «سازگاری با خودرو» مهم‌تر از دسته‌بندی است. اگر این را اشتباه بچینی، همه صفحات بعدی باید بازنویسی شوند.","output":"درخت دسته‌بندی + تاکسونومی‌ها + ویژگی‌ها + ۳۰ محصول نمونه + جدول سازگاری","time":"۶ تا ۱۲ ساعت","depends":"قطعه ۰ و ۱","sections":[{"title":"تاکسونومی‌ها (دو محور موازی)","items":[{"id":"2-01","t":"محور اول — دسته‌بندی قطعه","n":"ترمز، جلوبندی و فرمان، موتور، برق و باتری، فیلترها، بدنه و آینه، روشنایی، روغن و مایعات، لوازم مصرفی.","tag":"فنی","pr":"crit"},{"id":"2-02","t":"محور دوم — برند خودرو","n":"ایرانی: پراید، سمند، پژو، تیبا، ساینا، شاهین، دنا. خارجی: هیوندای، کیا، تویوتا، رنو.","tag":"فنی","pr":"crit"},{"id":"2-03","t":"تاکسونومی مدل خودرو با سلسله‌مراتب برند ← مدل","n":"با افزونه CPT UI یا کد سفارشی؛ سلسله‌مراتبی بودن الزامی است.","tag":"فنی","pr":"crit"},{"id":"2-04","t":"تاکسونومی سال ساخت یا attribute سال","n":"بازه‌ای مثل ۱۳۸۵ تا ۱۳۹۰؛ برای فیلتر «سازگار با سال خودرو».","tag":"فنی","pr":"imp"},{"id":"2-05","t":"تاکسونومی برند قطعه","n":"بوش، والئو، ایساکو، سایپا یدک، کروز، مگنت Marelli. لوگو برای هر برند آپلود شود.","tag":"فنی","pr":"imp"},{"id":"2-06","t":"تاکسونومی موقعیت نصب","n":"جلو/عقب، چپ/راست، بالا/پایین، محور جلو/عقب. در جستجو و مقایسه استفاده می‌شود.","tag":"فنی","pr":"later"},{"id":"2-07","t":"تاکسونومی نوع کالا: اصل، طرح اصلی، استوک، تعمیری","n":"در کارت محصول به شکل بج نمایش داده شود؛ روی اعتماد کاربر اثر مستقیم دارد.","tag":"فنی","pr":"imp"}]},{"title":"ویژگی‌ها و فیلدهای محصول","items":[{"id":"2-08","t":"شماره فنی به‌عنوان SKU یکتا","n":"همان عددی که مکانیک روی قطعه می‌بیند؛ مهم‌ترین کلید جستجو.","tag":"فنی","pr":"crit"},{"id":"2-09","t":"ویژگی «شماره OEM» و «شماره‌های جایگزین»","n":"چند شماره در یک فیلد؛ جستجو باید همه را پوشش دهد.","tag":"فنی","pr":"crit"},{"id":"2-10","t":"ویژگی‌های فنی: جنس، کشور سازنده، گارانتی، تعداد در بسته، واحد فروش","n":"واحد فروش (عدد/جفت/ست) در لوازم یدکی حیاتی است.","tag":"فنی","pr":"imp"},{"id":"2-11","t":"ویژگی‌های بازتابی (Swatch): رنگ، اندازه، سمت","n":"برای نمایش بصری در صفحه محصول و فیلتر سریع.","tag":"فنی","pr":"later"},{"id":"2-12","t":"محصول متغیر برای تنوع‌ها","n":"مثلاً لنت ترمز برای چند مدل خودرو یا بسته‌بندی ۱ و ۴ عددی.","tag":"فنی","pr":"imp"},{"id":"2-13","t":"وضعیت‌های موجودی را تعریف کن: موجود، ناموجود، تماس بگیرید، پیش‌سفارش","n":"در لوازم یدکی «تماس بگیرید» بسیار رایج است و نباید شبیه ناموجود دیده شود.","tag":"فنی","pr":"imp"},{"id":"2-14","t":"تنظیم نمایش قیمت: تومان، جداکننده سه‌رقمی، حالت «قیمت با تماس»","n":"و قیمت خط‌خورده برای تخفیف.","tag":"طراحی","pr":"imp"},{"id":"2-15","t":"فیلدهای سفارشی سفارش: مدل خودرو، پلاک، VIN","n":"در چک‌اوت اضافه می‌شود؛ جلوی مرجوعی اشتباه را می‌گیرد.","tag":"فنی","pr":"imp"}]},{"title":"سازگاری خودرو (قلب پروژه)","items":[{"id":"2-16","t":"ساختار جدول سازگاری را طراحی کن","n":"کمینه فیلدها: product_id، برند، مدل، سال از، سال تا، موتور/تیپ، یادداشت.","tag":"فنی","pr":"crit"},{"id":"2-17","t":"تصمیم نهایی: جدول اختصاصی یا متای محصول","n":"جدول اختصاصی برای هزاران محصول و فیلتر سریع بهتر جواب می‌دهد.","tag":"فنی","pr":"crit"},{"id":"2-18","t":"فرم ورود سازگاری در ویرایش محصول","n":"چند ردیف برند/مدل/سال با دکمه افزودن ردیف؛ نه فیلد متنی آزاد.","tag":"فنی","pr":"crit"},{"id":"2-19","t":"ورود دسته‌ای جدول سازگاری با CSV","n":"وگرنه برای ۵۰۰ محصول زمان غیرواقعی می‌برد.","tag":"فنی","pr":"imp"},{"id":"2-20","t":"تست ۲۰ ترکیب دستی در دیتابیس","n":"درستی تطبیق سال و مدل را قبل از ساخت UI بسنج.","tag":"تست","pr":"crit"}]},{"title":"داده نمونه","items":[{"id":"2-21","t":"۵ دسته اصلی، ۱۰ برند قطعه، ۵ برند خودرو","n":"همه با تصویر و توضیح، نه دسته خالی.","tag":"محتوا","pr":"crit"},{"id":"2-22","t":"۳۰ محصول نمونه واقعی با تصویر","n":"شامل: ساده، متغیر، ناموجود، تخفیف‌دار، بدون تصویر — تا همه حالت‌ها تست شود.","tag":"محتوا","pr":"crit"},{"id":"2-23","t":"ساخت قالب CSV ایمپورت محصول و تست آن","n":"بعداً مشتری با همین فایل محصول اضافه می‌کند.","tag":"فنی","pr":"imp"},{"id":"2-24","t":"مستندسازی ساختار در فایل data-model.md","n":"نقشه دیتابیس و نام دقیق تاکسونومی‌ها و متاکی‌ها.","tag":"فنی","pr":"later"}]}]},{"id":"p3","num":"۳","title":"سیستم طراحی و استایل گلوبال","icon":"🎨","goal":"قبل از ساختن صفحه، آجرها را بساز. یک بار تعریف، هزار بار استفاده — این چیزی است که ۵ دمو را یک‌دست نگه می‌دارد.","output":"یک صفحه Style Guide زنده در سایت + توکن‌های گلوبال المنتور","time":"۸ تا ۱۴ ساعت","depends":"قطعه ۰","sections":[{"title":"رنگ","items":[{"id":"3-01","t":"پالت اصلی: رنگ برند، رنگ تاکید (CTA)، رنگ تیره","n":"در یدکی، نارنجی/زرد/قرمز صنعتی با مشکی جواب می‌دهد؛ آبی برای اعتماد.","tag":"طراحی","pr":"crit"},{"id":"3-02","t":"پالت معنایی: موفق، خطا، هشدار، اطلاع","n":"برای موجودی، تخفیف، خطای فرم و پیام سبد.","tag":"طراحی","pr":"crit"},{"id":"3-03","t":"۹ سطح خاکستری","n":"متن اصلی، متن ثانویه، حاشیه، پس‌زمینه کارت، پس‌زمینه صفحه.","tag":"طراحی","pr":"imp"},{"id":"3-04","t":"بررسی کنتراست همه ترکیب‌ها (حداقل ۴.۵:۱)","n":"خصوصاً متن سفید روی نارنجی، که معمولاً رد می‌شود.","tag":"UX","pr":"crit"}]},{"title":"تایپوگرافی و فاصله","items":[{"id":"3-05","t":"مقیاس تیتر H1 تا H6 با clamp","n":"H1 حدود ۴۰px دسکتاپ و ۲۸px موبایل؛ همه از Global Fonts.","tag":"طراحی","pr":"crit"},{"id":"3-06","t":"متن بدنه ۱۶px با line-height ۱.۸","n":"فارسی به فضای عمودی بیشتری از لاتین نیاز دارد.","tag":"طراحی","pr":"crit"},{"id":"3-07","t":"قاعده اعداد: اعداد فارسی یا لاتین؟ یکی را انتخاب کن","n":"معمولاً قیمت‌ها لاتین و متن‌ها فارسی؛ اما باید همه‌جا یکسان باشد.","tag":"طراحی","pr":"imp"},{"id":"3-08","t":"مقیاس فاصله ۴/۸/۱۲/۱۶/۲۴/۳۲/۴۸/۶۴/۹۶","n":"در Elementor با Global Spacing یا متغیرهای CSS.","tag":"طراحی","pr":"imp"},{"id":"3-09","t":"شعاع گوشه، سایه و ضخامت حاشیه استاندارد","n":"مثلاً شعاع ۸px برای کارت، ۶px برای دکمه، سایه ملایم دو لایه.","tag":"طراحی","pr":"imp"}]},{"title":"کامپوننت‌های پایه","items":[{"id":"3-10","t":"دکمه‌ها در ۵ نوع و ۳ اندازه","n":"اصلی، ثانویه، خط‌دار، شفاف، آیکونی — با حالت hover/focus/disabled.","tag":"طراحی","pr":"crit"},{"id":"3-11","t":"فیلد فرم با label، placeholder، راهنما و خطا","n":"فیلد بدون label در موبایل گم می‌شود.","tag":"طراحی","pr":"crit"},{"id":"3-12","t":"بج‌ها: تخفیف، جدید، ناموجود، اصل، پیشنهاد ویژه","n":"روی تصویر کارت محصول، کنار گوشه، اندازه ثابت.","tag":"طراحی","pr":"imp"},{"id":"3-13","t":"کامپوننت تب، آکاردئون، مودال، توست، تولتیپ","n":"توست برای «به سبد اضافه شد» و کپی شماره فنی.","tag":"طراحی","pr":"imp"},{"id":"3-14","t":"ستاره امتیاز، استپر تعداد، بردکرامب، صفحه‌بندی","n":"بردکرامب باید Schema داشته باشد.","tag":"طراحی","pr":"imp"},{"id":"3-15","t":"حالت خالی (empty state) و اسکلت لودینگ برای همه لیست‌ها","n":"سبد خالی، نتیجه جستجوی خالی، آدرس خالی، مقایسه خالی.","tag":"UX","pr":"imp"},{"id":"3-16","t":"ساخت آیکون‌ست اختصاصی (۳۰ آیکون)","n":"ترمز، فیلتر، باتری، لاستیک، فرمان، خدمات، ارسال، ضمانت... استایل یکدست خطی ۲۴px.","tag":"طراحی","pr":"imp"}]},{"title":"صفحه راهنمای استایل و دسترس‌پذیری","items":[{"id":"3-17","t":"ساخت صفحه Style Guide با المنتور","n":"همه کامپوننت‌ها کنار هم؛ مرجع تیم و جلوگیری از پراکندگی.","tag":"طراحی","pr":"imp"},{"id":"3-18","t":"بررسی ۴ بریک‌پوینت برای هر کامپوننت","n":"حتی دکمه‌ها در ۳۶۰px هم باید کامل دیده شوند.","tag":"تست","pr":"imp"},{"id":"3-19","t":"دسترس‌پذیری: focus ring مشخص، هدف لمسی ۴۴px، skip link","n":"در فرم‌های خرید و checkout حیاتی است.","tag":"UX","pr":"imp"},{"id":"3-20","t":"حالت دارک (اختیاری، فقط اگر واقعاً استفاده می‌شود)","n":"اگر دمو ۵ تیره است، به‌جای دارک‌مود واقعی از پالت تیره استفاده کن.","tag":"طراحی","pr":"later"}]}]},{"id":"p4","num":"۴","title":"هدر، فوتر و اجزای سراسری","icon":"🧱","goal":"پوسته سایت. هر کاربر در هر صفحه این را می‌بیند؛ بیشترین بازده طراحی برای کمترین زمان.","output":"قالب‌های Header، Footer و اجزای تکرارشونده در Theme Builder","time":"۶ تا ۱۰ ساعت","depends":"قطعه ۳","sections":[{"title":"هدر","items":[{"id":"4-01","t":"نوار بالایی (topbar): تلفن، ساعات کاری، ارسال رایگان، ورود","n":"قابل بستن؛ در موبایل مخفی یا فقط تلفن.","tag":"طراحی","pr":"imp"},{"id":"4-02","t":"هدر دسکتاپ: لوگو، مگامنو، جستجو، آیکون‌ها","n":"جستجو باید بزرگ و در مرکز توجه باشد؛ در یدکی کاربر اغلب شماره فنی می‌زند.","tag":"طراحی","pr":"crit"},{"id":"4-03","t":"جستجوی هدر با پیشنهاد زنده (AJAX)","n":"نمایش ۵ محصول + ۲ دسته + «همه نتایج».","tag":"فنی","pr":"crit"},{"id":"4-04","t":"مگامنو دسته‌بندی قطعات","n":"۴ ستون + بنر تصویری + لینک برندها و «جستجو بر اساس خودرو».","tag":"طراحی","pr":"crit"},{"id":"4-05","t":"ویجت انتخاب خودرو در هدر","n":"برند ← مدل ← سال؛ انتخاب ذخیره شود و در همه صفحات باقی بماند.","tag":"فنی","pr":"imp"},{"id":"4-06","t":"آیکون‌های حساب، علاقه‌مندی، مقایسه، سبد با شمارنده","n":"شمارنده با AJAX آپدیت شود.","tag":"فنی","pr":"crit"},{"id":"4-07","t":"هدر موبایل: همبرگر، لوگو، جستجو، سبد","n":"حداکثر ۴ المان؛ بقیه به منوی کشویی برود.","tag":"طراحی","pr":"crit"},{"id":"4-08","t":"منوی کناری موبایل با آکاردئون دسته‌ها","n":"شامل ورود/ثبت‌نام، تماس، پیگیری سفارش.","tag":"طراحی","pr":"imp"},{"id":"4-09","t":"نوار پایین موبایل (bottom nav)","n":"خانه، دسته‌ها، جستجو، سبد، حساب — نرخ تعامل موبایل را بالا می‌برد.","tag":"UX","pr":"later"},{"id":"4-10","t":"هدر چسبان با حالت کوچک‌شده در اسکرول","n":"و حالت شفاف برای دموهایی که روی هیرو می‌نشینند.","tag":"طراحی","pr":"imp"},{"id":"4-11","t":"هدر اختصاصی برای صفحه‌های چک‌اوت و ورود","n":"هدر ساده بدون منو = کاهش حواس‌پرتی و افزایش نرخ تکمیل خرید.","tag":"UX","pr":"imp"},{"id":"4-12","t":"تست هدر در ۴ بریک‌پوینت و با منوی طولانی","n":"با ۱۲ آیتم منو تست کن، نه ۴ آیتم.","tag":"تست","pr":"imp"}]},{"title":"فوتر و اجزای شناور","items":[{"id":"4-13","t":"فوتر ۴ ستونه + خبرنامه","n":"درباره کوتاه، دسته‌ها، خدمات مشتریان، تماس و شبکه‌های اجتماعی.","tag":"طراحی","pr":"crit"},{"id":"4-14","t":"نماد اعتماد، درگاه‌ها و مجوزها","n":"اینماد، پرداخت امن، ضمانت اصالت — مهم‌ترین عامل اعتماد در فروشگاه یدکی.","tag":"طراحی","pr":"crit"},{"id":"4-15","t":"فوتر موبایل آکاردئونی","n":"بدون آکاردئون، فوتر موبایل یک صفحه بلند بی‌فایده است.","tag":"طراحی","pr":"imp"},{"id":"4-16","t":"دکمه‌های شناور: تماس/واتساپ، بازگشت به بالا","n":"در موبایل با bottom nav تداخل نداشته باشد.","tag":"طراحی","pr":"imp"},{"id":"4-17","t":"نوار اعلان قابل بستن (کمپین/ارسال رایگان)","n":"بالای هدر یا چسبیده به پایین صفحه.","tag":"طراحی","pr":"later"},{"id":"4-18","t":"قالب ۴۰۴، نتایج جستجو و آرشیو وبلاگ","n":"۳ قالب سراسری که فراموش می‌شوند و بعداً دردسر می‌سازند.","tag":"فنی","pr":"imp"},{"id":"4-19","t":"پاپ‌آپ خروج از سایت با کد تخفیف","n":"فقط یک‌بار در هر بازدید، با تأخیر و شرط صفحه.","tag":"کسب‌وکار","pr":"later"},{"id":"4-20","t":"بلوک CTA سراسری برای انتهای صفحات","n":"«قطعه‌ات را پیدا نکردی؟ بپرس» — مسیر نجات جستجوهای بی‌نتیجه.","tag":"کسب‌وکار","pr":"imp"}]}]},{"id":"p5","num":"۵","title":"کارت محصول و اجزای تکرارشونده","icon":"🧩","goal":"کارت محصول، پرتکرارترین عنصر سایت است. اگر این یک قطعه درست باشد، ۵ دمو و همه صفحات فروشگاه خودشان درست می‌شوند.","output":"Loop Item مرجع + کوئیک‌ویو + علاقه‌مندی + مقایسه + اسلایدر محصولات","time":"۱۰ تا ۱۶ ساعت","depends":"قطعه ۲ و ۳","sections":[{"title":"کارت محصول","items":[{"id":"5-01","t":"ساخت Loop Item کارت محصول در Theme Builder","n":"یک منبع حقیقت؛ بقیه صفحات فقط همین را صدا می‌زنند.","tag":"فنی","pr":"crit"},{"id":"5-02","t":"اجزای کارت: تصویر، بج، عنوان، شماره فنی، برند، قیمت، موجودی، دکمه","n":"شماره فنی زیر عنوان با فونت کوچک و کپی‌شدن با کلیک.","tag":"طراحی","pr":"crit"},{"id":"5-03","t":"حالت hover: تصویر دوم، دکمه‌های سریع (مقایسه/علاقه‌مندی/کوئیک‌ویو)","n":"در موبایل hover وجود ندارد؛ این دکمه‌ها باید همیشه یا با لمس دیده شوند.","tag":"UX","pr":"imp"},{"id":"5-04","t":"نمایش وضعیت موجودی با رنگ و متن","n":"موجود (سبز)، ناموجود (خاکستری)، تماس بگیرید (آبی)، ارسال از انبار (زرد).","tag":"طراحی","pr":"imp"},{"id":"5-05","t":"نمایش قیمت در همه حالت‌ها","n":"قیمت ساده، تخفیف‌دار، محدوده متغیر، بدون قیمت.","tag":"فنی","pr":"crit"},{"id":"5-06","t":"کارت فشرده (مینی) برای اسلایدر و سایدبار","n":"بدون توضیح، فقط تصویر + عنوان + قیمت.","tag":"طراحی","pr":"imp"},{"id":"5-07","t":"کارت لیستی (افقی) برای صفحه فروشگاه","n":"با توضیح کوتاه و مشخصات کلیدی؛ حالت خوب برای مقایسه ذهنی.","tag":"طراحی","pr":"later"},{"id":"5-08","t":"افزودن به سبد بدون رفرش + توست تأیید","n":"دکمه در حالت لودینگ قرار بگیرد و پیام موفقیت نمایش داده شود.","tag":"فنی","pr":"crit"},{"id":"5-09","t":"دکمه و مودال «کوئیک‌ویو»","n":"گالری، قیمت، انتخاب خودرو، افزودن به سبد — بدون ترک صفحه.","tag":"فنی","pr":"imp"},{"id":"5-10","t":"تست کارت با عنوان بسیار بلند و تصویر بدون پس‌زمینه","n":"دو شکست‌خوردگی رایج؛ ارتفاع کارت باید ثابت بماند.","tag":"تست","pr":"imp"}]},{"title":"تعامل‌ها","items":[{"id":"5-11","t":"دکمه علاقه‌مندی (Wishlist) با AJAX","n":"بدون رفرش، با تغییر حالت آیکون و شمارنده هدر.","tag":"فنی","pr":"imp"},{"id":"5-12","t":"دکمه افزودن به مقایسه + نوار مقایسه چسبان","n":"نوار پایین صفحه با تصاویر کوچک و دکمه «مقایسه کن».","tag":"فنی","pr":"imp"},{"id":"5-13","t":"ویجت کوچک سازگاری روی کارت محصول","n":"مثلاً «سازگار با پراید ۱۳۸۵–۱۳۹۰» به شکل یک خط متن با آیکون.","tag":"فنی","pr":"imp"},{"id":"5-14","t":"امتیاز و تعداد نظرات (فقط اگر واقعاً نظر داری)","n":"ستاره‌های خالی اعتماد را کم می‌کند؛ اگر نظری نیست، نمایش نده.","tag":"UX","pr":"later"},{"id":"5-15","t":"اسلایدر محصولات با Elementor Loop Carousel","n":"۴ کارت در دسکتاپ، ۲ در تبلت، ۱.۲ در موبایل (نشانه اسکرول).","tag":"فنی","pr":"crit"},{"id":"5-16","t":"گرید محصولات با ستون‌بندی ریسپانسیو","n":"۴/۳/۲ ستون؛ کارت‌های هم‌ارتفاع.","tag":"فنی","pr":"crit"},{"id":"5-17","t":"نوار لوگوی برندها (اسلایدر خاکستری)","n":"لوگوها یکدست و تک‌رنگ برای جلوگیری از شلوغی.","tag":"طراحی","pr":"imp"},{"id":"5-18","t":"کارت دسته‌بندی با تصویر و تعداد محصول","n":"تصویر قطعه با پس‌زمینه یکدست، نه عکس شلوغ.","tag":"طراحی","pr":"imp"},{"id":"5-19","t":"کارت مقاله وبلاگ","n":"تصویر، دسته، عنوان، تاریخ و زمان مطالعه.","tag":"طراحی","pr":"later"},{"id":"5-20","t":"بررسی همه اجزا در RTL و ۳۶۰px","n":"آیکون‌ها، فلش اسلایدر و جهت‌ها را جداگانه چک کن.","tag":"تست","pr":"crit"}]}]},{"id":"p6","num":"۶","title":"قالب‌های ووکامرس","icon":"🛒","goal":"قالب‌های پایه‌ای که همه صفحات فروشگاهی روی آن‌ها سوار می‌شوند. یک‌بار بساز، همه‌جا اعمال شود.","output":"Archive، Single Product، Category، Cart، Checkout، My Account در Theme Builder","time":"۸ تا ۱۲ ساعت","depends":"قطعه ۵","sections":[{"title":"قالب‌های اصلی","items":[{"id":"6-01","t":"قالب Product Archive (همه دسته‌ها)","n":"با شرط نمایش «همه آرشیوهای محصول» اعمال شود.","tag":"فنی","pr":"crit"},{"id":"6-02","t":"قالب Single Product","n":"اسکلت اصلی؛ جزئیات طراحی در قطعه ۸ بررسی می‌شود.","tag":"فنی","pr":"crit"},{"id":"6-03","t":"قالب دسته‌بندی محصول (Product Category)","n":"هدر تصویری اختصاصی + توضیح دسته + زیردسته‌ها.","tag":"فنی","pr":"imp"},{"id":"6-04","t":"قالب Cart، Checkout و My Account","n":"فعلاً اسکلت؛ در قطعات ۹ و ۱۰ تکمیل می‌شوند.","tag":"فنی","pr":"crit"},{"id":"6-05","t":"قالب صفحه تشکر / سفارش دریافت شد","n":"شماره سفارش، خلاصه، مراحل بعدی، راه ارتباط.","tag":"فنی","pr":"crit"},{"id":"6-06","t":"قالب نتایج جستجوی محصول","n":"جدا از آرشیو، تا فیلتر و متن خالی متفاوت باشد.","tag":"فنی","pr":"imp"},{"id":"6-07","t":"استایل پیام‌های ووکامرس (notice)","n":"افزودن به سبد، خطا، کوپن نامعتبر — این‌ها پیش‌فرض زشت‌اند.","tag":"طراحی","pr":"imp"},{"id":"6-08","t":"بررسی شرط‌های نمایش قالب‌ها","n":"بعد از ساخت ۵ دمو، قالب اشتباه روی صفحه اشتباه اعمال نشود.","tag":"تست","pr":"crit"},{"id":"6-09","t":"تست با محصول بدون تصویر، ناموجود و متغیر","n":"سه حالتی که بیشترین شکست بصری را دارند.","tag":"تست","pr":"imp"},{"id":"6-10","t":"استایل صفحات تگ محصول، برند و آرشیو سازگاری","n":"این آرشیوها هم باید ظاهر فروشگاه را داشته باشند.","tag":"فنی","pr":"later"}]}]},{"id":"p7","num":"۷","title":"پنج دموی صفحه اصلی","icon":"🏠","goal":"هر دمو یک روایت متفاوت، از یک کتابخانه سکشن مشترک. اول کتابخانه سکشن بساز، بعد دموها را مثل لِگو بچین.","output":"۵ صفحه اصلی کامل + مکانیزم جابه‌جایی دمو + سکشن‌های قابل استفاده مجدد","time":"۲۵ تا ۴۰ ساعت","depends":"قطعه ۴ و ۵","sections":[{"title":"کتابخانه سکشن (قبل از دموها)","items":[{"id":"7-01","t":"هیرو اسلایدر (۳ اسلاید، تصویر + متن + دو CTA)","n":"در موبایل ارتفاع کمتر و متن روی تصویر با اورلی.","tag":"طراحی","pr":"crit"},{"id":"7-02","t":"هیرو با ویجت انتخاب خودرو","n":"سه سلکت برند/مدل/سال + دکمه «قطعه من را پیدا کن».","tag":"فنی","pr":"crit"},{"id":"7-03","t":"نوار اعتماد (۴ مزیت با آیکون)","n":"ارسال سریع، ضمانت اصالت، ۷ روز مرجوعی، پشتیبانی فنی.","tag":"طراحی","pr":"crit"},{"id":"7-04","t":"گرید دسته‌بندی‌ها (۶ تا ۱۰ دسته)","n":"با تصویر قطعه و شمارش محصول.","tag":"طراحی","pr":"crit"},{"id":"7-05","t":"سکشن «جستجو بر اساس خودرو»","n":"لوگوی برندهای خودرو + مدل‌های محبوب.","tag":"فنی","pr":"crit"},{"id":"7-06","t":"سکشن «جستجو با شماره فنی»","n":"یک فیلد بزرگ + توضیح «شماره روی قطعه یا فاکتور قبلی».","tag":"UX","pr":"imp"},{"id":"7-07","t":"محصولات پرفروش / ویژه / جدید (اسلایدر)","n":"سه بلوک با تیتر و لینک «مشاهده همه».","tag":"فنی","pr":"crit"},{"id":"7-08","t":"بنر تخفیف روز با شمارش معکوس","n":"تایمر واقعی از تاریخ پایان کمپین، نه عدد ثابت.","tag":"فنی","pr":"imp"},{"id":"7-09","t":"بنر دو ستونه / سه ستونه","n":"یک بنر بزرگ + دو بنر کوچک با تصویر و متن.","tag":"طراحی","pr":"imp"},{"id":"7-10","t":"نوار برندهای قطعه","n":"اسلایدر لوگو با لینک به آرشیو برند.","tag":"طراحی","pr":"imp"},{"id":"7-11","t":"فرم «درخواست قطعه» (پیدا نکردی؟)","n":"مدل خودرو، نام قطعه، شماره فنی، شماره تماس — بهترین مبدل بازدید به سرنخ.","tag":"فنی","pr":"crit"},{"id":"7-12","t":"سکشن خدمات (تعمیرگاه/نصب/مشاوره)","n":"۳ تا ۴ خدمت با آیکون و لینک.","tag":"طراحی","pr":"later"},{"id":"7-13","t":"نظرات مشتریان (اسلایدر)","n":"نام، شهر، متن کوتاه، امتیاز؛ بدون عکس استوک.","tag":"طراحی","pr":"imp"},{"id":"7-14","t":"مقاله‌های وبلاگ (۳ کارت)","n":"محتوای آموزشی = ترافیک ارگانیک برای کلمات «تعویض لنت ترمز».","tag":"محتوا","pr":"imp"},{"id":"7-15","t":"خبرنامه / دریافت لیست تخفیف","n":"فقط ایمیل یا موبایل؛ با وعده مشخص.","tag":"طراحی","pr":"imp"},{"id":"7-16","t":"سوالات متداول آکاردئونی","n":"۵ سوال پرتکرار خرید یدکی + Schema.","tag":"طراحی","pr":"later"},{"id":"7-17","t":"شمارنده آمار (تعداد قطعه، مشتری، برند)","n":"اعداد واقعی و قابل دفاع.","tag":"طراحی","pr":"later"},{"id":"7-18","t":"سکشن اپلیکیشن / باشگاه مشتریان","n":"اگر وجود ندارد، نساز — سکشن الکی اعتماد را کم می‌کند.","tag":"طراحی","pr":"later"},{"id":"7-19","t":"سکشن اینستاگرام","n":"گرید تصاویر با لینک.","tag":"طراحی","pr":"later"},{"id":"7-20","t":"سکشن CTA ویدیویی / تصویری تمام‌عرض","n":"با اورلی و یک دکمه.","tag":"طراحی","pr":"later"},{"id":"7-21","t":"تبدیل هر سکشن به Template قابل استفاده مجدد","n":"با نام‌گذاری یکدست: hero-01، cat-grid-02 ... تا در ۵ دمو بازاستفاده شود.","tag":"فنی","pr":"crit"}]},{"title":"دمو ۱ — فروشگاه کلاسیک (خرده‌فروشی عمومی)","items":[{"id":"7-22","t":"تعریف روایت دمو ۱","n":"برای راننده عادی: «هر قطعه‌ای برای هر خودرویی، با ضمانت اصالت».","tag":"کسب‌وکار","pr":"crit"},{"id":"7-23","t":"چیدمان: هیرو اسلایدر ← نوار اعتماد ← دسته‌ها ← پرفروش‌ها ← بنر تخفیف ← برندها ← جدیدها ← مقالات ← خبرنامه","n":"ترتیب کلاسیک و اثبات‌شده؛ امن‌ترین دمو.","tag":"طراحی","pr":"crit"},{"id":"7-24","t":"هدر و فوتر مخصوص دمو ۱","n":"با شرط نمایش بر اساس صفحه.","tag":"فنی","pr":"imp"},{"id":"7-25","t":"تست دمو ۱ روی موبایل و اصلاح فاصله‌ها","n":"پدینگ سکشن‌ها در موبایل معمولاً باید نصف شود.","tag":"تست","pr":"imp"}]},{"title":"دمو ۲ — جستجو محور (Vehicle Finder)","items":[{"id":"7-26","t":"تعریف روایت دمو ۲","n":"برای کسی که نمی‌داند چه می‌خواهد: «خودرویت را بگو، قطعه‌اش را ما پیدا می‌کنیم».","tag":"کسب‌وکار","pr":"crit"},{"id":"7-27","t":"چیدمان: هیرو با انتخاب خودرو ← جستجوی شماره فنی ← برندهای خودرو ← دسته‌ها ← پرفروش‌های سازگار ← درخواست قطعه ← اعتماد ← مقالات","n":"کل صفحه حول یک اقدام: انتخاب خودرو.","tag":"طراحی","pr":"crit"},{"id":"7-28","t":"نمایش «خودروی انتخاب‌شده» در همه بخش‌های دمو ۲","n":"بعد از انتخاب، محصولات فیلتر شوند و یک نوار بالای صفحه خودرو را نشان دهد.","tag":"فنی","pr":"crit"},{"id":"7-29","t":"سکشن گاراژ من (خودروهای ذخیره‌شده)","n":"کاربر می‌تواند چند خودرو ذخیره کند؛ ویژگی متمایزکننده در این بازار.","tag":"فنی","pr":"imp"},{"id":"7-30","t":"تست دمو ۲ با انتخاب واقعی خودرو","n":"از انتخاب تا رسیدن به محصول سازگار، حداکثر ۳ کلیک.","tag":"تست","pr":"imp"}]},{"title":"دمو ۳ — کمپین/محصول قهرمان","items":[{"id":"7-31","t":"تعریف روایت دمو ۳","n":"برای کمپین تخفیف یا معرفی یک قطعه پرفروش: «امروز فقط، لنت ترمز با ۳۰٪ تخفیف».","tag":"کسب‌وکار","pr":"imp"},{"id":"7-32","t":"چیدمان: هیرو تمام‌عرض با شمارش معکوس ← محصول قهرمان (تصویر + مشخصات + خرید) ← مزایا ← مقایسه با مشابه ← نظرات ← سوالات ← استیکی خرید","n":"ساختار لندینگ فروش، با هویت فروشگاه.","tag":"طراحی","pr":"imp"},{"id":"7-33","t":"نوار خرید چسبان (قیمت + افزودن به سبد)","n":"در موبایل پایین صفحه، در دسکتاپ بالای صفحه.","tag":"فنی","pr":"imp"},{"id":"7-34","t":"تایمر شمارش معکوس متصل به تاریخ کمپین","n":"بعد از پایان، پیام «کمپین تمام شد» نمایش داده شود، نه عدد منفی.","tag":"فنی","pr":"imp"},{"id":"7-35","t":"تست دمو ۳ با موبایل در حالت عمودی و افقی","n":"هیرو تمام‌عرض در موبایل بیشترین ریسک را دارد.","tag":"تست","pr":"imp"}]},{"title":"دمو ۴ — خدمات و تعمیرگاه (و B2B سبک)","items":[{"id":"7-36","t":"تعریف روایت دمو ۴","n":"برای تعمیرگاه و مشتری خدماتی: «قطعه + نصب، یک‌جا».","tag":"کسب‌وکار","pr":"imp"},{"id":"7-37","t":"چیدمان: هیرو خدمات ← خدمات (نصب، تعمیر، مشاوره فنی) ← تعرفه/فرآیند ۳ مرحله‌ای ← تیم و مجوزها ← نمونه‌کار/رضایت ← فرم نوبت‌دهی ← نقشه و آدرس ← تماس ← درخواست عمده","n":"صفحه‌ای برای اعتمادسازی، نه فقط فروش.","tag":"طراحی","pr":"imp"},{"id":"7-38","t":"فرم نوبت‌دهی با انتخاب تاریخ/ساعت","n":"تاریخ شمسی؛ اگر شمسی پشتیبانی نمی‌شود، بازه زمانی ساده بگذار.","tag":"فنی","pr":"imp"},{"id":"7-39","t":"فرم درخواست عمده با فیلد تعداد و کد اقتصادی","n":"لید B2B؛ بدون قیمت عمومی.","tag":"فنی","pr":"later"},{"id":"7-40","t":"تست دمو ۴ با فرم‌ها و ارسال ایمیل","n":"از ارسال تا دریافت ایمیل مدیر را کامل تست کن.","tag":"تست","pr":"imp"}]},{"title":"دمو ۵ — مینیمال/تیره اسپرت","items":[{"id":"7-41","t":"تعریف روایت دمو ۵","n":"برای تیونینگ و خودروهای اسپرت: تصویرمحور، تایپوگرافی درشت، فضای منفی زیاد.","tag":"طراحی","pr":"imp"},{"id":"7-42","t":"چیدمان: هیرو تیره تصویری ← دسته‌ها به‌صورت خطی ← محصولات ویژه در گرید ۳ ستون ← CTA ویدیو ← برندها ← اینستاگرام ← خبرنامه تیره","n":"کمترین سکشن، بیشترین تأکید بر تصویر.","tag":"طراحی","pr":"imp"},{"id":"7-43","t":"پالت تیره اختصاصی (بدون تغییر پالت گلوبال)","n":"با متغیرهای CSS سطح سکشن، نه دست‌زدن به توکن‌های اصلی.","tag":"طراحی","pr":"imp"},{"id":"7-44","t":"تست خوانایی متن روی تصاویر تیره","n":"اورلی گرادیانت داشته باشد.","tag":"تست","pr":"imp"}]},{"title":"مدیریت دموها","items":[{"id":"7-45","t":"تعیین صفحه اصلی پیش‌فرض و مکانیزم سوییچ دمو","n":"یک صفحه انتخاب دمو یا سوئیچر شناور در پنل؛ کاربر باید آسان عوض کند.","tag":"فنی","pr":"imp"},{"id":"7-46","t":"ایمپورت تک‌کلیکی هر دمو (Template Kit / JSON)","n":"هر دمو یک پکیج مستقل شامل قالب هدر، فوتر و صفحه اصلی.","tag":"فنی","pr":"imp"},{"id":"7-47","t":"مستندسازی هر دمو (برای چه کسی، چه سکشن‌هایی، چه تصاویری)","n":"یک صفحه برای هر دمو در فایل README.","tag":"محتوا","pr":"later"},{"id":"7-48","t":"تست ۵ دمو در ۳ دستگاه و ۲ مرورگر","n":"و اندازه‌گیری سرعت هر کدام؛ دموهای سنگین‌تر باید بهینه شوند.","tag":"تست","pr":"crit"}]}]},{"id":"p8","num":"۸","title":"صفحه فروشگاه، جستجو و فیلتر","icon":"🔎","goal":"جایی که کاربر تصمیم می‌گیرد. در فروشگاه یدکی، ۷۰٪ فروش از مسیر جستجو و فیلتر می‌آید، نه از صفحه اصلی.","output":"آرشیو کامل + صفحه نتایج جستجو + جستجوی زنده + صفحه بررسی سازگاری ورودی","time":"۱۴ تا ۲۲ ساعت","depends":"قطعه ۵ و ۶","sections":[{"title":"صفحه فروشگاه / آرشیو","items":[{"id":"8-01","t":"چیدمان پایه: سایدبار فیلتر + نوار ابزار + گرید","n":"سایدبار ۲۵٪ و گرید ۷۵٪؛ استیکی بودن سایدبار در اسکرول.","tag":"طراحی","pr":"crit"},{"id":"8-02","t":"هدر صفحه دسته: عنوان، توضیح کوتاه، تعداد محصول، بردکرامب","n":"توضیح دسته برای سئو و برای راهنمایی کاربر.","tag":"طراحی","pr":"crit"},{"id":"8-03","t":"زیردسته‌ها به شکل چیپ/کارت بالای گرید","n":"ناوبری سریع‌تر از سایدبار در همان نقطه.","tag":"UX","pr":"imp"},{"id":"8-04","t":"نوار ابزار: تعداد نتایج، مرتب‌سازی، تغییر گرید/لیست","n":"مرتب‌سازی: پرفروش، ارزان‌ترین، گران‌ترین، جدیدترین، موجود.","tag":"فنی","pr":"crit"},{"id":"8-05","t":"فیلتر دسته‌بندی و زیردسته (آکاردئون)","n":"با چک‌باکس و شمارش تعداد محصول در هر شاخه.","tag":"فنی","pr":"crit"},{"id":"8-06","t":"فیلتر برند قطعه با لوگو","n":"لوگو در فیلتر سرعت انتخاب را بالا می‌برد.","tag":"فنی","pr":"imp"},{"id":"8-07","t":"فیلتر بازه قیمت با اسلایدر و فیلد عددی","n":"هر دو با هم، چون تایپ عدد در موبایل دقیق‌تر است.","tag":"فنی","pr":"crit"},{"id":"8-08","t":"فیلتر «سازگار با خودروی من»","n":"اگر خودرو انتخاب شده باشد، با یک کلیک نتایج به قطعات سازگار محدود شود.","tag":"فنی","pr":"crit"},{"id":"8-09","t":"فیلتر موجودی، تخفیف‌دار و نوع کالا (اصل/طرح)","n":"سوییچ‌های سریع بالای گرید.","tag":"فنی","pr":"imp"},{"id":"8-10","t":"فیلتر ویژگی‌های فنی (جنس، گارانتی، موقعیت)","n":"با شمارش و امکان جستجو داخل گزینه‌ها.","tag":"فنی","pr":"later"},{"id":"8-11","t":"فیلترهای فعال به شکل چیپ با دکمه حذف","n":"و دکمه «پاک کردن همه».","tag":"UX","pr":"crit"},{"id":"8-12","t":"فیلتر موبایل به شکل off-canvas با دکمه شناور","n":"دکمه «فیلتر (۳)» پایین صفحه با تعداد فیلتر فعال.","tag":"UX","pr":"crit"},{"id":"8-13","t":"بارگذاری بدون رفرش (AJAX) با حفظ آدرس","n":"آدرس باید با فیلترها آپدیت شود تا قابل اشتراک و ایندکس باشد.","tag":"فنی","pr":"imp"},{"id":"8-14","t":"صفحه‌بندی یا دکمه «محصولات بیشتر»","n":"بارگذاری تدریجی + شماره صفحه برای سئو (rel=next/prev).","tag":"فنی","pr":"imp"},{"id":"8-15","t":"حالت بدون نتیجه در آرشیو/فیلتر","n":"پیام + پیشنهاد حذف فیلتر + فرم درخواست قطعه.","tag":"UX","pr":"crit"},{"id":"8-16","t":"صفحه آرشیو برند (لوگو، توضیح، محصولات)","n":"و صفحه آرشیو «برند خودرو».","tag":"فنی","pr":"imp"},{"id":"8-17","t":"بهینه‌سازی تعداد کوئری در صفحه با ۲۰۰ محصول","n":"تست با ۲۰۰ محصول؛ لود زیر ۲ ثانیه.","tag":"سرعت","pr":"imp"}]},{"title":"جستجو","items":[{"id":"8-18","t":"جستجوی زنده در هدر با دسته‌بندی نتایج","n":"محصولات + دسته‌ها + «دیدن همه نتایج».","tag":"فنی","pr":"crit"},{"id":"8-19","t":"صفحه نتایج جستجو با همان گرید و فیلتر فروشگاه","n":"تجربه یکسان؛ کاربر نباید حس کند جای دیگری است.","tag":"فنی","pr":"crit"},{"id":"8-20","t":"جستجو با شماره فنی / OEM / شماره جایگزین","n":"با حذف فاصله و خط تیره، و پشتیبانی از جستجوی بخشی از شماره.","tag":"فنی","pr":"crit"},{"id":"8-21","t":"نرمال‌سازی متن فارسی در جستجو","n":"ی/ک عربی، نیم‌فاصله، اعداد فارسی و لاتین — بدون این، نیمی از جستجوها بی‌نتیجه است.","tag":"فنی","pr":"crit"},{"id":"8-22","t":"جستجوی املای جایگزین و مترادف","n":"مثلاً «لنت» و «لنت ترمز»، «دیسک» و «دیسک چرخ».","tag":"فنی","pr":"imp"},{"id":"8-23","t":"جستجوی صوتی یا بارکد (اختیاری)","n":"برای انبار و تعمیرگاه کاربردی، برای خرده‌فروشی تجملی.","tag":"فنی","pr":"later"},{"id":"8-24","t":"پیشنهادهای محبوب و تاریخچه جستجوی کاربر","n":"زیر فیلد جستجو در حالت خالی.","tag":"UX","pr":"later"},{"id":"8-25","t":"حالت «نتیجه‌ای پیدا نشد» با مسیر نجات","n":"پیشنهاد محصول مشابه + فرم درخواست قطعه + شماره تماس.","tag":"UX","pr":"crit"},{"id":"8-26","t":"اسکلت لودینگ و حالت خطا برای نتایج AJAX","n":"بدون آن، صفحه در اینترنت کند حس خرابی می‌دهد.","tag":"UX","pr":"imp"},{"id":"8-27","t":"ثبت جستجوهای بی‌نتیجه در یک گزارش","n":"هر هفته مرور کن؛ بهترین منبع برای فهم کمبود محصول.","tag":"کسب‌وکار","pr":"imp"},{"id":"8-28","t":"تنظیم noindex برای صفحات نتایج جستجو","n":"و ایندکس برای لندینگ‌های ساخته‌شده مثل «لنت ترمز پراید».","tag":"سئو","pr":"imp"}]}]},{"id":"p9","num":"۹","title":"سبد خرید و چک‌اوت","icon":"💳","goal":"قطعه‌ای که پول را می‌گیرد. هر اصطکاک اضافه اینجا مستقیماً پول است.","output":"سبد، مینی‌سبد، چک‌اوت تک‌مرحله‌ای، درگاه، صفحه تشکر، خطاها","time":"۱۶ تا ۲۴ ساعت","depends":"قطعه ۶","sections":[{"title":"سبد خرید","items":[{"id":"9-01","t":"مینی‌سبد کشویی (off-canvas) با AJAX","n":"بعد از افزودن به سبد باز شود؛ بدون ترک صفحه محصول.","tag":"فنی","pr":"imp"},{"id":"9-02","t":"صفحه سبد با ساختار دو ستونه","n":"اقلام در یک ستون، خلاصه چسبان در ستون کنار.","tag":"طراحی","pr":"crit"},{"id":"9-03","t":"ردیف اقلام: تصویر، عنوان، شماره فنی، ویژگی، تعداد، قیمت، حذف","n":"شماره فنی در سبد حتماً بماند تا اشتباه خرید کم شود.","tag":"طراحی","pr":"crit"},{"id":"9-04","t":"تغییر تعداد و حذف بدون رفرش با بازمحاسبه","n":"با حالت لودینگ روی ردیف همان محصول.","tag":"فنی","pr":"crit"},{"id":"9-05","t":"اعتبارسنجی موجودی هنگام تغییر تعداد","n":"پیام روشن: «فقط ۲ عدد در انبار موجود است».","tag":"فنی","pr":"imp"},{"id":"9-06","t":"فیلد کد تخفیف با نمایش تخفیف در خلاصه","n":"و پیام خطای واضح برای کد منقضی.","tag":"فنی","pr":"imp"},{"id":"9-07","t":"تخمین هزینه ارسال در سبد","n":"بر اساس استان/شهر و روش ارسال، قبل از چک‌اوت.","tag":"فنی","pr":"imp"},{"id":"9-08","t":"خلاصه سفارش: جمع، تخفیف، ارسال، مالیات، قابل پرداخت","n":"قابل پرداخت بزرگ‌تر و پررنگ‌تر.","tag":"طراحی","pr":"crit"},{"id":"9-09","t":"دکمه بزرگ ادامه فرآیند خرید + لینک ادامه خرید","n":"در موبایل چسبیده به پایین صفحه.","tag":"UX","pr":"crit"},{"id":"9-10","t":"سبد خالی با مسیر خروج","n":"پیشنهاد پرفروش‌ها + دکمه بازگشت به فروشگاه + شماره تماس.","tag":"UX","pr":"crit"},{"id":"9-11","t":"پیشنهاد مکمل (Cross-sell) داخل سبد","n":"«۹۰٪ خریداران این قطعه، این را هم خریدند».","tag":"کسب‌وکار","pr":"imp"},{"id":"9-12","t":"هشدار اقلام ناموجود یا تغییر قیمت در سبد","n":"قبل از رفتن به پرداخت، نه بعد از آن.","tag":"فنی","pr":"imp"},{"id":"9-13","t":"نشانگر پیشرفت «ارسال رایگان تا X تومان»","n":"افزایش میانگین سبد خرید، ساده و مؤثر.","tag":"کسب‌وکار","pr":"later"}]},{"title":"چک‌اوت","items":[{"id":"9-14","t":"چک‌اوت تک‌صفحه‌ای با استپر سه مرحله‌ای","n":"اطلاعات ← ارسال ← پرداخت، همه در یک صفحه.","tag":"UX","pr":"crit"},{"id":"9-15","t":"حذف فیلدهای غیرضروری و فارسی‌سازی لیبل‌ها","n":"شرکت، کد پستی اجباری و فیلدهای اضافه = رهاکردن سبد.","tag":"UX","pr":"crit"},{"id":"9-16","t":"فیلد آبشاری استان/شهر","n":"لیست کامل و مطابق تقسیمات فعلی.","tag":"فنی","pr":"crit"},{"id":"9-17","t":"فیلدهای سفارشی سفارش: مدل خودرو، پلاک، توضیح","n":"اختیاری اما در صفحه سفارش نمایش داده شود.","tag":"فنی","pr":"imp"},{"id":"9-18","t":"انتخاب روش ارسال با قیمت و زمان تخمینی","n":"پیک امروز، پست ۲ روزه، باربری ۳ روزه.","tag":"فنی","pr":"crit"},{"id":"9-19","t":"انتخاب درگاه پرداخت + توضیح امنیت","n":"با آیکون درگاه و جمله «پرداخت امن، هدایت به درگاه بانکی».","tag":"طراحی","pr":"crit"},{"id":"9-20","t":"ولیدیشن لحظه‌ای فرم با پیام خطای فارسی","n":"خطای فیلد زیر همان فیلد، نه بالای صفحه.","tag":"فنی","pr":"crit"},{"id":"9-21","t":"خرید به‌عنوان مهمان + ورود سریع","n":"ثبت‌نام اجباری بزرگ‌ترین قاتل نرخ تبدیل است.","tag":"UX","pr":"crit"},{"id":"9-22","t":"چک‌باکس قوانین با لینک","n":"و ذخیره رضایت در سفارش.","tag":"فنی","pr":"imp"},{"id":"9-23","t":"صفحه تشکر با مراحل بعدی و پیگیری","n":"شماره سفارش، روش ارسال، لینک پیگیری، پیشنهاد اشتراک خبرنامه.","tag":"UX","pr":"crit"},{"id":"9-24","t":"صفحه پرداخت ناموفق و تلاش مجدد","n":"با حفظ سبد و دکمه «تلاش مجدد پرداخت».","tag":"فنی","pr":"crit"},{"id":"9-25","t":"تست کامل پرداخت در سندباکس","n":"پرداخت موفق، ناموفق، لغو توسط کاربر، بازگشت از درگاه.","tag":"تست","pr":"crit"},{"id":"9-26","t":"تست ایمیل و پیامک تأیید سفارش","n":"و ایمیل «سفارش ارسال شد» با کد رهگیری.","tag":"تست","pr":"imp"},{"id":"9-27","t":"تست چک‌اوت روی موبایل با یک دست","n":"کیبورد عددی برای تلفن، autocomplete آدرس.","tag":"UX","pr":"crit"},{"id":"9-28","t":"ذخیره سبد رهاشده و ایمیل/پیامک یادآوری","n":"نیاز به افزونه؛ بازده بالا در فروشگاه‌های یدکی.","tag":"کسب‌وکار","pr":"later"}]}]},{"id":"p10","num":"۱۰","title":"حساب کاربری","icon":"👤","goal":"حساب کاربری در فروشگاه یدکی فقط «سفارش‌ها» نیست؛ گاراژ خودروها و لیست مقایسه هم بخشی از آن است.","output":"داشبورد، سفارش‌ها، آدرس‌ها، گاراژ من، علاقه‌مندی، مقایسه، ورود/ثبت‌نام","time":"۱۲ تا ۱۸ ساعت","depends":"قطعه ۶ و ۹","sections":[{"title":"ورود و ثبت‌نام","items":[{"id":"10-01","t":"صفحه ورود/ثبت‌نام دو ستونه با تب","n":"یک ستون فرم، یک ستون تصویر/مزایای عضویت.","tag":"طراحی","pr":"crit"},{"id":"10-02","t":"ورود با موبایل و کد یک‌بارمصرف (OTP)","n":"در ایران سریع‌ترین و آشناترین روش ورود.","tag":"فنی","pr":"imp"},{"id":"10-03","t":"اعتبارسنجی شماره موبایل ایرانی","n":"۰۹ + ۹ رقم، با نرمال‌سازی +98 و 9.","tag":"فنی","pr":"imp"},{"id":"10-04","t":"بازیابی رمز عبور با پیام فارسی","n":"و محدودیت تعداد درخواست.","tag":"فنی","pr":"imp"},{"id":"10-05","t":"ریدایرکت هوشمند بعد از ورود","n":"اگر از چک‌اوت آمده، به چک‌اوت برگردد نه به داشبورد.","tag":"UX","pr":"imp"},{"id":"10-06","t":"مودال ورود سریع در هدر","n":"بدون ترک صفحه فعلی.","tag":"UX","pr":"later"}]},{"title":"داشبورد و تب‌ها","items":[{"id":"10-07","t":"قالب My Account با سایدبار ناوبری","n":"در موبایل به تب افقی یا آکاردئون تبدیل شود.","tag":"طراحی","pr":"crit"},{"id":"10-08","t":"داشبورد با کارت‌های خلاصه","n":"سفارش‌های جاری، آدرس پیش‌فرض، خودروی من، امتیاز باشگاه.","tag":"طراحی","pr":"crit"},{"id":"10-09","t":"تب سفارش‌ها با فیلتر وضعیت و جستجو","n":"در حال پردازش، ارسال‌شده، تحویل‌شده، لغوشده.","tag":"فنی","pr":"crit"},{"id":"10-10","t":"جزئیات سفارش: اقلام، آدرس، پرداخت، تایم‌لاین وضعیت","n":"با شماره فنی و تصویر هر قلم.","tag":"طراحی","pr":"crit"},{"id":"10-11","t":"دکمه‌های عملیات سفارش","n":"دانلود فاکتور، پیگیری مرسوله، درخواست مرجوعی، خرید مجدد.","tag":"فنی","pr":"imp"},{"id":"10-12","t":"تب آدرس‌ها","n":"کارت آدرس با برچسب (خانه/محل کار)، ویرایش، حذف، پیش‌فرض.","tag":"فنی","pr":"crit"},{"id":"10-13","t":"تب جزئیات حساب و تغییر رمز","n":"با نمایش شماره موبایل تأییدشده.","tag":"فنی","pr":"imp"},{"id":"10-14","t":"تب لیست علاقه‌مندی‌ها","n":"با حذف سریع و افزودن به سبد.","tag":"فنی","pr":"imp"},{"id":"10-15","t":"تب لیست مقایسه‌های ذخیره‌شده","n":"اتصال به صفحه مقایسه.","tag":"فنی","pr":"later"},{"id":"10-16","t":"تب «خودروهای من» (گاراژ)","n":"افزودن برند/مدل/سال، نام مستعار، تعیین خودروی پیش‌فرض، حذف.","tag":"فنی","pr":"imp"},{"id":"10-17","t":"تب اعلان‌ها / پیام‌ها","n":"وضعیت سفارش، پاسخ به سوال فنی.","tag":"فنی","pr":"later"},{"id":"10-18","t":"خروج از حساب با تأیید","n":"و پاک‌سازی داده‌های محلی.","tag":"فنی","pr":"imp"},{"id":"10-19","t":"حالت خالی همه تب‌ها","n":"هر تب بدون داده باید پیام و دکمه اقدام داشته باشد.","tag":"UX","pr":"imp"},{"id":"10-20","t":"صفحه حساب اختصاصی (هدر ساده)","n":"و حذف منوهای حواس‌پرتی.","tag":"UX","pr":"later"}]}]},{"id":"p11","num":"۱۱","title":"مقایسه و بررسی سازگاری","icon":"🔧","goal":"دو صفحه‌ای که این پروژه را از یک فروشگاه معمولی جدا می‌کند. قلب تجربه لوازم یدکی همین‌جاست.","output":"صفحه مقایسه + صفحه بررسی سازگاری + ویجت سازگاری در محصول و سبد","time":"۱۶ تا ۲۶ ساعت","depends":"قطعه ۲ و ۶","sections":[{"title":"مقایسه محصولات","items":[{"id":"11-01","t":"دکمه افزودن به مقایسه در کارت و صفحه محصول","n":"با تیک تأیید بعد از افزودن.","tag":"فنی","pr":"crit"},{"id":"11-02","t":"نوار مقایسه چسبان با تصاویر و دکمه «مقایسه»","n":"حداکثر ۴ محصول؛ پیام هنگام تلاش برای پنجمی.","tag":"UX","pr":"imp"},{"id":"11-03","t":"صفحه مقایسه با جدول ویژگی‌ها","n":"ستون ثابت نام ویژگی، ستون‌های محصول، هدر چسبان.","tag":"طراحی","pr":"crit"},{"id":"11-04","t":"انتخاب ویژگی‌های قابل نمایش","n":"همه ویژگی‌ها نه؛ فقط ۸ تا ۱۲ ویژگی تصمیم‌ساز (قیمت، برند، گارانتی، سازگاری، جنس).","tag":"UX","pr":"crit"},{"id":"11-05","t":"هایلایت تفاوت‌ها","n":"ردیف‌های متفاوت با رنگ ملایم مشخص شوند.","tag":"طراحی","pr":"imp"},{"id":"11-06","t":"دکمه حذف هر محصول و پاک کردن همه","n":"با حفظ قابلیت بازگشت (undo).","tag":"UX","pr":"imp"},{"id":"11-07","t":"افزودن به سبد از داخل جدول مقایسه","n":"بدون ترک صفحه.","tag":"فنی","pr":"crit"},{"id":"11-08","t":"نمایش سازگاری در جدول مقایسه","n":"«با خودروی من سازگار است / نیست» با آیکون سبز و قرمز.","tag":"فنی","pr":"imp"},{"id":"11-09","t":"حالت موبایل: کارت‌های افقی با اسکرول","n":"جدول ۴ ستونه در موبایل غیرقابل استفاده است.","tag":"UX","pr":"crit"},{"id":"11-10","t":"اشتراک‌گذاری لینک مقایسه و چاپ/PDF","n":"لینک شامل شناسه محصولات باشد.","tag":"فنی","pr":"later"},{"id":"11-11","t":"صفحه مقایسه خالی با توضیح و پیشنهاد","n":"«هنوز محصولی اضافه نکردی» + پرفروش‌ها.","tag":"UX","pr":"imp"},{"id":"11-12","t":"سکشن «اخیراً مقایسه کرده‌اید» در صفحه مقایسه","n":"ذخیره در localStorage یا حساب.","tag":"فنی","pr":"later"}]},{"title":"بررسی سازگاری","items":[{"id":"11-13","t":"ویجت انتخاب خودرو (برند ← مدل ← سال ← تیپ)","n":"با AJAX و ذخیره انتخاب؛ همین ویجت در هدر و صفحه محصول مشترک باشد.","tag":"فنی","pr":"crit"},{"id":"11-14","t":"صفحه اختصاصی «بررسی سازگاری»","n":"انتخاب خودرو + انتخاب قطعه یا دسته → نتیجه.","tag":"طراحی","pr":"crit"},{"id":"11-15","t":"نتیجه سازگاری در سه حالت روشن","n":"سازگار (سبز)، ناسازگار (قرمز) با پیشنهاد جایگزین، نامشخص (زرد) با دکمه «بررسی توسط کارشناس».","tag":"UX","pr":"crit"},{"id":"11-16","t":"بخش سازگاری در صفحه محصول","n":"جدول خودروهای سازگار، قابل باز و بسته شدن، با جستجو داخل جدول.","tag":"فنی","pr":"crit"},{"id":"11-17","t":"هشدار ناسازگاری در سبد و چک‌اوت","n":"اگر خودروی کاربر با قلم سبد سازگار نبود، هشدار با امکان حذف.","tag":"فنی","pr":"crit"},{"id":"11-18","t":"نمایش «سازگار با خودروی من» در فیلتر، کارت و جستجو","n":"یک بار انتخاب خودرو، همه‌جا استفاده شود.","tag":"فنی","pr":"crit"},{"id":"11-19","t":"فرم «مطمئن نیستم» با ارسال درخواست بررسی","n":"مدل خودرو + عکس قطعه یا پلاک؛ تبدیل به لید پشتیبانی.","tag":"فنی","pr":"imp"},{"id":"11-20","t":"صفحه «قطعات سازگار با خودروی من»","n":"لیست کامل قطعات سازگار با گرید و فیلتر.","tag":"فنی","pr":"imp"},{"id":"11-21","t":"تست ۳۰ ترکیب برند/مدل/سال/قطعه","n":"شامل ترکیب‌های مرزی سال ساخت و مدل‌های هم‌نام.","tag":"تست","pr":"crit"},{"id":"11-22","t":"پیام روشن وقتی داده سازگاری برای محصول ثبت نشده","n":"«اطلاعات سازگاری این قطعه در حال تکمیل است» — نه سکوت و نه پاسخ اشتباه.","tag":"UX","pr":"crit"}]}]},{"id":"p12","num":"۱۲","title":"محصولات مرتبط و مکمل","icon":"🔗","goal":"افزایش میانگین سبد خرید با منطق، نه با شلوغی. در یدکی، «همراه این قطعه معمولاً این‌ها عوض می‌شوند».","output":"سکشن‌های مرتبط در محصول و سبد + صفحه اختصاصی محصولات مرتبط","time":"۸ تا ۱۲ ساعت","depends":"قطعه ۵ و ۶","sections":[{"title":"منطق انتخاب","items":[{"id":"12-01","t":"تعریف چهار نوع رابطه","n":"هم‌خانواده (همان دسته)، مکمل (با هم تعویض می‌شوند)، جایگزین (ناموجود)، هم‌قیمت/هم‌برند.","tag":"کسب‌وکار","pr":"crit"},{"id":"12-02","t":"تعیین اولویت نمایش","n":"دستی (انتخاب ادمین) > سازگاری خودرو > هم‌دسته > تصادفی.","tag":"فنی","pr":"imp"},{"id":"12-03","t":"فیلدهای مکمل و جایگزین در ویرایش محصول","n":"با جستجوی محصول و انتخاب چندگانه (Cross-sell/Up-sell ووکامرس یا فیلد سفارشی).","tag":"فنی","pr":"crit"},{"id":"12-04","t":"پرکردن دستی رابطه برای ۳۰ محصول نمونه","n":"برای تست واقعی الگوریتم لازم است.","tag":"محتوا","pr":"imp"}]},{"title":"نمایش","items":[{"id":"12-05","t":"سکشن «محصولات مرتبط» در صفحه محصول","n":"اسلایدر ۴تایی با عنوان و لینک.","tag":"فنی","pr":"crit"},{"id":"12-06","t":"سکشن «همراه با این محصول بخرید» (مکمل)","n":"با دکمه «افزودن همه به سبد» و تخفیف بسته.","tag":"کسب‌وکار","pr":"imp"},{"id":"12-07","t":"سکشن «محصولات جایگزین» برای کالای ناموجود","n":"به‌جای صفحه بن‌بست ناموجود.","tag":"UX","pr":"crit"},{"id":"12-08","t":"سکشن «اخیراً دیده‌اید»","n":"در صفحه محصول، سبد، و ۴۰۴.","tag":"فنی","pr":"imp"},{"id":"12-09","t":"سکشن «قطعات سازگار با خودروی شما»","n":"ترکیب سازگاری و مرتبط — قوی‌ترین سکشن فروش در این سایت.","tag":"فنی","pr":"crit"},{"id":"12-10","t":"صفحه اختصاصی «محصولات مرتبط» / «مکمل‌ها»","n":"گرید کامل با فیلتر، برای وقتی اسلایدر کافی نیست.","tag":"فنی","pr":"imp"},{"id":"12-11","t":"سکشن «بسته سرویس دوره‌ای»","n":"چند قطعه در یک بسته (روغن + فیلتر + واشر) با قیمت بسته.","tag":"کسب‌وکار","pr":"later"},{"id":"12-12","t":"اتصال مقالات وبلاگ به محصولات","n":"در انتهای مقاله، قطعات مرتبط با موضوع.","tag":"سئو","pr":"later"},{"id":"12-13","t":"تست الگوریتم با محصول ناموجود و بدون رابطه","n":"هیچ سکشنی نباید خالی یا تکراری نمایش داده شود.","tag":"تست","pr":"crit"}]}]},{"id":"p13","num":"۱۳","title":"صفحات محتوایی و اعتمادساز","icon":"📄","goal":"صفحاتی که کاربر قبل از خرید اول می‌خواند: درباره ما، تماس، قوانین، گارانتی، سوالات متداول. کم‌هزینه‌ترین برد اعتماد.","output":"۱۰ تا ۱۲ صفحه محتوایی با قالب یکدست","time":"۱۰ تا ۱۶ ساعت","depends":"قطعه ۴ و ۷","sections":[{"title":"صفحات ضروری","items":[{"id":"13-01","t":"درباره ما با داستان، تیم، مجوزها و آمار","n":"نه متن کلیشه‌ای؛ عکس واقعی انبار و تیم.","tag":"محتوا","pr":"crit"},{"id":"13-02","t":"تماس با ما با فرم، نقشه، آدرس، تلفن، ساعات کاری","n":"فرم با انتخاب موضوع (سفارش/فنی/عمده) و ارسال به ایمیل درست.","tag":"فنی","pr":"crit"},{"id":"13-03","t":"شرایط و قوانین خرید","n":"ارسال، پرداخت، لغو سفارش.","tag":"محتوا","pr":"crit"},{"id":"13-04","t":"سیاست مرجوعی و گارانتی","n":"جدول شرایط و استثناها (قطعات نصب‌شده و برقی).","tag":"محتوا","pr":"crit"},{"id":"13-05","t":"حریم خصوصی","n":"و کوکی‌ها.","tag":"محتوا","pr":"imp"},{"id":"13-06","t":"سوالات متداول با دسته‌بندی و آکاردئون","n":"خرید، ارسال، گارانتی، نصب، فنی.","tag":"محتوا","pr":"crit"},{"id":"13-07","t":"صفحه راهنمای خرید (چگونه قطعه درست را پیدا کنم)","n":"آموزش خواندن شماره فنی، تشخیص اصل از تقلبی.","tag":"محتوا","pr":"imp"},{"id":"13-08","t":"اکانت/حساب کاربری و سبد/چک‌اوت — صفحه یادآوری و لینک‌دهی","n":"این‌ها قالب ووکامرس‌اند؛ فقط از منویی که کاربر می‌بیند مطمئن شو.","tag":"تست","pr":"imp"},{"id":"13-09","t":"پیگیری سفارش (فرم شماره سفارش + موبایل)","n":"بدون نیاز به ورود.","tag":"فنی","pr":"imp"},{"id":"13-10","t":"صفحه فرصت‌های شغلی یا همکاری (اختیاری)","n":"اگر نیست، نساز.","tag":"محتوا","pr":"later"},{"id":"13-11","t":"صفحه ۴۰۴ سفارشی با جستجو و پیشنهاد","n":"و صفحه ۵۰۰ برای خطا.","tag":"فنی","pr":"imp"},{"id":"13-12","t":"صفحه برندها (لیست همه برندهای قطعه)","n":"با لوگو و لینک به آرشیو.","tag":"فنی","pr":"imp"}]},{"title":"یکدست‌سازی و سئو","items":[{"id":"13-13","t":"قالب صفحه محتوایی یکدست (هدر صفحه + متن غنی + CTA)","n":"یک قالب برای همه، با المنتور Template.","tag":"تست","pr":"crit"},{"id":"13-14","t":"متای هر صفحه: عنوان، توضیح، تصویر اشتراک","n":"با افزونه سئو.","tag":"سئو","pr":"imp"},{"id":"13-15","t":"Schema مناسب برای هر صفحه","n":"FAQPage، ContactPage، Organization، WebSite با SearchAction.","tag":"سئو","pr":"imp"},{"id":"13-16","t":"منوی فوتر به همه صفحات توصیفی","n":"هر صفحه باید حداقل از یک نقطه سایت لینک داشته باشد.","tag":"UX","pr":"imp"}]}]},{"id":"p14","num":"۱۴","title":"محتوا، سئو و سرعت","icon":"⚡","goal":"قالب زیبا بدون سرعت و سئو، بازدید و فروش نمی‌آورد. این قطعه را با طراحی موازی پیش ببر، نه در انتها.","output":"ساختار سئو، تصاویر بهینه، کش و بودجه عملکرد رعایت‌شده","time":"۱۰ تا ۱۸ ساعت","depends":"قطعه ۷ تا ۱۳","sections":[{"title":"تصاویر و رسانه","items":[{"id":"14-01","t":"عکاسی محصول: پس‌زمینه سفید یکدست + تصویر بافت/جزئیات","n":"برای هر محصول حداقل ۲ تصویر: کارت و جزئیات.","tag":"محتوا","pr":"crit"},{"id":"14-02","t":"فشرده‌سازی و تبدیل به WebP یا AVIF","n":"کاهش ۶۰ تا ۸۰ درصدی حجم با کیفیت بصری یکسان.","tag":"سرعت","pr":"crit"},{"id":"14-03","t":"lazy-load همه تصاویر غیر از بالای صفحه","n":"تصویر هیرو باید eager و preload باشد.","tag":"سرعت","pr":"crit"},{"id":"14-04","t":"متن alt برای همه تصاویر محصول","n":"شامل نام قطعه و خودروی سازگار.","tag":"سئو","pr":"imp"},{"id":"14-05","t":"آیکون‌ها به شکل SVG، نه فونت‌آیکون","n":"و inline برای آیکون‌های پرتکرار.","tag":"سرعت","pr":"imp"},{"id":"14-06","t":"ترکیب ویدیوی کوتاه نصب قطعه (اختیاری)","n":"با پلیر lazy و پوستر.","tag":"محتوا","pr":"later"}]},{"title":"سرعت","items":[{"id":"14-07","t":"کش صفحه و آبجکت (LiteSpeed/Redis)","n":"و استثنا کردن سبد، چک‌اوت و حساب.","tag":"سرعت","pr":"crit"},{"id":"14-08","t":"کمینه‌سازی و ترکیب CSS/JS","n":"مراقب باش Elementor را نشکند؛ مرحله‌به‌مرحله تست کن.","tag":"سرعت","pr":"imp"},{"id":"14-09","t":"حذف اسکریپت‌های بی‌استفاده در صفحات غیرفروشگاهی","n":"ووکامرس در صفحه اصلی لازم نیست.","tag":"سرعت","pr":"imp"},{"id":"14-10","t":"پیش‌بارگذاری فونت فارسی و fallback امن","n":"font-display: swap و جلوگیری از پرش متن.","tag":"سرعت","pr":"crit"},{"id":"14-11","t":"CDN برای تصاویر و فایل‌های استاتیک","n":"برای کاربران شهرهای مختلف.","tag":"سرعت","pr":"later"},{"id":"14-12","t":"اندازه‌گیری Core Web Vitals قبل و بعد","n":"LCP، CLS، INP — حداقل برای ۵ صفحه اصلی.","tag":"سرعت","pr":"crit"},{"id":"14-13","t":"تست سرعت با اینترنت موبایل کند","n":"حالت throttling در Lighthouse.","tag":"تست","pr":"imp"}]},{"title":"سئو","items":[{"id":"14-14","t":"نصب افزونه سئو و تنظیم نقشه سایت","n":"محصولات، دسته‌ها، مقالات، برندها.","tag":"سئو","pr":"crit"},{"id":"14-15","t":"ساختار هدینگ درست در هر قالب","n":"یک H1 در هر صفحه، H2 برای سکشن‌ها.","tag":"سئو","pr":"crit"},{"id":"14-16","t":"قالب عنوان و توضیح برای محصول و دسته","n":"مثلاً «خرید {نام قطعه} {برند} | قیمت و ارسال سریع».","tag":"سئو","pr":"imp"},{"id":"14-17","t":"توضیح متنی برای هر دسته (۲۰۰ تا ۴۰۰ کلمه)","n":"در پایین صفحه آرشیو، نه بالای آن.","tag":"سئو","pr":"crit"},{"id":"14-18","t":"لینک‌سازی داخلی بین قطعات، دسته‌ها و مقالات","n":"مثلاً از مقاله تعویض لنت به دسته لنت.","tag":"سئو","pr":"imp"},{"id":"14-19","t":"Schema محصول با قیمت، موجودی و امتیاز","n":"و schema BreadcrumbList و ItemList.","tag":"سئو","pr":"crit"},{"id":"14-20","t":"صفحه‌های لندینگ سئویی (مثلاً «لنت ترمز پراید»)","n":"۵ لندینگ اول را با کلمات واقعی انتخاب کن.","tag":"سئو","pr":"imp"},{"id":"14-21","t":"Google Search Console و Analytics","n":"و ثبت ecommerce events در GA4.","tag":"کسب‌وکار","pr":"imp"},{"id":"14-22","t":"بررسی robots.txt و عدم ایندکس صفحات خصوصی","n":"سبد، چک‌اوت، حساب، مقایسه خالی.","tag":"سئو","pr":"crit"}]}]},{"id":"p15","num":"۱۵","title":"تست، انتشار و تحویل","icon":"🚀","goal":"لیست کنترل نهایی. اینجا حرف «فکر می‌کنم درست است» تمام می‌شود.","output":"سایت منتشرشده + مستندات تحویل + آموزش مشتری","time":"۸ تا ۱۴ ساعت","depends":"همه قطعات","sections":[{"title":"تست عمومی","items":[{"id":"15-01","t":"چک‌لیست مرورگرها: کروم، سافاری، فایرفاکس + کروم اندروید و سافاری iOS","n":"مشکلات iOS سافاری با sticky و off-canvas رایج است.","tag":"تست","pr":"crit"},{"id":"15-02","t":"تست ۴ بریک‌پوینت روی هر قالب اصلی","n":"هدر، فوتر، آرشیو، محصول، سبد، چک‌اوت، حساب، مقایسه.","tag":"تست","pr":"crit"},{"id":"15-03","t":"تست RTL کامل: آیکون‌ها، فلش‌ها، اعداد، breadcrumb","n":"و اطمینان از نبود اسکرول افقی.","tag":"تست","pr":"crit"},{"id":"15-04","t":"تست کامل کاربر: جستجو ← انتخاب خودرو ← محصول ← سبد ← پرداخت","n":"سه بار با کاربر واقعی، نه خودت.","tag":"تست","pr":"crit"},{"id":"15-05","t":"تست دسترس‌پذیری پایه","n":"تب‌پذیری، label، contrast، alt.","tag":"تست","pr":"imp"},{"id":"15-06","t":"تست فرم‌ها: ارسال، خطا، پیام موفقیت، ایمیل دریافتی","n":"همه فرم‌ها را یک‌بار واقعاً پر کن.","tag":"تست","pr":"crit"},{"id":"15-07","t":"تست صفحه ۴۰۴، ۵۰۰، جستجوی خالی، سبد خالی","n":"حالت‌های خرابی زیاد دیده می‌شوند و کم تست می‌شوند.","tag":"تست","pr":"imp"},{"id":"15-08","t":"بازبینی نوشتاری فارسی (غلط، نیم‌فاصله، یکدستی لحن)","n":"یک نفر دیگر بخواند.","tag":"محتوا","pr":"imp"},{"id":"15-09","t":"بررسی نهایی کنسول بدون خطای JS","n":"در همه قالب‌ها.","tag":"تست","pr":"imp"}]},{"title":"انتشار","items":[{"id":"15-10","t":"بک‌آپ کامل قبل از انتشار","n":"و ذخیره نسخه المنتور همه صفحات (Export JSON).","tag":"فنی","pr":"crit"},{"id":"15-11","t":"غیرفعال‌کردن حالت تعمیر و بررسی نهایی ایندکس","n":"و حذف صفحه «به‌زودی» از ایندکس.","tag":"سئو","pr":"crit"},{"id":"15-12","t":"اتصال درگاه واقعی و انجام یک سفارش تست با مبلغ کم","n":"سفارش تست را بعداً حذف یا علامت بزن.","tag":"تست","pr":"crit"},{"id":"15-13","t":"پاک کردن کش همه لایه‌ها بعد از انتشار","n":"المنتور، افزونه کش، CDN، مرورگر.","tag":"فنی","pr":"imp"},{"id":"15-14","t":"تنظیم پشتیبان‌گیری و مانیتورینگ آپتایم","n":"و هشدار قطعی سایت.","tag":"فنی","pr":"imp"},{"id":"15-15","t":"ثبت دامنه، ایمیل سازمانی و رکوردهای DNS","n":"SPF/DKIM برای رسیدن ایمیل سفارش.","tag":"فنی","pr":"imp"}]},{"title":"تحویل","items":[{"id":"15-16","t":"مستندسازی: نقشه سایت، لیست قالب‌ها، ساختار تاکسونومی","n":"یک PDF یا صفحه Notion.","tag":"محتوا","pr":"imp"},{"id":"15-17","t":"راهنمای افزودن محصول و وارد کردن جدول سازگاری","n":"با تصاویر گام‌به‌گام.","tag":"محتوا","pr":"imp"},{"id":"15-18","t":"راهنمای کار با المنتور: چگونه سکشن عوض کنم بدون خرابی","n":"و کدام تنظیمات را دست نزند.","tag":"محتوا","pr":"imp"},{"id":"15-19","t":"جلسه آموزش + تحویل دسترسی‌ها","n":"مدیر سایت جدا از ادمین، با نقش مناسب.","tag":"محتوا","pr":"imp"},{"id":"15-20","t":"برنامه نگهداری ۹۰ روز اول","n":"آپدیت امن، بازبینی سرعت، بازبینی جستجوهای بی‌نتیجه.","tag":"کسب‌وکار","pr":"later"}]}]}]};
+
+const LS_KEY = 'partyarab_checklist_v1';
+const state = JSON.parse(localStorage.getItem(LS_KEY) || '{}');
+const save = () => localStorage.setItem(LS_KEY, JSON.stringify(state));
+
+const fa = n => String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+const PR_LABEL = { crit:'بحرانی', imp:'مهم', later:'بعداً' };
+
+/* ---------- build ---------- */
+const main = document.getElementById('main');
+const toc = document.getElementById('toc');
+let total=0, urgent=0;
+
+DATA.phases.forEach(ph => {
+  total += ph.sections.reduce((a,s)=>a+s.items.length,0);
+  urgent += ph.sections.reduce((a,s)=>a+s.items.filter(i=>i.pr==='crit').length,0);
+});
+
+DATA.phases.forEach(ph => {
+  const ids = ph.sections.flatMap(s=>s.items.map(i=>i.id));
+  const elapsed = ph.time;
+
+  const el = document.createElement('section');
+  el.className = 'phase';
+  el.id = ph.id;
+  el.innerHTML = `
+    <div class="phase-head">
+      <div class="pnum num">${ph.num}</div>
+      <div class="phead-main">
+        <h2 class="ptitle"><span class="ico">${ph.icon}</span> ${ph.title}</h2>
+        <p class="pgoal">${ph.goal}</p>
+        <div class="pmeta-row">
+          <span class="pill acc">خروجی: <b>${ph.output}</b></span>
+          <span class="pill">زمان تقریبی: <b>${elapsed}</b></span>
+          <span class="pill">پیش‌نیاز: <b>${ph.depends}</b></span>
+          <span class="pill">${fa(ids.length)} کار</span>
+        </div>
+        <div class="pbar">
+          <div class="bar"><i data-bar="${ph.id}"></i></div>
+          <span class="val num" data-val="${ph.id}">۰ / ${fa(ids.length)}</span>
+        </div>
+      </div>
+    </div>`;
+
+  ph.sections.forEach(sec => {
+    const s = document.createElement('div');
+    s.className = 'sec';
+    const h = document.createElement('div');
+    h.className = 'sec-t';
+    h.textContent = sec.title;
+    s.appendChild(h);
+
+    sec.items.forEach(it => {
+      const row = document.createElement('div');
+      row.className = 'item' + (state[it.id] ? ' checked' : '');
+      row.dataset.id = it.id;
+      row.dataset.pr = it.pr;
+      row.dataset.search = (it.t + ' ' + it.n + ' ' + it.tag + ' ' + sec.title + ' ' + ph.title).toLowerCase();
+      row.innerHTML = `
+        <button class="box" role="checkbox" aria-checked="${!!state[it.id]}" aria-label="${it.t}">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+        </button>
+        <div class="it-body">
+          <div class="it-top">
+            <span class="it-id num">${it.id}</span>
+            <span class="it-title">${it.t}</span>
+          </div>
+          <p class="it-note">${it.n}</p>
+          <div class="tags">
+            <span class="tag ${it.pr}">${PR_LABEL[it.pr]}</span>
+            <span class="tag cat">${it.tag}</span>
+          </div>
+        </div>`;
+      s.appendChild(row);
+    });
+    el.appendChild(s);
+  });
+
+  main.appendChild(el);
+
+  const a = document.createElement('a');
+  a.href = '#' + ph.id;
+  a.dataset.id = ph.id;
+  a.innerHTML = `<span class="n num">${ph.num}</span><span>${ph.title}</span><span class="mini"><i data-mini="${ph.id}"></i></span>`;
+  toc.appendChild(a);
+});
+
+/* ---------- progress ---------- */
+const items = [...document.querySelectorAll('.item')];
+
+function update(){
+  let done=0, uDone=0;
+  DATA.phases.forEach(ph=>{
+    const rows = items.filter(r=>r.closest('.phase').id===ph.id);
+    const d = rows.filter(r=>r.classList.contains('checked')).length;
+    const n = rows.length;
+    done += d;
+    const bi = document.querySelector(`[data-bar="${ph.id}"]`);
+    if(bi) bi.style.width = (n? d/n*100:0) + '%';
+    const vi = document.querySelector(`[data-val="${ph.id}"]`);
+    if(vi) vi.textContent = fa(d) + ' / ' + fa(n);
+    const mi = document.querySelector(`[data-mini="${ph.id}"]`);
+    if(mi){ mi.style.width = (n? d/n*100:0)+'%'; mi.parentElement.classList.toggle('full', d===n && n>0); }
+    document.getElementById(ph.id).classList.toggle('done', d===n && n>0);
+  });
+  items.forEach(r=>{ if(r.classList.contains('checked') && r.dataset.pr==='crit') uDone++; });
+
+  const pct = total? Math.round(done/total*100) : 0;
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-text').textContent = fa(done) + ' از ' + fa(total);
+  document.getElementById('ring-pct').textContent = fa(pct) + '٪';
+  document.getElementById('ring-fg').style.strokeDashoffset = 169.6 * (1 - pct/100);
+  document.getElementById('ring-fg').style.stroke = pct===100 ? '#47cd89' : '#ff8a3d';
+  document.getElementById('k-total').textContent = fa(total);
+  document.getElementById('k-done').textContent = fa(done);
+  document.getElementById('k-crit').textContent = fa(urgent);
+  document.getElementById('k-crit-done').textContent = fa(uDone);
+
+  const hint = document.getElementById('prog-hint');
+  if(pct===0) hint.textContent = 'از قطعه ۰ شروع کن: تصمیم‌های بنیادی.';
+  else if(pct===100) hint.textContent = 'تمام شد. سایت منتشر شد؟ مستندات تحویل را یادت نرود.';
+  else {
+    const next = DATA.phases.find(p => !document.getElementById(p.id).classList.contains('done'));
+    hint.textContent = next ? 'قطعه جاری: ' + next.num + ' — ' + next.title : '';
+  }
+
+  state_done = done;
+}
+let state_done = 0;
+
+items.forEach(r=>{
+  r.querySelector('.box').addEventListener('click', ()=>{
+    const id = r.dataset.id;
+    const on = !r.classList.contains('checked');
+    r.classList.toggle('checked', on);
+    r.querySelector('.box').setAttribute('aria-checked', on);
+    if(on) state[id]=1; else delete state[id];
+    save(); update(); applyFilter();
+  });
+});
+
+/* ---------- filter / search ---------- */
+let filter = 'all', query = '';
+function applyFilter(){
+  let visible = 0;
+  items.forEach(r=>{
+    const done = r.classList.contains('checked');
+    const okF = filter==='all' || (filter==='crit' && r.dataset.pr==='crit') || (filter==='todo' && !done) || (filter==='done' && done);
+    const okQ = !query || r.dataset.search.includes(query);
+    const show = okF && okQ;
+    r.classList.toggle('hide', !show);
+    if(show) visible++;
+  });
+  document.querySelectorAll('.phase').forEach(p=>{
+    const any = [...p.querySelectorAll('.item')].some(r=>!r.classList.contains('hide'));
+    p.style.display = any ? '' : 'none';
+  });
+  let e = document.getElementById('no-results');
+  if(!e){ e = document.createElement('div'); e.id='no-results'; e.className='empty'; main.appendChild(e); }
+  e.textContent = 'چیزی با این جستجو یا فیلتر پیدا نشد.';
+  e.classList.toggle('show', visible===0);
+}
+
+document.getElementById('q').addEventListener('input', e=>{
+  query = e.target.value.trim().toLowerCase();
+  applyFilter();
+});
+document.getElementById('filters').addEventListener('click', e=>{
+  const b = e.target.closest('.chip'); if(!b) return;
+  document.querySelectorAll('#filters .chip').forEach(c=>c.classList.remove('on'));
+  b.classList.add('on'); filter = b.dataset.f; applyFilter();
+});
+
+/* ---------- collapse all ---------- */
+let collapsed = false;
+document.getElementById('expand').addEventListener('click', e=>{
+  collapsed = !collapsed;
+  document.querySelectorAll('.sec').forEach(s=> s.style.display = collapsed ? 'none' : '');
+  e.target.textContent = collapsed ? 'باز کردن همه' : 'بستن همه';
+});
+
+/* ---------- reset / export / import ---------- */
+document.getElementById('reset').addEventListener('click', ()=>{
+  if(!confirm('همه تیک‌ها پاک شود؟ این کار قابل بازگشت نیست.')) return;
+  Object.keys(state).forEach(k=>delete state[k]);
+  save(); location.reload();
+});
+
+document.getElementById('export').addEventListener('click', ()=>{
+  const blob = new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'partyarab-progress.json';
+  a.click(); URL.revokeObjectURL(a.href);
+});
+
+/* ---------- init ---------- */
+update(); applyFilter();
+
+/* ---------- toc active ---------- */
+if('IntersectionObserver' in window){
+  const obs = new IntersectionObserver(es=>{
+    es.forEach(en=>{
+      if(en.isIntersecting){
+        document.querySelectorAll('nav.toc a').forEach(a=>a.classList.toggle('active', a.dataset.id===en.target.id));
+      }
+    });
+  },{rootMargin:'-70px 0px -70% 0px'});
+  document.querySelectorAll('.phase').forEach(p=>obs.observe(p));
+}
+</script>
+</body>
+</html>
