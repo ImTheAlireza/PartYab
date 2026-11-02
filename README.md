@@ -45,3 +45,13 @@ python3 -m http.server 8080
 | ۱۳ | صفحات محتوایی | درباره، تماس، قوانین، گارانتی، FAQ |
 | ۱۴ | محتوا، سئو، سرعت | WebP، کش، Schema، لندینگ‌ها |
 | ۱۵ | تست و انتشار | چک‌لیست نهایی، تحویل، آموزش |
+
+## ساخت کد
+
+| مسیر | چیست |
+|---|---|
+| `theme/part-yab/` | چایلد تم روی Hello Elementor (اسکلت قطعه ۱) |
+| `plugins/partyab-compat/` | موتور سازگاری قطعه با خودرو + ایمپورت CSV (قطعه ۲) |
+| `data/compat-sample.csv` | نمونه داده سازگاری برای تست |
+| `docs/LOCAL-SETUP.md` | راه‌اندازی لوکال قدم‌به‌قدم |
+| `tools/package-theme.sh` · `tools/package-plugin.sh` | ساخت ZIP قابل آپلود در `dist/` |
