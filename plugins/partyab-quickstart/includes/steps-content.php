@@ -123,14 +123,14 @@ function partyab_qs_product( array $data, int $cat_id ): int {
 }
 
 /**
- * ساخت صفحه در صورت نبود.
+ * ساخت صفحه در صورت نبود (نام تابع با رندر صفحه پیشخوان فرق دارد).
  *
  * @param string $title عنوان.
  * @param string $slug اسلاگ.
  * @param string $content محتوا.
  * @return int شناسه صفحه.
  */
-function partyab_qs_page( string $title, string $slug, string $content ): int {
+function partyab_qs_create_page( string $title, string $slug, string $content ): int {
 	$page = get_page_by_path( $slug );
 
 	if ( $page ) {
@@ -250,9 +250,9 @@ function partyab_qs_step_content( array &$report ): void {
 		. '<p style="max-width:640px;margin:0 auto 24px;color:#6b7280">خودروی خود را انتخاب کنید و فقط قطعات سازگار را ببینید. ضمانت اصالت کالا، ارسال سریع، مرجوعی ۷ روزه.</p>'
 		. '<a class="pb-btn" href="/shop">ورود به فروشگاه</a></div>';
 
-	$home = partyab_qs_page( 'خانه', 'home', $hero );
-	$page_my_car = partyab_qs_page( 'خودروی من', 'my-car', '<p>در قطعه ۴ باکس انتخاب خودرو اینجا ساخته می‌شود.</p>' );
-	$page_contact = partyab_qs_page( 'تماس با ما', 'contact', '<p>شماره تماس و فرم در قطعه ۱۳ تکمیل می‌شود.</p>' );
+	$home = partyab_qs_create_page( 'خانه', 'home', $hero );
+	$page_my_car = partyab_qs_create_page( 'خودروی من', 'my-car', '<p>در قطعه ۴ باکس انتخاب خودرو اینجا ساخته می‌شود.</p>' );
+	$page_contact = partyab_qs_create_page( 'تماس با ما', 'contact', '<p>شماره تماس و فرم در قطعه ۱۳ تکمیل می‌شود.</p>' );
 
 	update_option( 'show_on_front', 'page' );
 	update_option( 'page_on_front', $home );
