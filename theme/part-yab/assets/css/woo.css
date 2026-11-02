@@ -786,3 +786,70 @@
 	border-radius: var(--pb-radius-sm);
 	font-weight: 700;
 }
+
+/* ---------- فیلتر خودرو و برند ---------- */
+.pb-side-sublist {
+	list-style: none;
+	margin: 2px 0 6px;
+	padding-inline-start: var(--pb-4);
+	display: grid;
+	gap: 2px;
+	font-size: var(--pb-fs-xs);
+}
+
+.pb-side-sublist a {
+	display: block;
+	padding: 6px 8px;
+	border-inline-start: 2px solid var(--pb-border);
+	color: var(--pb-ink-500);
+}
+
+.pb-side-sublist a:hover,
+.pb-side-sublist li.is-active a {
+	border-inline-start-color: var(--pb-orange);
+	color: var(--pb-orange-600);
+	background: var(--pb-orange-50);
+}
+
+/* ---------- چیپ برند/خودرو در صفحه محصول ---------- */
+.pb-product-terms {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin: 0 0 var(--pb-3);
+}
+
+.pb-product-terms__label {
+	font-size: var(--pb-fs-xs);
+	color: var(--pb-ink-500);
+}
+
+.pb-chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	background: var(--pb-surface);
+	border: 1px solid var(--pb-border-strong);
+	border-radius: 999px;
+	padding: 3px 10px;
+	font-size: 11px;
+	font-weight: 700;
+	color: var(--pb-ink-700);
+}
+
+.pb-chip:hover {
+	border-color: var(--pb-orange);
+	color: var(--pb-orange-600);
+}
+
+.pb-chip--car {
+	background: var(--pb-orange-50);
+	border-color: #fed7aa;
+	color: var(--pb-orange-700);
+}
+
+.pb-chip--more {
+	background: #fff;
+	border-style: dashed;
+}

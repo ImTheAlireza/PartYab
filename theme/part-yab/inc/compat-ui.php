@@ -101,6 +101,26 @@ function partyab_maybe_save_car(): void {
 function partyab_cars_map(): array {
 	$map = array();
 
+	// مسیر اصلی: درخت تاکسونومی pb_car (همان چیزی که فیلترها استفاده می‌کنند).
+	if ( function_exists( 'partyab_car_tree' ) ) {
+		foreach ( partyab_car_tree() as $node ) {
+			$models = array();
+
+			foreach ( $node['models'] as $model ) {
+				$models[] = $model->name;
+			}
+
+			if ( $models ) {
+				$map[ $node['term']->name ] = $models;
+			}
+		}
+
+		if ( $map ) {
+			return $map;
+		}
+	}
+
+	// مسیر پشتیبان: جدول سازگاری.
 	if ( ! function_exists( 'partyab_compat_brands' ) ) {
 		return $map;
 	}
@@ -282,11 +302,30 @@ function partyab_filter_shop_by_car( $query ): void {
 		return;
 	}
 
-	if ( ! ( function_exists( 'is_shop' ) && ( is_shop() || is_product_category() ) ) ) {
+	if ( ! ( function_exists( 'is_shop' ) && ( is_shop() || is_product_taxonomy() ) ) ) {
 		return;
 	}
 
 	$car = partyab_current_car();
+
+	// مسیر اصلی: ترم خودرو در تاکسونومی pb_car.
+	if ( function_exists( 'partyab_find_car_term' ) ) {
+		$term = partyab_find_car_term( (string) $car['brand'], (string) $car['model'] );
+
+		if ( $term ) {
+			$tax_query   = (array) $query->get( 'tax_query' );
+			$tax_query[] = array(
+				'taxonomy' => 'pb_car',
+				'field'    => 'term_id',
+				'terms'    => array( (int) $term->term_id ),
+			);
+
+			$query->set( 'tax_query', $tax_query );
+			return;
+		}
+	}
+
+	// مسیر پشتیبان: جدول سازگاری CSV.
 	$ids = partyab_compat_product_ids( array(
 		'brand' => $car['brand'],
 		'model' => $car['model'],

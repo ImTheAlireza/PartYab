@@ -19,6 +19,7 @@ function partyab_qs_attach_image( string $path ): int {
 	}
 
 	$basename = basename( $path );
+	$hash     = (string) md5_file( $path );
 
 	$existing = get_posts( array(
 		'post_type'      => 'attachment',
@@ -29,7 +30,15 @@ function partyab_qs_attach_image( string $path ): int {
 	) );
 
 	if ( $existing ) {
-		return (int) $existing[0];
+		$id = (int) $existing[0];
+
+		// اگر عکس بسته با عکس نصب‌شده فرق دارد، فایل را همان‌جا جایگزین کن
+		// تا محصولات و برگه‌ها بدون تغییر لینک، عکس تازه را نشان دهند.
+		if ( get_post_meta( $id, '_partyab_demo_hash', true ) !== $hash ) {
+			partyab_qs_replace_attachment_file( $id, $path, $hash );
+		}
+
+		return $id;
 	}
 
 	require_once ABSPATH . 'wp-admin/includes/media.php';
@@ -53,8 +62,46 @@ function partyab_qs_attach_image( string $path ): int {
 	}
 
 	update_post_meta( $id, '_partyab_demo_image', $basename );
+	update_post_meta( $id, '_partyab_demo_hash', $hash );
 
 	return (int) $id;
+}
+
+/**
+ * جایگزینی فایل یک پیوست موجود و بازسازی بندانگشتی‌ها.
+ *
+ * چرا؟ چون شناسه پیوست در محصولات ذخیره شده؛ اگر پیوست جدید بسازیم
+ * محصولات عکس قدیمی را نگه می‌دارند.
+ *
+ * @param int    $id   شناسه پیوست.
+ * @param string $path فایل تازه.
+ * @param string $hash هش فایل تازه.
+ */
+function partyab_qs_replace_attachment_file( int $id, string $path, string $hash ): void {
+	$relative = (string) get_post_meta( $id, '_wp_attached_file', true );
+	$uploads  = wp_get_upload_dir();
+
+	if ( '' === $relative || empty( $uploads['basedir'] ) ) {
+		return;
+	}
+
+	$target = trailingslashit( $uploads['basedir'] ) . $relative;
+
+	if ( ! @copy( $path, $target ) ) { // phpcs:ignore WordPress.PHP.NoSilencedErrors
+		return;
+	}
+
+	require_once ABSPATH . 'wp-admin/includes/image.php';
+
+	$meta = wp_generate_attachment_metadata( $id, $target );
+
+	if ( ! is_wp_error( $meta ) ) {
+		wp_update_attachment_metadata( $id, $meta );
+	}
+
+	update_post_meta( $id, '_partyab_demo_hash', $hash );
+
+	$GLOBALS['partyab_qs_images_refreshed'] = (int) ( $GLOBALS['partyab_qs_images_refreshed'] ?? 0 ) + 1;
 }
 
 /**
@@ -211,6 +258,164 @@ function partyab_qs_ensure_woo_pages( array &$report ): void {
 		true,
 		$created > 0 ? $created . ' صفحه ساخته/اصلاح شد' : 'هر سه صفحه سالم بودند'
 	);
+}
+
+/**
+ * ساخت شاخه برند/خودرو و اتصال محصولات دمو به آن‌ها.
+ *
+ * برندهای خودرو از فهرست رایج ایرانی ساخته می‌شوند؛ مدل‌ها از فایل سازگاری.
+ *
+ * @param array $report گزارش.
+ */
+function partyab_qs_seed_taxonomies( array &$report ): void {
+	if ( ! taxonomy_exists( 'pb_car' ) || ! taxonomy_exists( 'pb_brand' ) ) {
+		partyab_qs_log( $report, 'ساختار', 'برند و خودرو', false, 'قالب قدیمی است؛ تاکسونومی‌ها ثبت نشده‌اند' );
+		return;
+	}
+
+	$cars = array(
+		'پراید'   => array( '131', '111', '132', '141' ),
+		'پژو'     => array( '405', 'پارس', '206', '207' ),
+		'سمند'    => array( 'سمند', 'EF7', 'سورن' ),
+		'دنا'     => array( 'دنا', 'دنا پلاس' ),
+		'تیبا'    => array( 'تیبا', 'تیبا ۲' ),
+		'ساینا'   => array( 'ساینا', 'ساینا S' ),
+		'کوییک'   => array( 'کوییک', 'کوییک R' ),
+		'شاهین'   => array( 'شاهین' ),
+		'رانا'    => array( 'رانا', 'رانا پلاس' ),
+		'آریسان'  => array( 'آریسان' ),
+	);
+
+	$brands = array( 'ایساکو', 'سایپا یدک', 'پارس یدک', 'کروز', 'بوش', 'سپاهان باتری', 'وامکو' );
+
+	$created_terms = 0;
+
+	foreach ( $cars as $brand => $models ) {
+		$parent = term_exists( $brand, 'pb_car' );
+
+		if ( ! $parent ) {
+			$parent = wp_insert_term( $brand, 'pb_car' );
+			$created_terms++;
+		}
+
+		if ( is_wp_error( $parent ) ) {
+			continue;
+		}
+
+		$parent_id = (int) ( is_array( $parent ) ? $parent['term_id'] : $parent );
+
+		foreach ( $models as $model ) {
+			$child = term_exists( $model, 'pb_car', $parent_id );
+
+			if ( ! $child ) {
+				wp_insert_term( $model, 'pb_car', array( 'parent' => $parent_id ) );
+				$created_terms++;
+			}
+		}
+	}
+
+	foreach ( $brands as $brand ) {
+		if ( ! term_exists( $brand, 'pb_brand' ) ) {
+			wp_insert_term( $brand, 'pb_brand' );
+			$created_terms++;
+		}
+	}
+
+	partyab_qs_log(
+		$report,
+		'ساختار',
+		'برند و خودرو',
+		true,
+		count( $cars ) . ' برند خودرو، ' . $created_terms . ' ترم ساخته/بررسی شد'
+	);
+
+	// اتصال محصولات دمو به خودروهای سازگار از روی CSV.
+	$mapping = array(
+		'PB-BRK-001' => 'ایساکو',
+		'PB-FLT-002' => 'ایساکو',
+		'PB-SPK-003' => 'بوش',
+		'PB-BAT-004' => 'سپاهان باتری',
+		'PB-SHK-005' => 'کروز',
+		'PB-WPR-006' => 'وامکو',
+	);
+	$linked = 0;
+
+	foreach ( $mapping as $sku => $brand ) {
+		$product_id = function_exists( 'wc_get_product_id_by_sku' ) ? (int) wc_get_product_id_by_sku( $sku ) : 0;
+
+		if ( $product_id > 0 ) {
+			wp_set_object_terms( $product_id, array( $brand ), 'pb_brand', false );
+			$linked++;
+		}
+	}
+
+	$csv = partyab_qs_vendor_dir() . 'compat-sample.csv';
+
+	if ( ! file_exists( $csv ) ) {
+		partyab_qs_log( $report, 'ساختار', 'سازگاری با خودرو', false, 'compat-sample.csv پیدا نشد' );
+		return;
+	}
+
+	$handle = fopen( $csv, 'r' ); // phpcs:ignore WordPress.WP.AlternativeFunctions
+
+	if ( ! $handle ) {
+		return;
+	}
+
+	$header = fgetcsv( $handle );
+	$rows   = 0;
+
+	if ( is_array( $header ) ) {
+		$header[0] = preg_replace( '/^\xEF\xBB\xBF/', '', (string) $header[0] );
+	}
+
+	while ( ( $row = fgetcsv( $handle ) ) !== false ) {
+		if ( count( $row ) < 3 || empty( $row[0] ) ) {
+			continue;
+		}
+
+		$product_id = function_exists( 'wc_get_product_id_by_sku' ) ? (int) wc_get_product_id_by_sku( trim( $row[0] ) ) : 0;
+
+		if ( $product_id <= 0 ) {
+			continue;
+		}
+
+		$car_brand = trim( $row[1] );
+		$car_model = trim( $row[2] );
+		$parent    = get_term_by( 'name', $car_brand, 'pb_car' );
+		$terms     = array();
+
+		if ( ! $parent ) {
+			$parent = wp_insert_term( $car_brand, 'pb_car' );
+			$parent = is_wp_error( $parent ) ? null : get_term_by( 'id', (int) $parent['term_id'], 'pb_car' );
+		}
+
+		if ( $parent ) {
+			$terms[] = (int) $parent->term_id;
+
+			$child = term_exists( $car_model, 'pb_car', (int) $parent->term_id );
+			$child = $child ? get_term_by( 'id', (int) ( is_array( $child ) ? $child['term_id'] : $child ), 'pb_car' ) : false;
+
+			if ( $child && (int) $child->parent === (int) $parent->term_id ) {
+				$terms[] = (int) $child->term_id;
+			} else {
+				$new = wp_insert_term( $car_model, 'pb_car', array( 'parent' => (int) $parent->term_id ) );
+
+				if ( ! is_wp_error( $new ) && isset( $new['term_id'] ) ) {
+					$terms[] = (int) $new['term_id'];
+				}
+			}
+		}
+
+		if ( $terms ) {
+			wp_set_object_terms( $product_id, $terms, 'pb_car', false );
+			$rows++;
+		}
+	}
+
+	fclose( $handle ); // phpcs:ignore WordPress.WP.AlternativeFunctions
+
+	partyab_qs_log( $report, 'ساختار', 'اتصال محصول به خودرو', $rows > 0, $rows . ' محصول به خودروهای سازگار وصل شد' );
 }
 
 function partyab_qs_step_content( array &$report ): void {
@@ -420,4 +625,12 @@ function partyab_qs_step_compat( array &$report ): void {
 	foreach ( array_slice( $result['errors'], 0, 5 ) as $error ) {
 		partyab_qs_log( $report, 'سازگاری', 'هشدار ایمپورت', false, $error );
 	}
+
+	$refreshed = (int) ( $GLOBALS['partyab_qs_images_refreshed'] ?? 0 );
+
+	if ( $refreshed > 0 ) {
+		partyab_qs_log( $report, 'محتوا', 'نوسازی عکس‌های دمو', true, $refreshed . ' عکس با نسخه تازه جایگزین شد' );
+	}
+
+	partyab_qs_seed_taxonomies( $report );
 }

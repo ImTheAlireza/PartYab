@@ -212,7 +212,68 @@ function partyab_shop_sidebar(): void {
 		echo '</ul></div>';
 	}
 
-	// ۳) قیمت.
+	// ۳) برند قطعه.
+	$brands = function_exists( 'partyab_brand_terms' ) ? partyab_brand_terms() : array();
+
+	if ( $brands ) {
+		echo '<div class="pb-side-card">';
+		echo '<h3 class="pb-side-card__title">برند قطعه</h3>';
+		echo '<ul class="pb-side-list">';
+
+		foreach ( array_slice( $brands, 0, 10 ) as $brand ) {
+			printf(
+				'<li class="%s"><a href="%s">%s <span>%s</span></a></li>',
+				is_tax( 'pb_brand', $brand->term_id ) ? 'is-active' : '',
+				esc_url( (string) get_term_link( $brand ) ),
+				esc_html( $brand->name ),
+				esc_html( number_format_i18n( $brand->count ) )
+			);
+		}
+
+		echo '</ul></div>';
+	}
+
+	// ۴) خودرو: برند و مدل.
+	$car_tree = function_exists( 'partyab_car_tree' ) ? partyab_car_tree() : array();
+
+	if ( $car_tree ) {
+		echo '<div class="pb-side-card">';
+		echo '<h3 class="pb-side-card__title">خودرو</h3>';
+		echo '<ul class="pb-side-list pb-side-list--cars">';
+
+		foreach ( $car_tree as $node ) {
+			$is_brand_active = is_tax( 'pb_car', $node['term']->term_id );
+
+			printf(
+				'<li class="%s"><a href="%s">%s <span>%s</span></a>',
+				$is_brand_active ? 'is-active' : '',
+				esc_url( (string) get_term_link( $node['term'] ) ),
+				esc_html( $node['term']->name ),
+				esc_html( number_format_i18n( $node['term']->count ) )
+			);
+
+			if ( $is_brand_active && $node['models'] ) {
+				echo '<ul class="pb-side-sublist">';
+
+				foreach ( $node['models'] as $model ) {
+					printf(
+						'<li class="%s"><a href="%s">%s</a></li>',
+						is_tax( 'pb_car', $model->term_id ) ? 'is-active' : '',
+						esc_url( (string) get_term_link( $model ) ),
+						esc_html( $model->name )
+					);
+				}
+
+				echo '</ul>';
+			}
+
+			echo '</li>';
+		}
+
+		echo '</ul></div>';
+	}
+
+	// ۵) قیمت.
 	echo '<div class="pb-side-card">';
 	echo '<h3 class="pb-side-card__title">محدوده قیمت (تومان)</h3>';
 	echo '<form class="pb-side-price" method="get" action="' . esc_url( $base ) . '">';
@@ -221,7 +282,7 @@ function partyab_shop_sidebar(): void {
 	echo '<button type="submit" class="pb-btn pb-btn--sm">اعمال</button>';
 	echo '</form></div>';
 
-	// ۴) موجودی.
+	// ۶) موجودی.
 	echo '<div class="pb-side-card">';
 	echo '<h3 class="pb-side-card__title">موجودی</h3>';
 	printf(
