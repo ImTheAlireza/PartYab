@@ -31,6 +31,7 @@ $partyab_modules = array(
 	'security',    // سخت‌سازی پیش‌فرض وردپرس.
 	'woocommerce', // تنظیمات حلقه و آرشیو فروشگاه.
 	'currency',    // نمایش واحد پول به تومان (تصمیم D15).
+	'compat-ui',   // باکس «خودروی من»، بج سازگاری، فیلتر آرشیو.
 );
 
 foreach ( $partyab_modules as $partyab_module ) {

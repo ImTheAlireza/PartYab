@@ -43,6 +43,35 @@ function partyab_enqueue_assets(): void {
 		)
 	);
 
+	// استایل رابط سازگاری خودرو (سبک، همیشه لازم است).
+	wp_enqueue_style(
+		'partyab-compat-ui',
+		PARTYAB_URI . '/assets/css/compat-ui.css',
+		array( 'partyab-base' ),
+		partyab_asset_version( 'assets/css/compat-ui.css' )
+	);
+
+	// اگر افزونه سازگاری فعال است، انتخابگر خودرو را هم بارگذاری کن.
+	if ( function_exists( 'partyab_compat_brands' ) && function_exists( 'partyab_cars_map' ) ) {
+		wp_enqueue_script(
+			'partyab-car-ui',
+			PARTYAB_URI . '/assets/js/compat-ui.js',
+			array(),
+			partyab_asset_version( 'assets/js/compat-ui.js' ),
+			array(
+				'in_footer' => true,
+				'strategy'  => 'defer',
+			)
+		);
+
+		$partyab_car = function_exists( 'partyab_current_car' ) ? partyab_current_car() : array( 'model' => '' );
+
+		wp_localize_script( 'partyab-car-ui', 'partyabCarData', array(
+			'cars'         => partyab_cars_map(),
+			'currentModel' => (string) ( $partyab_car['model'] ?? '' ),
+		) );
+	}
+
 	// داده‌های لازم در جاوااسکریپت (بدون inline script پراکنده).
 	wp_localize_script( 'partyab-main', 'partyabData', array(
 		'ajaxUrl' => admin_url( 'admin-ajax.php' ),

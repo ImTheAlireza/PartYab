@@ -248,11 +248,20 @@ function partyab_qs_step_content( array &$report ): void {
 	$hero = '<div class="pb-container" style="padding:64px 24px;text-align:center">'
 		. '<h1 style="font-size:34px;margin-bottom:12px">قطعه درست، همان بار اول</h1>'
 		. '<p style="max-width:640px;margin:0 auto 24px;color:#6b7280">خودروی خود را انتخاب کنید و فقط قطعات سازگار را ببینید. ضمانت اصالت کالا، ارسال سریع، مرجوعی ۷ روزه.</p>'
-		. '<a class="pb-btn" href="/shop">ورود به فروشگاه</a></div>';
+		. '<a class="pb-btn" href="/shop">ورود به فروشگاه</a> '
+		. '<a class="pb-btn pb-btn--ghost" href="/my-car" style="margin-inline-start:8px">خودروی من</a></div>';
 
 	$home = partyab_qs_create_page( 'خانه', 'home', $hero );
-	$page_my_car = partyab_qs_create_page( 'خودروی من', 'my-car', '<p>در قطعه ۴ باکس انتخاب خودرو اینجا ساخته می‌شود.</p>' );
+	$page_my_car = partyab_qs_create_page( 'خودروی من', 'my-car', '[partyab_my_car]' );
 	$page_contact = partyab_qs_create_page( 'تماس با ما', 'contact', '<p>شماره تماس و فرم در قطعه ۱۳ تکمیل می‌شود.</p>' );
+
+	// صفحه خودروی من همیشه شورت‌کد انتخابگر را داشته باشد (تکرارپذیر).
+	if ( $page_my_car ) {
+		wp_update_post( array(
+			'ID'           => $page_my_car,
+			'post_content' => "<!-- خودروی من -->\n[partyab_my_car]",
+		) );
+	}
 
 	update_option( 'show_on_front', 'page' );
 	update_option( 'page_on_front', $home );
