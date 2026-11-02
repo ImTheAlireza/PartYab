@@ -30,6 +30,7 @@ $partyab_modules = array(
 	'enqueue',     // استایل/اسکریپت/فونت با نسخه‌گذاری.
 	'security',    // سخت‌سازی پیش‌فرض وردپرس.
 	'woocommerce', // تنظیمات حلقه و آرشیو فروشگاه.
+	'currency',    // نمایش واحد پول به تومان (تصمیم D15).
 );
 
 foreach ( $partyab_modules as $partyab_module ) {
