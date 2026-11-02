@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="150" viewBox="0 0 160 150" role="img" aria-label="PartYab — لوگوی موقت عمودی">
+  <!-- PLACEHOLDER: نسخه عمودی لوگوی موقت -->
+  <rect x="52" y="8" width="56" height="56" rx="16" fill="#EA580C"/>
+  <circle cx="80" cy="30" r="12" fill="none" stroke="#FFFFFF" stroke-width="5"/>
+  <rect x="76" y="42" width="8" height="12" rx="3" fill="#FFFFFF"/>
+  <text x="80" y="100" text-anchor="middle" font-family="Vazirmatn, Tahoma, sans-serif" font-size="30" font-weight="800" fill="#111827" direction="ltr">PartYab</text>
+  <text x="80" y="126" text-anchor="middle" font-family="Vazirmatn, Tahoma, sans-serif" font-size="12" font-weight="500" fill="#6B7280">قطعه درست، همان بار اول</text>
+</svg>
