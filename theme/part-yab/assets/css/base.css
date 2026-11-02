@@ -18,10 +18,12 @@
 	/* رنگ برند */
 	--pb-orange: #ea580c;
 	--pb-orange-600: #c2410c;
+	--pb-orange-700: #9a3412;
 	--pb-orange-50: #fff7ed;
 	--pb-ink: #111827;
 	--pb-ink-700: #374151;
 	--pb-ink-500: #6b7280;
+	--pb-ink-300: #9ca3af;
 	--pb-blue: #1d4ed8;
 	--pb-success: #16a34a;
 	--pb-danger: #dc2626;
@@ -166,6 +168,13 @@ a:hover { color: var(--pb-orange); }
 }
 
 .pb-btn:active { transform: translateY(1px); }
+
+.pb-btn--sm {
+	min-height: 36px;
+	padding: var(--pb-2) var(--pb-4);
+	font-size: var(--pb-fs-xs);
+	border-radius: var(--pb-radius-sm);
+}
 
 .pb-btn--ghost {
 	background: transparent;

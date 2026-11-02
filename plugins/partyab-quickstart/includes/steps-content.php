@@ -151,7 +151,71 @@ function partyab_qs_create_page( string $title, string $slug, string $content ):
  *
  * @param array $report گزارش.
  */
+/**
+ * اطمینان از وجود صفحات ووکامرس (سبد خرید، تسویه، حساب کاربری) و اتصال آن‌ها.
+ *
+ * چرا لازم است؟ اگر ووکامرس به‌صورت برنامه‌ای فعال شود، صفحاتش ساخته نمی‌شوند و
+ * سبد خرید صفحه‌ای خالی می‌ماند.
+ *
+ * @param array $report گزارش.
+ */
+function partyab_qs_ensure_woo_pages( array &$report ): void {
+	if ( ! function_exists( 'wc_get_page_id' ) ) {
+		partyab_qs_log( $report, 'محتوا', 'صفحات فروشگاه', false, 'ووکامرس در دسترس نیست' );
+		return;
+	}
+
+	$pages = array(
+		'cart'      => array( 'سبد خرید', 'cart', '[woocommerce_cart]' ),
+		'checkout'  => array( 'تسویه حساب', 'checkout', '[woocommerce_checkout]' ),
+		'myaccount' => array( 'حساب کاربری', 'my-account', '[woocommerce_my_account]' ),
+	);
+
+	$created = 0;
+
+	foreach ( $pages as $key => $data ) {
+		$page_id  = (int) wc_get_page_id( $key );
+		$existing = $page_id > 0 ? get_post( $page_id ) : null;
+
+		if ( ! $existing || 'page' !== $existing->post_type ) {
+			$page_id = partyab_qs_create_page( $data[0], $data[1], $data[2] );
+			$created++;
+		// صفحه هست ولی شورت‌کد ندارد (صفحه خالی ساخته‌شده دستی).
+		} elseif ( ! has_shortcode( (string) $existing->post_content, trim( $data[2], '[]' ) ) ) {
+			wp_update_post( array(
+				'ID'           => $page_id,
+				'post_content' => $data[2],
+				'post_status'  => 'publish',
+			) );
+			$created++;
+		}
+
+		if ( $page_id > 0 ) {
+			update_option( 'woocommerce_' . $key . '_page_id', $page_id );
+		}
+	}
+
+	// صفحه فروشگاه.
+	$shop_id = (int) wc_get_page_id( 'shop' );
+	if ( $shop_id > 0 ) {
+		update_option( 'woocommerce_shop_page_id', $shop_id );
+	}
+
+	// پرmalink‌ها یک‌بار بازسازی شوند تا /shop و /cart درست باز شوند.
+	flush_rewrite_rules( false );
+
+	partyab_qs_log(
+		$report,
+		'محتوا',
+		'صفحات فروشگاه (سبد، تسویه، حساب)',
+		true,
+		$created > 0 ? $created . ' صفحه ساخته/اصلاح شد' : 'هر سه صفحه سالم بودند'
+	);
+}
+
 function partyab_qs_step_content( array &$report ): void {
+	partyab_qs_ensure_woo_pages( $report );
+
 	$cats = array(
 		'brake-system' => partyab_qs_category( 'سیستم ترمز', 'brake-system' ),
 		'filters'      => partyab_qs_category( 'فیلترها', 'filters' ),
