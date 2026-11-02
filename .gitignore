@@ -1,7 +1,7 @@
 # build artifacts
 dist/
-releases/
 *.zip
+!releases/*.zip
 
 # OS / editor
 .DS_Store

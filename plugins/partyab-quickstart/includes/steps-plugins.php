@@ -107,7 +107,18 @@ function partyab_qs_step_theme( array &$report ): void {
 		partyab_qs_log( $report, 'قالب', 'چایلد تم PartYab', false, 'فایل part-yab.zip در vendor نبود' );
 	}
 
-	switch_theme( 'part-yab' );
+	$child = wp_get_theme( 'part-yab' );
+
+	if ( $child->exists() ) {
+		switch_theme( 'part-yab' );
+	}
+
 	$active = wp_get_theme();
-	partyab_qs_log( $report, 'قالب', 'فعال‌سازی چایلد تم', $active->get_stylesheet() === 'part-yab', 'قالب فعال: ' . $active->get( 'Name' ) );
+	partyab_qs_log(
+		$report,
+		'قالب',
+		'فعال‌سازی چایلد تم',
+		$active->get_stylesheet() === 'part-yab',
+		$active->get_stylesheet() === 'part-yab' ? 'قالب فعال: ' . $active->get( 'Name' ) : 'چایلد تم نصب نشد — مرحله قالب را دوباره اجرا کن'
+	);
 }

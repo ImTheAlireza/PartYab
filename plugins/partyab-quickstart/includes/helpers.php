@@ -23,9 +23,22 @@ function partyab_qs_vendor_dir(): string {
  * @return string مسیر فایل یا رشته خالی.
  */
 function partyab_qs_find_zip( string $pattern ): string {
-	$files = glob( partyab_qs_vendor_dir() . $pattern . '.zip' );
+	$files = glob( partyab_qs_vendor_dir() . '*.zip' );
 
-	return $files ? $files[0] : '';
+	if ( ! $files ) {
+		return '';
+	}
+
+	// مقایسه بدون حساسیت به حروف بزرگ/کوچک — روی لینوکس نام Test.zip و test.zip یکی نیستند.
+	$regex = '/^' . str_replace( '\*', '.*', preg_quote( strtolower( $pattern ), '/' ) ) . '\.zip$/';
+
+	foreach ( $files as $file ) {
+		if ( preg_match( $regex, strtolower( basename( $file ) ) ) ) {
+			return $file;
+		}
+	}
+
+	return '';
 }
 
 /**

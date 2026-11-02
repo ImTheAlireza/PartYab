@@ -21,9 +21,27 @@ function partyab_qs_step_settings( array &$report ): void {
 	update_option( 'default_ping_status', 'closed' );
 	update_option( 'blogdescription', 'قطعه درست، همان بار اول' );
 
-	if ( 'fa_IR' !== get_option( 'WPLANG' ) ) {
-		update_option( 'WPLANG', 'fa_IR' );
+	// بسته زبان فارسی: اگر نصب نباشد تلاش می‌کنیم دانلود شود (نیاز به اینترنت).
+	require_once ABSPATH . 'wp-admin/includes/translation-install.php';
+
+	$langs = function_exists( 'get_available_languages' ) ? get_available_languages() : array();
+
+	if ( ! in_array( 'fa_IR', $langs, true ) ) {
+		require_once ABSPATH . 'wp-admin/includes/file.php';
+		require_once ABSPATH . 'wp-admin/includes/misc.php';
+		require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
+
+		$downloaded = wp_download_language_pack( 'fa_IR' );
+		partyab_qs_log(
+			$report,
+			'تنظیمات',
+			'بسته زبان فارسی',
+			(bool) $downloaded,
+			$downloaded ? 'دانلود و نصب شد' : 'دانلود نشد (اینترنت؟) — از پیشخوان ← پیشخوان ← به‌روزرسانی‌ها دستی نصب کن'
+		);
 	}
+
+	update_option( 'WPLANG', 'fa_IR' );
 
 	partyab_qs_log( $report, 'تنظیمات', 'پیوند یکتا و منطقه زمانی', true, 'نام نوشته + تهران + هفته از شنبه' );
 
