@@ -1,13 +1,13 @@
 # بسته‌های آماده نصب
 
-آخرین ساخت: کامیت `d86482c9ec0c91131c044c641fe463c78d5bfbc6`
+آخرین ساخت: کامیت `e5ec32fd30b00a903dbd97ae4c6392ed625aa455` · نسخه نصب‌کننده **۱٫۱٫۱**
 
 | فایل | حجم | لینک دانلود مستقیم |
 |---|---|---|
-| **نصب‌کننده کامل** (Elementor + Pro داخلش) | ۲۷MB | https://github.com/ImTheAlireza/PartYab/raw/d86482c9ec0c91131c044c641fe463c78d5bfbc6/releases/partyab-quickstart-full.zip |
-| نصب‌کننده سبک (المنتور از مخزن وردپرس) | ۶۴۲KB | https://github.com/ImTheAlireza/PartYab/raw/d86482c9ec0c91131c044c641fe463c78d5bfbc6/releases/partyab-quickstart.zip |
-| چایلد تم پارتیاب | ۲۲۷KB | https://github.com/ImTheAlireza/PartYab/raw/d86482c9ec0c91131c044c641fe463c78d5bfbc6/releases/part-yab.zip |
-| افزونه سازگاری قطعه-خودرو | ۱۱KB | https://github.com/ImTheAlireza/PartYab/raw/d86482c9ec0c91131c044c641fe463c78d5bfbc6/releases/partyab-compat.zip |
+| **نصب‌کننده کامل** (Elementor + Pro داخلش) | ۲۷MB | https://github.com/ImTheAlireza/PartYab/raw/e5ec32fd30b00a903dbd97ae4c6392ed625aa455/releases/partyab-quickstart-full.zip |
+| نصب‌کننده سبک (المنتور از مخزن وردپرس) | ۶۴۲KB | https://github.com/ImTheAlireza/PartYab/raw/e5ec32fd30b00a903dbd97ae4c6392ed625aa455/releases/partyab-quickstart.zip |
+| چایلد تم پارتیاب | ۲۲۷KB | https://github.com/ImTheAlireza/PartYab/raw/e5ec32fd30b00a903dbd97ae4c6392ed625aa455/releases/part-yab.zip |
+| افزونه سازگاری قطعه-خودرو | ۱۱KB | https://github.com/ImTheAlireza/PartYab/raw/e5ec32fd30b00a903dbd97ae4c6392ed625aa455/releases/partyab-compat.zip |
 
 ## نصب ۳ قدمی
 
