@@ -62,6 +62,20 @@ add_action( 'init', 'partyab_maybe_save_car' );
 /**
  * پردازش فرم انتخاب خودرو (بدون جاوااسکریپت هم کار می‌کند).
  */
+/**
+ * تبدیل ارقام فارسی/عربی به لاتین (ورودی فرم را فارسی می‌نویسند).
+ *
+ * @param string $text متن.
+ * @return string
+ */
+function partyab_normalize_digits( string $text ): string {
+	return str_replace(
+		array( '۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹', '٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩' ),
+		array( '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' ),
+		$text
+	);
+}
+
 function partyab_maybe_save_car(): void {
 	if ( is_admin() ) {
 		return;
@@ -82,7 +96,7 @@ function partyab_maybe_save_car(): void {
 
 	$brand = sanitize_text_field( wp_unslash( $_GET['pb_car_brand'] ) ); // phpcs:ignore WordPress.Security.NonceVerification
 	$model = isset( $_GET['pb_car_model'] ) ? sanitize_text_field( wp_unslash( $_GET['pb_car_model'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification
-	$year  = isset( $_GET['pb_car_year'] ) ? absint( wp_unslash( $_GET['pb_car_year'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification
+	$year  = isset( $_GET['pb_car_year'] ) ? absint( partyab_normalize_digits( (string) wp_unslash( $_GET['pb_car_year'] ) ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification
 
 	$value = rawurlencode( $brand . '|' . $model . '|' . $year );
 
@@ -192,8 +206,8 @@ function partyab_car_selector_shortcode(): string {
 
 			<label class="pb-field">
 				<span>سال ساخت</span>
-				<input type="number" name="pb_car_year" min="1300" max="1450" step="1" inputmode="numeric"
-					value="<?php echo esc_attr( $car['year'] ? (string) $car['year'] : '' ); ?>" placeholder="مثلاً ۱۳۹۵">
+				<input type="text" name="pb_car_year" inputmode="numeric" pattern="[۰-۹0-9]{4}" maxlength="4"
+					value="<?php echo esc_attr( partyab_fa_digits( (string) ( $car['year'] ?: '' ) ) ); ?>" placeholder="مثلاً ۱۳۹۵">
 			</label>
 
 			<button type="submit" class="pb-btn">ذخیره خودرو</button>

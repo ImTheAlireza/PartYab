@@ -110,3 +110,28 @@ add_filter( 'excerpt_length', 'partyab_excerpt_length' );
 function partyab_excerpt_length(): int {
 	return 22;
 }
+
+/**
+ * آیکن دسته‌ها برای صفحه اصلی (SVG درون‌خطی، بدون درخواست شبکه).
+ *
+ * @param int $index شماره دسته.
+ * @return string HTML آیکن.
+ */
+function partyab_category_icon( int $index = 0 ): string {
+	$icons = array(
+		// دیسک ترمز.
+		'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.4"/><path d="M12 4v3M12 17v3M4 12h3M17 12h3"/></svg>',
+		// فیلتر.
+		'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M7 4h10l1 5H6z"/><path d="M8 9v11h8V9"/><path d="M10 13h4M10 16h4"/></svg>',
+		// باتری.
+		'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="3" y="7" width="18" height="11" rx="2"/><path d="M7 7V5h3v2M14 7V5h3v2"/><path d="M8 12h3l-1.5 3"/><path d="M15 11v4M13 13h4"/></svg>',
+		// فنر/کمک فنر.
+		'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3v3"/><path d="M8 6h8"/><path d="M9 9h6M9 12h6M9 15h6M9 18h6"/><path d="M12 20v2"/></svg>',
+		// چراغ.
+		'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 8h7a5 5 0 0 1 0 10H4z"/><path d="M16 9l3-2M16 15l3 2M17 12h4"/></svg>',
+		// روغن.
+		'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M9 3h6l1 4H8z"/><path d="M8 7h8v12a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2z"/><path d="M10 13h4"/></svg>',
+	);
+
+	return $icons[ $index % count( $icons ) ];
+}

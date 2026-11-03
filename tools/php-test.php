@@ -75,10 +75,31 @@ function get_queried_object_id() { return 0; }
 function get_object_taxonomies( $t ) { return array( 'product_cat' ); }
 function has_shortcode( $c, $s ) { return false; }
 function flush_rewrite_rules( $h = true ) {}
+function get_header() { echo "<!--HEADER-->\n"; }
+function get_footer() { echo "<!--FOOTER-->\n"; }
+function have_posts() { return false; }
+function the_post() {}
+function the_content() { echo '<!--ELEMENTOR_CONTENT-->'; }
+function wc_get_products( $a = array() ) { return array(); }
+function wc_get_product_ids_on_sale() { return array(); }
+function wc_get_account_endpoint_url( $e ) { return home_url( '/account/' . $e ); }
+function wc_get_account_menu_items() { return array( 'dashboard' => 'پیشخوان' ); }
+function wc_get_account_menu_item_classes( $e ) { return 'woocommerce-MyAccount-navigation-link'; }
+function partyab_brand_terms() {
+	return array(
+		(object) array( 'term_id' => 1, 'name' => 'ایساکو', 'count' => 2, 'slug' => 'isaco' ),
+		(object) array( 'term_id' => 2, 'name' => 'بوش', 'count' => 1, 'slug' => 'bosch' ),
+	);
+}
+function get_terms( $a = array() ) {
+	return array(
+		(object) array( 'term_id' => 1, 'name' => 'سیستم ترمز', 'slug' => 'brake-system', 'count' => 3, 'taxonomy' => 'product_cat' ),
+		(object) array( 'term_id' => 2, 'name' => 'فیلترها', 'slug' => 'filters', 'count' => 2, 'taxonomy' => 'product_cat' ),
+	);
+}
 function add_shortcode( $tag, $cb ) {}
 function shortcode_exists( $t ) { return false; }
 function do_shortcode( $c ) { return ''; }
-function get_terms( $a = array() ) { return array(); }
 function get_term_link( $t ) { return home_url( '/term' ); }
 function get_term( $id, $tax ) { return null; }
 function get_bloginfo( $k = '' ) { return 'PartYab'; }
@@ -113,6 +134,7 @@ class WC_Product {
 
 require PARTYAB_DIR . '/inc/compat-ui.php';
 require PARTYAB_DIR . '/inc/woocommerce.php';
+require PARTYAB_DIR . '/inc/layout.php';
 
 /* ---------- ۱) نگاشت خودرو از تاکسونومی ---------- */
 $map = partyab_cars_map();
@@ -138,6 +160,21 @@ $product->regular = '850000';
 $product->sale    = '690000';
 $badge = partyab_sale_percent_badge( '<span class="onsale">تخفیف</span>', null, $product );
 check( 'درصد تخفیف محاسبه شد', strpos( $badge, '۱۹٪' ) !== false, $badge );
+
+/* ---------- ۵) ورودی سال: ارقام فارسی ---------- */
+check( 'سال با ارقام فارسی نمایش داده شد', strpos( $html, 'value="۱۳۹۵"' ) !== false );
+
+/* ---------- ۶) رندر صفحه اصلی دمو ۱ ---------- */
+ob_start();
+include PARTYAB_DIR . '/front-page.php';
+$front = ob_get_clean();
+
+foreach ( array( 'pb-hero', 'pb-cats', 'pb-cat__icon', 'pb-brands', 'pb-quote', 'pb-steps' ) as $section ) {
+	check( 'بخش ' . $section, strpos( $front, $section ) !== false );
+}
+
+check( 'مسیر المنتور فعال نشد (چون المنتور نصب نیست)', strpos( $front, 'ELEMENTOR_CONTENT' ) === false );
+check( 'صفحه اصلی هدر و فوتر دارد', strpos( $front, 'HEADER' ) !== false && strpos( $front, 'FOOTER' ) !== false );
 
 echo $GLOBALS['fails'] === 0 ? "\nهمه تست‌ها سبز\n" : "\n" . $GLOBALS['fails'] . " تست شکست خورد\n";
 exit( $GLOBALS['fails'] > 0 ? 1 : 0 );

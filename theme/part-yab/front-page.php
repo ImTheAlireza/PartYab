@@ -1,13 +1,40 @@
 <?php
 /**
- * صفحه اصلی فروشگاه.
+ * صفحه اصلی فروشگاه (دمو ۱).
+ *
+ * دو حالت دارد:
+ *  ۱) اگر صفحه اصلی در المنتور ساخته شده باشد، همان محتوا نمایش داده می‌شود
+ *     تا کاربر بتواند آزادانه با المنتور ویرایش کند.
+ *  ۲) در غیر این صورت، دموی آماده‌ی پارتیاب.
  *
  * @package PartYab
  */
 
 defined( 'ABSPATH' ) || exit;
 
+/* ---------- حالت ۱: صفحه اصلی ساخته‌شده با المنتور ---------- */
+$partyab_front_id = (int) get_option( 'page_on_front' );
+
+if ( $partyab_front_id > 0 && class_exists( '\Elementor\Plugin' ) ) {
+	$partyab_document = \Elementor\Plugin::$instance->documents->get( $partyab_front_id );
+
+	if ( $partyab_document && $partyab_document->is_built_with_elementor() ) {
+		get_header();
+
+		while ( have_posts() ) {
+			the_post();
+			the_content();
+		}
+
+		get_footer();
+
+		return;
+	}
+}
+
 get_header();
+
+$partyab_shop_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/shop' );
 ?>
 
 <section class="pb-hero">
@@ -26,7 +53,7 @@ get_header();
 
 			<div class="pb-hero__cta">
 				<a class="pb-btn pb-btn--ghost" href="<?php echo esc_url( home_url( '/my-car' ) ); ?>">انتخاب خودروی من</a>
-				<a class="pb-hero__link" href="<?php echo esc_url( function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/shop' ) ); ?>">همه قطعات →</a>
+				<a class="pb-hero__link" href="<?php echo esc_url( $partyab_shop_url ); ?>">همه قطعات →</a>
 			</div>
 		</div>
 
@@ -53,7 +80,7 @@ get_header();
 </section>
 
 <?php
-$categories = get_terms( array(
+$partyab_categories = get_terms( array(
 	'taxonomy'   => 'product_cat',
 	'hide_empty' => false,
 	'number'     => 6,
@@ -61,24 +88,50 @@ $categories = get_terms( array(
 	'order'      => 'DESC',
 ) );
 
-if ( ! is_wp_error( $categories ) && $categories ) :
+if ( ! is_wp_error( $partyab_categories ) && $partyab_categories ) :
 	?>
 	<section class="pb-section">
 		<div class="pb-container">
 			<div class="pb-section__head">
 				<h2>خرید بر اساس دسته قطعه</h2>
-				<a href="<?php echo esc_url( home_url( '/shop' ) ); ?>">همه دسته‌ها →</a>
+				<a href="<?php echo esc_url( $partyab_shop_url ); ?>">همه دسته‌ها →</a>
 			</div>
 
 			<div class="pb-cats">
-				<?php foreach ( $categories as $category ) : ?>
-					<?php if ( 'uncategorized' === $category->slug ) { continue; } ?>
-					<a class="pb-cat" href="<?php echo esc_url( get_term_link( $category ) ); ?>">
-						<span class="pb-cat__name"><?php echo esc_html( $category->name ); ?></span>
-						<span class="pb-cat__count"><?php echo esc_html( number_format_i18n( $category->count ) ); ?> کالا</span>
+				<?php
+				foreach ( $partyab_categories as $partyab_index => $partyab_category ) :
+					if ( 'uncategorized' === $partyab_category->slug ) {
+						continue;
+					}
+					?>
+					<a class="pb-cat" href="<?php echo esc_url( (string) get_term_link( $partyab_category ) ); ?>">
+						<span class="pb-cat__icon" aria-hidden="true"><?php echo partyab_category_icon( $partyab_index ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
+						<span class="pb-cat__name"><?php echo esc_html( $partyab_category->name ); ?></span>
+						<span class="pb-cat__count"><?php echo esc_html( number_format_i18n( $partyab_category->count ) ); ?> محصول</span>
 					</a>
 				<?php endforeach; ?>
 			</div>
+		</div>
+	</section>
+	<?php
+endif;
+
+/* ---------- پیشنهاد شگفت‌انگیز: فقط اگر محصول تخفیف‌دار وجود دارد ---------- */
+$partyab_on_sale = function_exists( 'wc_get_products' ) ? wc_get_products( array(
+	'limit'   => 4,
+	'status'  => 'publish',
+	'include' => wc_get_product_ids_on_sale(),
+) ) : array();
+
+if ( $partyab_on_sale ) :
+	?>
+	<section class="pb-section pb-deals">
+		<div class="pb-container">
+			<div class="pb-section__head">
+				<h2 class="pb-deals__title">پیشنهاد شگفت‌انگیز <span class="pb-deals__pill">تخفیف‌دار</span></h2>
+				<a href="<?php echo esc_url( add_query_arg( 'on_sale', '1', $partyab_shop_url ) ); ?>">همه تخفیف‌ها →</a>
+			</div>
+			<?php echo do_shortcode( '[products limit="4" columns="4" on_sale="true"]' ); ?>
 		</div>
 	</section>
 	<?php
@@ -89,7 +142,7 @@ endif;
 	<div class="pb-container">
 		<div class="pb-section__head">
 			<h2>تازه‌ترین قطعات</h2>
-			<a href="<?php echo esc_url( home_url( '/shop' ) ); ?>">همه محصولات →</a>
+			<a href="<?php echo esc_url( $partyab_shop_url ); ?>">همه محصولات →</a>
 		</div>
 
 		<?php
@@ -101,6 +154,32 @@ endif;
 		?>
 	</div>
 </section>
+
+<?php
+$partyab_brands = function_exists( 'partyab_brand_terms' ) ? partyab_brand_terms() : array();
+
+if ( $partyab_brands ) :
+	?>
+	<section class="pb-section pb-brands-section">
+		<div class="pb-container">
+			<div class="pb-section__head">
+				<h2>برندهای قطعه</h2>
+				<a href="<?php echo esc_url( $partyab_shop_url ); ?>">همه برندها →</a>
+			</div>
+
+			<div class="pb-brands">
+				<?php foreach ( $partyab_brands as $partyab_brand ) : ?>
+					<a class="pb-brand-chip" href="<?php echo esc_url( (string) get_term_link( $partyab_brand ) ); ?>">
+						<strong><?php echo esc_html( $partyab_brand->name ); ?></strong>
+						<span><?php echo esc_html( number_format_i18n( $partyab_brand->count ) ); ?> قطعه</span>
+					</a>
+				<?php endforeach; ?>
+			</div>
+		</div>
+	</section>
+	<?php
+endif;
+?>
 
 <section class="pb-section">
 	<div class="pb-container pb-steps">
@@ -118,6 +197,29 @@ endif;
 			<span class="pb-step__num">۳</span>
 			<strong>سفارش بده</strong>
 			<p>پرداخت آنلاین یا در محل، ارسال پیک تهران همان‌روز.</p>
+		</div>
+	</div>
+</section>
+
+<section class="pb-section pb-section--muted">
+	<div class="pb-container">
+		<div class="pb-section__head">
+			<h2>مشتری‌ها چه می‌گویند</h2>
+		</div>
+
+		<div class="pb-quotes">
+			<figure class="pb-quote">
+				<blockquote>قطعه‌ای که فرستادید دقیقاً به مدل ۱۳۹۵ من خورد؛ برخلاف دفعه قبل که دو بار مرجوع کردم.</blockquote>
+				<figcaption>رضا — پراید ۱۳۱</figcaption>
+			</figure>
+			<figure class="pb-quote">
+				<blockquote>قبل از خرید سازگاری را دیدم، پس بدون سوال سفارش دادم. بسته‌بندی و ارسال هم سریع بود.</blockquote>
+				<figcaption>مریم — پژو پارس</figcaption>
+			</figure>
+			<figure class="pb-quote">
+				<blockquote>جستجو با شماره فنی خیلی کمک کرد؛ در دو دقیقه فیلتر روغن درست را پیدا کردم.</blockquote>
+				<figcaption>حسین — سمند EF7</figcaption>
+			</figure>
 		</div>
 	</div>
 </section>
