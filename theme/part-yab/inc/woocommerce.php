@@ -56,10 +56,27 @@ add_action( 'woocommerce_no_products_found', 'partyab_no_products_found' );
  * حالت خالی آرشیو — هدایت به انتخاب خودرو به‌جای بن‌بست.
  */
 function partyab_no_products_found(): void {
+	$has_car = function_exists( 'partyab_has_car' ) && partyab_has_car();
+	$car     = $has_car ? partyab_current_car() : array();
+
 	echo '<div class="partyab-empty">';
 	echo '<p class="partyab-empty__title">محصولی با این فیلترها پیدا نشد.</p>';
-	echo '<p>خودروی خود را انتخاب کنید تا قطعات سازگار را ببینید، یا فیلترها را ساده‌تر کنید.</p>';
-	echo '<a class="partyab-btn" href="' . esc_url( home_url( '/my-car' ) ) . '">انتخاب خودروی من</a>';
+
+	if ( $has_car ) {
+		printf(
+			'<p>برای <strong>%s %s</strong> قطعه‌ای در این دسته ثبت نشده است. می‌توانی فیلتر خودرو را برداری یا خودرو را عوض کنی.</p>',
+			esc_html( (string) ( $car['brand'] ?? '' ) ),
+			esc_html( (string) ( $car['model'] ?? '' ) )
+		);
+		echo '<div class="partyab-empty__actions">';
+		echo '<a class="partyab-btn" href="' . esc_url( add_query_arg( 'pb_car_clear', '1' ) ) . '">نمایش همه محصولات</a>';
+		echo '<a class="partyab-btn partyab-btn--ghost" href="' . esc_url( home_url( '/my-car' ) ) . '">تغییر خودرو</a>';
+		echo '</div>';
+	} else {
+		echo '<p>خودروی خود را انتخاب کنید تا قطعات سازگار را ببینید، یا فیلترها را ساده‌تر کنید.</p>';
+		echo '<a class="partyab-btn" href="' . esc_url( home_url( '/my-car' ) ) . '">انتخاب خودروی من</a>';
+	}
+
 	echo '</div>';
 }
 

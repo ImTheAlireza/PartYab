@@ -365,6 +365,16 @@ check( 'فرم: شماره نامعتبر', isset( partyab_contact_validate( arr
 check( 'فرم: پیام کوتاه', isset( partyab_contact_validate( array( 'name' => 'علی رضایی', 'phone' => '09121234567', 'message' => 'سلام' ) )['message'] ) );
 check( 'فرم: شماره فارسی', '09121234567' === partyab_normalize_phone( '۰۹۱۲ ۱۲۳ ۴۵۶۷' ), partyab_normalize_phone( '۰۹۱۲ ۱۲۳ ۴۵۶۷' ) );
 
+/* ---------- ۵٫۱۱) فیلتر خودرو: نامشخص‌ها حذف نشوند ---------- */
+$clause = partyab_car_tax_clause( 55 );
+check( 'فیلتر خودرو: OR با NOT EXISTS', 'OR' === ( $clause['relation'] ?? '' ) && 2 === count( $clause ) - 1 );
+check( 'فیلتر خودرو: ترم درست', 55 === $clause[0]['terms'][0] );
+
+$_GET['pb_compat_strict'] = '1';
+$strict = partyab_car_tax_clause( 55 );
+check( 'فیلتر خودرو: حالت سخت‌گیرانه', ! isset( $strict['relation'] ) && 'pb_car' === $strict['taxonomy'] );
+unset( $_GET['pb_compat_strict'] );
+
 /* ---------- ۶) رندر صفحه اصلی دمو ۱ ---------- */
 ob_start();
 include PARTYAB_DIR . '/front-page.php';

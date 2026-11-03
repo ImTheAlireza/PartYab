@@ -359,3 +359,23 @@
 	color: #b91c1c;
 	border: 1px solid #fecaca;
 }
+
+/* فیکس: متن صفحه‌های محتوایی از والد وسط‌چین ارث نمی‌برد */
+.pb-page,
+.pb-page p,
+.pb-page li,
+.pb-page h1,
+.pb-page h2,
+.pb-page h3,
+.pb-page td,
+.pb-page th {
+	text-align: start;
+}
+
+.pb-page__title {
+	margin-bottom: var(--pb-4);
+}
+
+.pb-page__body > *:first-child {
+	margin-top: 0;
+}

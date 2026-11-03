@@ -314,6 +314,39 @@ function partyab_car_bar(): void {
 add_action( 'pre_get_posts', 'partyab_filter_shop_by_car' );
 
 /**
+ * شرط خودرو برای کوئری آرشیو.
+ *
+ * چرا OR با NOT EXISTS؟ اگر محصولی هیچ داده سازگاری نداشته باشد، «ناسازگار»
+ * نیست؛ فقط «نامشخص» است. حذف آن باعث خالی‌شدن کل دسته می‌شد.
+ * با پارامتر pb_compat_strict=1 فقط سازگارهای ثبت‌شده نمایش داده می‌شوند.
+ *
+ * @param int $term_id شناسه ترم خودرو.
+ * @return array<string, mixed>
+ */
+function partyab_car_tax_clause( int $term_id ): array {
+	$clause = array(
+		'taxonomy' => 'pb_car',
+		'field'    => 'term_id',
+		'terms'    => array( $term_id ),
+	);
+
+	$strict = isset( $_GET['pb_compat_strict'] ) && '1' === (string) $_GET['pb_compat_strict']; // phpcs:ignore WordPress.Security.NonceVerification
+
+	if ( $strict ) {
+		return $clause;
+	}
+
+	return array(
+		'relation' => 'OR',
+		$clause,
+		array(
+			'taxonomy' => 'pb_car',
+			'operator' => 'NOT EXISTS',
+		),
+	);
+}
+
+/**
  * محدود کردن کوئری آرشیو به قطعات سازگار.
  *
  * @param WP_Query $query کوئری.
@@ -337,11 +370,7 @@ function partyab_filter_shop_by_car( $query ): void {
 
 		if ( $term ) {
 			$tax_query   = (array) $query->get( 'tax_query' );
-			$tax_query[] = array(
-				'taxonomy' => 'pb_car',
-				'field'    => 'term_id',
-				'terms'    => array( (int) $term->term_id ),
-			);
+			$tax_query[] = partyab_car_tax_clause( (int) $term->term_id );
 
 			$query->set( 'tax_query', $tax_query );
 			return;
@@ -375,10 +404,20 @@ function partyab_car_filter_notice(): void {
 
 	$car = partyab_current_car();
 
+	$strict = isset( $_GET['pb_compat_strict'] ) && '1' === (string) $_GET['pb_compat_strict']; // phpcs:ignore WordPress.Security.NonceVerification
+
+	$toggle_url = $strict
+		? remove_query_arg( 'pb_compat_strict' )
+		: add_query_arg( 'pb_compat_strict', '1' );
+
 	printf(
-		'<div class="pb-note pb-note--filter">فقط قطعات سازگار با <strong>%s %s</strong> نمایش داده می‌شود. <a href="%s">نمایش همه</a></div>',
+		'<div class="pb-note pb-note--filter"><span>%s <strong>%s %s</strong>%s</span><span class="pb-note__actions"><a href="%s">%s</a><a href="%s">نمایش همه</a></span></div>',
+		$strict ? 'فقط قطعات سازگار با' : 'قطعات سازگار با',
 		esc_html( $car['brand'] ),
 		esc_html( $car['model'] ),
+		$strict ? '' : ' (به‌همراه قطعاتی که سازگاری‌شان ثبت نشده)',
+		esc_url( $toggle_url ),
+		$strict ? 'نمایش نامشخص‌ها' : 'فقط سازگارهای ثبت‌شده',
 		esc_url( add_query_arg( 'pb_car_clear', 1 ) )
 	);
 }

@@ -2416,3 +2416,230 @@
 		font-size: var(--pb-fs-sm);
 	}
 }
+
+/* ============================================================
+   فیکس دور ۷ — قیمت، دکمه تعداد، تب خالی، حالت خالی، گریدها
+   ============================================================ */
+
+/* ۱) قیمت: قیمت خط‌خورده و قیمت فروش هرگز روی هم نیفتند */
+.woocommerce .price {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex-wrap: wrap;
+	line-height: 1.6;
+}
+
+.woocommerce .price del {
+	order: 2;
+	font-size: 11px;
+	line-height: 1.6;
+}
+
+.woocommerce .price ins {
+	order: 1;
+	line-height: 1.6;
+}
+
+.woocommerce ul.products li.product .price {
+	min-height: 0;
+	line-height: 1.6;
+	margin-block: 2px 6px;
+}
+
+.woocommerce ul.products li.product .price .amount {
+	white-space: nowrap;
+}
+
+/* ۲) دکمه‌های ± تعداد — قبلاً فقط داخل جدول سبد استایل داشتند */
+.quantity {
+	display: inline-flex;
+	align-items: center;
+	background: #fff;
+	border: 1px solid var(--pb-border-strong, #d1d5db);
+	border-radius: var(--pb-radius-sm, 8px);
+	overflow: hidden;
+	line-height: 1;
+}
+
+.quantity input[type="number"] {
+	width: 46px;
+	height: 36px;
+	border: 0 !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	text-align: center;
+	font-family: inherit;
+	font-size: var(--pb-fs-xs);
+	font-weight: 800;
+	color: var(--pb-ink);
+	background: #fff;
+	appearance: textfield;
+	box-shadow: none !important;
+}
+
+.quantity input[type="number"]::-webkit-outer-spin-button,
+.quantity input[type="number"]::-webkit-inner-spin-button {
+	appearance: none;
+	margin: 0;
+}
+
+.pb-qty-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 36px;
+	border: 0;
+	margin: 0;
+	background: #fff;
+	color: var(--pb-orange-600);
+	font-size: 16px;
+	font-weight: 800;
+	line-height: 1;
+	cursor: pointer;
+	transition: background 0.15s ease, color 0.15s ease;
+}
+
+.pb-qty-btn:hover {
+	background: var(--pb-orange-50, #fff7ed);
+	color: var(--pb-orange);
+}
+
+.pb-qty-btn--minus {
+	border-inline-end: 1px solid var(--pb-border, #eef0f3);
+}
+
+.pb-qty-btn--plus {
+	border-inline-start: 1px solid var(--pb-border, #eef0f3);
+}
+
+/* جدول سبد: همان اندازه قبلی حفظ شود (این قواعد بعد از عمومی‌ها می‌آیند) */
+.woocommerce table.shop_table.cart td.product-quantity .quantity {
+	border: 0;
+}
+
+.woocommerce table.shop_table.cart td.product-quantity .pb-qty-btn {
+	width: 30px;
+	height: 34px;
+	background: var(--pb-surface, #f8fafc);
+}
+
+.woocommerce table.shop_table.cart td.product-quantity .quantity input[type="number"] {
+	width: 44px;
+	height: 34px;
+}
+
+/* ۳) پنل تب خالی نباید کادر بی‌محتوا بسازد */
+.woocommerce div.product .woocommerce-tabs .panel:empty {
+	display: none;
+}
+
+/* ۴) شمارنده دسته‌ها در سایدبار: بج خوانا به‌جای مربع خالی */
+.pb-side-list span {
+	min-width: 26px;
+	padding: 1px 8px;
+	text-align: center;
+	background: var(--pb-surface, #f8fafc);
+	border-radius: 999px;
+	font-size: 11px;
+	font-weight: 700;
+	color: var(--pb-ink-500);
+}
+
+.pb-side-list li.is-active span {
+	background: var(--pb-orange);
+	color: #fff;
+}
+
+/* ۵) نوار «فیلتر خودرو فعال» با دکمه‌های کنش */
+.pb-note--filter {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px 14px;
+}
+
+.pb-note__actions {
+	display: inline-flex;
+	align-items: center;
+	gap: 14px;
+	white-space: nowrap;
+}
+
+.pb-note__actions a {
+	font-weight: 700;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+/* ۶) حالت خالی آرشیو: دو دکمه کنار هم */
+.partyab-empty__actions {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 10px;
+	margin-top: var(--pb-3);
+}
+
+.partyab-empty__actions .partyab-btn {
+	margin-top: 0;
+}
+
+.partyab-empty__actions .partyab-btn--ghost {
+	background: #fff;
+	border: 1px solid var(--pb-border-strong, #d1d5db);
+	color: var(--pb-ink);
+}
+
+/* ۷) گرید نوارها: با ۲ یا ۳ محصول، ردیف پر شود نه نیمه‌خالی */
+.pb-strip__grid,
+.woocommerce .related ul.products,
+.woocommerce .upsells ul.products,
+.woocommerce .cross-sells ul.products {
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+@media (max-width: 991px) {
+	.pb-strip__grid,
+	.woocommerce .related ul.products,
+	.woocommerce .upsells ul.products,
+	.woocommerce .cross-sells ul.products {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+/* ۸) ستون خلاصه محصول کمی بازتر، تصویر کمی جمع‌تر */
+@media (min-width: 992px) {
+	.woocommerce div.product {
+		grid-template-columns: minmax(0, 42%) minmax(0, 1fr);
+	}
+}
+
+/* ۹) دکمه افزودن به سبد در کارت‌ها یکدست تمام‌عرض */
+.woocommerce ul.products li.product .button,
+.woocommerce ul.products li.product .add_to_cart_button {
+	width: 100%;
+	text-align: center;
+	box-sizing: border-box;
+}
+
+/* ۱۰) فرم افزودن به سبد: چیدمان تمیز دکمه + تعداد */
+.woocommerce div.product form.cart {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: stretch;
+	gap: 10px;
+	margin-bottom: var(--pb-3);
+}
+
+.woocommerce div.product form.cart .quantity {
+	margin: 0;
+}
+
+.woocommerce div.product form.cart .single_add_to_cart_button {
+	flex: 1 1 180px;
+	margin: 0;
+	min-height: 40px;
+}
