@@ -61,9 +61,6 @@
 			btn.classList.toggle('is-visible', window.scrollY > 600);
 		};
 
-		btn.addEventListener('click', function () {
-			window.scrollTo({ top: 0, behavior: 'smooth' });
-		});
 
 		window.addEventListener('scroll', toggle, { passive: true });
 		toggle();

@@ -51,6 +51,7 @@ function esc_url( $t ) { return htmlspecialchars( (string) $t, ENT_QUOTES ); }
 function esc_url_raw( $t ) { return (string) $t; }
 function esc_textarea( $t ) { return htmlspecialchars( (string) $t, ENT_QUOTES ); }
 function wp_kses_post( $t ) { return (string) $t; }
+function wp_kses( $t, $allowed ) { return (string) $t; }
 function home_url( $p = '/' ) { return 'http://example.test' . $p; }
 function site_url( $p = '/' ) { return home_url( $p ); }
 function admin_url( $p = '' ) { return 'http://example.test/wp-admin/' . $p; }
@@ -189,6 +190,7 @@ class WC_Product {
 	public function get_id() { return 1; }
 }
 
+require PARTYAB_DIR . '/inc/design.php';
 require PARTYAB_DIR . '/inc/compat-ui.php';
 require PARTYAB_DIR . '/inc/woocommerce.php';
 require PARTYAB_DIR . '/inc/layout.php';
@@ -431,7 +433,7 @@ ob_start();
 include PARTYAB_DIR . '/front-page.php';
 $front = ob_get_clean();
 
-foreach ( array( 'pb-hero', 'pb-cats', 'pb-cat__icon', 'pb-banner', 'pb-brands', 'pb-quote', 'pb-steps' ) as $section ) {
+foreach ( array( 'pb-hero', 'pb-cats', 'pb-cat__icon', 'pb-banner', 'pb-marquee', 'pb-editorial', 'pb-steps', 'pb-services' ) as $section ) {
 	check( 'بخش ' . $section, strpos( $front, $section ) !== false );
 }
 

@@ -1,0 +1,33 @@
+/* Motion is progressive enhancement: content is visible without JavaScript. */
+@keyframes float-a{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes blob-drift{0%{transform:translate(-2%,-1%) scale(1)}100%{transform:translate(8%,8%) scale(1.15)}}
+@keyframes grid-flow{from{background-position:0 0}to{background-position:0 58px,58px 0}}
+@keyframes orbit-breathe{0%,100%{opacity:.45;transform:rotateX(65deg) scale(1)}50%{opacity:.9;transform:rotateX(65deg) scale(1.06)}}
+@keyframes pulse-dot{0%,100%{box-shadow:0 0 0 0 #12874a30}65%{box-shadow:0 0 0 6px #12874a00}}
+@keyframes pop-in{0%{transform:scale(.6);opacity:0}65%{transform:scale(1.14)}100%{transform:scale(1);opacity:1}}
+@keyframes toast-in{from{opacity:0;transform:translateY(15px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes car-arrive{from{opacity:0;transform:translateX(-35px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes shine-sweep{0%{transform:translateX(-180%) rotate(15deg);opacity:0}20%{opacity:.8}100%{transform:translateX(330%) rotate(15deg);opacity:0}}
+@keyframes marquee-flow{to{transform:translateX(50%)}}
+@keyframes tick{from{opacity:.4;transform:translateY(-4px)}to{opacity:1;transform:none}}
+@keyframes panel-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes spin-slow{to{transform:rotate(360deg)}}
+.pb-motion-ready [data-reveal]{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .7s var(--ease);transition-delay:var(--d,0s)}
+.pb-motion-ready [data-reveal].in{opacity:1;transform:none}
+.pb-scroll-progress{position:fixed;top:0;inset-inline:0;height:3px;z-index:100;pointer-events:none}.pb-scroll-progress i{display:block;width:var(--p,0%);height:100%;background:linear-gradient(90deg,var(--orange-400),var(--orange-600));box-shadow:0 0 10px #ff6a0040;transition:width .08s linear}
+.pb-product-card{position:relative;isolation:isolate;transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s var(--ease)}
+.pb-product-card::after{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(260px circle at var(--mx,50%) var(--my,0%),#ff6a000c,transparent 70%);opacity:0;transition:opacity .3s;pointer-events:none;z-index:-1}
+.pb-product-card:hover{transform:translateY(-6px);box-shadow:0 24px 42px -24px #0e234047;border-color:var(--orange-100)}.pb-product-card:hover::after{opacity:1}
+.pb-product-card__media::after{content:'';position:absolute;top:-30%;left:0;width:35%;height:170%;background:linear-gradient(90deg,transparent,#ffffffb3,transparent);opacity:0;pointer-events:none}.pb-product-card:hover .pb-product-card__media::after{animation:shine-sweep .9s var(--ease)}
+.pb-product-card__image{transition:transform .55s var(--ease),filter .55s var(--ease)}.pb-product-card:hover .pb-product-card__image{transform:scale(1.07) rotate(-2deg)}
+.pb-fly-dot{position:fixed;z-index:200;width:32px;height:32px;display:grid;place-items:center;border-radius:50%;background:var(--orange-500);color:#fff;box-shadow:var(--sh-brand);pointer-events:none}.pb-fly-dot .pb-icon{width:17px;height:17px}.bump{animation:pop-in .45s var(--ease)}
+.pb-rail{position:relative}.pb-rail__track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px 2px 20px;scrollbar-width:none}.pb-rail__track::-webkit-scrollbar{display:none}.pb-rail__track>*{flex:0 0 calc((100% - 48px)/4);scroll-snap-align:start}.pb-rail__controls{display:flex;gap:6px}.pb-rail__btn{width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--navy-700);transition:all .2s}.pb-rail__btn:hover{background:var(--navy-800);color:#fff}.pb-rail__btn .pb-icon{width:16px;height:16px}
+.pb-marquee{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}.pb-marquee__track{display:flex;width:max-content;animation:marquee-flow 35s linear infinite}.pb-marquee:hover .pb-marquee__track{animation-play-state:paused}.pb-marquee__group{display:flex;align-items:center;gap:20px;padding-inline-end:20px}.pb-brand-tile{display:flex;align-items:center;justify-content:center;gap:12px;width:185px;height:74px;border:1px solid var(--line-soft);border-radius:14px;background:#fff;transition:all .25s}.pb-brand-tile:hover{border-color:var(--orange-100);transform:translateY(-3px);box-shadow:var(--sh-sm)}.pb-brand-tile b{font-size:21px;font-weight:900;color:var(--navy-700);letter-spacing:-.5px}.pb-brand-tile span{font-size:11px;color:var(--muted)}
+.pb-motion-toggle{display:inline-flex;align-items:center;gap:6px;font-size:10px;color:inherit;padding:5px}.pb-motion-toggle .pb-icon{width:13px;height:13px}.pb-motion-paused *,.pb-motion-paused *::before,.pb-motion-paused *::after{animation-play-state:paused!important}.pb-motion-paused [data-reveal]{opacity:1;transform:none;transition:none}.pb-motion-paused{scroll-behavior:auto}.pb-motion-paused .pb-hero__stage{transform:none!important}
+.pb-countdown{display:flex;align-items:center;gap:6px;direction:ltr}.pb-countdown__unit{display:grid;place-items:center;min-width:45px;padding:7px;border-radius:10px;background:#ffffff0e;border:1px solid #ffffff15}.pb-countdown__unit b{font-size:22px;line-height:1.3;font-weight:800;font-variant-numeric:tabular-nums}.pb-countdown__unit small{font-size:8px;color:#a8bcd6}.pb-countdown__unit b.tick{animation:tick .25s var(--ease)}.pb-countdown__sep{color:var(--orange-400);font-size:20px}
+.pb-confetti{position:fixed;width:7px;height:12px;border-radius:2px;pointer-events:none;z-index:200}
+@media(hover:none){.pb-product-card:hover{transform:none}.pb-product-card__tools{opacity:1;transform:none}.pb-product-card__quick{opacity:1;transform:none}}
+@media(max-width:1024px){.pb-rail__track>*{flex-basis:calc((100% - 32px)/3)}}
+@media(max-width:768px){.pb-rail__track>*{flex-basis:calc((100% - 16px)/2)}.pb-brand-tile{width:150px;height:64px}.pb-brand-tile b{font-size:18px}.pb-scroll-progress{height:2px}}
+@media(max-width:380px){.pb-rail__track>*{flex-basis:85%}}
+@media(prefers-reduced-motion:reduce){.pb-motion-ready [data-reveal]{opacity:1;transform:none}.pb-marquee__track{animation:none}.pb-hero__car{animation:none}.pb-hero__float{animation:none}}

@@ -9,7 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-add_action( 'wp_enqueue_scripts', 'partyab_enqueue_assets', 20 );
+add_action( 'wp_enqueue_scripts', 'partyab_enqueue_assets', 30 );
 
 /**
  * صف‌بندی دارایی‌های فرانت.
@@ -106,6 +106,12 @@ function partyab_enqueue_assets(): void {
 			'currentModel' => (string) ( $partyab_car['model'] ?? '' ),
 		) );
 	}
+
+	// Shared redesign components load after legacy/plugin styles.
+	wp_enqueue_style( 'partyab-redesign', PARTYAB_URI . '/assets/css/redesign.css', array( 'partyab-layout', 'partyab-content', 'partyab-compat-ui', 'partyab-search' ), partyab_asset_version( 'assets/css/redesign.css' ) );
+	wp_enqueue_style( 'partyab-motion', PARTYAB_URI . '/assets/css/motion.css', array( 'partyab-redesign' ), partyab_asset_version( 'assets/css/motion.css' ) );
+	wp_enqueue_script( 'partyab-ui', PARTYAB_URI . '/assets/js/ui.js', array(), partyab_asset_version( 'assets/js/ui.js' ), array( 'in_footer' => true, 'strategy' => 'defer' ) );
+	wp_enqueue_script( 'partyab-motion', PARTYAB_URI . '/assets/js/motion.js', array( 'partyab-ui', 'partyab-main' ), partyab_asset_version( 'assets/js/motion.js' ), array( 'in_footer' => true, 'strategy' => 'defer' ) );
 
 	// داده‌های لازم در جاوااسکریپت (بدون inline script پراکنده).
 	wp_localize_script( 'partyab-main', 'partyabData', array(
