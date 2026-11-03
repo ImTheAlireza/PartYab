@@ -207,6 +207,7 @@ require PARTYAB_DIR . '/inc/related.php';
 require PARTYAB_DIR . '/inc/recent.php';
 require PARTYAB_DIR . '/inc/pages.php';
 require PARTYAB_DIR . '/inc/contact-form.php';
+require PARTYAB_DIR . '/inc/seo.php';
 
 // استاب‌های داشبورد حساب
 function get_current_user_id() { return 7; }
@@ -374,6 +375,36 @@ $_GET['pb_compat_strict'] = '1';
 $strict = partyab_car_tax_clause( 55 );
 check( 'فیلتر خودرو: حالت سخت‌گیرانه', ! isset( $strict['relation'] ) && 'pb_car' === $strict['taxonomy'] );
 unset( $_GET['pb_compat_strict'] );
+
+/* ---------- ۵٫۱۲) سئو و داده ساختاریافته ---------- */
+check( 'متا: متن کوتاه دست‌نخورده', 'فیلتر روغن پژو ۴۰۵' === partyab_seo_description( '  فیلتر   روغن پژو ۴۰۵  ' ) );
+$long = partyab_seo_description( str_repeat( 'قطعه اصل با ضمانت اصالت کالا و ارسال سریع. ', 12 ), 120 );
+check( 'متا: کوتاه‌سازی', partyab_text_len( $long ) <= 121, (string) partyab_text_len( $long ) );
+check( 'متا: سه‌نقطه پایانی', str_ends_with( $long, '…' ) );
+check( 'متا: حذف تگ', ! str_contains( partyab_seo_description( '<p>لنت <b>ترمز</b></p>' ), '<' ) );
+
+$schema = partyab_product_schema( array(
+	'name'  => 'لنت ترمز جلو پراید',
+	'sku'   => 'PB-BRK-001',
+	'price' => '690000',
+	'brand' => 'ایساکو',
+	'url'   => 'https://example.test/p/1',
+	'image' => 'https://example.test/i.jpg',
+) );
+check( 'اسکیما: نوع Product', 'Product' === $schema['@type'] );
+check( 'اسکیما: برند', 'ایساکو' === $schema['brand']['name'] );
+check( 'اسکیما: قیمت و ارز', '690000' === $schema['offers']['price'] && 'IRR' === $schema['offers']['priceCurrency'] );
+check( 'اسکیما: موجودی پیش‌فرض', 'https://schema.org/InStock' === $schema['offers']['availability'] );
+
+$crumbs = partyab_breadcrumb_schema( array(
+	array( 'name' => 'خانه', 'url' => 'https://example.test/' ),
+	array( 'name' => 'ترمز', 'url' => 'https://example.test/c/brake' ),
+) );
+check( 'مسیر: دو آیتم با position', 2 === count( $crumbs['itemListElement'] ) && 2 === $crumbs['itemListElement'][1]['position'] );
+
+$faq_schema = partyab_faq_schema( partyab_faq_items() );
+check( 'FAQ اسکیما: هشت پرسش', 8 === count( $faq_schema['mainEntity'] ) );
+check( 'FAQ اسکیما: پاسخ', isset( $faq_schema['mainEntity'][0]['acceptedAnswer']['text'] ) );
 
 /* ---------- ۶) رندر صفحه اصلی دمو ۱ ---------- */
 ob_start();

@@ -39,6 +39,8 @@ $partyab_modules = array(
 	'recent',      // بازدیدهای اخیر.
 	'pages',       // شورت‌کدهای محتوایی: سؤالات متداول، تماس، راهنما.
 	'contact-form', // فرم تماس سبک بدون افزونه.
+	'seo',          // متا، Open Graph، داده ساختاریافته، پاک‌سازی هدر.
+	'seo-meta',     // خروجی متا و JSON-LD در wp_head.
 );
 
 foreach ( $partyab_modules as $partyab_module ) {
