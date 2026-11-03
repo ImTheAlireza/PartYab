@@ -374,6 +374,7 @@ function partyab_fa_digits( $text ) {
 }
 
 add_filter( 'wc_price', 'partyab_fa_digits', 20 );
+add_filter( 'number_format_i18n', 'partyab_fa_digits', 20 );
 add_filter( 'woocommerce_get_stock_html', 'partyab_fa_digits', 20 );
 
 /**
@@ -549,3 +550,104 @@ function partyab_loop_terms_line(): void {
 	echo '</div>';
 }
 add_action( 'woocommerce_after_shop_loop_item_title', 'partyab_loop_terms_line', 4 );
+
+/* ============================================================
+ * سبد خرید و تسویه حساب
+ * ============================================================ */
+
+/**
+ * آستانه ارسال رایگان (تومان).
+ */
+const PARTYAB_FREE_SHIPPING = 5000000;
+
+/**
+ * نوار «چقدر تا ارسال رایگان مانده» بالای جدول سبد.
+ */
+function partyab_free_shipping_progress(): void {
+	if ( ! function_exists( 'WC' ) || ! WC()->cart ) {
+		return;
+	}
+
+	$subtotal  = (float) WC()->cart->get_subtotal();
+	$threshold = (float) PARTYAB_FREE_SHIPPING;
+
+	if ( $subtotal <= 0 ) {
+		return;
+	}
+
+	$remaining = max( 0.0, $threshold - $subtotal );
+	$percent   = min( 100, (int) round( ( $subtotal / $threshold ) * 100 ) );
+
+	echo '<div class="pb-ship">';
+
+	if ( $remaining > 0 ) {
+		printf(
+			'<p class="pb-ship__text">%s تومان تا <strong>ارسال رایگان</strong> مانده.</p>',
+			esc_html( number_format_i18n( $remaining ) )
+		);
+	} else {
+		echo '<p class="pb-ship__text pb-ship__text--done">✓ ارسال این سفارش رایگان است.</p>';
+	}
+
+	printf(
+		'<span class="pb-ship__bar" role="progressbar" aria-valuenow="%1$d" aria-valuemin="0" aria-valuemax="100"><span style="width:%1$d%%"></span></span>',
+		(int) $percent
+	);
+
+	echo '</div>';
+}
+add_action( 'woocommerce_before_cart_table', 'partyab_free_shipping_progress', 5 );
+
+/**
+ * دکمه «ادامه خرید» بالای سبد و در صفحه تسویه.
+ */
+function partyab_continue_shopping(): void {
+	$url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/shop' );
+
+	printf(
+		'<p class="pb-continue"><a href="%s">← ادامه خرید</a></p>',
+		esc_url( $url )
+	);
+}
+add_action( 'woocommerce_before_cart_table', 'partyab_continue_shopping', 4 );
+
+/**
+ * ردیف اعتماد در سبد و تسویه.
+ */
+function partyab_checkout_trust(): void {
+	echo '<ul class="pb-product-trust pb-product-trust--wide">';
+	echo '<li>پرداخت امن</li>';
+	echo '<li>ضمانت اصالت کالا</li>';
+	echo '<li>مرجوعی ۷ روزه</li>';
+	echo '<li>پشتیبانی تلفنی</li>';
+	echo '</ul>';
+}
+add_action( 'woocommerce_review_order_after_submit', 'partyab_checkout_trust', 10 );
+add_action( 'woocommerce_after_cart_totals', 'partyab_checkout_trust', 10 );
+
+/**
+ * حذف فیلدهای غیرضروری تسویه در نسخه ۱ (شرکت، یادداشت سفارش جدا).
+ *
+ * @param array $fields فیلدها.
+ * @return array
+ */
+function partyab_checkout_fields( array $fields ): array {
+	unset( $fields['billing']['billing_company'] );
+	unset( $fields['billing']['billing_address_2'] );
+
+	if ( isset( $fields['order']['order_comments'] ) ) {
+		$fields['order']['order_comments']['label']       = 'یادداشت سفارش (اختیاری)';
+		$fields['order']['order_comments']['placeholder'] = 'مثلاً: زنگ واحد ۳ را بزنید';
+	}
+
+	return $fields;
+}
+add_filter( 'woocommerce_checkout_fields', 'partyab_checkout_fields', 20 );
+
+/**
+ * پیام کوتاه زیر دکمه ثبت سفارش.
+ */
+function partyab_place_order_note(): void {
+	echo '<p class="pb-checkout-note">با ثبت سفارش، شرایط فروش و مرجوعی را می‌پذیرید.</p>';
+}
+add_action( 'woocommerce_review_order_before_submit', 'partyab_place_order_note', 5 );

@@ -19,10 +19,32 @@ function check( $label, $ok, $note = '' ) {
 
 /* ---------- استاب‌های حداقلی وردپرس ---------- */
 function add_action( ...$a ) {}
-function add_filter( ...$a ) {}
+
+$GLOBALS['pb_filters'] = array();
+
+function add_filter( $tag, $callback, $priority = 10, $args = 1 ) {
+	$GLOBALS['pb_filters'][ $tag ][ $priority ][] = array( $callback, $args );
+	return true;
+}
 function remove_action( ...$a ) {}
 function remove_filter( ...$a ) {}
-function apply_filters( $tag, $value ) { return $value; }
+function apply_filters( $tag, $value, ...$rest ) {
+	if ( empty( $GLOBALS['pb_filters'][ $tag ] ) ) {
+		return $value;
+	}
+
+	ksort( $GLOBALS['pb_filters'][ $tag ] );
+
+	foreach ( $GLOBALS['pb_filters'][ $tag ] as $callbacks ) {
+		foreach ( $callbacks as $entry ) {
+			list( $callback, $args ) = $entry;
+			$extra = array_slice( $rest, 0, max( 0, $args - 1 ) );
+			$value = call_user_func_array( $callback, array_merge( array( $value ), $extra ) );
+		}
+	}
+
+	return $value;
+}
 function esc_html( $t ) { return htmlspecialchars( (string) $t, ENT_QUOTES ); }
 function esc_attr( $t ) { return htmlspecialchars( (string) $t, ENT_QUOTES ); }
 function esc_url( $t ) { return htmlspecialchars( (string) $t, ENT_QUOTES ); }
@@ -37,7 +59,7 @@ function is_ssl() { return false; }
 function sanitize_title( $t ) { return preg_replace( '/\s+/u', '-', trim( (string) $t ) ); }
 function sanitize_text_field( $t ) { return trim( strip_tags( (string) $t ) ); }
 function absint( $v ) { return abs( (int) $v ); }
-function number_format_i18n( $n, $d = 0 ) { return number_format( (float) $n, $d ); }
+function number_format_i18n( $n, $d = 0 ) { return apply_filters( 'number_format_i18n', number_format( (float) $n, $d ), $n, $d ); }
 function selected( $a, $b, $echo = true ) { $r = ( (string) $a === (string) $b ) ? ' selected' : ''; if ( $echo ) { echo $r; } return $r; }
 function get_option( $k, $d = false ) { return $d; }
 function update_option( $k, $v ) { return true; }
@@ -140,6 +162,25 @@ function partyab_car_tree() {
 	);
 }
 
+class WC_Cart_Stub {
+	public $subtotal = 3200000;
+	public function get_cart_contents_count() { return 2; }
+	public function get_subtotal() { return $this->subtotal; }
+}
+
+class WC_Stub {
+	public $cart;
+	public function __construct() { $this->cart = new WC_Cart_Stub(); }
+}
+
+function WC() {
+	static $instance = null;
+	if ( null === $instance ) {
+		$instance = new WC_Stub();
+	}
+	return $instance;
+}
+
 class WC_Product {
 	public $regular = '0';
 	public $sale    = '0';
@@ -206,6 +247,30 @@ function mock_car_marker( $c ) { return $c; }
 
 check( 'صفحه گاراژ خالی خودکار باکس خودرو می‌گیرد', strpos( partyab_auto_car_selector( '' ), 'partyab_my_car' ) !== false );
 check( 'صفحه‌ای که محتوا دارد دست نمی‌خورد', 'محتوای من' === partyab_auto_car_selector( 'محتوای من' ) );
+
+/* ---------- ۵٫۶) سبد و تسویه ---------- */
+ob_start();
+partyab_free_shipping_progress();
+$ship = ob_get_clean();
+check( 'نوار ارسال رایگان: مبلغ باقی‌مانده', strpos( $ship, '۱,۸۰۰,۰۰۰' ) !== false, trim( strip_tags( $ship ) ) );
+check( 'نوار ارسال رایگان: درصد پیشرفت', strpos( $ship, 'width:64%' ) !== false );
+check( 'نوار ارسال رایگان: شریط ARIA', strpos( $ship, 'role="progressbar"' ) !== false );
+
+ob_start();
+partyab_checkout_trust();
+$trust = ob_get_clean();
+check( 'ردیف اعتماد تسویه', strpos( $trust, 'پرداخت امن' ) !== false && strpos( $trust, 'مرجوعی' ) !== false );
+
+$fields = partyab_checkout_fields( array(
+	'billing' => array(
+		'billing_company'  => array( 'label' => 'شرکت' ),
+		'billing_address_2' => array( 'label' => 'آدرس ۲' ),
+		'billing_first_name' => array( 'label' => 'نام' ),
+	),
+	'order'   => array( 'order_comments' => array( 'label' => 'یادداشت' ) ),
+) );
+check( 'حذف فیلدهای اضافی تسویه', ! isset( $fields['billing']['billing_company'] ) && ! isset( $fields['billing']['billing_address_2'] ) );
+check( 'برچسب فارسی یادداشت سفارش', 'یادداشت سفارش (اختیاری)' === $fields['order']['order_comments']['label'] );
 
 /* ---------- ۶) رندر صفحه اصلی دمو ۱ ---------- */
 ob_start();
