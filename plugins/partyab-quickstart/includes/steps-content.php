@@ -537,6 +537,9 @@ function partyab_qs_step_content( array &$report ): void {
 
 	partyab_qs_log( $report, 'محتوا', 'صفحات (خانه، خودروی من، تماس)', $home > 0, 'صفحه اصلی ست شد' );
 
+	// ---- صفحه‌های ثابت محتوایی ----
+	partyab_qs_step_pages( $report );
+
 	// ---- منو ----
 	$menu_name = 'منوی اصلی';
 	$menu      = wp_get_nav_menu_object( $menu_name );

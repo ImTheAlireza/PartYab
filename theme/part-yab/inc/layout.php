@@ -51,10 +51,13 @@ function partyab_nav_fallback(): void {
  */
 function partyab_footer_fallback(): void {
 	$links = array(
-		home_url( '/' )        => 'خانه',
-		home_url( '/shop' )    => 'فروشگاه',
-		home_url( '/my-car' )  => 'خودروی من',
-		home_url( '/contact' ) => 'تماس با ما',
+		home_url( '/' )         => 'خانه',
+		home_url( '/shop' )     => 'فروشگاه',
+		home_url( '/my-car' )   => 'خودروی من',
+		home_url( '/about' )    => 'درباره ما',
+		home_url( '/faq' )      => 'سؤالات متداول',
+		home_url( '/returns' )  => 'شرایط مرجوعی',
+		home_url( '/contact' )  => 'تماس با ما',
 	);
 
 	echo '<ul class="pb-footer__menu">';

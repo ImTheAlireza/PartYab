@@ -205,6 +205,8 @@ function partyab_compat_rows( $product_id ) {
 require PARTYAB_DIR . '/inc/compat-table.php';
 require PARTYAB_DIR . '/inc/related.php';
 require PARTYAB_DIR . '/inc/recent.php';
+require PARTYAB_DIR . '/inc/pages.php';
+require PARTYAB_DIR . '/inc/contact-form.php';
 
 // استاب‌های داشبورد حساب
 function get_current_user_id() { return 7; }
@@ -340,6 +342,28 @@ $recent = partyab_recent_parse( '12, 7 ,12,,abc,19', 7 );
 check( 'بازدید: حذف محصول جاری و تکراری', array( 12, 19 ) === $recent, implode( ',', $recent ) );
 check( 'بازدید: سقف تعداد', 2 === count( partyab_recent_parse( '1,2,3,4,5', 0, 2 ) ) );
 check( 'بازدید: کوکی خالی', array() === partyab_recent_parse( '' ) );
+
+/* ---------- ۵٫۱۰) صفحه‌های محتوایی و فرم تماس ---------- */
+$faq = partyab_faq_items();
+check( 'سؤالات متداول: هشت مورد', 8 === count( $faq ), (string) count( $faq ) );
+check( 'سؤالات متداول: ساختار پرسش و پاسخ', isset( $faq[0][0], $faq[0][1] ) );
+
+$faq_html = partyab_faq_shortcode();
+check( 'آکاردئون: details', 8 === substr_count( $faq_html, '<details' ), (string) substr_count( $faq_html, '<details' ) );
+check( 'آکاردئون: مورد اول باز', 1 === substr_count( $faq_html, ' open' ) );
+
+$channels = partyab_contact_channels();
+check( 'کارت‌های تماس: چهار کانال', array( 'phone', 'whatsapp', 'email', 'address' ) === array_keys( $channels ) );
+check( 'کارت‌های تماس: رندر لینک', str_contains( partyab_contact_shortcode(), 'wa.me' ) );
+
+check( 'راهنما: چهار قدم', 4 === count( partyab_guide_steps() ) );
+check( 'راهنما: شماره فارسی', str_contains( partyab_steps_shortcode(), 'pb-guide__num' ) && ! str_contains( partyab_steps_shortcode(), 'pb-steps' ) );
+
+check( 'فرم: داده معتبر', array() === partyab_contact_validate( array( 'name' => 'علی رضایی', 'phone' => '09121234567', 'message' => 'کد فنی لنت ترمز پراید را می‌خواستم.' ) ) );
+check( 'فرم: نام کوتاه', isset( partyab_contact_validate( array( 'name' => 'ع', 'phone' => '09121234567', 'message' => 'یک پیام ده حرفی برای تست.' ) )['name'] ) );
+check( 'فرم: شماره نامعتبر', isset( partyab_contact_validate( array( 'name' => 'علی رضایی', 'phone' => '123', 'message' => 'یک پیام ده حرفی برای تست.' ) )['phone'] ) );
+check( 'فرم: پیام کوتاه', isset( partyab_contact_validate( array( 'name' => 'علی رضایی', 'phone' => '09121234567', 'message' => 'سلام' ) )['message'] ) );
+check( 'فرم: شماره فارسی', '09121234567' === partyab_normalize_phone( '۰۹۱۲ ۱۲۳ ۴۵۶۷' ), partyab_normalize_phone( '۰۹۱۲ ۱۲۳ ۴۵۶۷' ) );
 
 /* ---------- ۶) رندر صفحه اصلی دمو ۱ ---------- */
 ob_start();

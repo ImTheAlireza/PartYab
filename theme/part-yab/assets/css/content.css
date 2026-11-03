@@ -1,0 +1,361 @@
+/**
+ * استایل صفحه‌های محتوایی: درباره ما، تماس، سؤالات متداول، قوانین.
+ */
+
+.pb-page {
+	max-width: 860px;
+	margin: 0 auto;
+	padding: var(--pb-6) var(--pb-4);
+	font-size: var(--pb-fs-sm);
+	line-height: 2.1;
+	color: var(--pb-ink-700);
+}
+
+.pb-page h1 {
+	font-size: var(--pb-fs-xl);
+	line-height: 1.5;
+	color: var(--pb-ink);
+	margin: 0 0 var(--pb-2);
+}
+
+.pb-page h2 {
+	font-size: var(--pb-fs-md);
+	color: var(--pb-ink);
+	margin: var(--pb-6) 0 var(--pb-3);
+	padding-inline-start: 12px;
+	border-inline-start: 4px solid var(--pb-orange);
+	line-height: 1.6;
+}
+
+.pb-page h3 {
+	font-size: var(--pb-fs-sm);
+	color: var(--pb-ink);
+	margin: var(--pb-4) 0 var(--pb-2);
+}
+
+.pb-page p {
+	margin: 0 0 var(--pb-3);
+}
+
+.pb-page ul,
+.pb-page ol {
+	margin: 0 0 var(--pb-4);
+	padding-inline-start: 22px;
+}
+
+.pb-page li {
+	margin-bottom: 6px;
+}
+
+.pb-page a {
+	color: var(--pb-orange-600);
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+.pb-page table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: var(--pb-4);
+	font-size: var(--pb-fs-xs);
+}
+
+.pb-page th,
+.pb-page td {
+	border: 1px solid var(--pb-border);
+	padding: 10px 12px;
+	text-align: start;
+}
+
+.pb-page th {
+	background: var(--pb-surface);
+	font-weight: 700;
+	color: var(--pb-ink);
+}
+
+/* ============ سؤالات متداول ============ */
+.pb-faq {
+	display: grid;
+	gap: 10px;
+	margin: var(--pb-4) 0 var(--pb-5);
+}
+
+.pb-faq__item {
+	background: #fff;
+	border: 1px solid var(--pb-border);
+	border-radius: var(--pb-radius);
+	overflow: hidden;
+	transition: border-color 0.18s ease;
+}
+
+.pb-faq__item[open] {
+	border-color: var(--pb-orange);
+}
+
+.pb-faq__q {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--pb-3);
+	padding: 14px 16px;
+	cursor: pointer;
+	font-size: var(--pb-fs-sm);
+	font-weight: 700;
+	color: var(--pb-ink);
+	list-style: none;
+}
+
+.pb-faq__q::-webkit-details-marker {
+	display: none;
+}
+
+.pb-faq__q::after {
+	content: "+";
+	flex: 0 0 auto;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 24px;
+	border-radius: 8px;
+	background: var(--pb-orange-50);
+	color: var(--pb-orange-600);
+	font-size: 18px;
+	line-height: 1;
+	font-weight: 700;
+}
+
+.pb-faq__item[open] .pb-faq__q::after {
+	content: "−";
+	background: var(--pb-orange);
+	color: #fff;
+}
+
+.pb-faq__a {
+	padding: 0 16px 14px;
+	font-size: var(--pb-fs-xs);
+	line-height: 2;
+	color: var(--pb-ink-500);
+}
+
+.pb-faq__a p {
+	margin: 0;
+}
+
+/* ============ کارت‌های تماس ============ */
+.pb-contact-cards {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	gap: var(--pb-3);
+	margin: var(--pb-4) 0 var(--pb-6);
+}
+
+.pb-contact-cards__card {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	background: #fff;
+	border: 1px solid var(--pb-border);
+	border-radius: var(--pb-radius-lg);
+	padding: var(--pb-4);
+	color: var(--pb-ink);
+	text-decoration: none;
+	transition: border-color 0.18s ease, transform 0.18s ease;
+}
+
+.pb-contact-cards__card:hover {
+	border-color: var(--pb-orange);
+	transform: translateY(-2px);
+}
+
+.pb-contact-cards__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 38px;
+	height: 38px;
+	border-radius: 12px;
+	background: var(--pb-orange-50);
+	color: var(--pb-orange-600);
+	margin-bottom: 10px;
+}
+
+.pb-contact-cards__icon svg {
+	width: 21px;
+	height: 21px;
+}
+
+.pb-contact-cards__label {
+	font-size: 11px;
+	color: var(--pb-ink-500);
+}
+
+.pb-contact-cards__card strong {
+	font-size: var(--pb-fs-sm);
+	font-weight: 800;
+	color: var(--pb-ink);
+}
+
+.pb-contact-cards__card small {
+	font-size: 11px;
+	color: var(--pb-ink-500);
+	margin-top: 4px;
+}
+
+/* ============ مراحل راهنما ============ */
+.pb-guide {
+	display: grid;
+	gap: var(--pb-3);
+	list-style: none;
+	padding: 0;
+	margin: var(--pb-4) 0 var(--pb-6);
+	counter-reset: pb-step;
+}
+
+.pb-guide__item {
+	display: flex;
+	align-items: flex-start;
+	gap: 14px;
+	background: #fff;
+	border: 1px solid var(--pb-border);
+	border-radius: var(--pb-radius-lg);
+	padding: var(--pb-4);
+}
+
+.pb-guide__num {
+	flex: 0 0 auto;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 34px;
+	height: 34px;
+	border-radius: 50%;
+	background: var(--pb-ink);
+	color: #fff;
+	font-size: var(--pb-fs-sm);
+	font-weight: 800;
+}
+
+.pb-guide__item strong {
+	display: block;
+	font-size: var(--pb-fs-sm);
+	color: var(--pb-ink);
+	margin-bottom: 2px;
+}
+
+.pb-guide__item p {
+	margin: 0;
+	font-size: var(--pb-fs-xs);
+	color: var(--pb-ink-500);
+	line-height: 1.9;
+}
+
+/* ============ جعبه کمک ============ */
+.pb-help-box {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 4px;
+	background: linear-gradient(135deg, #fff7ed 0%, #fff 100%);
+	border: 1px solid var(--pb-orange-100, #ffedd5);
+	border-radius: var(--pb-radius-lg);
+	padding: var(--pb-4);
+	margin: var(--pb-5) 0;
+	font-size: var(--pb-fs-xs);
+	color: var(--pb-ink-500);
+}
+
+.pb-help-box strong {
+	font-size: var(--pb-fs-sm);
+	color: var(--pb-ink);
+}
+
+.pb-help-box .pb-btn {
+	margin-top: var(--pb-2);
+}
+
+@media (max-width: 640px) {
+	.pb-page {
+		padding: var(--pb-5) var(--pb-3);
+	}
+
+	.pb-page h1 {
+		font-size: var(--pb-fs-lg);
+	}
+}
+
+/* ============ فرم تماس ============ */
+.pb-form {
+	margin: var(--pb-4) 0 var(--pb-6);
+}
+
+.pb-form form {
+	display: grid;
+	gap: var(--pb-3);
+	background: #fff;
+	border: 1px solid var(--pb-border);
+	border-radius: var(--pb-radius-lg);
+	padding: var(--pb-4);
+}
+
+.pb-form label {
+	display: grid;
+	gap: 6px;
+	font-size: var(--pb-fs-xs);
+	font-weight: 700;
+	color: var(--pb-ink);
+}
+
+.pb-form input,
+.pb-form textarea {
+	width: 100%;
+	border: 1px solid var(--pb-border-strong, #d1d5db);
+	border-radius: var(--pb-radius);
+	padding: 11px 12px;
+	font-family: inherit;
+	font-size: var(--pb-fs-xs);
+	font-weight: 500;
+	color: var(--pb-ink);
+	background: #fff;
+}
+
+.pb-form input:focus,
+.pb-form textarea:focus {
+	outline: 2px solid var(--pb-orange-100, #ffedd5);
+	border-color: var(--pb-orange);
+}
+
+.pb-form textarea {
+	resize: vertical;
+	min-height: 120px;
+}
+
+.pb-form .pb-btn {
+	justify-self: start;
+}
+
+.pb-form__hp {
+	position: absolute;
+	inset-inline-start: -9999px;
+	margin: 0;
+}
+
+.pb-form__notice {
+	border-radius: var(--pb-radius);
+	padding: 12px 14px;
+	font-size: var(--pb-fs-xs);
+	font-weight: 700;
+	margin-bottom: var(--pb-3);
+}
+
+.pb-form__notice.is-ok {
+	background: #f0fdf4;
+	color: #15803d;
+	border: 1px solid #bbf7d0;
+}
+
+.pb-form__notice.is-bad {
+	background: #fef2f2;
+	color: #b91c1c;
+	border: 1px solid #fecaca;
+}

@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       PartYab Quick Start
  * Description:       نصب‌کننده یک‌کلیکی پارتیاب: نصب قالب و افزونه‌ها، تنظیمات، محصولات تست با عکس، داده سازگاری.
- * Version:           1.3.1
+ * Version:           1.4.0
  * Requires at least: 6.0
  * Requires PHP:      8.0
  * Author:            PartYab
@@ -21,7 +21,7 @@ if ( defined( 'PARTYAB_QS_LOADED' ) ) {
 
 define( 'PARTYAB_QS_LOADED', true );
 
-define( 'PARTYAB_QS_VERSION', '1.3.1' );
+define( 'PARTYAB_QS_VERSION', '1.4.0' );
 define( 'PARTYAB_QS_FILE', __FILE__ );
 define( 'PARTYAB_QS_DIR', plugin_dir_path( __FILE__ ) );
 define( 'PARTYAB_QS_URI', plugin_dir_url( __FILE__ ) );
@@ -67,6 +67,7 @@ partyab_qs_load( 'helpers' );
 partyab_qs_load( 'steps-plugins' );
 partyab_qs_load( 'steps-settings' );
 partyab_qs_load( 'steps-content' );
+partyab_qs_load( 'steps-pages' );
 partyab_qs_load( 'runner' );
 partyab_qs_load( 'uploader' );
 partyab_qs_load( 'admin' );

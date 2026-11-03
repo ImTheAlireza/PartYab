@@ -37,6 +37,8 @@ $partyab_modules = array(
 	'compat-table', // تب «سازگاری با خودرو» در صفحه محصول.
 	'related',     // مرتبط‌ها و مکمل خرید.
 	'recent',      // بازدیدهای اخیر.
+	'pages',       // شورت‌کدهای محتوایی: سؤالات متداول، تماس، راهنما.
+	'contact-form', // فرم تماس سبک بدون افزونه.
 );
 
 foreach ( $partyab_modules as $partyab_module ) {
