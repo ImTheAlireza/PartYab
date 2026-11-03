@@ -178,8 +178,15 @@ function partyab_car_selector_shortcode(): string {
 
 			<label class="pb-field">
 				<span>مدل</span>
+				<?php
+				$current_brand  = (string) ( $car['brand'] ?? '' );
+				$current_models = ( '' !== $current_brand && isset( $map[ $current_brand ] ) ) ? (array) $map[ $current_brand ] : array();
+				?>
 				<select name="pb_car_model" data-pb-model required>
-					<option value="">اول برند را انتخاب کن</option>
+					<option value=""><?php echo $current_models ? 'انتخاب کن…' : 'اول برند را انتخاب کن'; ?></option>
+					<?php foreach ( $current_models as $model_name ) : ?>
+						<option value="<?php echo esc_attr( $model_name ); ?>" <?php selected( $car['model'] ?? '', $model_name ); ?>><?php echo esc_html( $model_name ); ?></option>
+					<?php endforeach; ?>
 				</select>
 			</label>
 

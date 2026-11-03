@@ -100,7 +100,7 @@ function partyab_enqueue_woo_style(): void {
 		return;
 	}
 
-	if ( ! ( is_woocommerce() || is_cart() || is_checkout() || is_account_page() ) ) {
+	if ( ! ( is_woocommerce() || is_cart() || is_checkout() || is_account_page() || is_front_page() || is_home() ) ) {
 		return;
 	}
 
@@ -175,7 +175,7 @@ function partyab_shop_sidebar(): void {
 		echo '<p class="pb-side-car">' . esc_html( $label ) . '</p>';
 		echo '<a class="pb-side-link" href="' . esc_url( add_query_arg( 'pb_car_clear', '1', $base ) ) . '">پاک کردن خودرو</a> ';
 	} else {
-		echo '<p class="pb-side-car pb-side-car--empty">هنوز خودرویی انتخاب نشده؛ فقط قطعات سازگار را ببین.</p>';
+		echo '<p class="pb-side-car pb-side-car--empty">خودرویت را انتخاب کن تا فقط قطعات سازگار را ببینی.</p>';
 	}
 
 	echo '<a class="pb-btn pb-btn--sm" href="' . esc_url( home_url( '/my-car' ) ) . '">انتخاب خودرو</a>';
@@ -338,4 +338,157 @@ function partyab_single_car_prompt(): void {
 	echo '<a href="' . esc_url( home_url( '/my-car' ) ) . '">انتخاب خودرو →</a>';
 	echo '</div>';
 }
-add_action( 'woocommerce_single_product_summary', 'partyab_single_car_prompt', 4 );
+add_action( 'woocommerce_single_product_summary', 'partyab_single_car_prompt', 18 );
+
+/* ============================================================
+ * جزئیات نمایش: درصد تخفیف، ارقام فارسی، صفحه‌بندی، فیلترهای فعال
+ * ============================================================ */
+
+/**
+ * تبدیل ارقام لاتین به فارسی.
+ *
+ * @param string $text متن.
+ * @return string
+ */
+function partyab_fa_digits( $text ) {
+	if ( ! is_string( $text ) ) {
+		return $text;
+	}
+
+	return str_replace(
+		array( '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' ),
+		array( '۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹' ),
+		$text
+	);
+}
+
+add_filter( 'wc_price', 'partyab_fa_digits', 20 );
+add_filter( 'woocommerce_get_stock_html', 'partyab_fa_digits', 20 );
+
+/**
+ * بج تخفیف: «۲۵٪ تخفیف» به‌جای «تخفیف».
+ *
+ * @param string     $html    نشان پیش‌فرض.
+ * @param WP_Post    $post    نوشته.
+ * @param WC_Product $product محصول.
+ * @return string
+ */
+function partyab_sale_percent_badge( $html, $post, $product ) {
+	if ( ! $product instanceof WC_Product ) {
+		return $html;
+	}
+
+	$regular = (float) $product->get_regular_price();
+	$sale    = (float) $product->get_sale_price();
+
+	if ( $regular > 0 && $sale > 0 && $sale < $regular ) {
+		$percent = (int) round( ( ( $regular - $sale ) / $regular ) * 100 );
+
+		return '<span class="onsale pb-sale">' . esc_html( partyab_fa_digits( (string) $percent ) ) . '٪ تخفیف</span>';
+	}
+
+	return $html;
+}
+add_filter( 'woocommerce_sale_flash', 'partyab_sale_percent_badge', 20, 3 );
+
+/**
+ * فلش‌های صفحه‌بندی فارسی شوند (‹ › در قالب نمایش داده نمی‌شد).
+ *
+ * @param array $args آرگومان‌ها.
+ * @return array
+ */
+function partyab_pagination_args( array $args ): array {
+	$args['prev_text'] = 'قبلی';
+	$args['next_text'] = 'بعدی';
+
+	return $args;
+}
+add_filter( 'woocommerce_pagination_args', 'partyab_pagination_args' );
+
+/**
+ * محصولات مرتبط: ۴ ستون.
+ *
+ * @param array $args آرگومان‌ها.
+ * @return array
+ */
+function partyab_related_args( array $args ): array {
+	$args['posts_per_page'] = 4;
+	$args['columns']        = 4;
+
+	return $args;
+}
+add_filter( 'woocommerce_output_related_products_args', 'partyab_related_args' );
+
+/**
+ * ردیف اعتماد زیر دکمه خرید.
+ */
+function partyab_product_trust(): void {
+	echo '<ul class="pb-product-trust">';
+	echo '<li>ضمانت اصالت کالا</li>';
+	echo '<li>ارسال سریع</li>';
+	echo '<li>مرجوعی ۷ روزه</li>';
+	echo '</ul>';
+}
+add_action( 'woocommerce_single_product_summary', 'partyab_product_trust', 40 );
+
+/**
+ * چیپ فیلترهای فعال بالای شبکه محصولات.
+ */
+function partyab_active_filter_chips(): void {
+	if ( ! partyab_is_product_archive() ) {
+		return;
+	}
+
+	$chips = array();
+	$url   = wc_get_page_permalink( 'shop' );
+
+	if ( is_tax() ) {
+		$term = get_queried_object();
+
+		if ( $term instanceof WP_Term ) {
+			$chips[] = array( 'label' => $term->name, 'remove' => $url );
+		}
+	}
+
+	if ( function_exists( 'partyab_has_car' ) && partyab_has_car() ) {
+		$car     = partyab_current_car();
+		$chips[] = array(
+			'label'  => trim( $car['brand'] . ' ' . $car['model'] ),
+			'remove' => add_query_arg( 'pb_car_clear', '1' ),
+		);
+	}
+
+	if ( ! empty( $_GET['pb_in_stock'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+		$chips[] = array(
+			'label'  => 'فقط موجود',
+			'remove' => remove_query_arg( 'pb_in_stock' ),
+		);
+	}
+
+	$min = isset( $_GET['min_price'] ) ? (int) $_GET['min_price'] : 0; // phpcs:ignore WordPress.Security.NonceVerification
+	$max = isset( $_GET['max_price'] ) ? (int) $_GET['max_price'] : 0; // phpcs:ignore WordPress.Security.NonceVerification
+
+	if ( $min || $max ) {
+		$chips[] = array(
+			'label'  => 'قیمت: ' . ( $min ? number_format_i18n( $min ) : '۰' ) . ' تا ' . ( $max ? number_format_i18n( $max ) : 'بی‌نهایت' ),
+			'remove' => remove_query_arg( array( 'min_price', 'max_price' ) ),
+		);
+	}
+
+	if ( ! $chips ) {
+		return;
+	}
+
+	echo '<div class="pb-active-filters">';
+
+	foreach ( $chips as $chip ) {
+		printf(
+			'<a class="pb-active-filter" href="%s">%s <span aria-hidden="true">×</span></a>',
+			esc_url( $chip['remove'] ),
+			esc_html( $chip['label'] )
+		);
+	}
+
+	echo '</div>';
+}
+add_action( 'woocommerce_before_shop_loop', 'partyab_active_filter_chips', 15 );

@@ -90,11 +90,23 @@
 	text-decoration: line-through;
 }
 
+.woocommerce .price ins,
+.woocommerce .price ins span {
+	order: -1;
+}
+
 .woocommerce .price ins {
 	background: transparent;
 	color: var(--pb-orange-600);
 	font-weight: 800;
 	text-decoration: none;
+	white-space: nowrap;
+}
+
+.woocommerce .price del,
+.woocommerce .price del span {
+	text-decoration: line-through;
+	text-decoration-thickness: 1px;
 }
 
 .woocommerce div.product p.price,
@@ -534,17 +546,47 @@
 	}
 }
 
+/* چیدمان دوستونه صفحه محصول: grid به‌جای float (float در قالب جابه‌جا می‌شد) */
+.woocommerce div.product {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: var(--pb-5);
+}
+
+.woocommerce div.product div.images,
+.woocommerce div.product div.summary {
+	float: none !important;
+	width: 100% !important;
+	margin: 0 !important;
+}
+
+.woocommerce div.product .woocommerce-tabs,
+.woocommerce div.product .related,
+.woocommerce div.product .upsells {
+	grid-column: 1 / -1;
+}
+
 @media (min-width: 992px) {
+	.woocommerce div.product {
+		grid-template-columns: minmax(0, 46%) minmax(0, 1fr);
+		column-gap: var(--pb-6);
+		align-items: start;
+	}
+
 	.woocommerce div.product div.images {
-		width: 44% !important;
-		float: right;
-		margin-inline-start: var(--pb-5);
+		position: sticky;
+		top: 96px;
 	}
 
 	.woocommerce div.product div.summary {
-		width: 50% !important;
-		float: left;
+		padding-top: var(--pb-2);
 	}
+}
+
+/* تصویر محصول: گوشه گرد و پس‌زمینه سفید */
+.woocommerce div.product div.images img {
+	border-radius: var(--pb-radius-lg);
+	background: #fff;
 }
 
 /* ============ سبد خرید، تسویه، حساب ============ */
@@ -852,4 +894,250 @@
 .pb-chip--more {
 	background: #fff;
 	border-style: dashed;
+}
+
+/* ---------- بج درصد تخفیف ---------- */
+.woocommerce span.onsale.pb-sale,
+.woocommerce span.onsale {
+	background: var(--pb-orange);
+	color: #fff;
+	border-radius: 999px;
+	padding: 3px 10px;
+	font-size: 11px;
+	font-weight: 800;
+	line-height: 1.9;
+	box-shadow: var(--pb-shadow-sm);
+}
+
+/* ---------- ناموجود ---------- */
+.woocommerce ul.products li.product.outofstock .woocommerce-loop-product__title {
+	color: var(--pb-ink-500);
+}
+
+.woocommerce ul.products li.product.outofstock a img {
+	filter: grayscale(1);
+	opacity: 0.65;
+}
+
+.woocommerce ul.products li.product.outofstock::before {
+	content: "ناموجود";
+	position: absolute;
+	inset-inline-end: 12px;
+	top: 12px;
+	background: var(--pb-ink-700);
+	color: #fff;
+	font-size: 11px;
+	font-weight: 700;
+	border-radius: 999px;
+	padding: 3px 10px;
+	z-index: 2;
+}
+
+.woocommerce ul.products li.product {
+	position: relative;
+}
+
+.woocommerce ul.products li.product .button.disabled,
+.woocommerce ul.products li.product .button[disabled] {
+	background: var(--pb-surface) !important;
+	color: var(--pb-ink-300) !important;
+	border: 1px dashed var(--pb-border-strong) !important;
+}
+
+/* ---------- موجودی ---------- */
+.woocommerce div.product p.stock,
+.woocommerce div.product .stock {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	background: #f0fdf4;
+	color: #15803d;
+	border-radius: 999px;
+	padding: 3px 10px;
+	font-size: var(--pb-fs-xs);
+	font-weight: 700;
+}
+
+.woocommerce div.product p.stock::before,
+.woocommerce div.product .stock::before {
+	content: "";
+	width: 6px;
+	height: 6px;
+	border-radius: 999px;
+	background: currentColor;
+}
+
+.woocommerce div.product p.stock.out-of-stock {
+	background: #fef2f2;
+	color: #b91c1c;
+}
+
+/* ---------- ردیف اعتماد زیر خرید ---------- */
+.pb-product-trust {
+	list-style: none;
+	margin: var(--pb-4) 0 0;
+	padding: var(--pb-3);
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--pb-3);
+	background: var(--pb-surface);
+	border: 1px solid var(--pb-border);
+	border-radius: var(--pb-radius);
+	font-size: var(--pb-fs-xs);
+	color: var(--pb-ink-700);
+}
+
+.pb-product-trust li {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.pb-product-trust li::before {
+	content: "✓";
+	color: var(--pb-success);
+	font-weight: 800;
+}
+
+/* ---------- تب‌ها: تب فعال مشخص ---------- */
+.woocommerce div.product .woocommerce-tabs ul.tabs li.active {
+	background: transparent;
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li.active a {
+	border-bottom-width: 3px;
+}
+
+.woocommerce div.product .woocommerce-tabs .panel > h2:first-child {
+	display: none;
+}
+
+/* ---------- محصولات مرتبط: ۴ ستون ---------- */
+@media (min-width: 992px) {
+	.woocommerce .related ul.products,
+	.woocommerce .upsells ul.products {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}
+
+/* ---------- شمارش دسته/برند در سایدبار ---------- */
+.pb-side-list a span {
+	min-width: 22px;
+	text-align: center;
+	background: var(--pb-surface);
+	border-radius: 999px;
+	padding: 0 6px;
+	font-size: 11px;
+	color: var(--pb-ink-500);
+}
+
+/* ---------- فیلترهای فعال ---------- */
+.pb-active-filters {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin: 0 0 var(--pb-4);
+}
+
+.pb-active-filter {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	background: var(--pb-orange-50);
+	border: 1px solid #fed7aa;
+	color: var(--pb-orange-700);
+	border-radius: 999px;
+	padding: 4px 12px;
+	font-size: var(--pb-fs-xs);
+	font-weight: 700;
+}
+
+.pb-active-filter span {
+	font-size: 14px;
+	line-height: 1;
+	color: var(--pb-orange-600);
+}
+
+/* ---------- صفحه‌بندی: متن فارسی ---------- */
+.woocommerce nav.woocommerce-pagination ul li a.prev,
+.woocommerce nav.woocommerce-pagination ul li a.next {
+	font-weight: 700;
+	padding: 0 14px;
+}
+
+/* ---------- حساب کاربری: رفع چیدمان شکسته ---------- */
+.woocommerce-account .woocommerce {
+	display: grid !important;
+	grid-template-columns: minmax(0, 1fr);
+	gap: var(--pb-4);
+	align-items: start;
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation,
+.woocommerce-account .woocommerce-MyAccount-content {
+	float: none !important;
+	width: 100% !important;
+	min-width: 0;
+	margin: 0 !important;
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation {
+	padding: var(--pb-2);
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation ul {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation li {
+	flex: 1 1 auto;
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation li a {
+	text-align: center;
+	white-space: nowrap;
+	font-size: var(--pb-fs-xs);
+}
+
+.woocommerce-account .woocommerce-MyAccount-content {
+	padding: var(--pb-5);
+}
+
+@media (min-width: 992px) {
+	.woocommerce-account .woocommerce {
+		grid-template-columns: 240px minmax(0, 1fr);
+		gap: var(--pb-5);
+	}
+
+	.woocommerce-account .woocommerce-MyAccount-navigation ul {
+		display: grid;
+	}
+
+	.woocommerce-account .woocommerce-MyAccount-navigation li a {
+		text-align: start;
+		font-size: var(--pb-fs-sm);
+	}
+}
+
+/* ---------- سبد خالی ---------- */
+.woocommerce-cart .cart-empty,
+.woocommerce-cart .wc-empty-cart-message {
+	background: #fff;
+	border: 1px solid var(--pb-border);
+	border-inline-start: 4px solid var(--pb-orange);
+	border-radius: var(--pb-radius);
+	padding: var(--pb-5);
+	font-size: var(--pb-fs-base);
+	color: var(--pb-ink-700);
+	margin-bottom: var(--pb-3);
+}
+
+.woocommerce-cart .return-to-shop {
+	margin: 0;
+}
+
+.woocommerce-cart .return-to-shop a.button {
+	display: inline-block;
 }

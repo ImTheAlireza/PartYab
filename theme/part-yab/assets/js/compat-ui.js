@@ -7,14 +7,16 @@
 
 	function initCarSelector() {
 		var form = document.querySelector('.pb-car');
-		if (!form || !window.partyabData || !window.partyabData.cars) {
+		var data = window.partyabCarData || (window.partyabData && window.partyabData.cars ? window.partyabData : null);
+
+		if (!form || !data || !data.cars) {
 			return;
 		}
 
 		var brand = form.querySelector('[data-pb-brand]');
 		var model = form.querySelector('[data-pb-model]');
-		var cars = window.partyabData.cars;
-		var initialModel = window.partyabData.currentModel || '';
+		var cars = data.cars;
+		var initialModel = data.currentModel || model.value || '';
 
 		if (!brand || !model) {
 			return;
