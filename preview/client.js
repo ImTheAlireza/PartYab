@@ -19,7 +19,7 @@
   }
   function empty(title, text, href, label) { return '<div class="partyab-empty"><div class="pb-empty__icon">' + icon('cart') + '</div><p class="partyab-empty__title">' + title + '</p><p>' + text + '</p><a class="pb-btn" href="' + href + '">' + label + '</a></div>'; }
   function summary(t, checkout) {
-    return '<div class="cart_totals"><h2>' + (checkout ? 'خلاصه سفارش' : 'جمع سبد خرید') + '</h2><table class="shop_table"><tbody><tr><th>جمع کالاها</th><td>' + fa(t.subtotal) + ' تومان</td></tr>' + (t.discount ? '<tr><th>تخفیف کد PARTYAB</th><td class="pb-discount">− ' + fa(t.discount) + ' تومان</td></tr>' : '') + '<tr><th>ارسال نمونه</th><td>' + (t.shipping ? fa(t.shipping) + ' تومان' : 'رایگان') + '</td></tr><tr class="order-total"><th>مبلغ قابل پرداخت</th><td><strong>' + fa(t.total) + ' تومان</strong></td></tr></tbody></table>' + (checkout ? '' : '<form class="coupon" data-coupon><input class="input-text" name="coupon" placeholder="کد تخفیف نمونه: PARTYAB" aria-label="کد تخفیف"><button class="button" type="submit">اعمال</button></form><div class="wc-proceed-to-checkout"><a class="pb-btn checkout-button" href="/checkout">ادامه و تسویه ' + icon('arrow-l') + '</a></div>') + '<ul class="pb-product-trust"><li>' + icon('shield') + 'پرداخت نمایشی</li><li>' + icon('truck') + 'ارسال نمونه</li></ul></div>';
+    return '<div class="cart_totals"><h2>' + (checkout ? 'خلاصه سفارش' : 'جمع سبد خرید') + '</h2><table class="shop_table"><tbody><tr><th>جمع کالاها</th><td>' + fa(t.subtotal) + ' تومان</td></tr>' + (t.discount ? '<tr><th>تخفیف کد PARTYAB</th><td class="pb-discount">− ' + fa(t.discount) + ' تومان</td></tr>' : '') + '<tr><th>ارسال نمونه</th><td>' + (t.shipping ? fa(t.shipping) + ' تومان' : 'رایگان') + '</td></tr><tr class="order-total"><th>مبلغ قابل پرداخت</th><td><strong>' + fa(t.total) + ' تومان</strong></td></tr></tbody></table>' + (checkout ? '' : '<form class="coupon" data-coupon><input class="input-text" name="coupon" placeholder="کد تخفیف نمونه: PARTYAB" aria-label="کد تخفیف" autocomplete="off"><button class="button" type="submit">اعمال</button></form><div class="wc-proceed-to-checkout"><a class="pb-btn checkout-button" href="/checkout">ادامه و تسویه ' + icon('arrow-l') + '</a></div>') + '<ul class="pb-product-trust"><li>' + icon('shield') + 'پرداخت نمایشی</li><li>' + icon('truck') + 'ارسال نمونه</li></ul></div>';
   }
   function renderCart() {
     var root = $('#cart-root'); if (!root) return; var t = S.totals();
@@ -67,8 +67,8 @@
     var models = { 'پراید': ['۱۱۱', '۱۳۱', '۱۳۲', 'صندوق‌دار'], 'پژو': ['۲۰۶', '۲۰۷', '۴۰۵', 'پارس'], 'سمند': ['LX', 'EF7', 'سریر'], 'تیبا': ['صندوق‌دار', '۲', 'هاچ‌بک'] };
     var current = S.state.car;
     function fill(keep) { model.innerHTML = '<option value="">انتخاب کن…</option>' + (models[brand.value] || []).map(function (m) { return '<option ' + (keep === m ? 'selected' : '') + '>' + m + '</option>'; }).join(''); }
-    brand.addEventListener('change', function () { fill(''); }); if (current) { brand.value = current.brand; fill(current.model); }
-    form.addEventListener('submit', function (e) { e.preventDefault(); var car = { brand: brand.value, model: model.value, year: S.faDigits(form.year.value) }; S.setCar(car); location.href = '/shop?car=' + encodeURIComponent(car.brand + ' ' + car.model); });
+    brand.addEventListener('change', function () { fill(''); }); if (current) { brand.value = current.brand; fill(current.model); brand.dispatchEvent(new Event('input', { bubbles: true })); }
+    form.addEventListener('submit', function (e) { e.preventDefault(); var car = { brand: brand.value, model: model.value, year: S.faDigits(form.year.value) }; S.setCar(car); (window.PartyabTransition ? window.PartyabTransition.navigate('/shop?car=' + encodeURIComponent(car.brand + ' ' + car.model)) : location.href = '/shop?car=' + encodeURIComponent(car.brand + ' ' + car.model)); });
   }
   function initSearch() {
     var form = $('[data-demo-search]'); if (!form) return; var input = $('input[type=search]', form), box = $('#demo-suggest'), active = -1;
@@ -99,9 +99,9 @@
   document.addEventListener('submit', function (e) {
     var form = e.target;
     if (form.matches('[data-coupon]')) { e.preventDefault(); UI.toast(S.setCoupon(form.coupon.value) ? 'کد نمونه PARTYAB اعمال شد.' : 'کد تخفیف معتبر نیست.'); }
-    if (form.id === 'demo-checkout') { e.preventDefault(); if (!form.reportValidity()) return; var order = S.createOrder(); if (order) location.href = '/order/' + order.id; }
+    if (form.id === 'demo-checkout') { e.preventDefault(); if (!form.reportValidity()) return; var order = S.createOrder(); if (order) (window.PartyabTransition ? window.PartyabTransition.navigate('/order/' + order.id) : location.href = '/order/' + order.id); }
     if (form.id === 'demo-contact') { e.preventDefault(); var notice = $('#contact-result'); notice.hidden = false; notice.className = 'pb-form__notice is-ok'; notice.textContent = 'اطلاعات فرم معتبر است. در این پیش‌نمایش پیام واقعی ارسال نمی‌شود؛ ارسال واقعی در نسخه وردپرس انجام می‌شود.'; UI.toast('اعتبارسنجی فرم انجام شد.'); }
-    if (form.id === 'demo-auth') { e.preventDefault(); location.href = '/account'; }
+    if (form.id === 'demo-auth') { e.preventDefault(); (window.PartyabTransition ? window.PartyabTransition.navigate('/account') : location.href = '/account'); }
     if (form.id === 'address-form') { e.preventDefault(); var data = Object.fromEntries(new FormData(form)); S.setAddress(data); var saved = $('#address-saved'); saved.hidden = false; saved.textContent = 'آدرس نمونه برای ' + esc(data.name) + ' در ' + esc(data.city) + ' ذخیره شد.'; UI.toast('آدرس نمونه ذخیره شد.'); }
   });
   $('#demo-dialog')?.addEventListener('click', function (e) { if (e.target === this) this.close(); });

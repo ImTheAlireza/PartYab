@@ -29,6 +29,7 @@ function partyab_print_sprite(): void {
 	}
 	echo '<div class="pb-scroll-progress" aria-hidden="true"><i></i></div>';
 	echo '<div class="pb-toast-stack" role="status" aria-live="polite" aria-atomic="false"></div>';
+	echo '<div class="pb-page-loader" role="status" aria-live="polite" aria-hidden="true" hidden><div class="pb-page-loader__scene"><div class="pb-page-loader__logo"><svg aria-hidden="true"><use href="#i-logo"></use></svg></div><div class="pb-page-loader__road"><svg class="pb-page-loader__car" aria-hidden="true"><use href="#i-car"></use></svg></div><div class="pb-page-loader__bar"><i></i></div><p class="pb-page-loader__text">در حال آماده‌سازی مسیر…</p></div></div>';
 }
 add_action( 'wp_body_open', 'partyab_print_sprite', 1 );
 

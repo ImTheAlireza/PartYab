@@ -82,12 +82,14 @@
           var y = (event.clientY - rect.top) / rect.height - .5;
           stage.style.setProperty('--ry', (x * 12).toFixed(2) + 'deg');
           stage.style.setProperty('--rx', (-y * 8).toFixed(2) + 'deg');
+          scene.style.setProperty('--px', x.toFixed(3));
+          scene.style.setProperty('--py', y.toFixed(3));
         });
       });
       scene.addEventListener('pointerleave', function () {
         if (frame) cancelAnimationFrame(frame);
         frame = null;
-        stage.style.setProperty('--ry', '0deg'); stage.style.setProperty('--rx', '0deg');
+        stage.style.setProperty('--ry', '0deg'); stage.style.setProperty('--rx', '0deg'); scene.style.setProperty('--px', '0'); scene.style.setProperty('--py', '0');
       });
     });
     document.querySelectorAll('[data-magnetic]').forEach(function (button) {
