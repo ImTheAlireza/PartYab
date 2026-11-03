@@ -208,6 +208,8 @@ require PARTYAB_DIR . '/inc/recent.php';
 require PARTYAB_DIR . '/inc/pages.php';
 require PARTYAB_DIR . '/inc/contact-form.php';
 require PARTYAB_DIR . '/inc/seo.php';
+require PARTYAB_DIR . '/inc/search.php';
+require PARTYAB_DIR . '/inc/search-suggest.php';
 
 // استاب‌های داشبورد حساب
 function get_current_user_id() { return 7; }
@@ -405,6 +407,24 @@ check( 'مسیر: دو آیتم با position', 2 === count( $crumbs['itemListEl
 $faq_schema = partyab_faq_schema( partyab_faq_items() );
 check( 'FAQ اسکیما: هشت پرسش', 8 === count( $faq_schema['mainEntity'] ) );
 check( 'FAQ اسکیما: پاسخ', isset( $faq_schema['mainEntity'][0]['acceptedAnswer']['text'] ) );
+
+/* ---------- ۵٫۱۳) جستجو: ارقام فارسی و شماره فنی ---------- */
+check( 'جستجو: فاصله اضافه', 'لنت ترمز' === partyab_search_normalize( '  لنت   ترمز ' ) );
+check( 'جستجو: ارقام فارسی', 'PB-BRK-001' === partyab_search_normalize( 'PB-BRK-۰۰۱' ), partyab_search_normalize( 'PB-BRK-۰۰۱' ) );
+check( 'جستجو: ي عربی', 'علی' === partyab_search_normalize( 'علي' ) );
+check( 'جستجو: ك عربی', 'کروز' === partyab_search_normalize( 'كروز' ) );
+
+$variants = partyab_sku_variants( 'pb brk-001' );
+check( 'شماره فنی: حالت با خط تیره', in_array( 'PB BRK-001', $variants, true ) );
+check( 'شماره فنی: حالت چسبیده', in_array( 'PBBRK001', $variants, true ), implode( '|', $variants ) );
+check( 'شماره فنی: بیشتر از سه حالت', count( $variants ) <= 3 );
+
+$log = partyab_zero_log_add( array(), 'لنت پراید' );
+$log = partyab_zero_log_add( $log, ' لنت  پراید ' );
+check( 'گزارش بی‌نتیجه: شمارش', 2 === ( $log['لنت پراید'] ?? 0 ) );
+check( 'گزارش بی‌نتیجه: یک کلید', 1 === count( $log ) );
+check( 'گزارش بی‌نتیجه: عبارت کوتاه', array( 'لنت پراید' => 2 ) === partyab_zero_log_add( $log, 'ل' ) );
+check( 'گزارش بی‌نتیجه: سقف', 2 === count( partyab_zero_log_add( $log, 'شمع سمند', 2 ) ) );
 
 /* ---------- ۶) رندر صفحه اصلی دمو ۱ ---------- */
 ob_start();

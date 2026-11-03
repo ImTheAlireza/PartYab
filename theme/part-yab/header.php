@@ -57,13 +57,26 @@ defined( 'ABSPATH' ) || exit;
 				<?php endif; ?>
 			</div>
 
-			<form class="pb-search" role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+			<form class="pb-search" role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" data-pb-suggest-form>
 				<label class="screen-reader-text" for="pb-search-field">جستجوی قطعه</label>
-				<input id="pb-search-field" type="search" name="s" value="<?php echo esc_attr( get_search_query() ); ?>" placeholder="شماره فنی یا نام قطعه را بنویس…">
+				<input
+					id="pb-search-field"
+					type="search"
+					name="s"
+					value="<?php echo esc_attr( get_search_query() ); ?>"
+					placeholder="شماره فنی یا نام قطعه را بنویس…"
+					autocomplete="off"
+					role="combobox"
+					aria-expanded="false"
+					aria-controls="pb-suggest-results"
+					aria-autocomplete="list"
+					data-pb-suggest-input
+				>
 				<input type="hidden" name="post_type" value="product">
 				<button type="submit" aria-label="جستجو">
 					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
 				</button>
+				<div class="pb-suggest" id="pb-suggest-results" role="listbox" aria-label="پیشنهادهای جستجو" data-pb-suggest-results hidden></div>
 			</form>
 
 			<div class="pb-actions">

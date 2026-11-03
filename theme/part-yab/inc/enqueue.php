@@ -51,6 +51,25 @@ function partyab_enqueue_assets(): void {
 		partyab_asset_version( 'assets/css/layout.css' )
 	);
 
+	// استایل و اسکریپت پیشنهاد زنده جستجو.
+	wp_enqueue_style(
+		'partyab-search',
+		PARTYAB_URI . '/assets/css/search.css',
+		array( 'partyab-base' ),
+		partyab_asset_version( 'assets/css/search.css' )
+	);
+
+	wp_enqueue_script(
+		'partyab-search',
+		PARTYAB_URI . '/assets/js/search.js',
+		array(),
+		partyab_asset_version( 'assets/js/search.js' ),
+		array(
+			'in_footer' => true,
+			'strategy'  => 'defer',
+		)
+	);
+
 	// استایل صفحه‌های محتوایی (درباره، تماس، قوانین).
 	wp_enqueue_style(
 		'partyab-content',

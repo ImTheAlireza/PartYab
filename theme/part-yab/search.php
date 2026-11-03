@@ -69,9 +69,42 @@ $partyab_search_url        = function_exists( 'wc_get_page_permalink' ) ? wc_get
 
 					<div class="partyab-empty">
 						<p class="partyab-empty__title">چیزی با «<?php echo esc_html( get_search_query() ); ?>» پیدا نشد.</p>
-						<p>شماره فنی را بدون خط تیره امتحان کن، یا خودرویت را انتخاب کن تا فقط قطعات سازگار را ببینی.</p>
-						<a class="partyab-btn" href="<?php echo esc_url( home_url( '/my-car' ) ); ?>">انتخاب خودروی من</a>
+						<p>اگر شماره فنی داری، بدون خط تیره و با حرف بزرگ امتحان کن (مثل <span dir="ltr">PBBRK001</span>). یا خودرویت را انتخاب کن تا فقط قطعات سازگار را ببینی.</p>
+						<div class="partyab-empty__actions">
+							<a class="partyab-btn" href="<?php echo esc_url( home_url( '/my-car' ) ); ?>">انتخاب خودروی من</a>
+							<a class="partyab-btn partyab-btn--ghost" href="<?php echo esc_url( $partyab_search_url ); ?>">دیدن همه قطعات</a>
+						</div>
 					</div>
+
+					<?php
+					// میان‌بر: پرسیده‌ترین دسته‌ها تا کاربر در بن‌بست نماند.
+					$partyab_cats = get_terms(
+						array(
+							'taxonomy'   => 'product_cat',
+							'hide_empty' => true,
+							'parent'     => 0,
+							'number'     => 6,
+							'orderby'    => 'count',
+							'order'      => 'DESC',
+						)
+					);
+
+					if ( ! is_wp_error( $partyab_cats ) && $partyab_cats ) :
+						?>
+						<div class="pb-search-cats">
+							<h2 class="pb-search-cats__title">جستجو در دسته‌ها</h2>
+							<ul class="pb-search-cats__list">
+								<?php foreach ( $partyab_cats as $partyab_cat ) : ?>
+									<li>
+										<a href="<?php echo esc_url( get_term_link( $partyab_cat ) ); ?>">
+											<?php echo esc_html( $partyab_cat->name ); ?>
+											<span><?php echo esc_html( number_format_i18n( (int) $partyab_cat->count ) ); ?></span>
+										</a>
+									</li>
+								<?php endforeach; ?>
+							</ul>
+						</div>
+					<?php endif; ?>
 
 				<?php endif; ?>
 
