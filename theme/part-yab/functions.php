@@ -34,6 +34,7 @@ $partyab_modules = array(
 	'taxonomies',  // برند قطعه و خودرو (برند → مدل).
 	'layout',      // منوهای جایگزین، عنوان صفحه، کلاس‌های body.
 	'compat-ui',   // باکس «خودروی من»، بج سازگاری، فیلتر آرشیو.
+	'compat-table', // تب «سازگاری با خودرو» در صفحه محصول.
 );
 
 foreach ( $partyab_modules as $partyab_module ) {

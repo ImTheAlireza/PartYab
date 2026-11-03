@@ -193,6 +193,17 @@ require PARTYAB_DIR . '/inc/compat-ui.php';
 require PARTYAB_DIR . '/inc/woocommerce.php';
 require PARTYAB_DIR . '/inc/layout.php';
 
+// داده سازگاری برای تب محصول
+function partyab_compat_rows( $product_id ) {
+	return array(
+		array( 'car_brand' => 'پراید', 'car_model' => '131', 'year_from' => '1381', 'year_to' => '1399', 'engine' => '8 سوپاپ', 'note' => 'جلو' ),
+		array( 'car_brand' => 'پراید', 'car_model' => '111', 'year_from' => '1383', 'year_to' => '1399', 'engine' => '16 سوپاپ', 'note' => 'جلو' ),
+		array( 'car_brand' => 'پژو', 'car_model' => '405', 'year_from' => '1380', 'year_to' => '1400', 'engine' => '', 'note' => '' ),
+	);
+}
+
+require PARTYAB_DIR . '/inc/compat-table.php';
+
 /* ---------- ۱) نگاشت خودرو از تاکسونومی ---------- */
 $map = partyab_cars_map();
 check( 'نگاشت خودرو از تاکسونومی', isset( $map['پراید'] ) && in_array( '131', $map['پراید'], true ), json_encode( $map, JSON_UNESCAPED_UNICODE ) );
@@ -271,6 +282,22 @@ $fields = partyab_checkout_fields( array(
 ) );
 check( 'حذف فیلدهای اضافی تسویه', ! isset( $fields['billing']['billing_company'] ) && ! isset( $fields['billing']['billing_address_2'] ) );
 check( 'برچسب فارسی یادداشت سفارش', 'یادداشت سفارش (اختیاری)' === $fields['order']['order_comments']['label'] );
+
+/* ---------- ۵٫۷) تب سازگاری با خودرو ---------- */
+check( 'ردیف سازگار با خودروی ۱۳۹۵', true === partyab_row_matches_car( array( 'car_brand' => 'پراید', 'car_model' => '111', 'year_from' => '1383', 'year_to' => '1399' ), array( 'brand' => 'پراید', 'model' => '111', 'year' => 1395 ) ) );
+check( 'ردیف خارج از بازه سال رد می‌شود', false === partyab_row_matches_car( array( 'car_brand' => 'پراید', 'car_model' => '111', 'year_from' => '1383', 'year_to' => '1390' ), array( 'brand' => 'پراید', 'model' => '111', 'year' => 1395 ) ) );
+check( 'مدل متفاوت رد می‌شود', false === partyab_row_matches_car( array( 'car_brand' => 'پراید', 'car_model' => '131' ), array( 'brand' => 'پراید', 'model' => '111', 'year' => 1395 ) ) );
+
+$tabs = partyab_compat_product_tab( array( 'description' => array( 'title' => 'توضیحات' ) ) );
+check( 'تب سازگاری اضافه شد', isset( $tabs['partyab_compat'] ) && strpos( $tabs['partyab_compat']['title'], '۳' ) !== false, $tabs['partyab_compat']['title'] ?? '' );
+
+ob_start();
+partyab_render_compat_tab();
+$tab = ob_get_clean();
+check( 'نتیجه: سازگار است', strpos( $tab, 'با خودروی شما سازگار است' ) !== false );
+check( 'ردیف خودروی کاربر هایلایت شد', strpos( $tab, 'is-you' ) !== false && strpos( $tab, 'خودروی شما' ) !== false );
+check( 'سطر برند یک‌بار تکرار شد', 2 === substr_count( $tab, 'pb-compat__brand-row' ), (string) substr_count( $tab, 'pb-compat__brand-row' ) );
+check( 'شمارش برندها', strpos( $tab, '۲ برند خودرو' ) !== false );
 
 /* ---------- ۶) رندر صفحه اصلی دمو ۱ ---------- */
 ob_start();
