@@ -1,0 +1,17 @@
+# build artifacts
+dist/
+*.zip
+!releases/*.zip
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+
+# وابستگی‌های ابزار تست (php-wasm)
+node_modules/
+package-lock.json
+
+# بسته‌های خام المنتور (داخل releases/partyab-quickstart-full.zip هستند)
+Elementor.zip
+elementor-pro-*.zip

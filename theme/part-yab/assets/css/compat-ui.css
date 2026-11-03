@@ -1,0 +1,148 @@
+/**
+ * PartYab — استایل رابط سازگاری خودرو
+ * رنگ‌ها از توکن‌های base.css می‌آیند؛ هیچ رنگ تازه‌ای اینجا تعریف نمی‌شود.
+ */
+
+/* نوار بالای سایت */
+.pb-carbar {
+	background: var(--pb-ink);
+	color: #fff;
+	font-size: var(--pb-fs-sm);
+}
+
+.pb-carbar__inner {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--pb-3);
+	min-height: 40px;
+}
+
+.pb-carbar strong {
+	color: #fff;
+}
+
+.pb-carbar a {
+	color: var(--pb-orange-50);
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+/* باکس انتخاب خودرو */
+.pb-car {
+	background: var(--pb-surface);
+	border: 1px solid var(--pb-border);
+	border-radius: var(--pb-radius-lg);
+	padding: var(--pb-5);
+}
+
+.pb-car__current {
+	margin: 0 0 var(--pb-4);
+	color: var(--pb-ink-700);
+	font-size: var(--pb-fs-md);
+}
+
+.pb-car__fields {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: var(--pb-3);
+	align-items: end;
+}
+
+.pb-field {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	font-size: var(--pb-fs-sm);
+	color: var(--pb-ink-500);
+}
+
+.pb-field select,
+.pb-field input {
+	min-height: 44px;
+	padding: 0 var(--pb-3);
+	border: 1px solid var(--pb-border-strong);
+	border-radius: var(--pb-radius);
+	background: #fff;
+	font: inherit;
+	font-size: var(--pb-fs-base);
+	color: var(--pb-ink);
+	width: 100%;
+}
+
+.pb-car__clear {
+	align-self: center;
+	font-size: var(--pb-fs-sm);
+	color: var(--pb-ink-500);
+}
+
+/* بج سازگاری */
+.pb-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 4px 10px;
+	border-radius: 999px;
+	font-size: var(--pb-fs-xs);
+	font-weight: 700;
+	line-height: 1.8;
+	margin-bottom: var(--pb-1);
+}
+
+.pb-badge--yes {
+	background: #dcfce7;
+	color: #15803d;
+}
+
+.pb-badge--no {
+	background: #fee2e2;
+	color: #b91c1c;
+}
+
+.pb-badge--unknown {
+	background: var(--pb-surface);
+	color: var(--pb-ink-500);
+	border: 1px dashed var(--pb-border-strong);
+}
+
+.pb-single-badge {
+	margin-bottom: var(--pb-3);
+}
+
+/* یادداشت‌ها */
+.pb-note {
+	padding: var(--pb-3) var(--pb-4);
+	border-radius: var(--pb-radius);
+	background: var(--pb-orange-50);
+	border: 1px solid #fed7aa;
+	color: #9a3412;
+	font-size: var(--pb-fs-sm);
+	margin-bottom: var(--pb-4);
+}
+
+.pb-note a {
+	color: #9a3412;
+	font-weight: 700;
+}
+
+/* موبایل و دسکتاپ */
+@media (max-width: 767px) {
+	.pb-car {
+		padding: var(--pb-4);
+	}
+
+	.pb-car__fields .pb-btn {
+		width: 100%;
+	}
+}
+
+@media (min-width: 768px) {
+	.pb-car__fields {
+		grid-template-columns: 1.2fr 1.2fr 0.8fr auto;
+	}
+
+	.pb-car__clear {
+		grid-column: 1 / -1;
+		justify-self: end;
+	}
+}

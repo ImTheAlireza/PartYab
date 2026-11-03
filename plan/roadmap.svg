@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="1250" viewBox="0 0 1700 1250" font-family="Vazirmatn, Vazir, Tahoma, DejaVu Sans, sans-serif">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="0.3" y2="1"><stop offset="0" stop-color="#0b1220"/><stop offset="1" stop-color="#0f1a2e"/></linearGradient><filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#000" flood-opacity="0.45"/></filter></defs>
+<rect width="1700" height="1250" fill="url(#bg)"/>
+<text x="1656" y="68" text-anchor="end" style="direction:rtl" font-size="37" font-weight="700" fill="#f8fafc">نقشه راه PartYab — قالب فروشگاه لوازم یدکی</text>
+<text x="1656" y="108" text-anchor="end" style="direction:rtl" font-size="19" fill="#94a3b8">۱۶ قطعه · ۳۵۴ کار · ۲۱۶ ساعت ≈ ۸ هفته (۳۰ ساعت در هفته) · ۶ اسپرینت · هر اسپرینت با یک دروازه کیفیت بسته می‌شود</text>
+<text x="1656" y="142" text-anchor="end" style="direction:rtl" font-size="16" fill="#64748b">مسیر بحرانی: ۰ ← ۱ ← ۲ ← ۵ ← ۶ ← ۹ ← ۱۵    |    بقیه قطعات قابل موازی‌سازی یا حذف‌اند</text>
+<text x="289.75" y="192" text-anchor="middle" font-size="14" fill="#94a3b8">هفته ۱</text>
+<line x1="200.0" y1="206" x2="200.0" y2="1102" stroke="#1e293b" stroke-width="1"/>
+<text x="469.25" y="192" text-anchor="middle" font-size="14" fill="#94a3b8">هفته ۲</text>
+<line x1="379.5" y1="206" x2="379.5" y2="1102" stroke="#1e293b" stroke-width="1"/>
+<text x="648.75" y="192" text-anchor="middle" font-size="14" fill="#94a3b8">هفته ۳</text>
+<line x1="559.0" y1="206" x2="559.0" y2="1102" stroke="#1e293b" stroke-width="1"/>
+<text x="828.25" y="192" text-anchor="middle" font-size="14" fill="#94a3b8">هفته ۴</text>
+<line x1="738.5" y1="206" x2="738.5" y2="1102" stroke="#1e293b" stroke-width="1"/>
+<text x="1007.75" y="192" text-anchor="middle" font-size="14" fill="#94a3b8">هفته ۵</text>
+<line x1="918.0" y1="206" x2="918.0" y2="1102" stroke="#1e293b" stroke-width="1"/>
+<text x="1187.25" y="192" text-anchor="middle" font-size="14" fill="#94a3b8">هفته ۶</text>
+<line x1="1097.5" y1="206" x2="1097.5" y2="1102" stroke="#1e293b" stroke-width="1"/>
+<text x="1366.75" y="192" text-anchor="middle" font-size="14" fill="#94a3b8">هفته ۷</text>
+<line x1="1277.0" y1="206" x2="1277.0" y2="1102" stroke="#1e293b" stroke-width="1"/>
+<text x="1546.25" y="192" text-anchor="middle" font-size="14" fill="#94a3b8">هفته ۸</text>
+<line x1="1456.5" y1="206" x2="1456.5" y2="1102" stroke="#1e293b" stroke-width="1"/>
+<line x1="1636.0" y1="206" x2="1636.0" y2="1102" stroke="#1e293b" stroke-width="1"/>
+<rect x="200" y="220" width="1436.0" height="146" rx="16" fill="#16213a" opacity="0.7"/>
+<rect x="26" y="220" width="156" height="146" rx="16" fill="#2563eb" opacity="0.16" stroke="#2563eb" stroke-opacity="0.55"/>
+<text x="104" y="265" text-anchor="middle" font-size="25" font-weight="700" fill="#2563eb">S1</text>
+<text x="104" y="299" text-anchor="middle" style="direction:rtl" font-size="15.5" fill="#cbd5e1">پایه</text>
+<text x="104" y="326" text-anchor="middle" style="direction:rtl" font-size="12.5" fill="#64748b">اسپرینت ۱ · ۱۰٫۵ ساعت</text>
+<rect x="200.0" y="242" width="148" height="50" rx="11" fill="#2563eb" opacity="0.95" filter="url(#sh)"/>
+<text x="274.0" y="273" text-anchor="middle" style="direction:rtl" font-size="14.5" font-weight="600" fill="#ffffff">۰ · تصمیم‌های بنیادی</text>
+<rect x="298.725" y="242" width="278.225" height="50" rx="11" fill="#2563eb" opacity="0.95" filter="url(#sh)"/>
+<text x="437.83750000000003" y="273" text-anchor="middle" style="direction:rtl" font-size="14.5" font-weight="600" fill="#ffffff">۱ · زیرساخت فنی</text>
+<polygon points="598.95,278.0 613.95,293.0 598.95,308.0 583.95,293.0" fill="#f8fafc"/>
+<text x="598.95" y="299.0" text-anchor="middle" font-size="14" font-weight="700" fill="#0b1220">✓</text>
+<text x="598.95" y="331.0" text-anchor="middle" style="direction:rtl" font-size="11" fill="#94a3b8">دروازه</text>
+<rect x="200" y="384" width="1436.0" height="146" rx="16" fill="#16213a" opacity="0.7"/>
+<rect x="26" y="384" width="156" height="146" rx="16" fill="#7c3aed" opacity="0.16" stroke="#7c3aed" stroke-opacity="0.55"/>
+<text x="104" y="429" text-anchor="middle" font-size="25" font-weight="700" fill="#7c3aed">S2</text>
+<text x="104" y="463" text-anchor="middle" style="direction:rtl" font-size="15.5" fill="#cbd5e1">مدل و طراحی</text>
+<text x="104" y="490" text-anchor="middle" style="direction:rtl" font-size="12.5" fill="#64748b">اسپرینت ۲ · ۲۰ ساعت</text>
+<rect x="379.5" y="406" width="206.42499999999998" height="50" rx="11" fill="#7c3aed" opacity="0.95" filter="url(#sh)"/>
+<text x="482.7125" y="437" text-anchor="middle" style="direction:rtl" font-size="14.5" font-weight="600" fill="#ffffff">۲ · مدل داده</text>
+<rect x="406.42499999999995" y="468" width="332.075" height="50" rx="11" fill="#7c3aed" opacity="0.95" filter="url(#sh)"/>
+<text x="572.4625" y="499" text-anchor="middle" style="direction:rtl" font-size="14.5" font-weight="600" fill="#ffffff">۳ · سیستم طراحی</text>
+<polygon points="760.5,442.0 775.5,457.0 760.5,472.0 745.5,457.0" fill="#f8fafc"/>
+<text x="760.5" y="463.0" text-anchor="middle" font-size="14" font-weight="700" fill="#0b1220">✓</text>
+<text x="760.5" y="495.0" text-anchor="middle" style="direction:rtl" font-size="11" fill="#94a3b8">دروازه</text>
+<rect x="200" y="548" width="1436.0" height="146" rx="16" fill="#16213a" opacity="0.7"/>
+<rect x="26" y="548" width="156" height="146" rx="16" fill="#0891b2" opacity="0.16" stroke="#0891b2" stroke-opacity="0.55"/>
+<text x="104" y="593" text-anchor="middle" font-size="25" font-weight="700" fill="#0891b2">S3</text>
+<text x="104" y="627" text-anchor="middle" style="direction:rtl" font-size="15.5" fill="#cbd5e1">پوسته و کارت</text>
+<text x="104" y="654" text-anchor="middle" style="direction:rtl" font-size="12.5" fill="#64748b">اسپرینت ۳ · ۳۱ ساعت</text>
+<rect x="559.0" y="570" width="148" height="50" rx="11" fill="#0891b2" opacity="0.95" filter="url(#sh)"/>
+<text x="633.0" y="601" text-anchor="middle" style="direction:rtl" font-size="14.5" font-weight="600" fill="#ffffff">۴ · هدر و فوتر</text>
+<rect x="559.0" y="632" width="215.4" height="50" rx="11" fill="#0891b2" opacity="0.95" filter="url(#sh)"/>
+<text x="666.7" y="663" text-anchor="middle" style="direction:rtl" font-size="14.5" font-weight="600" fill="#ffffff">۵ · کارت محصول</text>
+<rect x="774.4" y="570" width="179.5" height="50" rx="11" fill="#0891b2" opacity="0.95" filter="url(#sh)"/>
+<text x="864.15" y="601" text-anchor="middle" style="direction:rtl" font-size="14.5" font-weight="600" fill="#ffffff">۶ · قالب‌های ووکامرس</text>
+<polygon points="975.9,606.0 990.9,621.0 975.9,636.0 960.9,621.0" fill="#f8fafc"/>
+<text x="975.9" y="627.0" text-anchor="middle" font-size="14" font-weight="700" fill="#0b1220">✓</text>
+<text x="975.9" y="659.0" text-anchor="middle" style="direction:rtl" font-size="11" fill="#94a3b8">دروازه</text>
+<rect x="200" y="712" width="1436.0" height="146" rx="16" fill="#16213a" opacity="0.7"/>
+<rect x="26" y="712" width="156" height="146" rx="16" fill="#d97706" opacity="0.16" stroke="#d97706" stroke-opacity="0.55"/>
+<text x="104" y="757" text-anchor="middle" font-size="25" font-weight="700" fill="#d97706">S4</text>
+<text x="104" y="791" text-anchor="middle" style="direction:rtl" font-size="15.5" fill="#cbd5e1">دمو و جستجو</text>
+<text x="104" y="818" text-anchor="middle" style="direction:rtl" font-size="12.5" fill="#64748b">اسپرینت ۴ · ۵۰٫۵ ساعت</text>
+<rect x="918.0" y="734" width="287.2" height="50" rx="11" fill="#d97706" opacity="0.95" filter="url(#sh)"/>
+<text x="1061.6" y="765" text-anchor="middle" style="direction:rtl" font-size="14.5" font-weight="600" fill="#ffffff">۷ · پنج دمو</text>
+<rect x="1016.725" y="796" width="260.275" height="50" rx="11" fill="#d97706" opacity="0.95" filter="url(#sh)"/>
+<text x="1146.8625" y="827" text-anchor="middle" style="direction:rtl" font-size="14.5" font-weight="600" fill="#ffffff">۸ · فروشگاه و جستجو</text>
+<polygon points="1299.0,770.0 1314.0,785.0 1299.0,800.0 1284.0,785.0" fill="#f8fafc"/>
+<text x="1299.0" y="791.0" text-anchor="middle" font-size="14" font-weight="700" fill="#0b1220">✓</text>
+<text x="1299.0" y="823.0" text-anchor="middle" style="direction:rtl" font-size="11" fill="#94a3b8">دروازه</text>
+<rect x="200" y="876" width="1436.0" height="146" rx="16" fill="#16213a" opacity="0.7"/>
+<rect x="26" y="876" width="156" height="146" rx="16" fill="#dc2626" opacity="0.16" stroke="#dc2626" stroke-opacity="0.55"/>
+<text x="104" y="921" text-anchor="middle" font-size="25" font-weight="700" fill="#dc2626">S5</text>
+<text x="104" y="955" text-anchor="middle" style="direction:rtl" font-size="15.5" fill="#cbd5e1">خرید و حساب</text>
+<text x="104" y="982" text-anchor="middle" style="direction:rtl" font-size="12.5" fill="#64748b">اسپرینت ۵ · ۶۶ ساعت</text>
+<rect x="1097.5" y="898" width="188.475" height="50" rx="11" fill="#dc2626" opacity="0.95" filter="url(#sh)"/>
+<text x="1191.7375" y="929" text-anchor="middle" style="direction:rtl" font-size="14.5" font-weight="600" fill="#ffffff">۹ · سبد و چک‌اوت</text>
+<rect x="1097.5" y="960" width="224.375" height="50" rx="11" fill="#dc2626" opacity="0.95" filter="url(#sh)"/>
+<text x="1209.6875" y="991" text-anchor="middle" style="direction:rtl" font-size="14.5" font-weight="600" fill="#ffffff">۱۱ · مقایسه و سازگاری</text>
+<rect x="1285.975" y="898" width="148" height="50" rx="11" fill="#dc2626" opacity="0.95" filter="url(#sh)"/>
+<text x="1359.975" y="929" text-anchor="middle" style="direction:rtl" font-size="14.5" font-weight="600" fill="#ffffff">۱۰ · حساب کاربری</text>
+<rect x="1321.875" y="960" width="148" height="50" rx="11" fill="#dc2626" opacity="0.95" filter="url(#sh)"/>
+<text x="1395.875" y="991" text-anchor="middle" style="direction:rtl" font-size="14.5" font-weight="600" fill="#ffffff">۱۲ · مرتبط‌ها</text>
+<polygon points="1442.6,934.0 1457.6,949.0 1442.6,964.0 1427.6,949.0" fill="#f8fafc"/>
+<text x="1442.6" y="955.0" text-anchor="middle" font-size="14" font-weight="700" fill="#0b1220">✓</text>
+<text x="1442.6" y="987.0" text-anchor="middle" style="direction:rtl" font-size="11" fill="#94a3b8">دروازه</text>
+<rect x="200" y="1040" width="1436.0" height="146" rx="16" fill="#16213a" opacity="0.7"/>
+<rect x="26" y="1040" width="156" height="146" rx="16" fill="#059669" opacity="0.16" stroke="#059669" stroke-opacity="0.55"/>
+<text x="104" y="1085" text-anchor="middle" font-size="25" font-weight="700" fill="#059669">S6</text>
+<text x="104" y="1119" text-anchor="middle" style="direction:rtl" font-size="15.5" fill="#cbd5e1">انتشار</text>
+<text x="104" y="1146" text-anchor="middle" style="direction:rtl" font-size="12.5" fill="#64748b">اسپرینت ۶ · ۳۸ ساعت</text>
+<rect x="1402.65" y="1062" width="148" height="50" rx="11" fill="#059669" opacity="0.95" filter="url(#sh)"/>
+<text x="1476.65" y="1093" text-anchor="middle" style="direction:rtl" font-size="14.5" font-weight="600" fill="#ffffff">۱۳ · محتوایی</text>
+<rect x="1402.65" y="1124" width="152.575" height="50" rx="11" fill="#059669" opacity="0.95" filter="url(#sh)"/>
+<text x="1478.9375" y="1155" text-anchor="middle" style="direction:rtl" font-size="14.5" font-weight="600" fill="#ffffff">۱۴ · سئو و سرعت</text>
+<rect x="1483.425" y="1186" width="148" height="50" rx="11" fill="#059669" opacity="0.95" filter="url(#sh)"/>
+<text x="1557.425" y="1217" text-anchor="middle" style="direction:rtl" font-size="14.5" font-weight="600" fill="#ffffff">۱۵ · تست و انتشار</text>
+<polygon points="1631.075,1098.0 1646.075,1113.0 1631.075,1128.0 1616.075,1113.0" fill="#f8fafc"/>
+<text x="1631.075" y="1119.0" text-anchor="middle" font-size="14" font-weight="700" fill="#0b1220">✓</text>
+<text x="1631.075" y="1151.0" text-anchor="middle" style="direction:rtl" font-size="11" fill="#94a3b8">دروازه</text>
+<text x="1656" y="1146" text-anchor="end" style="direction:rtl" font-size="15" fill="#94a3b8">دروازه‌های کیفیت: <tspan fill="#cbd5e1">S1 محصول تستی · S2 ۳۰ محصول و Style Guide · S3 کارت تا سبد · S4 پنج دمو و جستجو · S5 خرید سندباکس · S6 سایت زنده</tspan></text>
+<text x="1656" y="1178" text-anchor="end" style="direction:rtl" font-size="14" fill="#64748b">اگر عقب افتادی، از کارهای «بعداً» کم کن؛ دروازه کیفیت را هرگز رد نکن.</text>
+<text x="1656" y="1208" text-anchor="end" style="direction:rtl" font-size="14" fill="#64748b">مرجع کامل: Notion → PartYab  ·  CHECKLIST.md  ·  PLAN.md</text>
+</svg>
