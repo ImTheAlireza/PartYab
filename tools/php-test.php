@@ -114,8 +114,8 @@ function get_terms( $a = array() ) {
 	);
 }
 function add_shortcode( $tag, $cb ) {}
-function shortcode_exists( $t ) { return false; }
-function do_shortcode( $c ) { return ''; }
+function shortcode_exists( $t ) { return in_array( $t, array( 'partyab_my_car', 'products' ), true ); }
+function do_shortcode( $c ) { return '<div class="mock-shortcode">' . $c . '</div>'; }
 function get_term_link( $t ) { return home_url( '/term' ); }
 function get_term( $id, $tax ) { return null; }
 function get_bloginfo( $k = '' ) { return 'PartYab'; }
@@ -193,6 +193,19 @@ check( 'سایدبار روی صفحه جستجو هم رندر می‌شود', 
 
 /* ---------- ۵) ورودی سال: ارقام فارسی ---------- */
 check( 'سال با ارقام فارسی نمایش داده شد', strpos( $html, 'value="۱۳۹۵"' ) !== false );
+
+/* ---------- ۵٫۵) محافظ صفحه گاراژ خالی ---------- */
+function is_page( $p = '' ) { return true; }
+function in_the_loop() { return true; }
+function is_main_query() { return true; }
+function get_the_title( $id = 0 ) { return 'گاراژ من'; }
+function get_the_ID() { return 42; }
+function get_post_field( $f, $id ) { return 'garage'; }
+function wp_strip_all_tags( $s ) { return strip_tags( (string) $s ); }
+function mock_car_marker( $c ) { return $c; }
+
+check( 'صفحه گاراژ خالی خودکار باکس خودرو می‌گیرد', strpos( partyab_auto_car_selector( '' ), 'partyab_my_car' ) !== false );
+check( 'صفحه‌ای که محتوا دارد دست نمی‌خورد', 'محتوای من' === partyab_auto_car_selector( 'محتوای من' ) );
 
 /* ---------- ۶) رندر صفحه اصلی دمو ۱ ---------- */
 ob_start();

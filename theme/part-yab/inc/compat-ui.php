@@ -382,3 +382,43 @@ function partyab_car_filter_notice(): void {
 		esc_url( add_query_arg( 'pb_car_clear', 1 ) )
 	);
 }
+
+/**
+ * اگر صفحه‌ای با عنوان «گاراژ/خودرو» خالی رها شده باشد، باکس انتخاب خودرو را
+ * خودکار نمایش بده. (صفحه‌ای که محتوا دارد دست نمی‌خورد.)
+ *
+ * @param string $content محتوای صفحه.
+ * @return string
+ */
+function partyab_auto_car_selector( $content ) {
+	if ( ! is_page() || is_admin() || ! in_the_loop() || ! is_main_query() ) {
+		return $content;
+	}
+
+	if ( '' !== trim( wp_strip_all_tags( (string) $content ) ) ) {
+		return $content;
+	}
+
+	$title = (string) get_the_title();
+	$slug  = (string) get_post_field( 'post_name', get_the_ID() );
+
+	$find = static function ( string $haystack, string $needle ): bool {
+		if ( function_exists( 'mb_stripos' ) ) {
+			return false !== mb_stripos( $haystack, $needle );
+		}
+
+		return false !== stripos( $haystack, $needle );
+	};
+
+	$is_car_page = $find( $title, 'گاراژ' )
+		|| $find( $title, 'خودروی من' )
+		|| $find( $slug, 'garag' )
+		|| $find( $slug, 'my-car' );
+
+	if ( ! $is_car_page || ! shortcode_exists( 'partyab_my_car' ) ) {
+		return $content;
+	}
+
+	return $content . do_shortcode( '[partyab_my_car]' );
+}
+add_filter( 'the_content', 'partyab_auto_car_selector', 20 );
