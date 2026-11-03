@@ -204,6 +204,28 @@ function partyab_compat_rows( $product_id ) {
 
 require PARTYAB_DIR . '/inc/compat-table.php';
 
+// استاب‌های داشبورد حساب
+function get_current_user_id() { return 7; }
+function wp_get_current_user() { return (object) array( 'display_name' => 'آشنا' ); }
+function wc_get_customer_order_count( $id ) { return 4; }
+function wc_get_customer_total_spent( $id ) { return 6350000; }
+function wc_get_orders( $args = array() ) {
+	if ( ! empty( $args['return'] ) && 'ids' === $args['return'] ) {
+		return array( 101, 102 );
+	}
+	return array( new class() {
+		public function get_view_order_url() { return 'http://example.test/order/101'; }
+		public function get_order_number() { return '101'; }
+		public function get_status() { return 'processing'; }
+		public function get_date_created() { return '2026-10-01'; }
+		public function get_formatted_order_total() { return '<bdi>۶٬۳۵۰٬۰۰۰ تومان</bdi>'; }
+	} );
+}
+function wc_get_order_status_name( $s ) { return 'در حال انجام'; }
+function wc_format_datetime( $d ) { return '۱۰ مهر ۱۴۰۵'; }
+function wc_price( $p ) { return '<bdi>' . number_format_i18n( $p ) . ' تومان</bdi>'; }
+function wc_get_endpoint_url( $e, $v = '', $url = '' ) { return 'http://example.test/account/' . $e; }
+
 /* ---------- ۱) نگاشت خودرو از تاکسونومی ---------- */
 $map = partyab_cars_map();
 check( 'نگاشت خودرو از تاکسونومی', isset( $map['پراید'] ) && in_array( '131', $map['پراید'], true ), json_encode( $map, JSON_UNESCAPED_UNICODE ) );
@@ -298,6 +320,13 @@ check( 'نتیجه: سازگار است', strpos( $tab, 'با خودروی شم�
 check( 'ردیف خودروی کاربر هایلایت شد', strpos( $tab, 'is-you' ) !== false && strpos( $tab, 'خودروی شما' ) !== false );
 check( 'سطر برند یک‌بار تکرار شد', 2 === substr_count( $tab, 'pb-compat__brand-row' ), (string) substr_count( $tab, 'pb-compat__brand-row' ) );
 check( 'شمارش برندها', strpos( $tab, '۲ برند خودرو' ) !== false );
+
+/* ---------- ۵٫۸) داشبورد حساب ---------- */
+$stats = partyab_customer_stats( 7 );
+check( 'آمار: تعداد سفارش', 4 === $stats['orders'], (string) $stats['orders'] );
+check( 'آمار: سفارش در جریان', 2 === $stats['active'], (string) $stats['active'] );
+check( 'آمار: مجموع خرید', 6350000.0 === $stats['spent'] );
+check( 'آمار: آخرین سفارش', is_object( $stats['last'] ) );
 
 /* ---------- ۶) رندر صفحه اصلی دمو ۱ ---------- */
 ob_start();

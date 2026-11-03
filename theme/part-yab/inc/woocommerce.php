@@ -651,3 +651,91 @@ function partyab_place_order_note(): void {
 	echo '<p class="pb-checkout-note">با ثبت سفارش، شرایط فروش و مرجوعی را می‌پذیرید.</p>';
 }
 add_action( 'woocommerce_review_order_before_submit', 'partyab_place_order_note', 5 );
+
+/**
+ * اگر تصویر شاخص محصول نبود، تصویر جایگزین ووکامرس را نشان بده
+ * (سلول خالی باعث می‌شد چیدمان جدول سبد به‌هم بریزد).
+ *
+ * @param string $thumbnail HTML تصویر.
+ * @param array  $cart_item آیتم سبد.
+ * @param string $cart_item_key کلید.
+ * @return string
+ */
+function partyab_cart_thumbnail_fallback( $thumbnail, $cart_item = array(), $cart_item_key = '' ) {
+	if ( '' !== trim( (string) $thumbnail ) ) {
+		return $thumbnail;
+	}
+
+	if ( ! function_exists( 'wc_placeholder_img' ) ) {
+		return $thumbnail;
+	}
+
+	return wc_placeholder_img( 'woocommerce_thumbnail' );
+}
+add_filter( 'woocommerce_cart_item_thumbnail', 'partyab_cart_thumbnail_fallback', 10, 3 );
+
+/* ============================================================
+ * داشبورد حساب کاربری
+ * ============================================================ */
+
+/**
+ * آمار کوتاه مشتری برای داشبورد.
+ *
+ * @param int $user_id شناسه کاربر.
+ * @return array{orders:int,active:int,spent:float,last:?WC_Order}
+ */
+function partyab_customer_stats( int $user_id ): array {
+	$stats = array(
+		'orders' => 0,
+		'active' => 0,
+		'spent'  => 0.0,
+		'last'   => null,
+	);
+
+	if ( $user_id <= 0 || ! function_exists( 'wc_get_orders' ) ) {
+		return $stats;
+	}
+
+	$stats['orders'] = function_exists( 'wc_get_customer_order_count' ) ? (int) wc_get_customer_order_count( $user_id ) : 0;
+	$stats['spent']  = function_exists( 'wc_get_customer_total_spent' ) ? (float) wc_get_customer_total_spent( $user_id ) : 0.0;
+
+	$active = wc_get_orders( array(
+		'customer' => $user_id,
+		'limit'    => -1,
+		'status'   => array( 'wc-processing', 'wc-on-hold', 'wc-pending' ),
+		'return'   => 'ids',
+	) );
+
+	$stats['active'] = is_array( $active ) ? count( $active ) : 0;
+
+	$last = wc_get_orders( array(
+		'customer' => $user_id,
+		'limit'    => 1,
+		'orderby'  => 'date',
+		'order'    => 'DESC',
+	) );
+
+	if ( is_array( $last ) && $last ) {
+		$stats['last'] = $last[0];
+	}
+
+	return $stats;
+}
+
+/**
+ * آیکن‌های کوچک داشبورد.
+ *
+ * @param string $name نام آیکن.
+ * @return string
+ */
+function partyab_dashboard_icon( string $name ): string {
+	$icons = array(
+		'orders' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 3h9l4 4v14H6z"/><path d="M9 12h7M9 16h5"/></svg>',
+		'active' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/></svg>',
+		'wallet' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M16 15h2"/></svg>',
+		'pin'    => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>',
+		'car'    => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 16l1.5-5h11L19 16"/><path d="M4 16h16v3H4z"/><circle cx="7.5" cy="19.5" r="1.4"/><circle cx="16.5" cy="19.5" r="1.4"/></svg>',
+	);
+
+	return $icons[ $name ] ?? $icons['orders'];
+}

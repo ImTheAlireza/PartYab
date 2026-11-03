@@ -1868,3 +1868,393 @@
 		height: 200px;
 	}
 }
+
+/* ============================================================
+   جدول سبد: عرض ستون‌های قطعی (چیدمان به‌هم نریزد)
+   ============================================================ */
+.woocommerce table.shop_table.cart {
+	table-layout: fixed;
+}
+
+.woocommerce table.shop_table.cart th,
+.woocommerce table.shop_table.cart td {
+	word-break: normal;
+	overflow-wrap: anywhere;
+}
+
+.woocommerce table.shop_table.cart th.product-remove,
+.woocommerce table.shop_table.cart td.product-remove {
+	width: 46px;
+	text-align: center;
+}
+
+.woocommerce table.shop_table.cart th.product-thumbnail,
+.woocommerce table.shop_table.cart td.product-thumbnail {
+	width: 86px;
+	text-align: center;
+}
+
+.woocommerce table.shop_table.cart td.product-thumbnail img {
+	width: 68px;
+	height: 68px;
+	object-fit: contain;
+	display: inline-block;
+}
+
+.woocommerce table.shop_table.cart td.product-name {
+	width: auto;
+	min-width: 150px;
+	font-size: var(--pb-fs-sm);
+	line-height: 1.9;
+}
+
+.woocommerce table.shop_table.cart th.product-price,
+.woocommerce table.shop_table.cart td.product-price {
+	width: 112px;
+	white-space: nowrap;
+}
+
+.woocommerce table.shop_table.cart th.product-quantity,
+.woocommerce table.shop_table.cart td.product-quantity {
+	width: 132px;
+	white-space: nowrap;
+}
+
+.woocommerce table.shop_table.cart th.product-subtotal,
+.woocommerce table.shop_table.cart td.product-subtotal {
+	width: 132px;
+	white-space: nowrap;
+	font-weight: 800;
+}
+
+/* استپر تعداد در جدول سبد: افقی و فشرده */
+.woocommerce table.shop_table.cart td.product-quantity .quantity {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.woocommerce table.shop_table.cart td.product-quantity .quantity input.qty {
+	width: 44px;
+	min-height: 34px;
+	padding: 0;
+	font-size: 12px;
+	text-align: center;
+	border: 1px solid var(--pb-border-strong);
+	border-radius: var(--pb-radius-sm);
+	background: #fff;
+	-moz-appearance: textfield;
+}
+
+.woocommerce table.shop_table.cart td.product-quantity .quantity input.qty::-webkit-outer-spin-button,
+.woocommerce table.shop_table.cart td.product-quantity .quantity input.qty::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* دکمه‌های ± قالب */
+.woocommerce table.shop_table.cart td.product-quantity .pb-qty-btn,
+.woocommerce table.shop_table.cart td.product-quantity .quantity button {
+	width: 30px;
+	height: 34px;
+	line-height: 1;
+	border: 1px solid var(--pb-border-strong);
+	border-radius: var(--pb-radius-sm);
+	background: #fff;
+	color: var(--pb-ink-700);
+	font-size: 15px;
+	cursor: pointer;
+	flex: 0 0 auto;
+}
+
+.woocommerce table.shop_table.cart td.product-quantity .pb-qty-btn:hover {
+	border-color: var(--pb-orange);
+	color: var(--pb-orange-600);
+}
+
+/* اگر استپر به‌صورت ستونی رندر شد، افقی‌اش کن */
+.woocommerce table.shop_table.cart td.product-quantity .quantity {
+	flex-direction: row;
+	flex-wrap: nowrap;
+}
+
+/* ردیف اکشن‌ها: کوپن راست، دکمه‌ها چپ */
+.woocommerce .cart .actions td {
+	padding: var(--pb-3) 0;
+}
+
+.woocommerce .cart .actions .coupon {
+	display: flex;
+	align-items: center;
+	gap: var(--pb-2);
+	max-width: 420px;
+}
+
+.woocommerce .cart .actions .coupon .input-text {
+	min-height: 40px;
+	flex: 1 1 160px;
+}
+
+.woocommerce .cart .actions .coupon .button {
+	min-height: 40px;
+	white-space: nowrap;
+}
+
+.woocommerce .cart .actions > .button {
+	min-height: 40px;
+}
+
+/* در موبایل جدول اسکرول افقی شود، نه شکسته */
+@media (max-width: 767px) {
+	.woocommerce-cart form.woocommerce-cart-form {
+		overflow-x: auto;
+	}
+
+	.woocommerce table.shop_table.cart {
+		min-width: 620px;
+	}
+
+	.woocommerce table.shop_table.cart th.product-price,
+	.woocommerce table.shop_table.cart td.product-price {
+		display: none;
+	}
+}
+
+/* ============================================================
+   داشبورد حساب کاربری
+   ============================================================ */
+.pb-dash {
+	display: grid;
+	gap: var(--pb-4);
+}
+
+.pb-dash__hello {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--pb-3);
+	background: linear-gradient(135deg, var(--pb-ink) 0%, #1f2937 100%);
+	color: #fff;
+	border-radius: var(--pb-radius-lg);
+	padding: var(--pb-5);
+}
+
+.pb-dash__hello strong {
+	display: block;
+	font-size: var(--pb-fs-md);
+	margin-bottom: 4px;
+}
+
+.pb-dash__hello > div > span {
+	font-size: var(--pb-fs-xs);
+	color: #d1d5db;
+}
+
+.pb-dash__car {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	background: rgb(255 255 255 / 10%);
+	border: 1px solid rgb(255 255 255 / 18%);
+	border-radius: var(--pb-radius);
+	padding: 8px 14px;
+	color: #fff;
+	font-size: var(--pb-fs-xs);
+	font-weight: 700;
+}
+
+.pb-dash__car svg {
+	width: 20px;
+	height: 20px;
+	color: var(--pb-orange);
+}
+
+.pb-dash__car small {
+	background: var(--pb-orange);
+	color: #fff;
+	border-radius: 999px;
+	padding: 2px 8px;
+	font-size: 10px;
+	font-weight: 700;
+}
+
+.pb-dash__stats {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+	gap: var(--pb-3);
+}
+
+.pb-dash-card {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	background: #fff;
+	border: 1px solid var(--pb-border);
+	border-radius: var(--pb-radius-lg);
+	padding: var(--pb-4);
+}
+
+.pb-dash-card__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 34px;
+	height: 34px;
+	border-radius: 10px;
+	background: var(--pb-orange-50);
+	color: var(--pb-orange-600);
+	margin-bottom: 8px;
+}
+
+.pb-dash-card__icon svg {
+	width: 20px;
+	height: 20px;
+}
+
+.pb-dash-card strong {
+	font-size: var(--pb-fs-lg);
+	color: var(--pb-ink);
+	line-height: 1.6;
+}
+
+.pb-dash-card > span:last-child {
+	font-size: 11px;
+	color: var(--pb-ink-500);
+}
+
+/* آخرین سفارش */
+.pb-dash__last {
+	background: #fff;
+	border: 1px solid var(--pb-border);
+	border-radius: var(--pb-radius-lg);
+	padding: var(--pb-4);
+}
+
+.pb-dash__last-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--pb-3);
+	margin-bottom: var(--pb-3);
+}
+
+.pb-dash__last-head h3 {
+	margin: 0;
+	font-size: var(--pb-fs-sm);
+	color: var(--pb-ink);
+}
+
+.pb-dash__last-head a {
+	font-size: var(--pb-fs-xs);
+	font-weight: 700;
+	color: var(--pb-orange-600);
+}
+
+.pb-dash__last-body {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--pb-3);
+	font-size: var(--pb-fs-xs);
+	color: var(--pb-ink-700);
+}
+
+.pb-dash__order-num {
+	font-weight: 800;
+	color: var(--pb-ink);
+}
+
+.pb-dash__order-date {
+	color: var(--pb-ink-500);
+}
+
+.pb-dash__order-total {
+	margin-inline-start: auto;
+	font-weight: 800;
+	color: var(--pb-ink);
+}
+
+/* وضعیت سفارش */
+.pb-status {
+	display: inline-flex;
+	align-items: center;
+	border-radius: 999px;
+	padding: 2px 10px;
+	font-size: 11px;
+	font-weight: 700;
+	background: var(--pb-surface);
+	color: var(--pb-ink-700);
+}
+
+.pb-status--completed {
+	background: #f0fdf4;
+	color: #15803d;
+}
+
+.pb-status--processing,
+.pb-status--on-hold {
+	background: #fffbeb;
+	color: #b45309;
+}
+
+.pb-status--pending {
+	background: #f5f3ff;
+	color: #6d28d9;
+}
+
+.pb-status--cancelled,
+.pb-status--failed,
+.pb-status--refunded {
+	background: #fef2f2;
+	color: #b91c1c;
+}
+
+/* حالت خالی */
+.pb-dash__empty {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 4px;
+	background: #fff;
+	border: 1px dashed var(--pb-border-strong);
+	border-radius: var(--pb-radius-lg);
+	padding: var(--pb-5);
+	font-size: var(--pb-fs-xs);
+	color: var(--pb-ink-500);
+}
+
+.pb-dash__empty strong {
+	font-size: var(--pb-fs-sm);
+	color: var(--pb-ink);
+}
+
+.pb-dash__empty .pb-btn {
+	margin-top: var(--pb-3);
+}
+
+/* لینک‌های سریع */
+.pb-dash__links {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+	gap: var(--pb-2);
+}
+
+.pb-dash__links a {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #fff;
+	border: 1px solid var(--pb-border);
+	border-radius: var(--pb-radius);
+	padding: 12px;
+	font-size: var(--pb-fs-xs);
+	font-weight: 700;
+	color: var(--pb-ink-700);
+	text-align: center;
+}
+
+.pb-dash__links a:hover {
+	border-color: var(--pb-orange);
+	color: var(--pb-orange-600);
+}
