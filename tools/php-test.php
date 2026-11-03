@@ -203,6 +203,8 @@ function partyab_compat_rows( $product_id ) {
 }
 
 require PARTYAB_DIR . '/inc/compat-table.php';
+require PARTYAB_DIR . '/inc/related.php';
+require PARTYAB_DIR . '/inc/recent.php';
 
 // استاب‌های داشبورد حساب
 function get_current_user_id() { return 7; }
@@ -327,6 +329,17 @@ check( 'آمار: تعداد سفارش', 4 === $stats['orders'], (string) $stat
 check( 'آمار: سفارش در جریان', 2 === $stats['active'], (string) $stats['active'] );
 check( 'آمار: مجموع خرید', 6350000.0 === $stats['spent'] );
 check( 'آمار: آخرین سفارش', is_object( $stats['last'] ) );
+
+/* ---------- ۵٫۹) مرتبط‌ها و بازدیدهای اخیر ---------- */
+$comp = partyab_complement_slugs( array( 'brake-system' ) );
+check( 'مکمل: ترمز → فیلتر و تعلیق', array( 'filters', 'suspension' ) === $comp, implode( ',', $comp ) );
+check( 'مکمل: بدون تکرار خود دسته', ! in_array( 'brake-system', partyab_complement_slugs( array( 'brake-system', 'filters' ) ), true ) );
+check( 'مکمل: دسته ناشناس', array() === partyab_complement_slugs( array( 'unknown-cat' ) ) );
+
+$recent = partyab_recent_parse( '12, 7 ,12,,abc,19', 7 );
+check( 'بازدید: حذف محصول جاری و تکراری', array( 12, 19 ) === $recent, implode( ',', $recent ) );
+check( 'بازدید: سقف تعداد', 2 === count( partyab_recent_parse( '1,2,3,4,5', 0, 2 ) ) );
+check( 'بازدید: کوکی خالی', array() === partyab_recent_parse( '' ) );
 
 /* ---------- ۶) رندر صفحه اصلی دمو ۱ ---------- */
 ob_start();

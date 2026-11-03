@@ -35,6 +35,8 @@ $partyab_modules = array(
 	'layout',      // منوهای جایگزین، عنوان صفحه، کلاس‌های body.
 	'compat-ui',   // باکس «خودروی من»، بج سازگاری، فیلتر آرشیو.
 	'compat-table', // تب «سازگاری با خودرو» در صفحه محصول.
+	'related',     // مرتبط‌ها و مکمل خرید.
+	'recent',      // بازدیدهای اخیر.
 );
 
 foreach ( $partyab_modules as $partyab_module ) {

@@ -2258,3 +2258,161 @@
 	border-color: var(--pb-orange);
 	color: var(--pb-orange-600);
 }
+
+/* ============================================================
+   مرتبط‌ها، مکمل خرید و بازدیدهای اخیر
+   ============================================================ */
+.pb-strip,
+.woocommerce .related,
+.woocommerce .upsells,
+.woocommerce .cross-sells {
+	margin-top: var(--pb-6);
+}
+
+.pb-strip__head,
+.woocommerce .related > h2,
+.woocommerce .upsells > h2,
+.woocommerce .cross-sells > h2 {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	margin: 0 0 var(--pb-4);
+	padding: 0;
+	border: 0;
+	font-size: var(--pb-fs-md);
+	font-weight: 800;
+	color: var(--pb-ink);
+	position: relative;
+	padding-inline-start: 14px;
+}
+
+/* نشانگر نارنجی کنار عنوان نوارها */
+.pb-strip__head::before,
+.woocommerce .related > h2::before,
+.woocommerce .upsells > h2::before,
+.woocommerce .cross-sells > h2::before {
+	content: "";
+	position: absolute;
+	inset-inline-start: 0;
+	top: 4px;
+	bottom: 4px;
+	width: 4px;
+	border-radius: 999px;
+	background: var(--pb-orange);
+}
+
+.pb-strip__head p {
+	margin: 0;
+	font-size: var(--pb-fs-xs);
+	font-weight: 500;
+	color: var(--pb-ink-500);
+}
+
+/* گرید مشترک همه نوارها */
+.pb-strip__grid,
+.woocommerce .related ul.products,
+.woocommerce .upsells ul.products,
+.woocommerce .cross-sells ul.products {
+	display: grid !important;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: var(--pb-4);
+	margin: 0 !important;
+	padding: 0 !important;
+	list-style: none;
+}
+
+.pb-strip__grid li,
+.woocommerce .related ul.products li,
+.woocommerce .upsells ul.products li,
+.woocommerce .cross-sells ul.products li {
+	width: 100% !important;
+	float: none !important;
+	margin: 0 !important;
+	clear: none !important;
+}
+
+.pb-strip__grid li.product {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	background: #fff;
+	border: 1px solid var(--pb-border);
+	border-radius: var(--pb-radius-lg);
+	overflow: hidden;
+	padding-bottom: var(--pb-3);
+	transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.pb-strip__grid li.product:hover,
+.woocommerce .related ul.products li.product:hover {
+	border-color: var(--pb-orange);
+	box-shadow: 0 10px 24px rgb(15 23 42 / 8%);
+	transform: translateY(-2px);
+}
+
+.pb-strip__grid li.product img {
+	width: 100%;
+	aspect-ratio: 1 / 1;
+	object-fit: contain;
+	background: #fff;
+	margin: 0;
+}
+
+.pb-strip__grid li.product .woocommerce-loop-product__title {
+	font-size: var(--pb-fs-xs);
+	font-weight: 700;
+	line-height: 1.8;
+	padding: 0 var(--pb-3);
+	margin: var(--pb-2) 0 2px;
+	min-height: 3.6em;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.pb-strip__grid li.product .price {
+	padding: 0 var(--pb-3);
+	margin-top: auto;
+	font-weight: 800;
+	color: var(--pb-ink);
+	font-size: var(--pb-fs-xs);
+}
+
+.pb-strip__grid li.product .button,
+.pb-strip__grid li.product .add_to_cart_button {
+	margin: var(--pb-2) var(--pb-3) 0;
+	font-size: 11px;
+}
+
+/* تنوع نوارها */
+.pb-strip--car .pb-strip__head::before {
+	background: #16a34a;
+}
+
+.pb-strip--recent .pb-strip__head::before {
+	background: #2563eb;
+}
+
+.pb-strip--recent .pb-strip__grid li.product {
+	background: var(--pb-surface);
+}
+
+/* موبایل و تبلت */
+@media (max-width: 991px) {
+	.pb-strip__grid,
+	.woocommerce .related ul.products,
+	.woocommerce .upsells ul.products,
+	.woocommerce .cross-sells ul.products {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 480px) {
+	.pb-strip__head,
+	.woocommerce .related > h2,
+	.woocommerce .upsells > h2,
+	.woocommerce .cross-sells > h2 {
+		font-size: var(--pb-fs-sm);
+	}
+}
