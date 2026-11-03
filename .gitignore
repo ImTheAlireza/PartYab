@@ -12,6 +12,11 @@ Thumbs.db
 node_modules/
 package-lock.json
 
+# کش ابزارهای بررسی بصری (مرورگر headless، اسکرین‌شاتها)
+.cache/
+__pycache__/
+*.pyc
+
 # بسته‌های خام المنتور (داخل releases/partyab-quickstart-full.zip هستند)
 Elementor.zip
 elementor-pro-*.zip

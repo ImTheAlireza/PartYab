@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0E2340">
+<meta name="description" content="صفحه تشکر و تأیید سفارش پارتیاب">
+<title>سفارش ثبت شد — پارتیاب | قطعات اصل، انتخاب مطمئن</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M24 2.6 43 13.3v21.4L24 45.4 5 34.7V13.3z' fill='%230E2340' stroke='%23FF6A00' stroke-width='3'/%3E%3C/svg%3E">
+<link rel="preload" href="assets/fonts/Vazirmatn-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/partyab.css">
+<link rel="stylesheet" href="assets/css/pages.css">
+
+</head>
+<body>
+<div class="scroll-progress"><i></i></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- logo mark: hex nut + piston spark -->
+    <symbol id="i-logo" viewBox="0 0 48 48">
+      <path d="M24 2.6 43 13.3v21.4L24 45.4 5 34.7V13.3z" fill="#0E2340"/>
+      <path d="M24 2.6 43 13.3v21.4L24 45.4 5 34.7V13.3z" fill="none" stroke="#FF6A00" stroke-width="2.4" stroke-linejoin="round"/>
+      <path d="M17 32V18.4h5.6c3.4 0 5.7 1.9 5.7 5s-2.3 5-5.7 5H20" fill="none" stroke="#fff" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="31.6" cy="17.6" r="2.7" fill="#FF6A00"/>
+    </symbol>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+    <symbol id="i-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2.2l2.4 11.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.55L21 8H6"/><circle cx="10" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c1.1-3.6 4-5.4 7.5-5.4s6.4 1.8 7.5 5.4"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h4l2 5-2.5 1.6a12 12 0 0 0 5.9 5.9L15 14l5 2v4a1.9 1.9 0 0 1-2.1 1.9A17.5 17.5 0 0 1 2.1 6.1A1.9 1.9 0 0 1 4 4Z"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7.5-4.6-7.5-9.6A4.4 4.4 0 0 1 12 7.6a4.4 4.4 0 0 1 7.5 2.8c0 5-7.5 9.6-7.5 9.6Z"/></symbol>
+    <symbol id="i-chev-d" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></symbol>
+    <symbol id="i-chev-l" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></symbol>
+    <symbol id="i-chev-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></symbol>
+    <symbol id="i-arrow-l" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><polyline points="11 6 5 12 11 18"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5h10v9H2z"/><path d="M12 9.5h4.6L20 13v2.5h-8z"/><circle cx="6" cy="18" r="1.6"/><circle cx="16.5" cy="18" r="1.6"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7.5 3v6c0 4.4-3 8-7.5 9.2C7.5 20 4.5 16.4 4.5 12V6z"/><polyline points="8.8 12 11.2 14.4 15.4 10"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><polyline points="20 4 20 8 16 8"/></symbol>
+    <symbol id="i-headset" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><path d="M4 14h2.6v5H5.4A1.4 1.4 0 0 1 4 17.6z"/><path d="M20 14h-2.6v5h1.2A1.4 1.4 0 0 0 20 17.6z"/></symbol>
+    <symbol id="i-car" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16v-3.2L6 7h12l2 5.8V16"/><path d="M2.5 16h19"/><circle cx="7.5" cy="17.7" r="1.7"/><circle cx="16.5" cy="17.7" r="1.7"/><path d="M6.8 10.5h10.4"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.4M12 18.8v2.4M4.5 4.5l1.7 1.7M17.8 17.8l1.7 1.7M2.8 12h2.4M18.8 12h2.4M4.5 19.5l1.7-1.7M17.8 6.2l1.7-1.7"/></symbol>
+    <symbol id="i-oil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6v3.5c2.6 1.2 4.5 3.9 4.5 7A7.5 7.5 0 0 1 4.5 13.5c0-3.1 1.9-5.8 4.5-7z"/><path d="M9.6 10.6c.8-.9 2-.9 2.8 0"/></symbol>
+    <symbol id="i-brake" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="3"/><path d="M12 3.5v5M12 15.5v5M3.5 12h5M15.5 12h5" stroke-linecap="round"/></symbol>
+    <symbol id="i-body" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 4l9 5.5v10H3z"/><path d="M3 13h18"/><circle cx="8.5" cy="17" r="1.2"/></symbol>
+    <symbol id="i-shock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4"/><path d="M8.5 6h7v12h-7z"/><path d="M8.5 10h7M8.5 14h7"/></symbol>
+    <symbol id="i-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4a7 7 0 0 1 0 16H9l-3-3V7l3-3z"/><path d="M18.5 8.5h2.5M18.5 12h2.5M18.5 15.5h2.5"/></symbol>
+    <symbol id="i-electric" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 5 13.5h5.5L10 22l8-11.5h-5.5z"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2.8 2.85 5.9 6.5.9-4.72 4.55 1.14 6.45L12 17.5l-5.77 3.1 1.14-6.45L2.65 9.6l6.5-.9z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.6v.6"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6.5-6 6.5-10.5a6.5 6.5 0 1 0-13 0C5.5 15 12 21 12 21Z"/><circle cx="12" cy="10.4" r="2.4"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="2.4"/><path d="m3.8 7 8.2 6 8.2-6"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 4.5 13.6H10L9 22l8.5-11.6H12z"/></symbol>
+    <symbol id="i-heart-fill" viewBox="0 0 24 24" fill="currentColor"><path d="M12 20.6S3.6 15.5 3.6 9.9A4.9 4.9 0 0 1 12 6.7a4.9 4.9 0 0 1 8.4 3.2c0 5.6-8.4 10.7-8.4 10.7Z"/></symbol>
+    <symbol id="i-compare" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4H6a2 2 0 0 0-2 2v3M15 20h3a2 2 0 0 0 2-2v-3"/><path d="m3.5 20 4.5-4.5M20.5 4 16 8.5"/><path d="M13 11h5M13 14h3"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12S6 5.8 12 5.8 21.5 12 21.5 12 18 18.2 12 18.2 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.8"/></symbol>
+    <symbol id="i-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5.5" width="19" height="13" rx="2.6"/><path d="M2.5 10h19M6 14.5h3"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.6"/><path d="M12 7.6V12l3 1.8"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><polyline points="6 11 12 5 18 11"/></symbol>
+    <symbol id="i-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5.2"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.9" r="1.1" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-telegram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.4 4.4 2.9 11.3c-.9.3-.9 1.5 0 1.8l4.4 1.4 1.7 5.1c.2.7 1.1.8 1.5.2l2.3-3 4.3 3.1c.7.5 1.6.1 1.8-.7l3-13.4c.2-.9-.7-1.6-1.5-1.4Z"/><path d="m7.3 14.5 11-8.4-8.5 8.9"/></symbol>
+    <symbol id="i-whatsapp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 11.7a8.5 8.5 0 0 1-12.6 7.5L3.6 20.4l1.2-4.3a8.5 8.5 0 1 1 15.8-4.4Z"/><path d="M9 8.4c.5-.1.8.1 1 .5l.6 1.2c.1.3 0 .6-.2.8l-.5.5c.5 1 1.3 1.7 2.3 2.2l.5-.6c.2-.2.5-.2.8-.1l1.2.6c.4.2.6.5.5 1a1.9 1.9 0 0 1-2 1.5c-2.7-.2-5.7-3.1-5.9-5.8A1.9 1.9 0 0 1 9 8.4Z"/></symbol>
+    <symbol id="i-aparat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.8" y="4.4" width="18.4" height="15.2" rx="4.2"/><path d="m10 9.4 5 2.6-5 2.6z"/></symbol>
+    <symbol id="i-verified" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2.8 2.4 1.8 3-.2 1 2.8 2.4 1.8-.9 2.9.9 2.9-2.4 1.8-1 2.8-3-.2L12 21.2l-2.4-1.8-3 .2-1-2.8L3.2 15l.9-2.9L3.2 9.2l2.4-1.8 1-2.8 3 .2z"/><polyline points="8.8 12 11 14.2 15.3 9.9"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 21h4"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.4 13.7 9 20 10.8 13.7 12.6 12 19.2 10.3 12.6 4 10.8 10.3 9z"/></symbol>
+  </defs>
+</svg>
+<div class="topbar"><div class="container">
+  <div class="topbar-nav">
+    <a href="tel:02155667788"><svg class="pb-ic"><use href="#i-phone"/></svg>۰۲۱–۵۵۶۶۷۷۸۸</a>
+    <a href="track.html"><svg class="pb-ic"><use href="#i-truck"/></svg>ارسال رایگان سفارش‌های بالای ۵ میلیون</a>
+  </div>
+  <div class="topbar-nav">
+    <a href="track.html">پیگیری سفارش</a><a href="faq.html">سوالات متداول</a>
+    <a class="accent" href="warranty.html">۷ روز کاری ضمانت بازگشت</a>
+    <a href="sitemap.html">همه صفحات</a>
+  </div>
+</div></div>
+
+<header class="site-header">
+  <div class="container">
+    <div class="header-main">
+      <button class="hamburger" type="button" data-drawer-open aria-expanded="false" aria-label="باز کردن منو">
+        <span></span><span></span><span></span>
+      </button>
+      <a href="index.html" class="logo">
+        <svg class="logo-mark"><use href="#i-logo"/></svg>
+        <span class="logo-text"><b>پارتیاب</b><span>قطعات اصل، انتخاب مطمئن</span></span>
+      </a>
+      <form class="search" role="search" action="search.html" method="get">
+        <svg class="pb-ic"><use href="#i-search"/></svg><input name="q" type="search" placeholder="جستجوی قطعه، برند یا کد فنی… مثلاً «لنت ترمز ۲۰۶»" aria-label="جستجو">
+        <button class="search-btn" type="submit">جستجو</button>
+      </form>
+      <div class="header-actions">
+        <a class="h-action" href="account.html"><svg class="pb-ic"><use href="#i-user"/></svg><span class="label">حساب کاربری</span></a>
+        <a class="h-action" href="wishlist.html"><svg class="pb-ic"><use href="#i-heart"/></svg><span class="label">علاقه‌مندی</span></a>
+        <span class="h-sep hide-md"></span>
+        <a class="h-action" href="cart.html"><svg class="pb-ic"><use href="#i-cart"/></svg><span class="label">سبد خرید</span><span class="count">۳</span></a>
+      </div>
+    </div>
+  </div>
+  <nav class="main-nav"><div class="container"><a class="nav-link" href="index.html">خانه</a><a class="nav-link" href="shop.html">فروشگاه</a><a class="nav-link" href="index.html#cats"><svg class="pb-ic"><use href="#i-gear"/></svg>دسته‌بندیها</a><a class="nav-link" href="brands.html">برندها</a><a class="nav-link" href="garage.html"><svg class="pb-ic"><use href="#i-car"/></svg>خودروی من</a><a class="nav-link" href="compare.html">مقایسه</a><a class="nav-link" href="blog.html">دانشنامه<span class="pill">جدید</span></a><a class="nav-link" href="about.html">درباره ما</a><a class="nav-link" href="contact.html">تماس با ما</a>
+    <a class="nav-link" href="contact.html" style="margin-inline-start:auto;color:var(--orange-600)">فروش عمده / تعمیرگاهها</a>
+  </div></nav>
+</header>
+<div class="drawer-backdrop" data-drawer-close></div>
+<aside class="drawer" aria-label="منوی موبایل">
+  <div class="drawer-head"><b>پارتیاب</b><button class="drawer-close" data-drawer-close aria-label="بستن"><svg class="pb-ic"><use href="#i-plus"/></svg></button></div>
+  <a class="" href="index.html">خانه</a><a class="" href="shop.html">فروشگاه</a><a class="" href="index.html#cats"><svg class="pb-ic"><use href="#i-gear"/></svg>دسته‌بندیها</a><a class="" href="brands.html">برندها</a><a class="" href="garage.html"><svg class="pb-ic"><use href="#i-car"/></svg>خودروی من</a><a class="" href="compare.html">مقایسه</a><a class="" href="blog.html">دانشنامه</a><a class="" href="about.html">درباره ما</a><a class="" href="contact.html">تماس با ما</a><a class="" href="cart.html"><svg class="pb-ic"><use href="#i-cart"/></svg>سبد خرید</a><a class="" href="checkout.html"><svg class="pb-ic"><use href="#i-card"/></svg>تسویه حساب</a><a class="" href="orders.html"><svg class="pb-ic"><use href="#i-truck"/></svg>سفارش‌های من</a><a class="" href="wishlist.html"><svg class="pb-ic"><use href="#i-heart"/></svg>علاقه‌مندیها</a><a class="" href="track.html"><svg class="pb-ic"><use href="#i-pin"/></svg>پیگیری سفارش</a><a class="" href="faq.html"><svg class="pb-ic"><use href="#i-info"/></svg>سوالات متداول</a><a class="" href="sitemap.html"><svg class="pb-ic"><use href="#i-pin"/></svg>همه صفحات</a>
+  <div class="drawer-foot">قطعات اصل، انتخاب مطمئن<br>۰۲۱–۵۵۶۶۷۷۸۸ · شنبه تا پنجشنبه ۹ تا ۱۸</div>
+</aside>
+<section class="page-hero">
+  <div class="container">
+    <nav class="crumbs" aria-label="مسیر صفحه"><a href="index.html">خانه</a><svg class="pb-ic"><use href="#i-chev-l"/></svg><a href="cart.html">سبد خرید</a><svg class="pb-ic"><use href="#i-chev-l"/></svg><span class="current">تأیید سفارش</span></nav>
+    <div class="ph-grid">
+      <div>
+        <span class="ph-eyebrow"><svg class="pb-ic"><use href="#i-spark"/></svg>مرحله ۳ از ۳</span>
+        <h1>سفارش شما ثبت شد</h1>
+        <p class="ph-lead">پرداخت با موفقیت انجام شد. از این لحظه می‌توانی وضعیت سفارش را مرحله به‌مرحله دنبال کنی.</p>
+      </div>
+      <div class="ph-side"><div class="ph-stat"><b>#PY-1404-1284</b><span>شماره سفارش</span></div><div class="ph-stat"><b>۲٬۱۷۰٬۰۰۰</b><span>تومان پرداختشده</span></div></div>
+    </div>
+  </div>
+</section>
+<main id="content"><div class="container block">
+  <div class="panel success-card">
+    <span class="ic"><svg class="pb-ic"><use href="#i-check"/></svg></span>
+    <h2 class="h1">ممنون، علی! سفارشت ثبت شد 🎉</h2>
+    <p>رسید پرداخت و خلاصه سفارش به شماره ۰۹۱۲۳۴۵۶۷۸۹ پیامک شد.<br>همکاران انبار تا ساعت ۱۶ امروز بسته‌بندی را انجام می‌دهند.</p>
+    <div class="row" style="justify-content:center;gap:10px;flex-wrap:wrap;margin-top:18px">
+      <span class="badge badge-navy">شماره سفارش: PY-1404-1284</span>
+      <span class="badge badge-success">پرداخت موفق</span></div>
+    <div class="btn-row">
+      <a class="btn btn-primary btn-lg" href="track.html">پیگیری سفارش<svg class="pb-ic"><use href="#i-arrow-l"/></svg></a>
+      <a class="btn btn-outline btn-lg" href="shop.html">ادامه خرید</a></div>
+  </div>
+  <div class="panel panel-pad block-sm">
+    <div class="steps">
+      <div class="step is-done"><span class="n"><svg class="pb-ic"><use href="#i-check"/></svg></span><b>ثبت سفارش</b><span class="line"></span></div>
+      <div class="step is-done"><span class="n"><svg class="pb-ic"><use href="#i-check"/></svg></span><b>تأیید پرداخت</b><span class="line"></span></div>
+      <div class="step is-now"><span class="n">۳</span><b>آماده‌سازی و بسته‌بندی</b><span class="line"></span></div>
+      <div class="step"><span class="n">۴</span><b>تحویل به پست</b></div>
+    </div>
+  </div>
+  <div class="grid-2 block-sm" style="align-items:start">
+    <div class="panel panel-pad"><h3 class="h3" style="margin-bottom:12px">جزئیات سفارش</h3>
+      <div class="totals"><div><span>تاریخ</span><b>۱۴۰۴/۰۸/۰۲</b></div>
+        <div><span>روش پرداخت</span><b>درگاه آنلاین شاپرک</b></div>
+        <div><span>روش ارسال</span><b>استاندارد (رایگان)</b></div>
+        <div><span>آدرس تحویل</span><b>تهران، امیرکبیر، پلاک ۲۴</b></div>
+        <div class="grand"><span>مبلغ پرداختشده</span><b>۲٬۱۷۰٬۰۰۰ تومان</b></div></div></div>
+    <div class="panel panel-pad"><h3 class="h3" style="margin-bottom:12px">بعد از این چه می‌شود؟</h3>
+      <div class="timeline">
+        <div class="timeline-item is-now"><span class="dot"></span><b>امروز تا ۱۶</b><span>بسته‌بندی و صدور فاکتور</span></div>
+        <div class="timeline-item"><span class="dot"></span><b>فردا صبح</b><span>تحویل به شرکت حمل و ارسال کد رهگیری</span></div>
+        <div class="timeline-item"><span class="dot"></span><b>۱ تا ۳ روز کاری</b><span>تحویل مرسوله و پیامک رضایت‌سنجی</span></div>
+      </div></div>
+  </div>
+</div>
+<div class="container block">
+  <div class="section-head"><div data-reveal><h2 class="h2 title-draw">دفعه بعد هم همراه تو هستیم</h2><div class="sub">قطعات مکمل سرویس بعدی</div></div><a class="link-more" href="shop.html">مشاهده همه<svg class="pb-ic"><use href="#i-chev-l"/></svg></a></div>
+  <div class="rail"><div class="rail-nav on-light">
+      <button class="rail-btn" data-rail="prev" aria-label="قبلی"><svg class="pb-ic"><use href="#i-chev-r"/></svg></button>
+      <button class="rail-btn" data-rail="next" aria-label="بعدی"><svg class="pb-ic"><use href="#i-chev-l"/></svg></button>
+    </div><div class="rail-track"><article class="pc pc-compact" data-reveal style="--d:0.0s">
+  <div class="pc-media">
+    
+    <div class="pc-tools">
+      <button class="pc-tool" data-fav title="افزودن به علاقه‌مندیها"><svg class="pb-ic"><use href="#i-heart"/></svg></button>
+      <button class="pc-tool" title="مقایسه" data-toast="کالا به لیست مقایسه اضافه شد"><svg class="pb-ic"><use href="#i-compare"/></svg></button>
+      <button class="pc-tool" title="مشاهده سریع" data-toast="مشاهده سریع — دیسک ترمز جلو ۲۰۶"><svg class="pb-ic"><use href="#i-eye"/></svg></button>
+    </div>
+    <svg class="pc-img" viewBox="0 0 120 120" fill="none"><circle cx="60" cy="60" r="42" fill="#fff" stroke="#0E2340" stroke-width="3"/><circle cx="60" cy="60" r="27" fill="#F4F8FD" stroke="#8FA9C9" stroke-width="2"/><circle cx="60" cy="60" r="13" fill="#FFF4EB" stroke="#FF6A00" stroke-width="3"/></svg>
+    <div class="pc-quick"><svg class="pb-ic"><use href="#i-eye"/></svg>مشاهده سریع</div>
+  </div>
+  <div class="pc-body">
+    <div class="pc-topline"><span class="pc-brand">والئو</span><span class="pc-sku">DB-206</span></div>
+    <h3 class="pc-title"><a href="product.html">دیسک ترمز جلو پژو ۲۰۶ (جفت)</a></h3>
+    
+    <div class="pc-price-row">
+      <div class="pc-price"><b>۲٬۷۵۰٬۰۰۰ <small>تومان</small></b></div>
+      <button class="pc-add"><svg class="pb-ic"><use href="#i-cart"/></svg><span class="t">افزودن</span></button>
+    </div>
+    
+  </div>
+</article><article class="pc pc-compact" data-reveal style="--d:0.06s">
+  <div class="pc-media">
+    <span class="pc-flag">۱۶٪<small>تخفیف</small></span>
+    <div class="pc-tools">
+      <button class="pc-tool" data-fav title="افزودن به علاقه‌مندیها"><svg class="pb-ic"><use href="#i-heart"/></svg></button>
+      <button class="pc-tool" title="مقایسه" data-toast="کالا به لیست مقایسه اضافه شد"><svg class="pb-ic"><use href="#i-compare"/></svg></button>
+      <button class="pc-tool" title="مشاهده سریع" data-toast="مشاهده سریع — واتر پمپ ۴۰۵"><svg class="pb-ic"><use href="#i-eye"/></svg></button>
+    </div>
+    <svg class="pc-img" viewBox="0 0 120 120" fill="none"><circle cx="60" cy="60" r="30" fill="#fff" stroke="#0E2340" stroke-width="3"/><circle cx="60" cy="60" r="13" fill="#FFF4EB" stroke="#FF6A00" stroke-width="3"/><path d="M60 30v-9M30 60h-9M90 60h9" stroke="#FF6A00" stroke-width="3" stroke-linecap="round"/></svg>
+    <div class="pc-quick"><svg class="pb-ic"><use href="#i-eye"/></svg>مشاهده سریع</div>
+  </div>
+  <div class="pc-body">
+    <div class="pc-topline"><span class="pc-brand">کروز</span><span class="pc-sku">WP-405</span></div>
+    <h3 class="pc-title"><a href="product.html">واتر پمپ پژو ۴۰۵ و پارس (اصل)</a></h3>
+    
+    <div class="pc-price-row">
+      <div class="pc-price"><span class="old">۱٬۷۲۰٬۰۰۰</span><b>۱٬۴۵۰٬۰۰۰ <small>تومان</small></b></div>
+      <button class="pc-add"><svg class="pb-ic"><use href="#i-cart"/></svg><span class="t">افزودن</span></button>
+    </div>
+    
+  </div>
+</article><article class="pc pc-compact is-low" data-reveal style="--d:0.12s">
+  <div class="pc-media">
+    <span class="pc-flag">۱۵٪<small>تخفیف</small></span>
+    <div class="pc-tools">
+      <button class="pc-tool" data-fav title="افزودن به علاقه‌مندیها"><svg class="pb-ic"><use href="#i-heart"/></svg></button>
+      <button class="pc-tool" title="مقایسه" data-toast="کالا به لیست مقایسه اضافه شد"><svg class="pb-ic"><use href="#i-compare"/></svg></button>
+      <button class="pc-tool" title="مشاهده سریع" data-toast="مشاهده سریع — شمع موتور پلاتینی بوش"><svg class="pb-ic"><use href="#i-eye"/></svg></button>
+    </div>
+    <svg class="pc-img" viewBox="0 0 120 120" fill="none">
+              <rect x="52" y="10" width="16" height="24" rx="4" fill="#fff" stroke="#0E2340" stroke-width="3"/>
+              <path d="M44 40h32l-4 24H48z" fill="#FFF4EB" stroke="#FF6A00" stroke-width="3"/>
+              <rect x="50" y="64" width="20" height="26" rx="4" fill="#fff" stroke="#0E2340" stroke-width="3"/>
+              <path d="M56 74h8M56 82h8" stroke="#0E2340" stroke-width="3" stroke-linecap="round"/>
+              <path d="M60 90v12M56 102h8" stroke="#FF6A00" stroke-width="3" stroke-linecap="round"/>
+              <path d="M88 52l6-6M92 62h8M88 72l6 6" stroke="#FF6A00" stroke-width="2.4" stroke-linecap="round" opacity=".6"/>
+            </svg>
+    <div class="pc-quick"><svg class="pb-ic"><use href="#i-eye"/></svg>مشاهده سریع</div>
+  </div>
+  <div class="pc-body">
+    <div class="pc-topline"><span class="pc-brand">بوش</span><span class="pc-sku">FR7DC+</span></div>
+    <h3 class="pc-title"><a href="product.html">شمع موتور چهار شعله بوش تیپ پلاتینی</a></h3>
+    
+    <div class="pc-price-row">
+      <div class="pc-price"><span class="old">۶۴۰٬۰۰۰</span><b>۵۴۴٬۰۰۰ <small>تومان</small></b></div>
+      <button class="pc-add"><svg class="pb-ic"><use href="#i-cart"/></svg><span class="t">افزودن</span></button>
+    </div>
+    
+  </div>
+</article><article class="pc pc-compact" data-reveal style="--d:0.18s">
+  <div class="pc-media">
+    <span class="pc-flag pc-flag-navy">اصل</span>
+    <div class="pc-tools">
+      <button class="pc-tool" data-fav title="افزودن به علاقه‌مندیها"><svg class="pb-ic"><use href="#i-heart"/></svg></button>
+      <button class="pc-tool" title="مقایسه" data-toast="کالا به لیست مقایسه اضافه شد"><svg class="pb-ic"><use href="#i-compare"/></svg></button>
+      <button class="pc-tool" title="مشاهده سریع" data-toast="مشاهده سریع — تسمه تایم کامل"><svg class="pb-ic"><use href="#i-eye"/></svg></button>
+    </div>
+    <svg class="pc-img" viewBox="0 0 120 120" fill="none"><ellipse cx="60" cy="60" rx="42" ry="26" fill="none" stroke="#0E2340" stroke-width="4"/><ellipse cx="60" cy="60" rx="18" ry="10" fill="#FFF4EB" stroke="#FF6A00" stroke-width="3"/></svg>
+    <div class="pc-quick"><svg class="pb-ic"><use href="#i-eye"/></svg>مشاهده سریع</div>
+  </div>
+  <div class="pc-body">
+    <div class="pc-topline"><span class="pc-brand">گیتس</span><span class="pc-sku">TB-206</span></div>
+    <h3 class="pc-title"><a href="product.html">تسمه تایم کامل پژو ۲۰۶ تیپ ۲</a></h3>
+    
+    <div class="pc-price-row">
+      <div class="pc-price"><b>۲٬۳۸۰٬۰۰۰ <small>تومان</small></b></div>
+      <button class="pc-add"><svg class="pb-ic"><use href="#i-cart"/></svg><span class="t">افزودن</span></button>
+    </div>
+    
+  </div>
+</article><article class="pc pc-compact" data-reveal style="--d:0.24s">
+  <div class="pc-media">
+    <span class="pc-flag pc-flag-navy">جدید</span>
+    <div class="pc-tools">
+      <button class="pc-tool" data-fav title="افزودن به علاقه‌مندیها"><svg class="pb-ic"><use href="#i-heart"/></svg></button>
+      <button class="pc-tool" title="مقایسه" data-toast="کالا به لیست مقایسه اضافه شد"><svg class="pb-ic"><use href="#i-compare"/></svg></button>
+      <button class="pc-tool" title="مشاهده سریع" data-toast="مشاهده سریع — تیغه برف‌پاک‌کن"><svg class="pb-ic"><use href="#i-eye"/></svg></button>
+    </div>
+    <svg class="pc-img" viewBox="0 0 120 120" fill="none"><path d="M18 84c22-6 52-20 84-40" stroke="#0E2340" stroke-width="7" stroke-linecap="round"/><path d="M26 90c24-6 52-18 76-36" stroke="#FF6A00" stroke-width="4" stroke-linecap="round"/><rect x="13" y="78" width="18" height="22" rx="6" fill="#fff" stroke="#0E2340" stroke-width="3"/><circle cx="22" cy="89" r="3" fill="#FF6A00"/></svg>
+    <div class="pc-quick"><svg class="pb-ic"><use href="#i-eye"/></svg>مشاهده سریع</div>
+  </div>
+  <div class="pc-body">
+    <div class="pc-topline"><span class="pc-brand">والئو</span><span class="pc-sku">WB-22</span></div>
+    <h3 class="pc-title"><a href="product.html">تیغه برف‌پاک‌کن جفت ۲۲ اینچ</a></h3>
+    
+    <div class="pc-price-row">
+      <div class="pc-price"><b>۴۲۰٬۰۰۰ <small>تومان</small></b></div>
+      <button class="pc-add"><svg class="pb-ic"><use href="#i-cart"/></svg><span class="t">افزودن</span></button>
+    </div>
+    
+  </div>
+</article></div></div>
+</div></main>
+<footer class="ft">
+  <div class="ft-clip">
+    <svg class="ft-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width=".7">
+      <circle cx="12" cy="12" r="3.2"/><circle cx="12" cy="12" r="8.6"/>
+      <path d="M12 1.4v3M12 19.6v3M1.4 12h3M19.6 12h3M4.5 4.5l2.1 2.1M17.4 17.4l2.1 2.1M4.5 19.5l2.1-2.1M17.4 6.6l2.1-2.1"/>
+    </svg>
+  </div>
+  <div class="container ft-cta-wrap">
+    <div class="ft-cta">
+      <span class="ic"><svg class="pb-ic"><use href="#i-headset"/></svg></span>
+      <div><b>مطمئن نیستید کدام قطعه مناسب خودروی شماست؟</b>
+      <span>کارشناسان فنی پارتیاب رایگان راهنمایی می‌کنند — هر روز ۹ تا ۱۸</span></div>
+      <span class="spacer"></span>
+      <a class="btn btn-white btn-lg" href="tel:02155667788"><svg class="pb-ic"><use href="#i-phone"/></svg>۰۲۱–۵۵۶۶۷۷۸۸</a>
+    </div>
+  </div>
+  <div class="container">
+    <div class="ft-main">
+      <div>
+        <a href="index.html" class="ft-logo"><svg class="logo-mark"><use href="#i-logo"/></svg>
+          <span class="logo-text"><b>پارتیاب</b><span>PARITYAB AUTO PARTS</span></span></a>
+        <p class="ft-about">فروشگاه تخصصی لوازم یدکی خودرو؛ تأمین قطعات اصل و استاندارد برای خودروهای ایرانی و چینی با ضمانت اصالت، تطبیق دقیق با مدل خودرو و ارسال سراسری.</p>
+        <div class="ft-socials">
+          <a class="ft-social" href="contact.html" title="اینستاگرام"><svg class="pb-ic"><use href="#i-instagram"/></svg></a>
+          <a class="ft-social" href="contact.html" title="تلگرام"><svg class="pb-ic"><use href="#i-telegram"/></svg></a>
+          <a class="ft-social" href="contact.html" title="واتساپ"><svg class="pb-ic"><use href="#i-whatsapp"/></svg></a>
+          <a class="ft-social" href="contact.html" title="آپارات"><svg class="pb-ic"><use href="#i-aparat"/></svg></a>
+        </div>
+      </div>
+      <div class="ft-col"><h5>خدمات مشتریان</h5><ul>
+        <li><a href="track.html">پیگیری سفارش</a></li>
+        <li><a href="warranty.html">شرایط مرجوعی و تعویض</a></li>
+        <li><a href="guide.html">روشهای ارسال</a></li>
+        <li><a href="faq.html">سوالات متداول</a></li>
+        <li><a href="about.html">درباره پارتیاب</a></li></ul></div>
+      <div class="ft-col"><h5>دسترسی سریع</h5><ul>
+        <li><a href="garage.html">انتخاب خودرو</a></li>
+        <li><a href="contact.html">فروش عمده و تعمیرگاهها</a></li>
+        <li><a href="blog.html">دانشنامه فنی</a></li>
+        <li><a href="brands.html">برندها</a></li>
+        <li><a href="sitemap.html">نقشه سایت</a></li></ul></div>
+      <div class="ft-news">
+        <b>خبرنامه فنی پارتیاب</b>
+        <p>تخفیفهای هفتگی، قطعات جدید و نکات نگهداری خودرو — بدون ایمیل تبلیغاتی اضافه.</p>
+        <form class="ft-news-form" onsubmit="return false"><input type="email" placeholder="ایمیل شما">
+          <button class="btn btn-primary">عضویت</button></form>
+        <div class="ft-trust">
+          <span><svg class="pb-ic"><use href="#i-verified"/></svg>ضمانت اصالت کالا</span>
+          <span><svg class="pb-ic"><use href="#i-check"/></svg>۷ روز بازگشت</span>
+          <span><svg class="pb-ic"><use href="#i-check"/></svg>فاکتور رسمی</span>
+        </div>
+      </div>
+    </div>
+    <div class="ft-info">
+      <div class="ft-info-item"><span class="ic"><svg class="pb-ic"><use href="#i-pin"/></svg></span><span><span>نشانی فروشگاه</span><b>تهران، خیابان امیرکبیر، پاساژ کاشانی، پلاک ۲۱۱</b></span></div>
+      <div class="ft-info-item"><span class="ic"><svg class="pb-ic"><use href="#i-phone"/></svg></span><span><span>تلفن سفارش و پشتیبانی</span><b class="ltr" style="text-align:start">۰۲۱–۵۵۶۶۷۷۸۸</b></span></div>
+      <div class="ft-info-item"><span class="ic"><svg class="pb-ic"><use href="#i-clock"/></svg></span><span><span>ساعت پاسخگویی</span><b>شنبه تا پنجشنبه ۹ تا ۱۸</b></span></div>
+      <div class="ft-info-item"><span class="ic"><svg class="pb-ic"><use href="#i-mail"/></svg></span><span><span>ایمیل</span><b class="ltr" style="text-align:start">info@part-yab.ir</b></span></div>
+    </div>
+    <div class="ft-bottom">
+      <div class="ft-copy">© ۱۴۰۴ <b>پارتیاب</b> — تمامی حقوق محفوظ است. طراحی مجدد v2.0</div>
+      <div class="ft-bottom-right"><div class="ft-pays">
+        <span class="ft-pay">شاپرک</span><span class="ft-pay">زرین‌پال</span>
+        <span class="ft-pay">ای‌نماد</span><span class="ft-pay">پرداخت در محل</span></div>
+        <button class="ft-top-btn"><svg class="pb-ic"><use href="#i-up"/></svg>بازگشت به بالا</button></div>
+    </div>
+  </div>
+</footer>
+<div class="toast-wrap" aria-live="polite"></div>
+<script src="assets/js/partyab.js"></script>
+<script src="assets/js/pages.js"></script>
+</body>
+</html>

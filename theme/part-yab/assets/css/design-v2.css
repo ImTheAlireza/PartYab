@@ -1,0 +1,302 @@
+/**
+ * PartYab — پل طراحی نسخه ۲ (بازسازی کامل ظاهر بر اساس styleguide.html)
+ *
+ * این فایل بعد از همهٔ استایل\u200cهای قدیمی (base/layout/search/content/compat-ui/woo)
+ * بارگذاری می\u200cشود. به\u200cجای حذف معماری `pb-*`،توکن\u200cها را به پالت جدید نگاشت
+ * می\u200cکند و اجزای کلیدی (هدر، هیرو، دکمه\u200cها، کارت محصول، فوتر، ووکامرس)
+ * را با زبان بصری نسخه ۲ بازنویسی می\u200cکند. نشانه\u200cگذاری PHP دست\u200cنخورده می\u200cماند
+ * تا قالب، افزونه\u200cها و Elementor بدون شکستن به کار خود ادامه دهند.
+ *
+ * منبع طراحی: site/styleguide.html · پیاده\u200cسازی کامل ۲۳ صفحه: site/*.html
+ */
+
+/* ============ ۱. نگاشت توکن\u200cها ============ */
+:root {
+	/* پالت تازه */
+	--navy-900: #08172c;
+	--navy-800: #0e2340;
+	--navy-700: #12294a;
+	--navy-600: #1d4074;
+	--orange-400: #ff8a34;
+	--orange-500: #ff6a00;
+	--orange-600: #e25a00;
+	--orange-700: #b54708;
+	--orange-50: #fff4eb;
+	--ink: #0d1726;
+	--ink-soft: #334155;
+	--muted: #61718a;
+	--bg: #f5f7fb;
+	--bg-2: #eef2f8;
+	--surface: #fff;
+	--line: #e3e9f2;
+	--line-soft: #edf1f7;
+	--success: #12874a;
+	--danger: #d92d20;
+	--container: 1280px;
+	--sh-sm: 0 4px 14px rgb(14 35 64 / 6%);
+	--sh-md: 0 12px 30px rgb(14 35 64 / 10%);
+	--sh-lg: 0 22px 55px rgb(14 35 64 / 14%);
+
+	/* توکن\u200cهای قدیمی → مقادیر نسخه ۲ (همهٔ استایل\u200cهای موجود تازه می\u200cشوند) */
+	--pb-orange: #ff6a00;
+	--pb-orange-600: #e25a00;
+	--pb-orange-700: #b54708;
+	--pb-orange-50: #fff4eb;
+	--pb-ink: #0d1726;
+	--pb-ink-700: #334155;
+	--pb-ink-500: #61718a;
+	--pb-ink-300: #8a99ae;
+	--pb-blue: #1d4074;
+	--pb-success: #12874a;
+	--pb-danger: #d92d20;
+	--pb-warning: #b54708;
+	--pb-bg: #f5f7fb;
+	--pb-surface: #fff;
+	--pb-border: #e3e9f2;
+	--pb-border-strong: #c9d5e6;
+	--pb-radius-sm: 8px;
+	--pb-radius: 12px;
+	--pb-radius-lg: 20px;
+	--pb-shadow-sm: 0 4px 14px rgb(14 35 64 / 6%);
+	--pb-shadow: 0 12px 30px rgb(14 35 64 / 10%);
+	--pb-shadow-lg: 0 22px 55px rgb(14 35 64 / 14%);
+	--pb-container: 1280px;
+	--pb-gutter: 20px;
+}
+
+body {
+	font-family: 'Vazirmatn', system-ui, 'Segoe UI', Tahoma, sans-serif;
+	background: var(--bg);
+	color: var(--ink);
+	line-height: 1.75;
+}
+
+h1, h2, h3, h4, h5, h6 { color: var(--ink); letter-spacing: -.02em; }
+a { color: var(--navy-600); }
+a:hover { color: var(--orange-600); }
+
+/* ============ ۲. هدر سه\u200cلایه ============ */
+.pb-topbar {
+	background: linear-gradient(100deg, #08172c, #0e2340 55%, #12294a);
+	color: #a8bcd6;
+	border-bottom: 1px solid rgb(255 255 255 / 7%);
+}
+.pb-topbar a { color: #c7d6ea; }
+.pb-topbar a:hover { color: var(--orange-400); }
+
+.pb-header__main {
+	background: rgb(255 255 255 / 94%);
+	backdrop-filter: blur(14px);
+	-webkit-backdrop-filter: blur(14px);
+	border-bottom: 1px solid var(--line);
+}
+.pb-nav {
+	background: #fff;
+	border-bottom: 1px solid var(--line-soft);
+}
+.pb-brand__link { color: var(--navy-800); font-weight: 900; }
+.pb-search input,
+.pb-hero__search input {
+	border: 1px solid var(--line);
+	background: var(--bg);
+	border-radius: 12px;
+	transition: box-shadow .2s ease, border-color .2s ease;
+}
+.pb-search input:focus,
+.pb-hero__search input:focus {
+	border-color: var(--orange-400);
+	box-shadow: 0 0 0 4px rgb(255 106 0 / 12%);
+	outline: none;
+}
+.pb-action { border-radius: 10px; transition: background .2s ease, color .2s ease; }
+.pb-action:hover { background: var(--orange-50); color: var(--orange-600); }
+.pb-action__count {
+	background: var(--orange-500);
+	color: #fff;
+	border-radius: 999px;
+	box-shadow: 0 3px 10px rgb(255 106 0 / 35%);
+}
+
+/* ============ ۳. دکمه\u200cها و هیرو ============ */
+.pb-btn,
+.woocommerce a.button,
+.woocommerce button.button,
+.woocommerce input.button,
+.woocommerce a.button.alt,
+.woocommerce button.button.alt,
+.woocommerce #place_order,
+.woocommerce .single_add_to_cart_button,
+.woocommerce-Button {
+	background-image: linear-gradient(120deg, var(--orange-500), #ff8a34);
+	background-color: var(--orange-500);
+	color: #fff;
+	border: 0;
+	border-radius: 12px;
+	padding: 12px 22px;
+	font-weight: 800;
+	box-shadow: 0 8px 22px rgb(255 106 0 / 24%);
+	transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+}
+.pb-btn:hover,
+.woocommerce a.button:hover,
+.woocommerce button.button:hover,
+.woocommerce a.button.alt:hover,
+.woocommerce #place_order:hover,
+.woocommerce .single_add_to_cart_button:hover {
+	filter: brightness(1.04);
+	transform: translateY(-2px);
+	box-shadow: 0 14px 28px rgb(255 106 0 / 30%);
+	color: #fff;
+}
+.pb-btn--ghost {
+	background: rgb(255 255 255 / 10%);
+	background-image: none;
+	border: 1px solid rgb(255 255 255 / 28%);
+	color: #fff;
+	box-shadow: none;
+}
+.pb-hero .pb-btn--ghost:hover { background: rgb(255 255 255 / 18%); }
+
+.pb-hero {
+	background:
+		radial-gradient(circle at 78% 18%, rgb(255 106 0 / 18%), transparent 42%),
+		linear-gradient(rgb(255 255 255 / 2.5%) 1px, transparent 1px),
+		linear-gradient(90deg, rgb(255 255 255 / 2.5%) 1px, transparent 1px),
+		linear-gradient(150deg, #12294a, #08172c 70%);
+	background-size: auto, 32px 32px, 32px 32px, auto;
+	color: #fff;
+}
+.pb-hero__title, .pb-hero__lead, .pb-hero__eyebrow { color: inherit; }
+.pb-hero__eyebrow { color: var(--orange-400); }
+.pb-hero__card {
+	background: rgb(255 255 255 / 96%);
+	border: 1px solid rgb(255 255 255 / 60%);
+	border-radius: 20px;
+	box-shadow: var(--sh-lg);
+	color: var(--ink);
+}
+.pb-hero__card-head { color: var(--navy-800); }
+
+/* ============ ۴. بخش\u200cها، دسته\u200cها، بنرها ============ */
+.pb-section--muted { background: var(--bg-2); }
+.pb-section__head h2 { font-weight: 900; }
+.pb-section__head a { color: var(--orange-600); font-weight: 800; }
+
+.pb-cat,
+.pb-product-card,
+.pb-card {
+	background: var(--surface);
+	border: 1px solid var(--line);
+	border-radius: 20px;
+	box-shadow: var(--sh-sm);
+	transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.pb-cat:hover,
+.pb-product-card:hover,
+.pb-card:hover {
+	transform: translateY(-6px);
+	border-color: #d3e0f0;
+	box-shadow: var(--sh-md);
+}
+.pb-cat__icon {
+	background: var(--orange-50);
+	color: var(--orange-600);
+	border-radius: 14px;
+}
+.pb-banner {
+	border-radius: 24px;
+	overflow: hidden;
+	box-shadow: var(--sh-md);
+}
+.pb-banner--dark { background: linear-gradient(140deg, #12294a, #08172c); color: #fff; }
+.pb-banner--warm { background: linear-gradient(140deg, #fff4eb, #ffe4cb); color: var(--ink); }
+.pb-banner--dark .pb-banner__title,
+.pb-banner--dark .pb-banner__kicker { color: inherit; }
+
+/* ============ ۵. ووکامرس ============ */
+.woocommerce ul.products li.product,
+.woocommerce-page ul.products li.product {
+	background: var(--surface);
+	border: 1px solid var(--line);
+	border-radius: 20px;
+	padding: 12px 12px 18px;
+	box-shadow: var(--sh-sm);
+	transition: transform .25s ease, box-shadow .25s ease;
+}
+.woocommerce ul.products li.product:hover { transform: translateY(-6px); box-shadow: var(--sh-md); }
+.woocommerce ul.products li.product img { border-radius: 14px; background: var(--bg-2); }
+.woocommerce ul.products li.product .woocommerce-loop-product__title { font-weight: 800; color: var(--ink); }
+.woocommerce .price,
+.woocommerce ul.products li.product .price { color: var(--navy-800); font-weight: 900; }
+.woocommerce .price del,
+.woocommerce .price del span { color: var(--muted); }
+.woocommerce .price ins,
+.woocommerce .price ins span { color: var(--orange-600); }
+.woocommerce span.onsale {
+	background: var(--orange-500);
+	color: #fff;
+	border-radius: 999px;
+	min-height: auto;
+	line-height: 1.9;
+	padding: 2px 12px;
+	box-shadow: 0 6px 16px rgb(255 106 0 / 28%);
+}
+.woocommerce .star-rating { color: #f5a623; }
+.woocommerce .woocommerce-pagination .page-numbers li a,
+.woocommerce .woocommerce-pagination .page-numbers li span {
+	border-radius: 10px;
+}
+.woocommerce .woocommerce-pagination .page-numbers li .current { background: var(--navy-800); color: #fff; }
+.woocommerce input.input-text,
+.woocommerce textarea,
+.woocommerce select,
+.woocommerce form .form-row input.input-text {
+	background: var(--bg);
+	border: 1px solid var(--line);
+	border-radius: 12px;
+	padding: 11px 14px;
+}
+.woocommerce input.input-text:focus,
+.woocommerce textarea:focus { border-color: var(--orange-400); box-shadow: 0 0 0 4px rgb(255 106 0 / 12%); outline: none; }
+.woocommerce table.shop_table,
+.woocommerce table.shop_table_responsive {
+	border: 1px solid var(--line);
+	border-radius: 18px;
+	overflow: hidden;
+	background: var(--surface);
+}
+.woocommerce .woocommerce-message,
+.woocommerce .woocommerce-info {
+	border-top-color: var(--orange-500);
+	background: var(--orange-50);
+	border-radius: 12px;
+}
+.woocommerce .woocommerce-error { border-top-color: var(--danger); border-radius: 12px; }
+
+/* ============ ۶. فوتر ============ */
+.pb-footer { background: linear-gradient(150deg, #12294a, #08172c 70%); color: #b9c9de; }
+.pb-footer__main { background: transparent; }
+.pb-footer h3, .pb-footer h2, .pb-footer strong { color: #fff; }
+.pb-footer a { color: #b9c9de; }
+.pb-footer a:hover { color: var(--orange-400); }
+.pb-footer__bottom { border-top: 1px solid rgb(255 255 255 / 9%); background: rgb(0 0 0 / 12%); }
+.pb-trust { background: var(--surface); border-bottom: 1px solid var(--line); }
+.pb-trust__item { color: var(--ink-soft); }
+.pb-top {
+	background: var(--orange-500);
+	color: #fff;
+	border-radius: 12px;
+	box-shadow: 0 8px 20px rgb(255 106 0 / 28%);
+}
+
+/* ============ ۷. دسترس\u200cپذیری و واکنش\u200cگرایی ============ */
+:focus-visible { outline: 3px solid var(--orange-400); outline-offset: 3px; }
+::selection { background: var(--orange-500); color: #fff; }
+@media (max-width: 900px) {
+	.woocommerce ul.products li.product { border-radius: 16px; }
+	.pb-hero { background-size: auto, 24px 24px, 24px 24px, auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+	.pb-cat, .pb-product-card, .pb-card, .pb-btn,
+	.woocommerce a.button, .woocommerce button.button { transition-duration: .01ms; }
+}

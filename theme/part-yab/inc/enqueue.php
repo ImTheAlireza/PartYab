@@ -115,6 +115,29 @@ function partyab_enqueue_assets(): void {
 	) );
 }
 
+add_action( 'wp_enqueue_scripts', 'partyab_enqueue_design_v2', 40 );
+
+/**
+ * پل طراحی نسخه ۲ — باید آخرین استایل صف باشد (حتی بعد از woo.css).
+ *
+ * وابستگی به partyab-woo فقط زمانی اضافه می‌شود که آن استایل ثبت شده باشد،
+ * زیرا در صفحات غیرفروشگاهی ثبت نمی‌شود و وابستگی گمشده مانع چاپ استایل می‌شود.
+ */
+function partyab_enqueue_design_v2(): void {
+	$deps = array( 'partyab-base', 'partyab-layout', 'partyab-content', 'partyab-compat-ui' );
+
+	if ( wp_style_is( 'partyab-woo', 'registered' ) ) {
+		$deps[] = 'partyab-woo';
+	}
+
+	wp_enqueue_style(
+		'partyab-design-v2',
+		PARTYAB_URI . '/assets/css/design-v2.css',
+		$deps,
+		partyab_asset_version( 'assets/css/design-v2.css' )
+	);
+}
+
 add_action( 'wp_head', 'partyab_preload_font', 1 );
 
 /**
