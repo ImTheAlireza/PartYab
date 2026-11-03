@@ -116,6 +116,42 @@ if ( ! is_wp_error( $partyab_categories ) && $partyab_categories ) :
 	<?php
 endif;
 
+/* ---------- بنرهای دوگانه ---------- */
+$partyab_banner_terms = array(
+	'brake'      => get_term_by( 'slug', 'brake-system', 'product_cat' ),
+	'suspension' => get_term_by( 'slug', 'suspension', 'product_cat' ),
+);
+
+$partyab_banner_links = array(
+	'brake'      => $partyab_banner_terms['brake'] ? (string) get_term_link( $partyab_banner_terms['brake'] ) : $partyab_shop_url,
+	'suspension' => $partyab_banner_terms['suspension'] ? (string) get_term_link( $partyab_banner_terms['suspension'] ) : $partyab_shop_url,
+);
+?>
+<section class="pb-section pb-section--banners">
+	<div class="pb-container pb-banners">
+
+		<a class="pb-banner pb-banner--dark" href="<?php echo esc_url( $partyab_banner_links['brake'] ); ?>">
+			<span class="pb-banner__text">
+				<span class="pb-banner__kicker">سیستم ترمز</span>
+				<strong class="pb-banner__title">لنت و دیسک ترمز، سازگار با خودروی تو</strong>
+				<span class="pb-banner__cta">دیدن قطعات ترمز →</span>
+			</span>
+			<img class="pb-banner__img" src="<?php echo esc_url( PARTYAB_URI . '/assets/img/banner-brake.jpg' ); ?>" alt="لنت و دیسک ترمز" loading="lazy" width="1024" height="1024">
+		</a>
+
+		<a class="pb-banner pb-banner--warm" href="<?php echo esc_url( $partyab_banner_links['suspension'] ); ?>">
+			<span class="pb-banner__text">
+				<span class="pb-banner__kicker">جلوبندی و تعلیق</span>
+				<strong class="pb-banner__title">کمک فنر و فنر، برای رانندگی نرم‌تر</strong>
+				<span class="pb-banner__cta">دیدن قطعات تعلیق →</span>
+			</span>
+			<img class="pb-banner__img" src="<?php echo esc_url( PARTYAB_URI . '/assets/img/banner-suspension.jpg' ); ?>" alt="کمک فنر" loading="lazy" width="1024" height="1024">
+		</a>
+
+	</div>
+</section>
+<?php
+
 /* ---------- پیشنهاد شگفت‌انگیز: فقط اگر محصول تخفیف‌دار وجود دارد ---------- */
 $partyab_on_sale = function_exists( 'wc_get_products' ) ? wc_get_products( array(
 	'limit'   => 4,

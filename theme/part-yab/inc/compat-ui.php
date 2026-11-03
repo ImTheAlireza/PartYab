@@ -323,7 +323,9 @@ function partyab_filter_shop_by_car( $query ): void {
 		return;
 	}
 
-	if ( ! ( function_exists( 'is_shop' ) && ( is_shop() || is_product_taxonomy() ) ) ) {
+	$is_product_search = $query->is_search() && 'product' === $query->get( 'post_type' );
+
+	if ( ! ( function_exists( 'is_shop' ) && ( is_shop() || is_product_taxonomy() ) ) && ! $is_product_search ) {
 		return;
 	}
 

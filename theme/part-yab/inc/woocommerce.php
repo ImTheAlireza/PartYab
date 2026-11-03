@@ -100,7 +100,7 @@ function partyab_enqueue_woo_style(): void {
 		return;
 	}
 
-	if ( ! ( is_woocommerce() || is_cart() || is_checkout() || is_account_page() || is_front_page() || is_home() ) ) {
+	if ( ! ( is_woocommerce() || is_cart() || is_checkout() || is_account_page() || is_front_page() || is_home() || is_search() ) ) {
 		return;
 	}
 
@@ -153,14 +153,23 @@ function partyab_shop_wrapper_end(): void {
 /**
  * سایدبار فیلتر آرشیو: خودرو، دسته، قیمت، موجودی.
  */
-function partyab_shop_sidebar(): void {
+function partyab_shop_sidebar( string $base = '' ): void {
 	$in_stock = isset( $_GET['pb_in_stock'] ) ? '1' === (string) $_GET['pb_in_stock'] : false; // phpcs:ignore WordPress.Security.NonceVerification
 	$min      = isset( $_GET['min_price'] ) ? (int) $_GET['min_price'] : 0; // phpcs:ignore WordPress.Security.NonceVerification
 	$max      = isset( $_GET['max_price'] ) ? (int) $_GET['max_price'] : 0; // phpcs:ignore WordPress.Security.NonceVerification
-	$base     = partyab_is_product_archive() && is_shop() ? wc_get_page_permalink( 'shop' ) : get_term_link( get_queried_object() );
+	if ( '' === $base ) {
+		if ( partyab_is_product_archive() && is_shop() ) {
+			$base = wc_get_page_permalink( 'shop' );
+		} elseif ( partyab_is_product_archive() ) {
+			$term = get_queried_object();
+			$base = $term instanceof WP_Term ? (string) get_term_link( $term ) : wc_get_page_permalink( 'shop' );
+		} else {
+			$base = wc_get_page_permalink( 'shop' );
+		}
+	}
 
-	if ( is_wp_error( $base ) ) {
-		$base = home_url( '/shop' );
+	if ( ! is_string( $base ) || '' === $base ) {
+		$base = wc_get_page_permalink( 'shop' );
 	}
 
 	echo '<aside class="pb-shop__side">';
@@ -310,7 +319,9 @@ function partyab_filter_in_stock( $query ): void {
 		return;
 	}
 
-	if ( ! ( $query->is_post_type_archive( 'product' ) || $query->is_tax( get_object_taxonomies( 'product' ) ) ) ) {
+	$is_product_search = $query->is_search() && 'product' === $query->get( 'post_type' );
+
+	if ( ! ( $query->is_post_type_archive( 'product' ) || $query->is_tax( get_object_taxonomies( 'product' ) ) || $is_product_search ) ) {
 		return;
 	}
 
@@ -492,3 +503,49 @@ function partyab_active_filter_chips(): void {
 	echo '</div>';
 }
 add_action( 'woocommerce_before_shop_loop', 'partyab_active_filter_chips', 15 );
+
+/**
+ * خط برند و خودروهای سازگار روی کارت محصول.
+ */
+function partyab_loop_terms_line(): void {
+	global $product;
+
+	if ( ! $product instanceof WC_Product ) {
+		return;
+	}
+
+	$brands = get_the_terms( $product->get_id(), 'pb_brand' );
+	$cars   = get_the_terms( $product->get_id(), 'pb_car' );
+
+	$brand_name = ( $brands && ! is_wp_error( $brands ) ) ? $brands[0]->name : '';
+	$car_names  = array();
+
+	if ( $cars && ! is_wp_error( $cars ) ) {
+		foreach ( $cars as $car ) {
+			// فقط مدل‌ها (فرزند) را بشمار، نه برندها.
+			if ( $car->parent ) {
+				$car_names[] = $car->name;
+			}
+		}
+	}
+
+	if ( '' === $brand_name && ! $car_names ) {
+		return;
+	}
+
+	echo '<div class="pb-card-meta">';
+
+	if ( '' !== $brand_name ) {
+		printf( '<span class="pb-card-meta__brand">%s</span>', esc_html( $brand_name ) );
+	}
+
+	if ( $car_names ) {
+		printf(
+			'<span class="pb-card-meta__cars">%s</span>',
+			esc_html( 'سازگار با ' . implode( '، ', array_slice( $car_names, 0, 2 ) ) . ( count( $car_names ) > 2 ? ' و ' . count( $car_names ) . ' مدل دیگر' : '' ) )
+		);
+	}
+
+	echo '</div>';
+}
+add_action( 'woocommerce_after_shop_loop_item_title', 'partyab_loop_terms_line', 4 );

@@ -1275,3 +1275,112 @@
 		font-size: var(--pb-fs-sm);
 	}
 }
+
+/* ---------- خط برند/خودرو روی کارت ---------- */
+.pb-card-meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 4px 8px;
+	font-size: 11px;
+	line-height: 1.8;
+	min-height: 20px;
+}
+
+.pb-card-meta__brand {
+	font-weight: 800;
+	color: var(--pb-orange-700);
+	background: var(--pb-orange-50);
+	border-radius: 999px;
+	padding: 1px 8px;
+}
+
+.pb-card-meta__cars {
+	color: var(--pb-ink-500);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 100%;
+}
+
+/* ---------- گالری محصول ---------- */
+.woocommerce div.product div.images .flex-control-thumbs {
+	display: grid;
+	grid-template-columns: repeat(5, minmax(0, 1fr));
+	gap: 8px;
+	margin: 10px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.woocommerce div.product div.images .flex-control-thumbs li {
+	width: 100%;
+	margin: 0;
+	float: none;
+}
+
+.woocommerce div.product div.images .flex-control-thumbs img {
+	border-radius: var(--pb-radius-sm);
+	border: 1px solid var(--pb-border);
+	opacity: 0.75;
+	padding: 2px;
+	background: #fff;
+}
+
+.woocommerce div.product div.images .flex-control-thumbs img.flex-active,
+.woocommerce div.product div.images .flex-control-thumbs img:hover {
+	opacity: 1;
+	border-color: var(--pb-orange);
+}
+
+.woocommerce div.product div.images .woocommerce-product-gallery__trigger {
+	border-radius: 999px;
+	background: #fff;
+	box-shadow: var(--pb-shadow-sm);
+	color: var(--pb-ink);
+	z-index: 5;
+}
+
+/* ---------- صفحه نتایج جستجو ---------- */
+.pb-search-page {
+	padding-block: var(--pb-6);
+}
+
+.pb-search-head {
+	margin-bottom: var(--pb-4);
+}
+
+.pb-search-head__title {
+	font-size: var(--pb-fs-lg);
+	margin: 0 0 4px;
+	color: var(--pb-ink);
+}
+
+.pb-search-head__count {
+	margin: 0;
+	font-size: var(--pb-fs-xs);
+	color: var(--pb-ink-500);
+}
+
+.pb-search-list {
+	display: grid;
+	gap: var(--pb-3);
+}
+
+.pb-search-item {
+	background: #fff;
+	border: 1px solid var(--pb-border);
+	border-radius: var(--pb-radius-lg);
+	padding: var(--pb-4);
+}
+
+.pb-search-item h2 {
+	font-size: var(--pb-fs-base);
+	margin: 0 0 4px;
+}
+
+.pb-search-item p {
+	margin: 0;
+	font-size: var(--pb-fs-sm);
+	color: var(--pb-ink-500);
+}

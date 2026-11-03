@@ -91,6 +91,22 @@ function partyab_brand_terms() {
 		(object) array( 'term_id' => 2, 'name' => 'بوش', 'count' => 1, 'slug' => 'bosch' ),
 	);
 }
+function get_term_by( $field, $value, $tax ) {
+	return (object) array( 'term_id' => 77, 'name' => 'سیستم ترمز', 'slug' => $value, 'count' => 3, 'taxonomy' => 'product_cat' );
+}
+function get_the_terms( $post_id, $tax ) {
+	if ( 'pb_brand' === $tax ) {
+		return array( (object) array( 'term_id' => 1, 'name' => 'ایساکو', 'parent' => 0 ) );
+	}
+	if ( 'pb_car' === $tax ) {
+		return array(
+			(object) array( 'term_id' => 10, 'name' => 'پراید', 'parent' => 0 ),
+			(object) array( 'term_id' => 11, 'name' => '131', 'parent' => 10 ),
+			(object) array( 'term_id' => 12, 'name' => '111', 'parent' => 10 ),
+		);
+	}
+	return array();
+}
 function get_terms( $a = array() ) {
 	return array(
 		(object) array( 'term_id' => 1, 'name' => 'سیستم ترمز', 'slug' => 'brake-system', 'count' => 3, 'taxonomy' => 'product_cat' ),
@@ -161,6 +177,20 @@ $product->sale    = '690000';
 $badge = partyab_sale_percent_badge( '<span class="onsale">تخفیف</span>', null, $product );
 check( 'درصد تخفیف محاسبه شد', strpos( $badge, '۱۹٪' ) !== false, $badge );
 
+/* ---------- ۴٫۵) خط برند/خودرو روی کارت ---------- */
+ob_start();
+$partyab_product = new WC_Product();
+partyab_loop_terms_line();
+$card_meta = ob_get_clean();
+check( 'چیپ برند روی کارت', strpos( $card_meta, 'ایساکو' ) !== false, trim( $card_meta ) );
+check( 'خودروهای سازگار روی کارت', strpos( $card_meta, 'سازگار با 131' ) !== false, trim( $card_meta ) );
+
+/* ---------- ۴٫۶) سایدبار با base صریح (صفحه جستجو) ---------- */
+ob_start();
+partyab_shop_sidebar( 'http://example.test/shop' );
+$sidebar = ob_get_clean();
+check( 'سایدبار روی صفحه جستجو هم رندر می‌شود', strpos( $sidebar, 'pb-side-card' ) !== false && strlen( $sidebar ) > 500, strlen( $sidebar ) . ' بایت' );
+
 /* ---------- ۵) ورودی سال: ارقام فارسی ---------- */
 check( 'سال با ارقام فارسی نمایش داده شد', strpos( $html, 'value="۱۳۹۵"' ) !== false );
 
@@ -169,7 +199,7 @@ ob_start();
 include PARTYAB_DIR . '/front-page.php';
 $front = ob_get_clean();
 
-foreach ( array( 'pb-hero', 'pb-cats', 'pb-cat__icon', 'pb-brands', 'pb-quote', 'pb-steps' ) as $section ) {
+foreach ( array( 'pb-hero', 'pb-cats', 'pb-cat__icon', 'pb-banner', 'pb-brands', 'pb-quote', 'pb-steps' ) as $section ) {
 	check( 'بخش ' . $section, strpos( $front, $section ) !== false );
 }
 
