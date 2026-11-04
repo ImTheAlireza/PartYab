@@ -1,13 +1,17 @@
 # بسته‌های آماده نصب
 
-آخرین ساخت: بازطراحی نسخه **۲٫۰٫۰** قالب (سرمه‌ای/نارنجی، انیمیشن‌های دسترس‌پذیر، صفحه‌های یکدست). نسخه نصب‌کننده **۱٫۱٫۱**.
+آخرین ساخت: نسخه **۲٫۴٫۰** قالب (هاور پایدار کارت محصول، لودر لوگو بدون پروگرس‌بار، صدای قابل‌خاموش، هیرو سه‌بعدی با چرخش آرام پیوسته). نسخه نصب‌کننده **۱٫۴٫۰**.
 
 | فایل | حجم | لینک دانلود مستقیم |
 |---|---|---|
-| **نصب‌کننده کامل** (Elementor + Pro داخلش) | ۲۷MB | https://github.com/ImTheAlireza/PartYab/raw/7604492612050a92109206aa9c9cc5fad805f600/releases/partyab-quickstart-full.zip |
-| نصب‌کننده سبک (المنتور از مخزن وردپرس) | ۶۴۲KB | https://github.com/ImTheAlireza/PartYab/raw/7604492612050a92109206aa9c9cc5fad805f600/releases/partyab-quickstart.zip |
-| چایلد تم پارتیاب | ۲۲۷KB | https://github.com/ImTheAlireza/PartYab/raw/7604492612050a92109206aa9c9cc5fad805f600/releases/part-yab.zip |
-| افزونه سازگاری قطعه-خودرو | ۱۱KB | https://github.com/ImTheAlireza/PartYab/raw/7604492612050a92109206aa9c9cc5fad805f600/releases/partyab-compat.zip |
+| **نصب‌کننده کامل** (Elementor + Pro داخلش) | ۲۹MB | [partyab-quickstart-full.zip](./partyab-quickstart-full.zip) |
+| نصب‌کننده سبک (المنتور از مخزن وردپرس) | ۳٫۱MB | [partyab-quickstart.zip](./partyab-quickstart.zip) |
+| چایلد تم پارتیاب | ۲٫۴MB | [part-yab.zip](./part-yab.zip) |
+| افزونه سازگاری قطعه-خودرو | ۱۱KB | [partyab-compat.zip](./partyab-compat.zip) |
+
+## تنظیم صدا
+
+پس از نصب، از **نمایش ← حرکت و صدا** می‌توانید افکت صوتی ترنزیشن صفحه‌ها را روشن/خاموش کنید. کلید «صدا» در فوتر سایت هم برای بازدیدکننده وجود دارد. مرورگرها صدا را پس از نخستین کلیک/لمس کاربر پخش می‌کنند.
 
 ## نصب ۳ قدمی
 

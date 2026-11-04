@@ -1,10 +1,10 @@
 export const categories = [
-  { slug: 'brake-system', name: 'لنت و سیستم ترمز', icon: 'brake', image: 'brake-pad.jpg' },
-  { slug: 'filters', name: 'فیلترها', icon: 'oil', image: 'oil-filter.jpg' },
-  { slug: 'electrical', name: 'برقی و باتری', icon: 'electric', image: 'battery.jpg' },
-  { slug: 'suspension', name: 'جلوبندی و تعلیق', icon: 'shock', image: 'shock-absorber.jpg' },
-  { slug: 'engine', name: 'موتور و احتراق', icon: 'gear', image: 'spark-plug.jpg' },
-  { slug: 'body-glass', name: 'بدنه و تیغه برف‌پاک‌کن', icon: 'body', image: 'wiper-blade.jpg' },
+  { slug: 'brake-system', name: 'لنت و سیستم ترمز', icon: 'brake', image: 'cut/brake-pad.webp' },
+  { slug: 'filters', name: 'فیلترها', icon: 'oil', image: 'cut/oil-filter.webp' },
+  { slug: 'electrical', name: 'برقی و باتری', icon: 'electric', image: 'cut/battery.webp' },
+  { slug: 'suspension', name: 'جلوبندی و تعلیق', icon: 'shock', image: 'cut/shock-absorber.webp' },
+  { slug: 'engine', name: 'موتور و احتراق', icon: 'gear', image: 'cut/spark-plug.webp' },
+  { slug: 'body-glass', name: 'بدنه و تیغه برف‌پاک‌کن', icon: 'body', image: 'cut/wiper-blade.webp' },
 ];
 const fits = {
   pride: { brand: 'پراید', model: '۱۱۱', years: '۱۳۹۰ تا ۱۳۹۸', label: 'پراید ۱۱۱' },

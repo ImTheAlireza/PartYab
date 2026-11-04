@@ -91,3 +91,13 @@ function partyab_order_status_summary( int $order_id ): void {
 	echo '<div class="pb-order-status-summary" data-reveal>' . partyab_icon( 'verified' ) . '<div><strong>وضعیت سفارش: ' . esc_html( wc_get_order_status_name( $order->get_status() ) ) . '</strong><p>جزئیات و تغییرات سفارش در حساب کاربری تو قابل پیگیری است.</p></div></div>'; // phpcs:ignore WordPress.Security.EscapeOutput
 }
 add_action( 'woocommerce_thankyou', 'partyab_order_status_summary', 5 );
+
+/** Static outer hit area + moving inner surface: no hover edge flicker. */
+function partyab_loop_surface_start(): void {
+	echo '<div class="pb-product-card__surface">';
+}
+function partyab_loop_surface_end(): void {
+	echo '</div>';
+}
+add_action( 'woocommerce_before_shop_loop_item', 'partyab_loop_surface_start', 1 );
+add_action( 'woocommerce_after_shop_loop_item', 'partyab_loop_surface_end', 99 );

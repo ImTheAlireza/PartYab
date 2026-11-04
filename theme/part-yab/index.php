@@ -8,7 +8,7 @@ partyab_page_intro( is_home() ? 'دانشنامه و مجله پارتیاب' : 
 	<?php if ( have_posts() ) : ?>
 		<div class="pb-article-grid"><?php while ( have_posts() ) : the_post(); ?>
 			<article <?php post_class( 'pb-article-card' ); ?> data-reveal>
-				<a class="pb-article-card__visual" href="<?php the_permalink(); ?>"><?php if ( has_post_thumbnail() ) : ?><?php the_post_thumbnail( 'large' ); ?><?php else : ?><img src="<?php echo esc_url( PARTYAB_URI . '/assets/img/hero-car.webp' ); ?>" alt="" loading="lazy"><?php endif; ?></a>
+				<a class="pb-article-card__visual" href="<?php the_permalink(); ?>"><?php if ( has_post_thumbnail() ) : ?><?php the_post_thumbnail( 'large' ); ?><?php else : ?><img src="<?php echo esc_url( PARTYAB_URI . '/assets/img/hero-car-poster.webp' ); ?>" alt="" loading="lazy"><?php endif; ?></a>
 				<div class="pb-article-card__body"><small><?php echo esc_html( get_the_date() ); ?></small><h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2><p><?php echo esc_html( wp_trim_words( get_the_excerpt(), 24 ) ); ?></p><span>ادامه مطلب <?php echo partyab_icon( 'arrow-l' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span></div>
 			</article>
 		<?php endwhile; ?></div>

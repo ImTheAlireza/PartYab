@@ -96,9 +96,9 @@
       button.addEventListener('pointermove', function (event) {
         if (reduced()) return;
         var rect = button.getBoundingClientRect();
-        button.style.transform = 'translate(' + ((event.clientX - rect.left - rect.width / 2) * .07) + 'px,' + ((event.clientY - rect.top - rect.height / 2) * .12) + 'px)';
+        button.style.translate = ((event.clientX - rect.left - rect.width / 2) * .07) + 'px ' + ((event.clientY - rect.top - rect.height / 2) * .12) + 'px';
       });
-      button.addEventListener('pointerleave', function () { button.style.transform = ''; });
+      button.addEventListener('pointerleave', function () { button.style.translate = ''; });
     });
     document.addEventListener('pointermove', function (event) {
       if (reduced()) return;

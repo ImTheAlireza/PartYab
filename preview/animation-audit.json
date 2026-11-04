@@ -1,0 +1,245 @@
+{
+  "date": "2026-11-04T05:41:42.866Z",
+  "results": [
+    {
+      "name": "header nav underline",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "header action underline",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "button ripple",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "category icon no snapping keyframe",
+      "ok": true,
+      "detail": "{\"anim\":\"none\",\"trans\":\"transform, background, color, box-shadow\",\"tf\":\"matrix(1, -5.13124e-06, 5.13124e-06, 1, 0, -0.000209998)\"}"
+    },
+    {
+      "name": "category outer hit area static",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "product surface lift",
+      "ok": true,
+      "detail": "0px -6px"
+    },
+    {
+      "name": "product outer hit area static",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "product hover edge does not flicker",
+      "ok": true,
+      "detail": "0px -6px | 0px -6px | 0px -6px | 0px -6px | 0px -6px | 0px -6px"
+    },
+    {
+      "name": "product quick view reveal",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "brand logos contained",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "marquee pauses on hover",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "loader slides in",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "loader has no progress bar",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "loader logo animates",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "loader slides out",
+      "ok": true,
+      "detail": "matrix(1, 0, 0, 1, -768.099, 0)"
+    },
+    {
+      "name": "loader hidden after slide",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "input focus has no extra orange halo",
+      "ok": true,
+      "detail": "{\"shadow\":\"none\",\"outline\":\"none\"}"
+    },
+    {
+      "name": "select focus no halo",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "select dropdown animates",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "faq opens with motion",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "quick-view dialog animates",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "add-to-cart toast animates",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "scroll progress advances",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "back-to-top visible",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "all reveal targets visible after scroll",
+      "ok": true,
+      "detail": "0 hidden"
+    },
+    {
+      "name": "3D hero ready",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "3D fallback hidden",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "3D hero rotates slowly while idle",
+      "ok": true,
+      "detail": "-0.60→-0.52"
+    },
+    {
+      "name": "3D hero responds to scroll",
+      "ok": true,
+      "detail": "-0.52→-0.33"
+    },
+    {
+      "name": "button shine sweep",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "magnetic button translate",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "hero float idle animation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "category hover feedback",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "service icon ring",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "checkbox pop-in",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "motion toggle pauses marquee",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "sound toggle visible",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "sound can be muted",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "sound can be unmuted",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "sound cue plays after user gesture",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "curtain fully covers before navigation",
+      "ok": true,
+      "detail": "{\"covered\":true,\"tf\":\"none\"}"
+    },
+    {
+      "name": "link navigation completes",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "arrival curtain hidden after transition",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile nav opens",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "reduced motion reveal visible",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "reduced motion marquee still",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "reduced motion loader static",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "no page errors",
+      "ok": true,
+      "detail": ""
+    }
+  ]
+}

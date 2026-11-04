@@ -27,7 +27,7 @@
       card.style.setProperty('--mx', ((event.clientX - rect.left) / rect.width * 100) + '%');
       card.style.setProperty('--my', ((event.clientY - rect.top) / rect.height * 100) + '%');
     }, { passive: true });
-    document.querySelectorAll('.pb-btn:not([data-magnetic]), .pb-product-card__add').forEach(function (button) {
+    document.querySelectorAll('.pb-btn:not([data-magnetic])').forEach(function (button) {
       button.addEventListener('pointermove', function (event) {
         if (reduced()) return;
         var rect = button.getBoundingClientRect();

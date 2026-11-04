@@ -5,9 +5,8 @@ input:not([type]),input:where([type=text],[type=email],[type=tel],[type=number],
   transition:border-color .25s var(--ease),box-shadow .25s var(--ease),background .25s var(--ease),transform .25s var(--ease)
 }
 input:not([type]):hover,input:where([type=text],[type=email],[type=tel],[type=number],[type=search],[type=password],[type=url]):hover,select:hover,textarea:hover{border-color:#c6d2e4}
-input:not([type]):focus,input:where([type=text],[type=email],[type=tel],[type=number],[type=search],[type=password],[type=url]):focus,select:focus,textarea:focus{background:#fff;border-color:var(--orange-400);box-shadow:0 0 0 4px var(--orange-50),0 8px 20px -14px #ff6a0066;animation:focus-pop .35s var(--ease)}
+input:not([type]):focus,input:where([type=text],[type=email],[type=tel],[type=number],[type=search],[type=password],[type=url]):focus,select:focus,textarea:focus{background:#fff;border-color:var(--orange-500);box-shadow:none;outline:none}
 input:-webkit-autofill,textarea:-webkit-autofill,select:-webkit-autofill{-webkit-box-shadow:0 0 0 1000px var(--navy-50) inset;-webkit-text-fill-color:var(--ink);caret-color:var(--ink);transition:background-color 9999s ease-out}
-@keyframes focus-pop{0%{transform:scale(.995)}60%{transform:scale(1.006)}100%{transform:scale(1)}}
 /* Custom checkbox/radio, including Woo payment methods. */
 input[type=checkbox],input[type=radio]{appearance:none;-webkit-appearance:none;display:inline-grid;place-items:center;width:20px;height:20px;min-height:0;border:1.5px solid #c6d2e4;border-radius:6px;background:#fff;cursor:pointer;transition:all .25s var(--ease);flex:none;margin:0}
 input[type=radio]{border-radius:50%}
@@ -18,7 +17,8 @@ input[type=checkbox]:checked,input[type=radio]:checked{background:linear-gradien
 input[type=checkbox]:checked::after,input[type=radio]:checked::after{transform:scale(1)}
 input[type=checkbox]:focus-visible,input[type=radio]:focus-visible{outline:3px solid var(--orange-100);outline-offset:3px}
 /* 2) Buttons and links: shine, ripple, press, magnetic-friendly. */
-.pb-btn,.button,button[type=submit],.pb-product-card__add,.pb-action,.pb-cat,.pb-nav__menu a,.pb-section__link,.pb-qty-btn,.pb-product-card__tool{position:relative;isolation:isolate;overflow:hidden}
+.pb-btn,.button,button[type=submit],.pb-product-card__add,.pb-cat,.pb-nav__menu a,.pb-section__link,.pb-qty-btn,.pb-product-card__tool{position:relative;isolation:isolate;overflow:hidden}
+.pb-action{position:relative;isolation:isolate;overflow:visible}
 .pb-btn::before,.button::before,button[type=submit]::before,.pb-product-card__add::before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,transparent 30%,#ffffff59 50%,transparent 70%);transform:translateX(-130%) skewX(-12deg);transition:transform .7s var(--ease);pointer-events:none}
 .pb-btn:hover::before,.button:hover::before,button[type=submit]:hover::before,.pb-product-card__add:hover::before{transform:translateX(130%) skewX(-12deg)}
 .pb-btn:active,.button:active,button[type=submit]:active,.pb-product-card__add:active,.pb-action:active,.pb-cat:active{transform:scale(.965)}
@@ -33,7 +33,10 @@ input[type=checkbox]:focus-visible,input[type=radio]:focus-visible{outline:3px s
 .pb-card,.pb-panel,.pb-side-card,.pb-step,.pb-cat,.pb-service,.pb-article-card,.pb-contact-cards__card,.pb-about-value,.pb-dash-card,.pb-banner,.pb-product-card,.pb-editorial{position:relative}
 .pb-card::after,.pb-panel::after,.pb-side-card::after,.pb-step::after,.pb-service::after,.pb-article-card::after,.pb-contact-cards__card::after,.pb-about-value::after,.pb-dash-card::after{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(240px circle at var(--mx,50%) var(--my,0%),#ff6a0010,transparent 70%);opacity:0;transition:opacity .35s;pointer-events:none}
 .pb-card:hover::after,.pb-panel:hover::after,.pb-side-card:hover::after,.pb-step:hover::after,.pb-service:hover::after,.pb-article-card:hover::after,.pb-contact-cards__card:hover::after,.pb-about-value:hover::after,.pb-dash-card:hover::after{opacity:1}
-.pb-cat:hover .pb-cat__icon{animation:icon-bounce .6s var(--ease)}
+.pb-cat__icon{transition:transform .5s cubic-bezier(.2,1.4,.3,1),background .3s var(--ease),color .3s var(--ease),box-shadow .3s var(--ease)}
+.pb-cat:hover{transform:none;box-shadow:var(--sh-md);border-color:var(--orange-100)}
+.pb-cat:hover .pb-cat__icon{animation:none;transform:translateY(-5px) rotate(-7deg) scale(1.07);box-shadow:0 12px 22px -14px #ff6a0080}
+.pb-cat:active .pb-cat__icon{transform:translateY(-1px) rotate(-3deg) scale(.96)}
 .pb-service:hover .pb-service__icon{animation:icon-ring .7s var(--ease)}
 .pb-dash-card:hover .pb-dash-card__icon{animation:icon-nudge .6s var(--ease)}
 @keyframes icon-bounce{0%,100%{transform:none}40%{transform:translateY(-6px) rotate(-8deg)}70%{transform:translateY(2px)}}
@@ -43,7 +46,7 @@ input[type=checkbox]:focus-visible,input[type=radio]:focus-visible{outline:3px s
 .pb-select__native{position:absolute!important;width:1px!important;height:1px!important;min-height:0!important;opacity:0;pointer-events:none;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .pb-select__button{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-height:46px;border:1.5px solid var(--line);border-radius:var(--r-sm);background:var(--bg);padding:10px 14px;font-size:13px;text-align:start;cursor:pointer;transition:all .25s var(--ease)}
 .pb-select__button:hover{border-color:#c6d2e4;background:#fff}
-.pb-select.is-open .pb-select__button,.pb-select__button:focus-visible{border-color:var(--orange-400);background:#fff;box-shadow:0 0 0 4px var(--orange-50)}
+.pb-select.is-open .pb-select__button,.pb-select__button:focus-visible{border-color:var(--orange-500);background:#fff;box-shadow:none;outline:none}
 .pb-select__button .pb-icon{width:16px;height:16px;color:var(--muted);transition:transform .3s var(--ease)}
 .pb-select.is-open .pb-select__button .pb-icon{transform:rotate(180deg);color:var(--orange-500)}
 .pb-select__list{position:absolute;top:calc(100% + 8px);inset-inline:0;z-index:90;max-height:260px;overflow:auto;margin:0;padding:6px;list-style:none;background:#fff;border:1px solid var(--line);border-radius:13px;box-shadow:var(--sh-lg);transform-origin:top center;animation:select-in .25s var(--ease)}
@@ -92,33 +95,28 @@ input[type=checkbox]:focus-visible,input[type=radio]:focus-visible{outline:3px s
 @keyframes faq-open{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
 .pb-toast{animation:toast-spring .5s cubic-bezier(.34,1.56,.64,1)}
 @keyframes toast-spring{from{opacity:0;transform:translateY(20px) scale(.9)}to{opacity:1;transform:none}}
-/* 9) Page transition loader. */
-.pb-page-loader{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:radial-gradient(ellipse at 50% 30%,#173b65,#0a1b33 60%,#061529);opacity:0;visibility:hidden;transition:opacity .35s var(--ease),visibility .35s}
-.pb-page-loader.is-active{opacity:1;visibility:visible}
-.pb-page-loader__scene{position:relative;width:min(420px,86vw);text-align:center;color:#d9e5f5}
-.pb-page-loader__logo{width:74px;height:74px;margin:0 auto 18px;display:grid;place-items:center;border-radius:22px;background:#ffffff0d;border:1px solid #ffffff1f;box-shadow:0 20px 50px -20px #000;animation:loader-pulse 1.6s ease-in-out infinite}
-.pb-page-loader__logo svg{width:46px;height:46px}
-.pb-page-loader__road{position:relative;height:54px;margin:10px 0 18px;overflow:hidden;border-bottom:2px dashed #7da8d640}
-.pb-page-loader__car{position:absolute;bottom:6px;right:-40px;width:38px;height:38px;color:var(--orange-400);animation:loader-drive 1.5s cubic-bezier(.45,0,.55,1) infinite}
-.pb-page-loader__bar{height:5px;border-radius:99px;background:#ffffff14;overflow:hidden}
-.pb-page-loader__bar i{display:block;height:100%;width:40%;border-radius:99px;background:linear-gradient(90deg,var(--orange-400),var(--orange-600));animation:loader-bar 1.2s var(--ease) infinite}
-.pb-page-loader__text{margin:14px 0 0;font-size:12px;color:#a8bcd6}
-.pb-page-loader.is-static .pb-page-loader__car,.pb-page-loader.is-static .pb-page-loader__logo,.pb-page-loader.is-static .pb-page-loader__bar i{animation:none}
-.pb-page-loader.is-static .pb-page-loader__bar i{width:100%}
-@keyframes loader-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
-@keyframes loader-drive{0%{right:-40px;transform:scaleX(1)}49%{transform:scaleX(1)}50%{right:calc(100% + 40px);transform:scaleX(-1)}99%{transform:scaleX(-1)}100%{right:-40px;transform:scaleX(1)}}
-@keyframes loader-bar{0%{transform:translateX(120%)}100%{transform:translateX(-260%)}}
-html.pb-page-leaving .pb-site-content,html.pb-page-leaving .pb-header,html.pb-page-leaving .pb-footer{animation:page-leave .35s var(--ease) forwards}
-@keyframes page-leave{to{opacity:0;transform:translateY(-10px)}}
-.pb-page-enter{animation:page-enter .55s var(--ease)}
-@keyframes page-enter{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+/* 9) Page transition: opaque curtain, logo-only loader, no content flash. */
+.pb-page-loader{position:fixed;inset:0;z-index:9999;visibility:hidden;transform:translateX(103%);transition:transform .42s cubic-bezier(.4,0,.2,1),visibility .42s;pointer-events:none;contain:layout paint}
+.pb-page-loader.is-active{visibility:visible;transform:none;pointer-events:auto}
+.pb-page-loader.is-leaving{visibility:visible;transform:translateX(-103%)}
+.pb-page-loader.is-instant{transition:none!important}
+html.pb-page-arriving .pb-page-loader,html.pb-page-arriving .pb-page-loader[hidden]{display:block!important;visibility:visible;transform:none;transition:none;pointer-events:auto}
+.pb-page-loader__panel{position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(ellipse at 50% 38%,#173b65,#0a1b33 62%,#061529);color:#fff}
+.pb-page-loader__logo{display:grid;place-items:center;width:104px;height:104px;color:var(--orange-400);animation:loader-logo 1.6s ease-in-out infinite;will-change:transform}
+.pb-page-loader__logo svg{width:68px;height:68px;filter:drop-shadow(0 10px 28px #ff6a0066)}
+.pb-page-loader:not(.is-active):not(.is-leaving) .pb-page-loader__logo{animation-play-state:paused}
+html.pb-page-arriving .pb-page-loader__logo{animation-play-state:running}
+.pb-page-loader.is-static .pb-page-loader__logo{animation:none}
+@keyframes loader-logo{0%,100%{transform:translateY(0) scale(1) rotate(0)}50%{transform:translateY(-8px) scale(1.06) rotate(-3deg)}}
+html.pb-page-leaving .pb-site-content,html.pb-page-leaving .pb-header,html.pb-page-leaving .pb-footer{animation:none}
+.pb-page-enter{animation:none}
 /* 10) Reduced motion / pause. */
-.pb-motion-paused .pb-ripple,.pb-motion-paused .pb-page-loader__car,.pb-motion-paused .pb-page-loader__bar i{animation:none!important}
+.pb-motion-paused .pb-ripple,.pb-motion-paused .pb-page-loader__logo{animation:none!important}
 @media(prefers-reduced-motion:reduce){
   .pb-btn::before,.button::before,button[type=submit]::before,.pb-product-card__add::before{display:none}
   .pb-hero__car,.pb-hero__stage::before,.pb-hero__stage::after,.pb-hero__float{animation:none!important;transform:none!important}
   .pb-page-enter,html.pb-page-leaving .pb-site-content{animation:none}
-  .pb-page-loader{transition:none}
+  .pb-page-loader{transition:none}.pb-page-loader__logo{animation:none}
   .pb-select__list,.pb-dialog[open],.pb-toast{animation:none}
 }
 @media(max-width:768px){
@@ -147,3 +145,33 @@ html.pb-page-leaving .pb-site-content,html.pb-page-leaving .pb-header,html.pb-pa
 .woocommerce-MyAccount-navigation ul{max-width:100%}
 .pb-dash__stats{grid-template-columns:repeat(3,minmax(0,1fr))}
 .pb-dash-card{min-width:0;overflow-wrap:anywhere}
+
+/* 11) Header hover underline: visible, animated, RTL-aware. */
+.pb-nav__menu>li>a,.pb-action,.pb-topbar__links a,.pb-nav__support{position:relative}
+.pb-nav__menu>li>a::before,.pb-action::after,.pb-topbar__links a::after,.pb-nav__support::after{content:'';position:absolute;bottom:4px;inset-inline:13px;height:2px;border-radius:2px;background:currentColor;transform:scaleX(0);transform-origin:right center;transition:transform .3s var(--ease);pointer-events:none}
+.pb-action::after{inset-inline:11px;bottom:5px}
+.pb-topbar__links a::after,.pb-nav__support::after{inset-inline:0;bottom:-3px}
+.pb-nav__menu>li>a:hover::before,.pb-nav__menu>li>a:focus-visible::before,.pb-nav__menu>li.current-menu-item>a::before,.pb-action:hover::after,.pb-action:focus-visible::after,.pb-topbar__links a:hover::after,.pb-nav__support:hover::after{transform:scaleX(1)}
+/* 12) Brand marquee: logos can never overflow their tile. */
+.pb-marquee .pb-brand-tile{flex:0 0 185px;min-width:185px;max-width:185px;overflow:hidden;box-sizing:border-box}
+.pb-marquee .pb-brand-tile img{display:block;width:132px!important;height:44px!important;max-width:132px!important;max-height:44px!important;flex:0 0 auto;object-fit:contain!important}
+@media(max-width:768px){.pb-marquee .pb-brand-tile{flex-basis:150px;min-width:150px;max-width:150px}.pb-marquee .pb-brand-tile img{width:110px!important;height:38px!important;max-width:110px!important;max-height:38px!important}}
+.pb-hero__credit{position:absolute;bottom:2px;inset-inline-start:8px;z-index:4;font-size:8px;color:#93a8c4;opacity:.45;transition:opacity .25s}
+.pb-hero__credit:hover{opacity:1}
+/* 13) 3D hero canvas with image fallback. */
+.pb-hero__canvas{position:absolute;inset:0;z-index:1;width:100%;height:100%;opacity:0;transition:opacity .7s var(--ease);pointer-events:none}
+.pb-hero--3d .pb-hero__canvas{opacity:1}
+.pb-hero--3d .pb-hero__car--fallback{animation:none!important;opacity:0!important;visibility:hidden}
+.pb-hero--3d .pb-hero__stage{transform:none}
+/* 14) Focus: one calm border, no extra orange halo on fields. */
+input:focus-visible,textarea:focus-visible,select:focus-visible,.pb-select__button:focus-visible{outline:none}
+.pb-search:focus-within{box-shadow:none;border-color:var(--orange-500)}
+
+/* 15) Stable product hover: outer card never moves, inner surface does. */
+.pb-product-card,.woocommerce ul.products li.product{padding:0;background:transparent;border:0;box-shadow:none;overflow:visible}
+.pb-product-card__surface{padding:12px 12px 15px;background:#fff;border:1px solid var(--line-soft);border-radius:19px}
+.pb-product-card__add:hover{transform:none}
+.pb-brand-tile:hover{transform:none}
+@media(max-width:768px){.pb-product-card__surface{padding:9px 9px 12px;border-radius:15px}}
+@media(hover:none){.pb-product-card:hover .pb-product-card__surface,.pb-product-card:focus-within .pb-product-card__surface{translate:none;box-shadow:none}}
+@media(prefers-reduced-motion:reduce){.pb-product-card__surface{transition:none}.pb-product-card:hover .pb-product-card__surface{translate:none}}

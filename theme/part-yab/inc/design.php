@@ -29,7 +29,7 @@ function partyab_print_sprite(): void {
 	}
 	echo '<div class="pb-scroll-progress" aria-hidden="true"><i></i></div>';
 	echo '<div class="pb-toast-stack" role="status" aria-live="polite" aria-atomic="false"></div>';
-	echo '<div class="pb-page-loader" role="status" aria-live="polite" aria-hidden="true" hidden><div class="pb-page-loader__scene"><div class="pb-page-loader__logo"><svg aria-hidden="true"><use href="#i-logo"></use></svg></div><div class="pb-page-loader__road"><svg class="pb-page-loader__car" aria-hidden="true"><use href="#i-car"></use></svg></div><div class="pb-page-loader__bar"><i></i></div><p class="pb-page-loader__text">در حال آماده‌سازی مسیر…</p></div></div>';
+	echo '<div class="pb-page-loader" role="status" aria-live="polite" aria-hidden="true" hidden><div class="pb-page-loader__panel"><span class="pb-page-loader__logo" aria-hidden="true"><svg><use href="#i-logo"></use></svg></span><span class="screen-reader-text">در حال آماده‌سازی صفحه</span></div></div>';
 }
 add_action( 'wp_body_open', 'partyab_print_sprite', 1 );
 
@@ -88,4 +88,24 @@ function partyab_section_heading( string $title, string $subtitle = '', string $
 function partyab_design_category_icon( string $slug ): string {
 	$map = array( 'brake-system' => 'brake', 'filters' => 'oil', 'electrical' => 'electric', 'suspension' => 'shock', 'body-glass' => 'body', 'lighting' => 'light', 'engine' => 'gear' );
 	return partyab_icon( $map[ $slug ] ?? 'gear' );
+}
+
+/** Local brand artwork for the home marquee; falls back to the term name. */
+function partyab_brand_logo( string $name ): string {
+	$map = array(
+		'ایساکو' => 'isaco.png', 'isaco' => 'isaco.png',
+		'سرکان' => 'serkan.png', 'serkan' => 'serkan.png',
+		'صبا' => 'saba.png', 'saba' => 'saba.png',
+		'بوش' => 'bosch.png', 'bosch' => 'bosch.png',
+		'کوش‌آوران' => 'koosh-avaran.svg', 'کوش آوران' => 'koosh-avaran.svg', 'koosh-avaran' => 'koosh-avaran.svg',
+		'مان' => 'mann.png', 'mann' => 'mann.png', 'mann-filter' => 'mann.png',
+		'دنسو' => 'denso.png', 'denso' => 'denso.png',
+		'والئو' => 'valeo.png', 'valeo' => 'valeo.png',
+		'های‌کیو' => 'hi-q.svg', 'های کیو' => 'hi-q.svg', 'hi-q' => 'hi-q.svg',
+		'برنا' => 'borna.png', 'borna' => 'borna.png',
+		'عظام' => 'ezam.png', 'ezam' => 'ezam.png',
+	);
+	$key = trim( $name );
+	$file = $map[ $key ] ?? $map[ strtolower( $key ) ] ?? '';
+	return $file ? PARTYAB_URI . '/assets/img/brands/' . $file : '';
 }

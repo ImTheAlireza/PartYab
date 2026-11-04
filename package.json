@@ -4,10 +4,16 @@
     "lint:php": "node tools/php-run.mjs tools/php-lint.php theme plugins",
     "test:php": "node tools/php-run.mjs tools/php-test.php",
     "test:preview": "node tools/preview-smoke.mjs",
-    "build:release": "bash tools/build-release.sh"
+    "build:release": "bash tools/build-release.sh",
+    "build:hero": "node tools/build-hero.mjs",
+    "test:animation": "node tools/animation-audit.mjs"
   },
   "dependencies": {
     "@php-wasm/node": "^3.1.54",
     "@php-wasm/universal": "^3.1.54"
+  },
+  "devDependencies": {
+    "three": "0.170.0",
+    "esbuild": "0.24.2"
   }
 }

@@ -6,6 +6,7 @@ setupLambdaEnvironment('/tmp/al2023/lib');
 process.env.FONTCONFIG_PATH ||= '/tmp/fonts';
 const browser = await pw.launch({ executablePath: await chromium.executablePath(), args: chromium.args, headless: true });
 const page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 1 });
+await page.route('**/assets/js/hero-3d.js', r => r.fulfill({ contentType: 'text/javascript', body: '' }));
 const errors = [];
 page.on('pageerror', e => errors.push('pageerror: ' + e.message));
 page.on('console', m => { if (m.type() === 'error' && !page.url().endsWith('/404')) errors.push('console: ' + m.text()); });

@@ -41,7 +41,7 @@ defined( 'ABSPATH' ) || exit;
 				<div class="pb-footer__contact"><?php echo partyab_icon( 'clock' ); // phpcs:ignore WordPress.Security.EscapeOutput ?><div><small>ساعت پاسخگویی</small><b>شنبه تا پنجشنبه، ۹ تا ۱۸</b></div></div>
 			</div>
 		</div>
-		<div class="pb-footer__bottom-inner"><span>© <?php echo esc_html( partyab_fa_digits( gmdate( 'Y' ) ) ); ?> پارتیاب — تمامی حقوق محفوظ است.</span><div class="pb-footer__pay"><span>پرداخت امن</span><span>درگاه بانکی</span><span>فاکتور رسمی</span></div><button class="pb-motion-toggle" type="button" data-motion-toggle aria-pressed="false"><?php echo partyab_icon( 'spark' ); // phpcs:ignore WordPress.Security.EscapeOutput ?><span>توقف انیمیشن‌ها</span></button></div>
+		<div class="pb-footer__bottom-inner"><span>© <?php echo esc_html( partyab_fa_digits( gmdate( 'Y' ) ) ); ?> پارتیاب — تمامی حقوق محفوظ است.</span><div class="pb-footer__pay"><span>پرداخت امن</span><span>درگاه بانکی</span><span>فاکتور رسمی</span></div><button class="pb-motion-toggle" type="button" data-motion-toggle aria-pressed="false"><?php echo partyab_icon( 'spark' ); // phpcs:ignore WordPress.Security.EscapeOutput ?><span>توقف انیمیشن‌ها</span></button><button class="pb-motion-toggle" type="button" data-sound-toggle aria-pressed="true" hidden><span>خاموش کردن صدا</span></button></div>
 	</div>
 </footer>
 <button class="pb-top" type="button" data-pb-top aria-label="بازگشت به بالا"><?php echo partyab_icon( 'up' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></button>

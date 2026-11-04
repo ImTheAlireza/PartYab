@@ -149,6 +149,17 @@ function wp_unslash( $v ) { return is_string( $v ) ? stripslashes( $v ) : $v; }
 function wp_parse_args( $a, $d = array() ) { return array_merge( $d, (array) $a ); }
 function get_query_var( $k, $d = '' ) { return $d; }
 function wp_json_encode( $v ) { return json_encode( $v ); }
+function register_setting( $g, $n, $a = array() ) {}
+function add_settings_section( ...$a ) {}
+function add_settings_field( ...$a ) {}
+function add_theme_page( ...$a ) {}
+function current_user_can( $c ) { return true; }
+function checked( $a, $b = true, $echo = true ) { $r = ( (string) $a === (string) $b ) ? ' checked="checked"' : ''; if ( $echo ) { echo $r; } return $r; }
+function settings_fields( $g ) {}
+function do_settings_sections( $p ) {}
+function submit_button( $t = '' ) { echo '<button>' . esc_html( $t ) . '</button>'; }
+function get_admin_page_title() { return 'حرکت و صدا'; }
+function __return_false() { return false; }
 
 // درخت خودرو (همان چیزی که تاکسونومی می‌سازد).
 function partyab_car_tree() {
@@ -191,6 +202,7 @@ class WC_Product {
 }
 
 require PARTYAB_DIR . '/inc/design.php';
+require PARTYAB_DIR . '/inc/motion-settings.php';
 require PARTYAB_DIR . '/inc/compat-ui.php';
 require PARTYAB_DIR . '/inc/woocommerce.php';
 require PARTYAB_DIR . '/inc/layout.php';
@@ -427,6 +439,18 @@ check( 'گزارش بی‌نتیجه: شمارش', 2 === ( $log['لنت پرای
 check( 'گزارش بی‌نتیجه: یک کلید', 1 === count( $log ) );
 check( 'گزارش بی‌نتیجه: عبارت کوتاه', array( 'لنت پراید' => 2 ) === partyab_zero_log_add( $log, 'ل' ) );
 check( 'گزارش بی‌نتیجه: سقف', 2 === count( partyab_zero_log_add( $log, 'شمع سمند', 2 ) ) );
+
+/* ---------- ۵٫۱۴) حرکت/صدا و لودر لوگو ---------- */
+check( 'صدا: فقط مقدار صریح ۱ روشن می‌کند', '1' === partyab_sanitize_sound( '1' ) );
+check( 'صدا: مقدارهای دیگر خاموش می‌شوند', '0' === partyab_sanitize_sound( '0' ) && '0' === partyab_sanitize_sound( 'yes' ) && '0' === partyab_sanitize_sound( '' ) );
+ob_start();
+partyab_render_sound_field();
+$sound_field = ob_get_clean();
+check( 'صدا: چک‌باکس تنظیمات وردپرس', strpos( $sound_field, 'name="partyab_motion_sound"' ) !== false && strpos( $sound_field, 'checked' ) !== false );
+ob_start();
+partyab_print_sprite();
+$sprite = ob_get_clean();
+check( 'لودر: فقط لوگو، بدون پروگرس‌بار', strpos( $sprite, 'pb-page-loader__logo' ) !== false && strpos( $sprite, 'pb-page-loader__line' ) === false && strpos( $sprite, 'progressbar' ) === false );
 
 /* ---------- ۶) رندر صفحه اصلی دمو ۱ ---------- */
 ob_start();

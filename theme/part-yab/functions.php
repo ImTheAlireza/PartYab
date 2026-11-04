@@ -9,7 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'PARTYAB_VERSION', '2.0.0' );
+define( 'PARTYAB_VERSION', '2.4.0' );
 define( 'PARTYAB_DIR', get_stylesheet_directory() );
 define( 'PARTYAB_URI', get_stylesheet_directory_uri() );
 
@@ -28,6 +28,7 @@ function partyab_asset_version( string $relative_path ): string {
 $partyab_modules = array(
 	'setup',       // ویژگی‌های قالب، منوها، اندازه تصاویر.
 	'design',      // آیکن‌ها و اجزای مشترک بازطراحی.
+	'motion-settings', // تنظیمات حرکت/صدا و پوشش اولیهٔ ترنزیشن.
 	'enqueue',     // استایل/اسکریپت/فونت با نسخه‌گذاری.
 	'security',    // سخت‌سازی پیش‌فرض وردپرس.
 	'woocommerce', // تنظیمات حلقه و آرشیو فروشگاه.
