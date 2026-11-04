@@ -43,6 +43,7 @@ const server = createServer(async (req, res) => {
     if (path === '/preview/catalog.json') { res.writeHead(200, { 'Content-Type': types['.json'], 'Cache-Control': 'no-cache' }); return res.end(JSON.stringify(products)); }
     if (path.startsWith('/preview/') && /\.(css|js)$/.test(path)) return serveFile(res, join(root, 'preview'), path.slice('/preview/'.length));
     if (path === '/favicon.ico') return serveFile(res, join(root, 'theme/part-yab/assets/img'), 'logo-stacked.svg');
+    if (path === '/ideas') return serveFile(res, join(root, 'preview'), 'ideas.html');
     if (path === '/health') { res.writeHead(200, { 'Content-Type': 'application/json' }); return res.end(JSON.stringify({ ok: true, demo: true })); }
     if (path === '/my-car' && url.searchParams.get('clear') === '1') { res.writeHead(302, { Location: '/my-car', 'Set-Cookie': 'partyab_demo_car=; Path=/; Max-Age=0; SameSite=Lax' }); return res.end(); }
     const car = readCar(req);

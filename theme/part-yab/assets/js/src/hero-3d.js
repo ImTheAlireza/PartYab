@@ -102,7 +102,7 @@ function init() {
     const py = still ? 0 : parseFloat(sceneEl.style.getPropertyValue('--py')) || 0;
     const realDt = Math.min(0.5, (t - lastT) / 1000 || 0.016);
     const dt = Math.min(0.1, realDt); lastT = t;
-    if (!still) idle += realDt * 0.12;
+    if (!still) idle += realDt * 0.2;
     const targetYaw = -0.7 + idle + progress * 0.35 + px * 0.1;
     const targetPitch = py * 0.05;
     const alpha = still ? 1 : 1 - Math.exp(-dt * 9);

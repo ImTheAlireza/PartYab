@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-04T05:41:42.866Z",
+  "date": "2026-11-04T06:35:16.250Z",
   "results": [
     {
       "name": "header nav underline",
@@ -19,7 +19,7 @@
     {
       "name": "category icon no snapping keyframe",
       "ok": true,
-      "detail": "{\"anim\":\"none\",\"trans\":\"transform, background, color, box-shadow\",\"tf\":\"matrix(1, -5.13124e-06, 5.13124e-06, 1, 0, -0.000209998)\"}"
+      "detail": "{\"anim\":\"none\",\"trans\":\"transform, background, color, box-shadow\",\"tf\":\"matrix(1.06202, -0.1304, 0.1304, 1.06202, 0, -5)\"}"
     },
     {
       "name": "category outer hit area static",
@@ -29,7 +29,7 @@
     {
       "name": "product surface lift",
       "ok": true,
-      "detail": "0px -6px"
+      "detail": "0px"
     },
     {
       "name": "product outer hit area static",
@@ -74,7 +74,7 @@
     {
       "name": "loader slides out",
       "ok": true,
-      "detail": "matrix(1, 0, 0, 1, -768.099, 0)"
+      "detail": "matrix(1, 0, 0, 1, 0, 0)"
     },
     {
       "name": "loader hidden after slide",
@@ -139,12 +139,12 @@
     {
       "name": "3D hero rotates slowly while idle",
       "ok": true,
-      "detail": "-0.60→-0.52"
+      "detail": "-0.53→-0.23"
     },
     {
       "name": "3D hero responds to scroll",
       "ok": true,
-      "detail": "-0.52→-0.33"
+      "detail": "-0.23→-0.00"
     },
     {
       "name": "button shine sweep",
