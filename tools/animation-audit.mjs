@@ -56,6 +56,7 @@ await p.waitForFunction(() => { const el = document.querySelector('.pb-page-load
 check('loader slides in', await css('.pb-page-loader', 'transform') === 'none' && await css('.pb-page-loader', 'visibility') === 'visible');
 check('loader has no progress bar', await p.locator('.pb-page-loader__line, .pb-page-loader progress, .pb-page-loader [role=progressbar]').count() === 0);
 check('loader logo animates', await css('.pb-page-loader__logo', 'animationName') === 'loader-logo');
+check('L2 pulse waves animate', await p.locator('.pb-page-loader__wave').count() === 3 && await css('.pb-page-loader__wave', 'animationName') === 'loader-wave');
 await p.evaluate(() => { window.PartyabTransition.hide(); });
 await p.waitForFunction(() => document.querySelector('.pb-page-loader').classList.contains('is-leaving'), { timeout: 5000 }).catch(() => {});
 await p.waitForTimeout(180);
@@ -153,6 +154,7 @@ check('reduced motion reveal visible', await p.locator('[data-reveal]').first().
 check('reduced motion marquee still', await css('.pb-marquee__track', 'animationName') === 'none');
 await p.evaluate(() => window.PartyabTransition.show()); await p.waitForTimeout(80);
 check('reduced motion loader static', await p.locator('.pb-page-loader').evaluate(el => el.classList.contains('is-static')));
+check('reduced motion L2 waves static', await css('.pb-page-loader__wave', 'animationName') === 'none');
 check('no page errors', errors.length === 0, errors.join(' | '));
 writeFileSync('preview/animation-audit.json', JSON.stringify({ date: new Date().toISOString(), results }, null, 2));
 const failed = results.filter(r => !r.ok);

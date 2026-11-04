@@ -5,7 +5,7 @@
   var DURATION = 420;
   var overlay = null, state = 'idle', busy = false, serial = 0;
   var reduced = function () { return window.PartyabMotion && window.PartyabMotion.reduced(); };
-  var MARKUP = '<div class="pb-page-loader__panel"><span class="pb-page-loader__logo" aria-hidden="true"><svg><use href="#i-logo"></use></svg></span><span class="screen-reader-text">در حال آماده‌سازی صفحه</span></div>';
+  var MARKUP = '<div class="pb-page-loader__panel"><span class="pb-page-loader__pulse" aria-hidden="true"><i class="pb-page-loader__wave"></i><i class="pb-page-loader__wave"></i><i class="pb-page-loader__wave"></i></span><span class="pb-page-loader__logo" aria-hidden="true"><svg><use href="#i-logo"></use></svg></span><span class="screen-reader-text">در حال آماده‌سازی صفحه</span></div>';
 
   function ensure() {
     if (overlay) return overlay;
