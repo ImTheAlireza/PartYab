@@ -2,14 +2,14 @@
   {
     "name": "desktop cold load",
     "pass": true,
-    "ms": 20760,
+    "ms": 19596,
     "state": {
       "hero": {
         "ready": true,
         "status": "ready",
         "error": null,
-        "yaw": 1.661182230330592,
-        "idle": 0.13657999999940404,
+        "yaw": 1.6969616578374735,
+        "idle": 0.1783800000002979,
         "progress": 0,
         "reduced": false
       },
@@ -25,7 +25,7 @@
         "status": 200
       },
       {
-        "url": "http://127.0.0.1:3000/assets/models/mustang-shelby-gt500.glb",
+        "url": "http://127.0.0.1:3000/assets/models/brick-car.glb",
         "status": 200
       }
     ],
@@ -35,14 +35,14 @@
   {
     "name": "mobile cold load",
     "pass": true,
-    "ms": 8436,
+    "ms": 7051,
     "state": {
       "hero": {
         "ready": true,
         "status": "ready",
         "error": null,
-        "yaw": 1.6214065726018907,
-        "idle": 0.1,
+        "yaw": 1.6043713921960054,
+        "idle": 0.08000000000044705,
         "progress": 0,
         "reduced": false
       },
@@ -58,7 +58,7 @@
         "status": 200
       },
       {
-        "url": "http://127.0.0.1:3000/assets/models/mustang-shelby-gt500.glb",
+        "url": "http://127.0.0.1:3000/assets/models/brick-car.glb",
         "status": 200
       }
     ],
@@ -68,14 +68,14 @@
   {
     "name": "legacy decoder blocked",
     "pass": true,
-    "ms": 16866,
+    "ms": 12936,
     "state": {
       "hero": {
         "ready": true,
         "status": "ready",
         "error": null,
-        "yaw": 1.57967151701297,
-        "idle": 0.05,
+        "yaw": 1.6038326819934172,
+        "idle": 0.07841999999955297,
         "progress": 0,
         "reduced": false
       },
@@ -91,7 +91,7 @@
         "status": 200
       },
       {
-        "url": "http://127.0.0.1:3000/assets/models/mustang-shelby-gt500.glb",
+        "url": "http://127.0.0.1:3000/assets/models/brick-car.glb",
         "status": 200
       }
     ],
@@ -101,14 +101,14 @@
   {
     "name": "slow model keeps poster",
     "pass": true,
-    "ms": 23953,
+    "ms": 21754,
     "state": {
       "hero": {
         "ready": true,
         "status": "ready",
         "error": null,
-        "yaw": 1.7075837304665369,
-        "idle": 0.18737999999955285,
+        "yaw": 1.6714653165228919,
+        "idle": 0.14859999999970205,
         "progress": 0,
         "reduced": false
       },
@@ -124,7 +124,7 @@
         "status": 200
       },
       {
-        "url": "http://127.0.0.1:3000/assets/models/mustang-shelby-gt500.glb",
+        "url": "http://127.0.0.1:3000/assets/models/brick-car.glb",
         "status": 200
       }
     ],
@@ -134,7 +134,7 @@
   {
     "name": "script unavailable",
     "pass": true,
-    "ms": 9672,
+    "ms": 9473,
     "state": {
       "hero": null,
       "canvasOpacity": "0",
@@ -160,7 +160,7 @@
   {
     "name": "model unavailable",
     "pass": true,
-    "ms": 11229,
+    "ms": 10293,
     "state": {
       "hero": {
         "ready": false,
@@ -183,14 +183,14 @@
         "status": 200
       },
       {
-        "url": "http://127.0.0.1:3000/assets/models/mustang-shelby-gt500.glb",
+        "url": "http://127.0.0.1:3000/assets/models/brick-car.glb",
         "status": 404
       }
     ],
     "errors": [],
     "failures": [
       {
-        "url": "http://127.0.0.1:3000/assets/models/mustang-shelby-gt500.glb",
+        "url": "http://127.0.0.1:3000/assets/models/brick-car.glb",
         "reason": "net::ERR_ABORTED"
       }
     ]
@@ -198,7 +198,7 @@
   {
     "name": "WebGL unavailable",
     "pass": true,
-    "ms": 9469,
+    "ms": 9814,
     "state": {
       "hero": {
         "ready": false,

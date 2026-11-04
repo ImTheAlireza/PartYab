@@ -7,7 +7,7 @@
     "build:release": "bash tools/build-release.sh",
     "build:hero": "node tools/build-hero.mjs",
     "test:animation": "node tools/animation-audit.mjs",
-    "build:model": "node tools/build-model.mjs",
+    "build:model": "node tools/build-brick-car.mjs",
     "test:hero": "node tools/hero-load-check.mjs"
   },
   "dependencies": {

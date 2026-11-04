@@ -1,4 +1,4 @@
-# ممیزی جداگانهٔ انیمیشن‌ها (نسخه ۲٫۵)
+# ممیزی جداگانهٔ انیمیشن‌ها (نسخه ۲٫۶)
 
 ابزار: `node tools/animation-audit.mjs`  
 خروجی ماشین‌خوان: `preview/animation-audit.json`

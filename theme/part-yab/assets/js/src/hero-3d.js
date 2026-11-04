@@ -25,7 +25,6 @@ function init() {
   let renderer, scene = null, environmentTarget = null, modelRoot = null;
   let disposed = false, ready = false, visible = true, raf = 0;
   let yaw = 1.55, pitch = 0, idle = 0, radius = 2.6, lastT = 0;
-  const replacedMaterials = new Set();
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 
   try {
@@ -66,7 +65,6 @@ function init() {
     observers.forEach(o => o.disconnect());
     disposeScene();
     environmentTarget?.dispose();
-    replacedMaterials.forEach(m => m.dispose());
     renderer?.dispose();
     disposed = true;
   }
@@ -83,30 +81,21 @@ function init() {
   }
 
   function tuneMaterials(model) {
-    const paintCache = new Map();
     model.traverse(o => {
       if (!o.isMesh) return;
       const list = Array.isArray(o.material) ? o.material : [o.material];
       const tuned = list.map(m => {
         if (!m) return m;
         const n = (m.name || '').toLowerCase();
-        if (n === 'carpaint' || n === 'carpaint.001') {
-          if (!paintCache.has(n)) {
-            const stripe = n === 'carpaint.001';
-            const base = { color: m.color ? m.color.clone() : new THREE.Color(0xffffff), metalness: stripe ? 0.2 : 0.85, roughness: stripe ? 0.3 : 0.28, envMapIntensity: 1.1, side: THREE.FrontSide };
-            // Clearcoat is a second specular lobe; skip it on phones / low-core devices.
-            paintCache.set(n, lowPower ? new THREE.MeshStandardMaterial(base) : new THREE.MeshPhysicalMaterial({ ...base, clearcoat: stripe ? 0.4 : 0.9, clearcoatRoughness: 0.14 }));
-            replacedMaterials.add(m);
-          }
-          return paintCache.get(n);
-        }
         if (n.includes('glass')) {
-          m.envMapIntensity = 1.1; m.transmission = 0; m.transparent = true; m.opacity = 0.55; m.depthWrite = false; m.side = THREE.DoubleSide; m.needsUpdate = true;
+          m.envMapIntensity = 1.1; m.transparent = true; m.opacity = 0.45; m.depthWrite = false; m.side = THREE.DoubleSide; m.needsUpdate = true;
           return m;
         }
-        if (n.includes('tire')) { m.metalness = 0.2; m.roughness = 0.85; m.side = THREE.FrontSide; return m; }
+        if (n.includes('tire')) { m.metalness = 0; m.roughness = 0.9; m.side = THREE.DoubleSide; return m; }
+        // Brick car is tiny; double-sided opaque materials avoid any face-culling
+        // differences across GPUs and cost almost nothing at ~3k triangles.
         m.envMapIntensity = 1.0;
-        m.side = /leather|seat|lambert|roll/.test(n) ? THREE.DoubleSide : THREE.FrontSide;
+        m.side = THREE.DoubleSide;
         return m;
       });
       o.material = Array.isArray(o.material) ? tuned : tuned[0];
@@ -116,7 +105,7 @@ function init() {
   async function load() {
     const slowTimer = setTimeout(() => { if (!ready && !disposed) { state.status = 'slow'; sceneEl.dataset.heroState = 'slow'; } }, 12000);
     try {
-      const url = new URL(canvas.dataset.model || './assets/models/mustang-shelby-gt500.glb', document.baseURI).href;
+      const url = new URL(canvas.dataset.model || './assets/models/brick-car.glb', document.baseURI).href;
       const response = await fetch(url, { signal: modelRequest.signal, credentials: 'same-origin' });
       if (!response.ok) throw new Error('model-http-' + response.status);
       const gltf = await new GLTFLoader().parseAsync(await response.arrayBuffer(), new URL('.', url).href);

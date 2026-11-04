@@ -1,7 +1,6 @@
 # 3D model credits
 
-- **Mustang Shelby GT500** by [blender-toart](https://www.cgtrader.com/designers/blender-toart), sourced from [CGTrader item #6123437](https://www.cgtrader.com/items/6123437/download-page), licensed under the CGTrader **Royalty Free License** (no AI).
-- The user-supplied source file is `2.glb` at the repository root. The web-optimized derivative is `assets/models/mustang-shelby-gt500.glb`.
-- Modifications for PartYab: removed the studio ground plane and helper empty, rebuilt and planted the four wheels on their axles, simplified dense geometry, joined draw calls (17), quantized positions/normals (KHR_mesh_quantization), removed unused UVs and transmission extensions, tuned paint/glass materials and hero lighting, transparent presentation, continuous slow turntable rotation with scroll/pointer offset. The web GLB is plain glTF — no Draco/WASM runtime decoder is required.
-- Mustang and Shelby are trademarks of Ford Motor Company; this project is not affiliated with or endorsed by Ford.
+- **PartYab Brick Concept** — an original, procedurally built brick/technic-style car created for this project by `tools/build-brick-car.mjs`. It is not an official LEGO product and is not affiliated with or endorsed by the LEGO Group. LEGO is a trademark of the LEGO Group.
+- The web asset is `assets/models/brick-car.glb`: plain glTF 2.0, ~132 KB, ~2.8k triangles, 9 draw calls, no textures, no Draco/WASM decoder, no material extensions.
+- The previous Mustang Shelby GT500 derivative (from the user-supplied `2.glb`, CGTrader #6123437 by blender-toart, Royalty Free) was removed from the theme because detailed PBR/clearcoat rendering was unreliable on some devices. The original upload remains at the repository root for reference.
 - three.js is MIT licensed (see `assets/js/hero-3d.LICENSE.txt`).
