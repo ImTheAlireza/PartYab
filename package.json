@@ -6,7 +6,9 @@
     "test:preview": "node tools/preview-smoke.mjs",
     "build:release": "bash tools/build-release.sh",
     "build:hero": "node tools/build-hero.mjs",
-    "test:animation": "node tools/animation-audit.mjs"
+    "test:animation": "node tools/animation-audit.mjs",
+    "build:model": "node tools/build-model.mjs",
+    "test:hero": "node tools/hero-load-check.mjs"
   },
   "dependencies": {
     "@php-wasm/node": "^3.1.54",
@@ -17,7 +19,6 @@
     "@gltf-transform/extensions": "^4.5.1",
     "@gltf-transform/functions": "^4.5.1",
     "@sparticuz/chromium": "^153.0.0",
-    "draco3dgltf": "^1.5.9",
     "esbuild": "0.24.2",
     "meshoptimizer": "^1.3.0",
     "playwright": "^1.64.1",

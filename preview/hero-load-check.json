@@ -1,0 +1,227 @@
+[
+  {
+    "name": "desktop cold load",
+    "pass": true,
+    "ms": 20760,
+    "state": {
+      "hero": {
+        "ready": true,
+        "status": "ready",
+        "error": null,
+        "yaw": 1.661182230330592,
+        "idle": 0.13657999999940404,
+        "progress": 0,
+        "reduced": false
+      },
+      "canvasOpacity": "1",
+      "fallbackOpacity": "0",
+      "fallbackVisibility": "hidden",
+      "fallbackLoaded": true,
+      "curtainHidden": true
+    },
+    "requests": [
+      {
+        "url": "http://127.0.0.1:3000/assets/js/hero-3d.js",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3000/assets/models/mustang-shelby-gt500.glb",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "failures": []
+  },
+  {
+    "name": "mobile cold load",
+    "pass": true,
+    "ms": 8436,
+    "state": {
+      "hero": {
+        "ready": true,
+        "status": "ready",
+        "error": null,
+        "yaw": 1.6214065726018907,
+        "idle": 0.1,
+        "progress": 0,
+        "reduced": false
+      },
+      "canvasOpacity": "1",
+      "fallbackOpacity": "0",
+      "fallbackVisibility": "hidden",
+      "fallbackLoaded": true,
+      "curtainHidden": true
+    },
+    "requests": [
+      {
+        "url": "http://127.0.0.1:3000/assets/js/hero-3d.js",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3000/assets/models/mustang-shelby-gt500.glb",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "failures": []
+  },
+  {
+    "name": "legacy decoder blocked",
+    "pass": true,
+    "ms": 16866,
+    "state": {
+      "hero": {
+        "ready": true,
+        "status": "ready",
+        "error": null,
+        "yaw": 1.57967151701297,
+        "idle": 0.05,
+        "progress": 0,
+        "reduced": false
+      },
+      "canvasOpacity": "1",
+      "fallbackOpacity": "0",
+      "fallbackVisibility": "hidden",
+      "fallbackLoaded": true,
+      "curtainHidden": true
+    },
+    "requests": [
+      {
+        "url": "http://127.0.0.1:3000/assets/js/hero-3d.js",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3000/assets/models/mustang-shelby-gt500.glb",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "failures": []
+  },
+  {
+    "name": "slow model keeps poster",
+    "pass": true,
+    "ms": 23953,
+    "state": {
+      "hero": {
+        "ready": true,
+        "status": "ready",
+        "error": null,
+        "yaw": 1.7075837304665369,
+        "idle": 0.18737999999955285,
+        "progress": 0,
+        "reduced": false
+      },
+      "canvasOpacity": "1",
+      "fallbackOpacity": "0",
+      "fallbackVisibility": "hidden",
+      "fallbackLoaded": true,
+      "curtainHidden": true
+    },
+    "requests": [
+      {
+        "url": "http://127.0.0.1:3000/assets/js/hero-3d.js",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3000/assets/models/mustang-shelby-gt500.glb",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "failures": []
+  },
+  {
+    "name": "script unavailable",
+    "pass": true,
+    "ms": 9672,
+    "state": {
+      "hero": null,
+      "canvasOpacity": "0",
+      "fallbackOpacity": "1",
+      "fallbackVisibility": "visible",
+      "fallbackLoaded": true,
+      "curtainHidden": true
+    },
+    "requests": [
+      {
+        "url": "http://127.0.0.1:3000/assets/js/hero-3d.js",
+        "status": 500
+      }
+    ],
+    "errors": [],
+    "failures": [
+      {
+        "url": "http://127.0.0.1:3000/assets/js/hero-3d.js",
+        "reason": "net::ERR_ABORTED"
+      }
+    ]
+  },
+  {
+    "name": "model unavailable",
+    "pass": true,
+    "ms": 11229,
+    "state": {
+      "hero": {
+        "ready": false,
+        "status": "fallback",
+        "error": "model-http-404",
+        "yaw": 1.55,
+        "idle": 0,
+        "progress": 0,
+        "reduced": false
+      },
+      "canvasOpacity": "0",
+      "fallbackOpacity": "1",
+      "fallbackVisibility": "visible",
+      "fallbackLoaded": true,
+      "curtainHidden": true
+    },
+    "requests": [
+      {
+        "url": "http://127.0.0.1:3000/assets/js/hero-3d.js",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3000/assets/models/mustang-shelby-gt500.glb",
+        "status": 404
+      }
+    ],
+    "errors": [],
+    "failures": [
+      {
+        "url": "http://127.0.0.1:3000/assets/models/mustang-shelby-gt500.glb",
+        "reason": "net::ERR_ABORTED"
+      }
+    ]
+  },
+  {
+    "name": "WebGL unavailable",
+    "pass": true,
+    "ms": 9469,
+    "state": {
+      "hero": {
+        "ready": false,
+        "status": "fallback",
+        "error": "webgl2-unavailable",
+        "yaw": 1.55,
+        "idle": 0,
+        "progress": 0,
+        "reduced": false
+      },
+      "canvasOpacity": "0",
+      "fallbackOpacity": "1",
+      "fallbackVisibility": "visible",
+      "fallbackLoaded": true,
+      "curtainHidden": true
+    },
+    "requests": [
+      {
+        "url": "http://127.0.0.1:3000/assets/js/hero-3d.js",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "failures": []
+  }
+]

@@ -175,6 +175,8 @@ html.pb-page-leaving .pb-site-content,html.pb-page-leaving .pb-header,html.pb-pa
 .pb-hero--3d .pb-hero__canvas{opacity:1}
 .pb-hero--3d .pb-hero__car--fallback{animation:none!important;opacity:0!important;visibility:hidden}
 .pb-hero--3d .pb-hero__stage{transform:none}
+.pb-hero--fallback .pb-hero__canvas{opacity:0}
+.pb-hero--fallback .pb-hero__car--fallback{opacity:1!important;visibility:visible}
 /* 14) Focus: one calm border, no extra orange halo on fields. */
 input:focus-visible,textarea:focus-visible,select:focus-visible,.pb-select__button:focus-visible{outline:none}
 .pb-search:focus-within{box-shadow:none;border-color:var(--orange-500)}

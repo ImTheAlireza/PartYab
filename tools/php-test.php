@@ -457,6 +457,9 @@ ob_start();
 include PARTYAB_DIR . '/front-page.php';
 $front = ob_get_clean();
 
+$front_page = file_get_contents( PARTYAB_DIR . '/front-page.php' );
+check( 'هیرو: مدل موستانگ بدون دیکودر ', strpos( $front_page, 'mustang-shelby-gt500.glb' ) !== false && strpos( $front_page, 'data-decoder' ) === false && strpos( $front_page, 'partyab_asset_version' ) !== false );
+
 foreach ( array( 'pb-hero', 'pb-cats', 'pb-cat__icon', 'pb-banner', 'pb-marquee', 'pb-editorial', 'pb-steps', 'pb-services' ) as $section ) {
 	check( 'بخش ' . $section, strpos( $front, $section ) !== false );
 }

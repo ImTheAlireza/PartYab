@@ -5,7 +5,7 @@ await inflate('node_modules/@sparticuz/chromium/bin/al2023.tar.br'); setupLambda
 const b = await pw.launch({ executablePath: await chromium.executablePath(), args: [...chromium.args, '--enable-unsafe-swiftshader'], headless: true });
 const p = await b.newPage({ viewport: { width: 1440, height: 1000 } });
 await p.goto('http://127.0.0.1:3000/?hero-poster=1', { waitUntil: 'domcontentloaded' });
-await p.waitForFunction(() => window.PartyabHero3D?.ready, { timeout: 30000 });
+await p.waitForFunction(() => window.PartyabHero3D?.ready, { timeout: 90000 });
 await p.waitForTimeout(1500);
 const data = await p.evaluate(() => document.querySelector('[data-hero-car]').toDataURL('image/png'));
 writeFileSync('/tmp/hero-poster.png', Buffer.from(data.split(',')[1], 'base64'));

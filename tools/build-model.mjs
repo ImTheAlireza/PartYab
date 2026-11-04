@@ -6,17 +6,16 @@
 //   1. Bake every body mesh's world transform into its geometry (flat, stable hierarchy).
 //   2. Take the one correctly-scaled front-left wheel+brake assembly as a template,
 //      re-center it on its hub, and instance it at the four fender/hub axle positions.
-//   3. Export a clean static GLB, then Draco-compress it.
-import { readFileSync, writeFileSync } from 'node:fs';
+//   3. Export a clean static GLB, simplify and join it. No runtime decoder is required.
+import { readFileSync, writeFileSync, unlinkSync } from 'node:fs';
 import { stat } from 'node:fs/promises';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
 import { NodeIO } from '@gltf-transform/core';
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
-import { draco, join, simplify, weld } from '@gltf-transform/functions';
+import { dedup, flatten, join, prune, quantize, simplify, weld } from '@gltf-transform/functions';
 import { MeshoptSimplifier } from 'meshoptimizer';
-import draco3d from 'draco3dgltf';
 await MeshoptSimplifier.ready;
 
 // Minimal FileReader polyfill for GLTFExporter in Node (binary path only; no textures).
@@ -128,20 +127,44 @@ const glb = await exporter.parseAsync(out, { binary: true });
 const tmp = OUT + '.tmp.glb';
 writeFileSync(tmp, Buffer.from(glb));
 
-// Draco-compress.
-const io = new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({
-  'draco3d.encoder': await draco3d.createEncoderModule(),
-  'draco3d.decoder': await draco3d.createDecoderModule(),
-});
+// Plain glTF is intentional: a blocked WASM file or worker must never prevent the car
+// from appearing on WordPress. Geometry reduction, rather than a runtime decoder, keeps
+// this small. Flatten BEFORE join so body and wheel primitives can share draw calls.
+const io = new NodeIO().registerExtensions(ALL_EXTENSIONS);
 const doc = await io.read(tmp);
-// The hierarchy is now flat + static, so simplification and draw-call joining are safe.
-await doc.transform(
-  weld(),
-  simplify({ simplifier: MeshoptSimplifier, ratio: 0.35, error: 0.001 }),
-  join(),
-  draco({ method: 'edgebreaker', encodeSpeed: 5, decodeSpeed: 5, quantizePosition: 14, quantizeNormal: 10, quantizeTexcoord: 12, quantizeColor: 8, quantizeGeneric: 12 }),
-);
-await io.write(OUT, doc);
-
+// This model has no textures. Unused UV seams prevent welding and waste bandwidth.
+for (const mesh of doc.getRoot().listMeshes()) for (const prim of mesh.listPrimitives()) {
+  for (const semantic of prim.listSemantics()) if (!['POSITION', 'NORMAL'].includes(semantic)) prim.setAttribute(semantic, null);
+}
+// Bake the cheap glass look into core glTF so no transmission render pass is ever
+// requested, even before the hero's material tuning runs.
+for (const material of doc.getRoot().listMaterials()) {
+  if (/glass/i.test(material.getName())) {
+    material.getExtension('KHR_materials_transmission')?.setTransmissionFactor(0);
+    material.getExtension('KHR_materials_volume')?.setThicknessFactor(0);
+    material.setAlphaMode('BLEND');
+    material.setAlpha(0.55);
+    material.setDoubleSided(true);
+  }
+}
+for (const ext of doc.getRoot().listExtensionsUsed()) {
+  if (['KHR_materials_transmission', 'KHR_materials_volume'].includes(ext.extensionName)) ext.dispose();
+}
+try {
+  await doc.transform(
+    weld(),
+    simplify({ simplifier: MeshoptSimplifier, ratio: Number(process.env.HERO_MODEL_RATIO || 0.45), error: Number(process.env.HERO_MODEL_ERROR || 0.001) }),
+    flatten(),
+    dedup(),
+    join(),
+    prune(),
+    quantize({ quantizePosition: 16, quantizeNormal: 12, quantizeGeneric: 12 }),
+  );
+  await io.write(OUT, doc);
+} finally {
+  unlinkSync(tmp);
+}
+const root = doc.getRoot();
+const triangles = root.listMeshes().reduce((sum, mesh) => sum + mesh.listPrimitives().reduce((n, p) => n + (p.getIndices() || p.getAttribute('POSITION')).getCount() / 3, 0), 0);
 const before = (await stat(SRC)).size, after = (await stat(OUT)).size;
-console.log(JSON.stringify({ source: SRC, output: OUT, before, after, reduction: +(1 - after / before).toFixed(3), bodyMeshes: bodyMeshes.length, wheels: positions.length }, null, 2));
+console.log(JSON.stringify({ source: SRC, output: OUT, before, after, reduction: +(1 - after / before).toFixed(3), bodyMeshes: bodyMeshes.length, wheels: positions.length, triangles, drawCalls: root.listMeshes().reduce((n, m) => n + m.listPrimitives().length, 0), materials: root.listMaterials().length, runtimeDecoder: false }, null, 2));

@@ -60,10 +60,12 @@ check('loader has no progress bar', await p.locator('.pb-page-loader__line, .pb-
 check('loader logo animates', await css('.pb-page-loader__logo', 'animationName') === 'loader-logo');
 check('L2 pulse waves animate', await p.locator('.pb-page-loader__wave').count() === 3 && await css('.pb-page-loader__wave', 'animationName') === 'loader-wave');
 await p.evaluate(() => { window.PartyabTransition.hide(); });
-await p.waitForFunction(() => document.querySelector('.pb-page-loader').classList.contains('is-leaving'), { timeout: 5000 }).catch(() => {});
-await p.waitForTimeout(180);
+const leavingOk = await p.waitForFunction(() => {
+  const el = document.querySelector('.pb-page-loader');
+  return el.classList.contains('is-leaving') && getComputedStyle(el).visibility === 'visible';
+}, { timeout: 8000 }).then(() => true).catch(() => false);
 const leavingTf = await css('.pb-page-loader', 'transform');
-check('loader slides out', await p.locator('.pb-page-loader').evaluate(el => el.classList.contains('is-leaving')) && await css('.pb-page-loader', 'visibility') === 'visible', leavingTf);
+check('loader slides out', leavingOk, leavingTf);
 await p.waitForTimeout(650); check('loader hidden after slide', await p.locator('.pb-page-loader').evaluate(el => el.hidden));
 // focus rings
 await go('/contact'); await p.locator('[name=phone]').focus(); await p.waitForTimeout(250);
@@ -98,10 +100,11 @@ const heroReady = await p.evaluate(() => !!window.PartyabHero3D?.ready);
 check('3D hero ready', heroReady);
 if (heroReady) {
   check('3D fallback hidden', await p.locator('.pb-hero__car--fallback').evaluate(el => getComputedStyle(el).visibility) === 'hidden');
-  const idle0 = await p.evaluate(() => window.PartyabHero3D.yaw);
+  // Measure the turntable accumulator, not yaw: yaw also includes pointer/scroll offsets.
+  const idle0 = await p.evaluate(() => window.PartyabHero3D.idle);
   await p.waitForTimeout(2000);
-  const idle1 = await p.evaluate(() => window.PartyabHero3D.yaw);
-  check('3D hero rotates slowly while idle', Math.abs(idle1 - idle0) > 0.05, idle0.toFixed(2) + '→' + idle1.toFixed(2));
+  const idle1 = await p.evaluate(() => window.PartyabHero3D.idle);
+  check('3D hero rotates slowly while idle', idle1 - idle0 > 0.05, idle0.toFixed(2) + '→' + idle1.toFixed(2));
   const yaw0 = await p.evaluate(() => window.PartyabHero3D.yaw);
   await p.evaluate(() => scrollTo({ top: 520, behavior: 'instant' }));
   await p.waitForFunction((y0) => Math.abs(window.PartyabHero3D.yaw - y0) > 0.12, yaw0, { timeout: 15000 }).catch(() => {});

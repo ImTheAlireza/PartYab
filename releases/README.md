@@ -1,12 +1,12 @@
 # بسته‌های آماده نصب
 
-آخرین ساخت: نسخه **۲٫۵٫۰** قالب (دکمه‌های سبک B1+B4 و ثانویه B2، هیرو Mustang Shelby GT500 بهینه‌شده با چرخش آرام پیوسته، لودر L2 بدون پروگرس‌بار، صدای قابل‌خاموش). نسخه نصب‌کننده **۱٫۴٫۰**.
+آخرین ساخت: نسخه **۲٫۵٫۱** قالب (رفع بارگذاری هیرو Mustang Shelby GT500 بدون دیکودر WASM، پوستر تا اولین فریم واقعی، دکمه‌های سبک B1+B4 و ثانویه B2، لودر L2، صدای قابل‌خاموش). نسخه نصب‌کننده **۱٫۴٫۰**.
 
 | فایل | حجم | لینک دانلود مستقیم |
 |---|---|---|
-| **نصب‌کننده کامل** (Elementor + Pro داخلش) | ۲۹MB | [partyab-quickstart-full.zip](./partyab-quickstart-full.zip) |
-| نصب‌کننده سبک (المنتور از مخزن وردپرس) | ۲٫۵MB | [partyab-quickstart.zip](./partyab-quickstart.zip) |
-| چایلد تم پارتیاب | ۱٫۷MB | [part-yab.zip](./part-yab.zip) |
+| **نصب‌کننده کامل** (Elementor + Pro داخلش) | ۳۰MB | [partyab-quickstart-full.zip](./partyab-quickstart-full.zip) |
+| نصب‌کننده سبک (المنتور از مخزن وردپرس) | ۴٫۲MB | [partyab-quickstart.zip](./partyab-quickstart.zip) |
+| چایلد تم پارتیاب | ۳٫۴MB | [part-yab.zip](./part-yab.zip) |
 | افزونه سازگاری قطعه-خودرو | ۱۱KB | [partyab-compat.zip](./partyab-compat.zip) |
 
 ## تنظیم صدا
