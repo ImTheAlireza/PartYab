@@ -1,7 +1,7 @@
 # 3D model credits
 
-- **Ferrari 458 Italia** by [vicent091036](https://sketchfab.com/models/57bf6cc56931426e87494f554df1dab6), licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
-- Sourced from the [three.js examples](https://github.com/mrdoob/three.js/tree/r170/examples/models/gltf) (`ferrari.glb`).
-- Modifications for PartYab: custom paint/rim/glass materials, lighting, transparent presentation, continuous slow turntable rotation with scroll/pointer offset.
-- Ferrari and 458 are trademarks of Ferrari S.p.A.; this project is not affiliated with or endorsed by Ferrari.
+- **Mustang Shelby GT500** by [blender-toart](https://www.cgtrader.com/designers/blender-toart), sourced from [CGTrader item #6123437](https://www.cgtrader.com/items/6123437/download-page), licensed under the CGTrader **Royalty Free License** (no AI).
+- The user-supplied source file is `2.glb` at the repository root. The web-optimized derivative is `assets/models/mustang-shelby-gt500.glb`.
+- Modifications for PartYab: removed the studio ground plane and helper empty, rebuilt and planted the four wheels on their axles, simplified dense geometry, joined draw calls, Draco-compressed (≈95% smaller), tuned paint/glass materials and hero lighting, transparent presentation, continuous slow turntable rotation with scroll/pointer offset.
+- Mustang and Shelby are trademarks of Ford Motor Company; this project is not affiliated with or endorsed by Ford.
 - three.js is MIT licensed (see `assets/js/hero-3d.LICENSE.txt`). Draco decoder is Apache-2.0.

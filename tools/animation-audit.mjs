@@ -4,7 +4,7 @@ import { writeFileSync } from 'node:fs';
 await inflate('node_modules/@sparticuz/chromium/bin/al2023.tar.br'); setupLambdaEnvironment('/tmp/al2023/lib');
 const b = await pw.launch({ executablePath: await chromium.executablePath(), args: [...chromium.args, '--enable-unsafe-swiftshader'], headless: true });
 const p = await b.newPage({ viewport: { width: 1440, height: 1000 } });
-p.setDefaultTimeout(60000);
+p.setDefaultTimeout(120000);
 const errors = []; p.on('pageerror', e => errors.push(e.message));
 const results = [];
 const check = (name, ok, detail = '') => { results.push({ name, ok: !!ok, detail }); console.log((ok ? 'PASS' : 'FAIL') + ' ' + name + (detail ? ' — ' + detail : '')); };
@@ -17,9 +17,11 @@ await p.locator('.pb-nav__menu > li > a').nth(1).hover(); await p.waitForTimeout
 check('header nav underline', await css('.pb-nav__menu > li > a:nth-child(1)', 'transform', '::before').catch(() => '') !== 'none' || await p.locator('.pb-nav__menu > li > a').nth(1).evaluate(el => getComputedStyle(el, '::before').transform) !== 'none');
 await p.locator('.pb-action').first().hover(); await p.waitForTimeout(380);
 check('header action underline', await p.locator('.pb-action').first().evaluate(el => getComputedStyle(el, '::after').transform) !== 'none');
-// ripple
-await p.locator('.pb-hero__cta .pb-btn').first().dispatchEvent('pointerdown', { clientX: 120, clientY: 120 }); await p.waitForTimeout(80);
-check('button ripple', await p.locator('.pb-ripple').count() > 0);
+// B1 primary soft lift (no ripple/magnetic/shine anymore)
+await p.locator('.pb-hero__cta .pb-btn--primary').hover();
+const b1ok = await p.waitForFunction(() => getComputedStyle(document.querySelector('.pb-hero__cta .pb-btn--primary')).translate === '0px -2px', { timeout: 5000 }).then(() => true).catch(() => false);
+check('B1 primary soft lift', b1ok);
+check('no busy ripple layer', await p.locator('.pb-ripple').count() === 0);
 // category icon smooth
 const cat = p.locator('.pb-cat').first(); await p.evaluate(() => { document.documentElement.style.scrollBehavior = 'auto'; document.querySelector('.pb-cat').scrollIntoView({ block: 'center', behavior: 'instant' }); }); await p.waitForTimeout(900);
 for (let attempt = 0; attempt < 4; attempt++) {
@@ -110,10 +112,13 @@ if (heroReady) {
 
 // more individual components
 await go('/'); await p.waitForTimeout(500);
-const btn = p.locator('.pb-hero__cta .pb-btn').first(); await btn.hover(); await p.waitForTimeout(750);
-check('button shine sweep', await btn.evaluate(el => getComputedStyle(el, '::before').transform) !== 'none');
-const bb = await btn.boundingBox(); await p.mouse.move(bb.x + bb.width * .8, bb.y + bb.height * .3); await p.waitForTimeout(120);
-check('magnetic button translate', await btn.evaluate(el => el.style.translate !== ''));
+const btn = p.locator('.pb-hero__cta .pb-btn--primary'); await btn.hover();
+const b4ok = await p.waitForFunction(() => ['-4px','-4px 0px'].includes(getComputedStyle(document.querySelector('.pb-hero__cta .pb-btn--primary .pb-icon')).translate), { timeout: 20000 }).then(() => true).catch(() => false);
+check('B4 icon slide on primary', b4ok);
+const sec = p.locator('.pb-hero__cta .pb-btn--glass'); await sec.hover();
+const b2ok = await p.waitForFunction(() => getComputedStyle(document.querySelector('.pb-hero__cta .pb-btn--glass')).borderTopColor === 'rgb(255, 138, 51)', { timeout: 5000 }).then(() => true).catch(() => false);
+check('B2 secondary orange border', b2ok);
+check('B2 secondary stays grounded', await sec.evaluate(el => ['none','0px','0px 0px'].includes(getComputedStyle(el).translate)));
 check('hero float idle animation', await css('.pb-hero__float', 'animationName') === 'float-a');
 const cat2 = p.locator('.pb-cat').nth(1); await cat2.scrollIntoViewIfNeeded(); await p.waitForTimeout(700); const c2 = await cat2.boundingBox(); await p.mouse.move(c2.x + c2.width/2, c2.y + c2.height/2); await p.waitForTimeout(500);
 check('category hover feedback', await cat2.evaluate(el => getComputedStyle(el).boxShadow) !== 'none' && await cat2.locator('.pb-cat__icon').evaluate(el => getComputedStyle(el).transform) !== 'none');

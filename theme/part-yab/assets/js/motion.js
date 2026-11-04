@@ -92,14 +92,6 @@
         stage.style.setProperty('--ry', '0deg'); stage.style.setProperty('--rx', '0deg'); scene.style.setProperty('--px', '0'); scene.style.setProperty('--py', '0');
       });
     });
-    document.querySelectorAll('[data-magnetic]').forEach(function (button) {
-      button.addEventListener('pointermove', function (event) {
-        if (reduced()) return;
-        var rect = button.getBoundingClientRect();
-        button.style.translate = ((event.clientX - rect.left - rect.width / 2) * .07) + 'px ' + ((event.clientY - rect.top - rect.height / 2) * .12) + 'px';
-      });
-      button.addEventListener('pointerleave', function () { button.style.translate = ''; });
-    });
     document.addEventListener('pointermove', function (event) {
       if (reduced()) return;
       var card = event.target.closest('.pb-product-card, .pc');

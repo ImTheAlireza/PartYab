@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-04T06:52:29.615Z",
+  "date": "2026-11-04T08:53:51.981Z",
   "results": [
     {
       "name": "header nav underline",
@@ -12,14 +12,19 @@
       "detail": ""
     },
     {
-      "name": "button ripple",
+      "name": "B1 primary soft lift",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "no busy ripple layer",
       "ok": true,
       "detail": ""
     },
     {
       "name": "category icon no snapping keyframe",
       "ok": true,
-      "detail": "{\"anim\":\"none\",\"trans\":\"transform, background, color, box-shadow\",\"tf\":\"matrix(1.05943, -0.123761, 0.123761, 1.05943, 0, -4.75931)\"}"
+      "detail": "{\"anim\":\"none\",\"trans\":\"transform, background, color, box-shadow\",\"tf\":\"matrix(1.06202, -0.1304, 0.1304, 1.06202, 0, -5)\"}"
     },
     {
       "name": "category outer hit area static",
@@ -79,7 +84,7 @@
     {
       "name": "loader slides out",
       "ok": true,
-      "detail": "matrix(1, 0, 0, 1, -900.735, 0)"
+      "detail": "matrix(1, 0, 0, 1, 0, 0)"
     },
     {
       "name": "loader hidden after slide",
@@ -144,20 +149,25 @@
     {
       "name": "3D hero rotates slowly while idle",
       "ok": true,
-      "detail": "-0.56→-0.27"
+      "detail": "1.72→1.89"
     },
     {
       "name": "3D hero responds to scroll",
       "ok": true,
-      "detail": "-0.27→-0.05"
+      "detail": "1.89→2.11"
     },
     {
-      "name": "button shine sweep",
+      "name": "B4 icon slide on primary",
       "ok": true,
       "detail": ""
     },
     {
-      "name": "magnetic button translate",
+      "name": "B2 secondary orange border",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "B2 secondary stays grounded",
       "ok": true,
       "detail": ""
     },

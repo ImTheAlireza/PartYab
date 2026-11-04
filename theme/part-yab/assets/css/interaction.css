@@ -16,17 +16,21 @@ input[type=radio]::after{border-radius:50%;background:#fff;width:8px;height:8px}
 input[type=checkbox]:checked,input[type=radio]:checked{background:linear-gradient(145deg,var(--orange-400),var(--orange-600));border-color:var(--orange-500);box-shadow:0 6px 14px -8px #ff6a00b3;animation:pop-in .35s var(--ease)}
 input[type=checkbox]:checked::after,input[type=radio]:checked::after{transform:scale(1)}
 input[type=checkbox]:focus-visible,input[type=radio]:focus-visible{outline:3px solid var(--orange-100);outline-offset:3px}
-/* 2) Buttons and links: shine, ripple, press, magnetic-friendly. */
+/* 2) Buttons: selected B1 soft lift + B4 icon slide; secondary B2 orange border. */
 .pb-btn,.button,button[type=submit],.pb-product-card__add,.pb-cat,.pb-nav__menu a,.pb-section__link,.pb-qty-btn,.pb-product-card__tool{position:relative;isolation:isolate;overflow:hidden}
 .pb-action{position:relative;isolation:isolate;overflow:visible}
-.pb-btn::before,.button::before,button[type=submit]::before,.pb-product-card__add::before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,transparent 30%,#ffffff59 50%,transparent 70%);transform:translateX(-130%) skewX(-12deg);transition:transform .7s var(--ease);pointer-events:none}
-.pb-btn:hover::before,.button:hover::before,button[type=submit]:hover::before,.pb-product-card__add:hover::before{transform:translateX(130%) skewX(-12deg)}
-.pb-btn:active,.button:active,button[type=submit]:active,.pb-product-card__add:active,.pb-action:active,.pb-cat:active{transform:scale(.965)}
-.pb-btn:hover .pb-icon,.button:hover .pb-icon{animation:icon-nudge .55s var(--ease)}
-.pb-ripple{position:absolute;border-radius:50%;background:#ffffff70;transform:scale(0);animation:ripple .65s var(--ease) forwards;pointer-events:none;z-index:0}
-.pb-btn--ghost .pb-ripple,.pb-action .pb-ripple,.pb-cat .pb-ripple{background:#ff6a0026}
-@keyframes ripple{to{transform:scale(2.6);opacity:0}}
-@keyframes icon-nudge{0%,100%{transform:none}35%{transform:translateX(-3px) rotate(-6deg)}70%{transform:translateX(2px)}}
+.pb-btn,.woocommerce a.button,.woocommerce button.button,.woocommerce input.button,.woocommerce #respond input#submit,button[type=submit],.pb-product-card__add{transition:translate .28s var(--ease),box-shadow .28s var(--ease),background .28s var(--ease),color .28s var(--ease),border-color .28s var(--ease)}
+.pb-btn:hover,.woocommerce a.button:hover,.woocommerce button.button:hover,.woocommerce input.button:hover,.woocommerce #respond input#submit:hover,button[type=submit]:hover{translate:0 -2px}
+.pb-btn:active,.woocommerce a.button:active,.woocommerce button.button:active,.woocommerce input.button:active,.woocommerce #respond input#submit:active,button[type=submit]:active{translate:0 0}
+.pb-btn .pb-icon,.button .pb-icon,button[type=submit] .pb-icon,.pb-product-card__add .pb-icon,.pb-action .pb-icon,.pb-section__link .pb-icon{transition:translate .28s var(--ease)}
+.pb-btn:hover .pb-icon,.button:hover .pb-icon,button[type=submit]:hover .pb-icon,.pb-product-card__add:hover .pb-icon,.pb-action:hover .pb-icon,.pb-section__link:hover .pb-icon{translate:-4px 0}
+.pb-btn--ghost,.pb-btn.ghost,.pb-btn--white,.pb-btn--secondary,.woocommerce a.button.alt,.woocommerce button.button.alt,.woocommerce input.button.alt{background:#fff;border-color:var(--line);color:var(--navy-800);box-shadow:none}
+.pb-btn--ghost:hover,.pb-btn.ghost:hover,.pb-btn--white:hover,.pb-btn--secondary:hover,.woocommerce a.button.alt:hover,.woocommerce button.button.alt:hover,.woocommerce input.button.alt:hover{background:#ff6a0008;border-color:var(--orange-500);color:var(--orange-600);translate:0 0;box-shadow:none}
+.pb-btn--glass{background:#ffffff0e;border-color:#ffffff35;color:#fff}.pb-btn--glass:hover{background:#ff6a0014;border-color:var(--orange-400);color:var(--orange-400);translate:0 0;box-shadow:none}
+.pb-btn--text{background:none;border-color:transparent;color:var(--navy-700)}.pb-btn--text:hover{background:none;border-color:transparent;color:var(--orange-600);translate:0 0;box-shadow:none}
+.pb-product-card__add:hover{translate:0 0;box-shadow:0 10px 20px -12px #ff6a0080}
+.pb-qty-btn:hover,.pb-product-card__tool:hover{translate:0 -1px}
+.pb-qty-btn:active,.pb-product-card__tool:active,.pb-cat:active{translate:0 0}
 .pb-page__body a:not(.pb-btn),.pb-footer__menu a,.pb-nav__menu a{background-image:linear-gradient(currentColor,currentColor);background-size:0 1.5px;background-repeat:no-repeat;background-position:right bottom;transition:background-size .35s var(--ease),color .25s}
 .pb-page__body a:not(.pb-btn):hover,.pb-footer__menu a:hover,.pb-nav__menu a:hover{background-size:100% 1.5px}
 /* 3) Pointer-follow glow on cards. */
@@ -38,7 +42,7 @@ input[type=checkbox]:focus-visible,input[type=radio]:focus-visible{outline:3px s
 .pb-cat:hover .pb-cat__icon{animation:none;transform:translateY(-5px) rotate(-7deg) scale(1.07);box-shadow:0 12px 22px -14px #ff6a0080}
 .pb-cat:active .pb-cat__icon{transform:translateY(-1px) rotate(-3deg) scale(.96)}
 .pb-service:hover .pb-service__icon{animation:icon-ring .7s var(--ease)}
-.pb-dash-card:hover .pb-dash-card__icon{animation:icon-nudge .6s var(--ease)}
+.pb-dash-card__icon{transition:translate .28s var(--ease)}.pb-dash-card:hover .pb-dash-card__icon{translate:-4px 0}
 @keyframes icon-bounce{0%,100%{transform:none}40%{transform:translateY(-6px) rotate(-8deg)}70%{transform:translateY(2px)}}
 @keyframes icon-ring{0%{box-shadow:0 0 0 0 #ff6a0033}100%{box-shadow:0 0 0 14px #ff6a0000}}
 /* 4) Custom select. Native select stays in the form for compatibility. */
@@ -82,7 +86,7 @@ input[type=checkbox]:focus-visible,input[type=radio]:focus-visible{outline:3px s
 .pb-hero__float--two{bottom:24%;right:1%;animation-delay:-2.5s;transform:translate3d(calc(var(--px,0)*-12px),calc(var(--py,0)*-8px),0)}
 .pb-hero__stats{position:relative;z-index:4}
 .pb-hero__stat{backdrop-filter:blur(8px)}
-.pb-hero__stat:hover .pb-icon{animation:icon-nudge .55s var(--ease)}
+.pb-hero__stat .pb-icon{transition:translate .28s var(--ease)}.pb-hero__stat:hover .pb-icon{translate:-4px 0}
 @keyframes car-cruise{0%,100%{translate:0 0}50%{translate:0 -7px}}
 @keyframes headlight-glow{0%,100%{opacity:.45}50%{opacity:.95}}
 @keyframes road-run{to{background-position:-92px 0}}
@@ -117,10 +121,10 @@ html.pb-page-arriving .pb-page-loader__logo,html.pb-page-arriving .pb-page-loade
 html.pb-page-leaving .pb-site-content,html.pb-page-leaving .pb-header,html.pb-page-leaving .pb-footer{animation:none}
 .pb-page-enter{animation:none}
 /* 10) Reduced motion / pause. */
-.pb-motion-paused .pb-ripple,.pb-motion-paused .pb-page-loader__logo,.pb-motion-paused .pb-page-loader__wave{animation:none!important}
+.pb-motion-paused .pb-page-loader__logo,.pb-motion-paused .pb-page-loader__wave{animation:none!important}
 .pb-motion-paused .pb-page-loader__wave{opacity:0}
 @media(prefers-reduced-motion:reduce){
-  .pb-btn::before,.button::before,button[type=submit]::before,.pb-product-card__add::before{display:none}
+  .pb-btn,.button,button[type=submit],.pb-product-card__add,.pb-qty-btn,.pb-product-card__tool{transition:none}.pb-btn:hover,.button:hover,button[type=submit]:hover,.pb-product-card__add:hover,.pb-qty-btn:hover,.pb-product-card__tool:hover{translate:none}.pb-btn .pb-icon,.button .pb-icon,button[type=submit] .pb-icon,.pb-product-card__add .pb-icon,.pb-action .pb-icon,.pb-section__link .pb-icon,.pb-dash-card__icon,.pb-hero__stat .pb-icon{transition:none}.pb-btn:hover .pb-icon,.button:hover .pb-icon,button[type=submit]:hover .pb-icon,.pb-product-card__add:hover .pb-icon,.pb-action:hover .pb-icon,.pb-section__link:hover .pb-icon,.pb-dash-card:hover .pb-dash-card__icon,.pb-hero__stat:hover .pb-icon{translate:none}
   .pb-hero__car,.pb-hero__stage::before,.pb-hero__stage::after,.pb-hero__float{animation:none!important;transform:none!important}
   .pb-page-enter,html.pb-page-leaving .pb-site-content{animation:none}
   .pb-page-loader{transition:none}.pb-page-loader__logo,.pb-page-loader__wave{animation:none}.pb-page-loader__wave{opacity:0}
@@ -178,7 +182,7 @@ input:focus-visible,textarea:focus-visible,select:focus-visible,.pb-select__butt
 /* 15) Stable product hover: outer card never moves, inner surface does. */
 .pb-product-card,.woocommerce ul.products li.product{padding:0;background:transparent;border:0;box-shadow:none;overflow:visible}
 .pb-product-card__surface{padding:12px 12px 15px;background:#fff;border:1px solid var(--line-soft);border-radius:19px}
-.pb-product-card__add:hover{transform:none}
+.pb-product-card__add:hover{transform:none;translate:0 0}
 .pb-brand-tile:hover{transform:none}
 @media(max-width:768px){.pb-product-card__surface{padding:9px 9px 12px;border-radius:15px}}
 @media(hover:none){.pb-product-card:hover .pb-product-card__surface,.pb-product-card:focus-within .pb-product-card__surface{translate:none;box-shadow:none}}

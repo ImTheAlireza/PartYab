@@ -1,23 +1,9 @@
-/* Global micro-interactions: ripple, pointer glow, custom selects. */
+/* Global micro-interactions: pointer glow, custom selects. Button motion is CSS-only (B1+B4 / B2). */
 (function () {
   'use strict';
   var reduced = function () { return window.PartyabMotion && window.PartyabMotion.reduced(); };
   var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  function ripple(event) {
-    if (reduced()) return;
-    var el = event.target.closest('.pb-btn, .button, button[type=submit], .pb-product-card__add, .pb-action, .pb-cat, .pb-qty-btn, .pb-product-card__tool');
-    if (!el || el.disabled) return;
-    var rect = el.getBoundingClientRect();
-    var size = Math.max(rect.width, rect.height);
-    var span = document.createElement('span');
-    span.className = 'pb-ripple';
-    span.style.width = span.style.height = size + 'px';
-    span.style.left = (event.clientX - rect.left - size / 2) + 'px';
-    span.style.top = (event.clientY - rect.top - size / 2) + 'px';
-    el.appendChild(span);
-    setTimeout(function () { span.remove(); }, 700);
-  }
-  document.addEventListener('pointerdown', ripple);
+
   if (fine) {
     document.addEventListener('pointermove', function (event) {
       if (reduced()) return;
@@ -27,14 +13,6 @@
       card.style.setProperty('--mx', ((event.clientX - rect.left) / rect.width * 100) + '%');
       card.style.setProperty('--my', ((event.clientY - rect.top) / rect.height * 100) + '%');
     }, { passive: true });
-    document.querySelectorAll('.pb-btn:not([data-magnetic])').forEach(function (button) {
-      button.addEventListener('pointermove', function (event) {
-        if (reduced()) return;
-        var rect = button.getBoundingClientRect();
-        button.style.translate = ((event.clientX - rect.left - rect.width / 2) * .05) + 'px ' + ((event.clientY - rect.top - rect.height / 2) * .1) + 'px';
-      });
-      button.addEventListener('pointerleave', function () { button.style.translate = ''; });
-    });
   }
 
   /* Custom select: keeps the native select submitted, replaces only the popup. */

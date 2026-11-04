@@ -54,7 +54,7 @@ const btn = p.locator('.pb-hero__cta .pb-btn').first(); await btn.hover(); await
 const btnInfo = await btn.evaluate(el => ({ translate: el.style.translate, iconAnim: el.querySelector('.pb-icon') ? getComputedStyle(el.querySelector('.pb-icon')).animationName : '', beforeTf: getComputedStyle(el, '::before').transform, tf: getComputedStyle(el).transform }));
 check(3, 'button hover inventory', true, JSON.stringify(btnInfo));
 await btn.dispatchEvent('pointerdown', { clientX: 100, clientY: 100 }); await p.waitForTimeout(80);
-check(3, 'ripple present', await p.locator('.pb-ripple').count() > 0);
+check(3, 'B1 primary lift present', await p.locator('.pb-hero__cta .pb-btn--primary').evaluate(el => getComputedStyle(el).translate) === '0px -2px');
 
 // Pass 4: product hover edge, 10 cycles
 await go('/'); await p.waitForTimeout(400);

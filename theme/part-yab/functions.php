@@ -9,7 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'PARTYAB_VERSION', '2.4.1' );
+define( 'PARTYAB_VERSION', '2.5.0' );
 define( 'PARTYAB_DIR', get_stylesheet_directory() );
 define( 'PARTYAB_URI', get_stylesheet_directory_uri() );
 

@@ -28,17 +28,12 @@ function init() {
   scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
   scene.environmentIntensity = 1.05;
 
-  scene.add(new THREE.HemisphereLight(0xdce9ff, 0x16283f, 0.85));
-  const key = new THREE.DirectionalLight(0xffffff, 1.5); key.position.set(3.5, 5.5, -2.5); scene.add(key);
-  const top = new THREE.DirectionalLight(0xffffff, 0.35); top.position.set(0, 6, 1); scene.add(top);
-  const rim = new THREE.DirectionalLight(0xffb27a, 0.85); rim.position.set(-4.5, 2.2, 3.2); scene.add(rim);
-  const fill = new THREE.DirectionalLight(0x9fc2e8, 0.6); fill.position.set(-2.5, 1.2, -4); scene.add(fill);
+  scene.add(new THREE.HemisphereLight(0xdce9ff, 0x16283f, 0.95));
+  const key = new THREE.DirectionalLight(0xffffff, 1.7); key.position.set(3.5, 5.5, -2.5); scene.add(key);
+  const rim = new THREE.DirectionalLight(0xffb27a, 0.9); rim.position.set(-4.5, 2.2, 3.2); scene.add(rim);
 
   const car = new THREE.Group();
   scene.add(car);
-  const body = new THREE.MeshPhysicalMaterial({ color: 0xb8c4d2, metalness: 0.88, roughness: 0.25, clearcoat: 0.9, clearcoatRoughness: 0.14, envMapIntensity: 1.0 });
-  const details = new THREE.MeshStandardMaterial({ color: 0x1a2029, metalness: 0.95, roughness: 0.3, envMapIntensity: 1.2 });
-  const glass = new THREE.MeshPhysicalMaterial({ color: 0x172330, metalness: 0.15, roughness: 0.08, transparent: true, opacity: 0.72, envMapIntensity: 1.1 });
 
   const draco = new DRACOLoader();
   draco.setDecoderPath(canvas.dataset.decoder || '/assets/models/draco/');
@@ -46,20 +41,53 @@ function init() {
   const loader = new GLTFLoader();
   loader.setDRACOLoader(draco);
 
-  let ready = false, visible = true, yaw = -0.7, pitch = 0, idle = 0, radius = 2.6, lastT = 0;
+  let ready = false, visible = true, yaw = 1.55, pitch = 0, idle = 0, radius = 2.6, lastT = 0;
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 
-  loader.load(canvas.dataset.model || '/assets/models/ferrari.glb', (gltf) => {
-    const model = gltf.scene.children[0] || gltf.scene;
-    const paint = (name, mat) => { const o = model.getObjectByName(name); if (o) o.material = mat; };
-    paint('body', body);
-    ['rim_fl', 'rim_fr', 'rim_rl', 'rim_rr', 'trim'].forEach(n => paint(n, details));
-    paint('glass', glass);
+  loader.load(canvas.dataset.model || '/assets/models/mustang-shelby-gt500.glb', (gltf) => {
+    const model = gltf.scene;
+    // Preserve the model's authored PBR materials; only tune paint/glass for the hero lighting.
+    const paintCache = new Map();
+    model.traverse((o) => {
+      if (!o.isMesh) return;
+      const list = Array.isArray(o.material) ? o.material : [o.material];
+      const tuned = list.map((m) => {
+        if (!m) return m;
+        const n = (m.name || '').toLowerCase();
+        if (n === 'carpaint' || n === 'carpaint.001') {
+          if (!paintCache.has(n)) {
+            const stripe = n === 'carpaint.001';
+            paintCache.set(n, new THREE.MeshPhysicalMaterial({
+              color: m.color ? m.color.clone() : new THREE.Color(0xffffff),
+              metalness: stripe ? 0.2 : 0.85,
+              roughness: stripe ? 0.3 : 0.28,
+              clearcoat: stripe ? 0.4 : 0.9,
+              clearcoatRoughness: 0.14,
+              envMapIntensity: 1.1,
+              side: THREE.FrontSide,
+            }));
+          }
+          return paintCache.get(n);
+        }
+        if (n.includes('glass')) {
+          // Replace costly KHR transmission (extra scene render pass) with cheap alpha blending.
+          m.envMapIntensity = 1.1;
+          if (m.transmission > 0) { m.transmission = 0; m.transparent = true; m.opacity = 0.55; m.depthWrite = false; }
+          return m;
+        }
+        if (n.includes('tire')) { m.metalness = 0.2; m.roughness = 0.85; m.side = THREE.FrontSide; return m; }
+        m.envMapIntensity = 1.0;
+        m.side = THREE.FrontSide;
+        return m;
+      });
+      o.material = Array.isArray(o.material) ? tuned : tuned[0];
+    });
     car.add(model);
     const box = new THREE.Box3().setFromObject(model);
     const size = box.getSize(new THREE.Vector3());
     const center = box.getCenter(new THREE.Vector3());
     model.position.sub(center); model.position.y += size.y / 2;
+    target.y = size.y * 0.42;
     radius = Math.max(size.x, size.z) * 0.58;
     const shadowCanvas = document.createElement('canvas');
     shadowCanvas.width = shadowCanvas.height = 256;
@@ -103,7 +131,7 @@ function init() {
     const realDt = Math.min(0.5, (t - lastT) / 1000 || 0.016);
     const dt = Math.min(0.1, realDt); lastT = t;
     if (!still) idle += realDt * 0.2;
-    const targetYaw = -0.7 + idle + progress * 0.35 + px * 0.1;
+    const targetYaw = 1.55 + idle + progress * 0.35 + px * 0.1;
     const targetPitch = py * 0.05;
     const alpha = still ? 1 : 1 - Math.exp(-dt * 9);
     yaw += (targetYaw - yaw) * alpha;
