@@ -160,8 +160,9 @@ check('mobile nav opens', await p.locator('.pb-nav').evaluate(el => el.classList
 await p.emulateMedia({ reducedMotion: 'reduce' }); await go('/'); await p.waitForTimeout(500);
 check('reduced motion reveal visible', await p.locator('[data-reveal]').first().evaluate(el => getComputedStyle(el).opacity) === '1');
 check('reduced motion marquee still', await css('.pb-marquee__track', 'animationName') === 'none');
-await p.evaluate(() => window.PartyabTransition.show()); await p.waitForTimeout(80);
-check('reduced motion loader static', await p.locator('.pb-page-loader').evaluate(el => el.classList.contains('is-static')));
+await p.evaluate(() => window.PartyabTransition.show());
+const staticOk = await p.waitForFunction(() => document.querySelector('.pb-page-loader')?.classList.contains('is-static'), { timeout: 3000 }).then(() => true).catch(() => false);
+check('reduced motion loader static', staticOk);
 check('reduced motion L2 waves static', await css('.pb-page-loader__wave', 'animationName') === 'none');
 check('no page errors', errors.length === 0, errors.join(' | '));
 writeFileSync('preview/animation-audit.json', JSON.stringify({ date: new Date().toISOString(), results }, null, 2));

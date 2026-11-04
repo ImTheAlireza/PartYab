@@ -72,7 +72,7 @@ function partyab_render_motion_settings_page(): void {
 function partyab_transition_boot(): void {
 	?>
 	<script>
-	(function(){try{var k='partyab-page-transition',v=sessionStorage.getItem(k);if(!v)return;var d=JSON.parse(v);if(!d||Date.now()-d.at>15000){sessionStorage.removeItem(k);return;}var r=matchMedia('(prefers-reduced-motion: reduce)').matches,p=false;try{p=localStorage.getItem('partyab-motion')==='paused';}catch(e){}if(!r&&!p)document.documentElement.classList.add('pb-page-arriving');}catch(e){}})();
+	(function(){try{var k='partyab-page-transition',v=sessionStorage.getItem(k);if(!v)return;var d=JSON.parse(v);if(!d||Date.now()-d.at>15000){sessionStorage.removeItem(k);return;}var r=matchMedia('(prefers-reduced-motion: reduce)').matches,p=false;try{p=localStorage.getItem('partyab-motion')==='paused';}catch(e){}if(r||p)return;var root=document.documentElement;root.classList.add('pb-page-arriving');var done=false;function release(){if(done||!root.classList.contains('pb-page-arriving'))return;done=true;root.classList.remove('pb-page-arriving','pb-page-leaving');try{sessionStorage.removeItem(k);}catch(e){}var l=document.querySelector('.pb-page-loader');if(l){l.hidden=true;l.setAttribute('aria-hidden','true');l.classList.remove('is-active','is-leaving','is-instant');}}setTimeout(release,2600);window.addEventListener('pageshow',function(){setTimeout(release,1200);});}catch(e){}})();
 	</script>
 	<?php
 }

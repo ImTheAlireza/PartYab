@@ -104,7 +104,8 @@ input[type=checkbox]:focus-visible,input[type=radio]:focus-visible{outline:3px s
 .pb-page-loader.is-active{visibility:visible;transform:none;pointer-events:auto}
 .pb-page-loader.is-leaving{visibility:visible;transform:translateX(-103%)}
 .pb-page-loader.is-instant{transition:none!important}
-html.pb-page-arriving .pb-page-loader,html.pb-page-arriving .pb-page-loader[hidden]{display:block!important;visibility:visible;transform:none;transition:none;pointer-events:auto}
+html.pb-page-arriving .pb-page-loader,html.pb-page-arriving .pb-page-loader[hidden]{display:block!important;visibility:visible;transform:none;transition:none;pointer-events:auto;animation:pb-arriving-failsafe 0s 3s forwards}
+@keyframes pb-arriving-failsafe{to{visibility:hidden;pointer-events:none;opacity:0}}
 .pb-page-loader__panel{position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(ellipse at 50% 38%,#173b65,#0a1b33 62%,#061529);color:#fff}
 .pb-page-loader__pulse{position:absolute;width:84px;height:84px;display:grid;place-items:center;pointer-events:none}
 .pb-page-loader__wave{position:absolute;inset:0;border-radius:50%;border:1.5px solid #ff8a3d59;opacity:0;animation:loader-wave 2.4s cubic-bezier(.22,.61,.36,1) infinite;will-change:transform,opacity}

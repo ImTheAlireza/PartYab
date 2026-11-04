@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-04T11:01:24.126Z",
+  "date": "2026-11-04T12:36:27.293Z",
   "results": [
     {
       "name": "header nav underline",
@@ -149,12 +149,12 @@
     {
       "name": "3D hero rotates slowly while idle",
       "ok": true,
-      "detail": "0.05→0.28"
+      "detail": "0.02→0.22"
     },
     {
       "name": "3D hero responds to scroll",
       "ok": true,
-      "detail": "1.80→1.99"
+      "detail": "1.74→1.93"
     },
     {
       "name": "B4 icon slide on primary",
