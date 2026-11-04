@@ -76,7 +76,7 @@ function partyab_footer_fallback(): void {
  * @return bool
  */
 function partyab_hide_page_title( $show ) {
-	if ( is_front_page() || ( function_exists( 'is_shop' ) && is_shop() ) ) {
+	if ( is_front_page() || ( function_exists( 'is_woocommerce' ) && ( is_woocommerce() || is_cart() || is_checkout() || is_account_page() ) ) ) {
 		return false;
 	}
 

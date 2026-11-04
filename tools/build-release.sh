@@ -26,6 +26,8 @@ cp "$DIST/part-yab.zip" "$QS/vendor/"
 cp "$DIST/partyab-compat.zip" "$QS/vendor/"
 cp "$ROOT/data/compat-sample.csv" "$QS/vendor/"
 cp "$ROOT/data/demo-images/"*.jpg "$QS/vendor/demo-images/"
+mkdir -p "$QS/vendor/demo-images/cut"
+cp "$ROOT/data/demo-images/cut/"*.webp "$QS/vendor/demo-images/cut/"
 
 if [ "$FULL" = "yes" ]; then
   echo "▸ افزودن Elementor و Elementor Pro به بسته (حالت کامل)"

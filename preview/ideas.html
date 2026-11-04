@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>پارتیاب — انتخاب ایده لودر و دکمه</title>
+<style>
+:root{--navy:#0a1b33;--navy2:#102b4c;--orange:#ff6a00;--orange2:#ff8a3d;--ink:#0e2340;--muted:#61718a;--line:#e3eaf4;--bg:#f4f7fb;--ease:cubic-bezier(.22,.61,.36,1)}
+*{box-sizing:border-box}body{margin:0;font-family:Vazirmatn,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.7}
+.wrap{max-width:1180px;margin:auto;padding:32px 20px 80px}
+header{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;margin-bottom:28px}
+h1{font-size:26px;margin:0}h2{font-size:20px;margin:36px 0 8px}p.lead{color:var(--muted);margin:0 0 20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 10px 30px -24px #0e234055;cursor:pointer;transition:border-color .25s,box-shadow .25s,translate .25s var(--ease)}
+.card:hover{translate:0 -3px;box-shadow:0 18px 36px -26px #0e234066}
+.card.selected{border-color:var(--orange);box-shadow:0 0 0 3px #ff6a0022,0 18px 36px -26px #0e234066}
+.card h3{margin:12px 0 4px;font-size:16px}.card p{margin:0;color:var(--muted);font-size:12px}
+.tag{display:inline-block;font-size:10px;font-weight:700;color:var(--orange);background:#ff6a0014;border-radius:99px;padding:2px 9px;margin-top:8px}
+.stage{height:190px;border-radius:16px;background:radial-gradient(ellipse at 50% 38%,#173b65,#0a1b33 62%,#061529);display:grid;place-items:center;overflow:hidden;position:relative}
+.stage.light{background:linear-gradient(145deg,#fff,#eef3fa)}
+.logo{width:54px;height:54px;color:var(--orange2);display:grid;place-items:center;position:relative;z-index:2}
+.logo svg{width:100%;height:100%;filter:drop-shadow(0 8px 22px #ff6a0066)}
+/* 1 orbit */
+.orbit .ring{position:absolute;inset:0;border-radius:50%;border:1.5px solid #7da8d633}
+.orbit .ring.r1{width:96px;height:96px;margin:auto;animation:spin 3.2s linear infinite}
+.orbit .ring.r2{width:128px;height:128px;margin:auto;animation:spin 5.5s linear infinite reverse}
+.orbit .ring::after{content:'';position:absolute;top:-4px;left:50%;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:var(--orange2);box-shadow:0 0 14px 3px #ff6a0088}
+.orbit .logo{animation:breathe 2.4s ease-in-out infinite}
+/* 2 pulse */
+.pulse .wave{position:absolute;width:70px;height:70px;border-radius:50%;border:1.5px solid #ff8a3d66;animation:wave 2.2s var(--ease) infinite}
+.pulse .wave.w2{animation-delay:.7s}.pulse .wave.w3{animation-delay:1.4s}
+.pulse .logo{animation:breathe 2.2s ease-in-out infinite}
+/* 3 speedometer */
+.gauge svg{position:absolute;width:132px;height:132px;transform:rotate(-90deg)}
+.gauge circle{fill:none;stroke-width:3;stroke-linecap:round}
+.gauge .track{stroke:#7da8d626}
+.gauge .arc{stroke:url(#g);stroke-dasharray:220 400;animation:gauge 1.8s var(--ease) infinite}
+.gauge .logo{animation:breathe 1.8s ease-in-out infinite}
+/* 4 disc */
+.disc .rotor{position:absolute;width:118px;height:118px;border-radius:50%;border:2px dashed #7da8d655;animation:spin 6s linear infinite}
+.disc .rotor::before{content:'';position:absolute;inset:14px;border-radius:50%;border:1.5px solid #ff8a3d44}
+.disc .logo{animation:breathe 3s ease-in-out infinite}
+/* 5 shine slide */
+.shine .bar{position:absolute;bottom:34px;width:140px;height:3px;border-radius:99px;background:#ffffff1a;overflow:hidden}
+.shine .bar i{position:absolute;inset-block:0;width:45%;border-radius:99px;background:linear-gradient(90deg,transparent,var(--orange2),transparent);animation:sweep 1.4s var(--ease) infinite}
+.shine .logo{animation:floaty 2s ease-in-out infinite}
+/* 6 gear */
+.gear .cog{position:absolute;width:112px;height:112px;color:#7da8d644;animation:spin 7s linear infinite}
+.gear .cog svg{width:100%;height:100%}
+.gear .logo{animation:breathe 2.6s ease-in-out infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+@keyframes wave{0%{transform:scale(.6);opacity:.9}100%{transform:scale(2.1);opacity:0}}
+@keyframes gauge{0%{stroke-dasharray:40 400;stroke-dashoffset:0}50%{stroke-dasharray:240 400;stroke-dashoffset:-60}100%{stroke-dasharray:40 400;stroke-dashoffset:-320}}
+@keyframes sweep{0%{inset-inline-start:-45%}100%{inset-inline-start:105%}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+/* buttons */
+.btn-stage{height:150px;display:grid;place-items:center}
+.demo-btn{display:inline-flex;align-items:center;gap:9px;min-height:48px;padding:12px 26px;border-radius:13px;border:1.5px solid transparent;background:var(--orange);color:#fff;font:inherit;font-size:14px;font-weight:750;cursor:pointer;position:relative;isolation:isolate;overflow:hidden;transition:translate .28s var(--ease),box-shadow .28s var(--ease),background .28s var(--ease),color .28s,border-color .28s}
+.demo-btn svg{width:18px;height:18px;transition:translate .28s var(--ease)}
+.b1:hover{translate:0 -2px;box-shadow:0 14px 26px -14px #ff6a00aa;background:var(--orange2)}
+.b1:active{translate:0 0;box-shadow:0 6px 14px -10px #ff6a00aa}
+.b2{background:#fff;color:var(--ink);border-color:var(--line)}
+.b2::after{content:'';position:absolute;inset:0;border-radius:inherit;border:1.5px solid var(--orange);opacity:0;transition:opacity .28s}
+.b2:hover{color:var(--orange);background:#ff6a0008}.b2:hover::after{opacity:1}
+.b3::before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,var(--orange2),var(--orange));transform:scaleY(0);transform-origin:bottom;transition:transform .32s var(--ease)}
+.b3{background:var(--navy2)}
+.b3:hover::before{transform:scaleY(1)}
+.b4:hover svg{translate:-4px 0}
+.b4:hover{background:var(--orange2)}
+.b5{background:var(--navy2)}
+.b5:hover{translate:0 -1px;box-shadow:0 12px 22px -16px #0e2340cc}
+.b5:active{translate:0 1px;box-shadow:inset 0 3px 8px #0006}
+footer{position:sticky;bottom:0;background:#ffffffee;backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:14px 20px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+#summary{font-size:13px;color:var(--muted)}
+.copy{border:0;background:var(--navy2);color:#fff;border-radius:11px;padding:10px 18px;font:inherit;font-weight:700;cursor:pointer}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div><h1>انتخاب ایده لودر و دکمه</h1><p class="lead">روی هر کارت کلیک کن تا انتخاب شود. در پایان دکمه «کپی انتخاب» را بزن و نتیجه را برای من بفرست.</p></div>
+</header>
+
+<h2>ایده‌های لودر</h2>
+<p class="lead">همه با لوگوی پارتیاب، پس‌زمینهٔ سرمه‌ای و حرکت نرم. هیچ پروگرس‌بار عددی ندارند.</p>
+<div class="grid" id="loaders">
+  <div class="card" data-group="loader" data-id="L1"><div class="stage orbit"><span class="ring r1"></span><span class="ring r2"></span><span class="logo"></span></div><h3>L1 — مدار لوگو</h3><p>دو مدار نازک با نقطهٔ نارنجی دور لوگو؛ خود لوگو نفس می‌کشد.</p><span class="tag">پیشنهاد من</span></div>
+  <div class="card" data-group="loader" data-id="L2"><div class="stage pulse"><span class="wave w1"></span><span class="wave w2"></span><span class="wave w3"></span><span class="logo"></span></div><h3>L2 — تپش نرم</h3><p>موج‌های دایره‌ای ملایم از پشت لوگو باز می‌شوند؛ بسیار خلوت و مدرن.</p></div>
+  <div class="card" data-group="loader" data-id="L3"><div class="stage gauge"><svg viewBox="0 0 132 132"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff8a3d"/><stop offset="1" stop-color="#ff6a00"/></linearGradient></defs><circle class="track" cx="66" cy="66" r="58"/><circle class="arc" cx="66" cy="66" r="58"/></svg><span class="logo"></span></div><h3>L3 — سرعت‌سنج</h3><p>یک کمان نارنجی مثل دور موتور می‌چرخد؛ حس خودرویی بدون شلوغی.</p><span class="tag">خودرویی</span></div>
+  <div class="card" data-group="loader" data-id="L4"><div class="stage disc"><span class="rotor"></span><span class="logo"></span></div><h3>L4 — دیسک ترمز</h3><p>حلقهٔ نقطه‌چین مثل دیسک/رینگ می‌چرخد و لوگو ثابت و آرام است.</p></div>
+  <div class="card" data-group="loader" data-id="L5"><div class="stage shine"><span class="logo"></span><span class="bar"><i></i></span></div><h3>L5 — شناور + خط نور</h3><p>لوگو کمی شناور می‌شود و یک خط نور کوتاه زیر آن رفت‌وبرگشت می‌کند.</p></div>
+  <div class="card" data-group="loader" data-id="L6"><div class="stage gear"><span class="cog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></span><span class="logo"></span></div><h3>L6 — چرخ‌دنده ظریف</h3><p>یک چرخ‌دنده کم‌رنگ پشت لوگو می‌چرخد؛ فنی ولی مینیمال.</p></div>
+</div>
+
+<h2>ایده‌های دکمه</h2>
+<p class="lead">هدف: حذف shine/ریپل/تکان شدید؛ فقط یک حرکت نرم و قابل‌پیش‌بینی.</p>
+<div class="grid" id="buttons">
+  <div class="card" data-group="button" data-id="B1"><div class="stage light btn-stage"><button class="demo-btn b1" type="button">کشف قطعات <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5m7-7-7 7 7 7"/></svg></button></div><h3>B1 — لیفت نرم</h3><p>فقط ۲ پیکسل بالا می‌آید، سایهٔ نارنجی ملایم می‌گیرد و کمی روشن‌تر می‌شود.</p><span class="tag">پیشنهاد من</span></div>
+  <div class="card" data-group="button" data-id="B2"><div class="stage light btn-stage"><button class="demo-btn b2" type="button">انتخاب خودرو</button></div><h3>B2 — حاشیهٔ نارنجی</h3><p>دکمهٔ روشن با حاشیهٔ خاکستری؛ هنگام هاور حاشیه و متن نارنجی می‌شود.</p></div>
+  <div class="card" data-group="button" data-id="B3"><div class="stage light btn-stage"><button class="demo-btn b3" type="button">افزودن به سبد</button></div><h3>B3 — پُرشوندهٔ نرم</h3><p>یک لایهٔ نارنجی از پایین به‌آرامی پر می‌شود؛ بدون درخشش عبوری.</p></div>
+  <div class="card" data-group="button" data-id="B4"><div class="stage light btn-stage"><button class="demo-btn b4" type="button">مشاهده همه <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5m7-7-7 7 7 7"/></svg></button></div><h3>B4 — آیکن لغزان</h3><p>خود دکمه ثابت است؛ فقط آیکن چند پیکسل نرم جابه‌جا می‌شود.</p></div>
+  <div class="card" data-group="button" data-id="B5"><div class="stage light btn-stage"><button class="demo-btn b5" type="button">تسویه حساب</button></div><h3>B5 — عمق فشردن</h3><p>هاور بسیار کم‌رنگ، کلیک با حس فرورفتن نرم؛ مناسب دکمه‌های تیره.</p></div>
+</div>
+</div>
+<footer><span id="summary">هنوز چیزی انتخاب نشده</span><button class="copy" type="button" id="copy">کپی انتخاب</button></footer>
+<script>
+const LOGO='<svg viewBox="0 0 48 48" fill="none"><path d="M24 3 42 13.5v21L24 45 6 34.5v-21L24 3Z" stroke="currentColor" stroke-width="3"/><path d="M18 33V15h8a6 6 0 0 1 0 12h-8" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="33" cy="16" r="2.5" fill="currentColor"/></svg>';
+document.querySelectorAll('.logo').forEach(el=>el.innerHTML=LOGO);
+const picked={loader:null,button:null};
+function sync(){document.querySelectorAll('.card').forEach(c=>c.classList.toggle('selected',picked[c.dataset.group]===c.dataset.id));document.getElementById('summary').textContent='لودر: '+(picked.loader||'—')+' | دکمه: '+(picked.button||'—');}
+document.querySelectorAll('.card').forEach(c=>c.addEventListener('click',()=>{picked[c.dataset.group]=c.dataset.id;sync();}));
+document.getElementById('copy').addEventListener('click',async()=>{const t='انتخاب پارتیاب: لودر '+(picked.loader||'انتخاب نشده')+'، دکمه '+(picked.button||'انتخاب نشده');try{await navigator.clipboard.writeText(t);}catch(e){}document.getElementById('summary').textContent=t+' (کپی شد)';});
+sync();
+</script>
+</body>
+</html>

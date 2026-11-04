@@ -1,0 +1,393 @@
+{
+  "date": "2026-11-04T06:00:37.668Z",
+  "results": [
+    {
+      "pass": 1,
+      "name": "route /",
+      "ok": true,
+      "detail": "status=200 overflow=false"
+    },
+    {
+      "pass": 1,
+      "name": "route /shop",
+      "ok": true,
+      "detail": "status=200 overflow=false"
+    },
+    {
+      "pass": 1,
+      "name": "route /product/brake-pad",
+      "ok": true,
+      "detail": "status=200 overflow=false"
+    },
+    {
+      "pass": 1,
+      "name": "route /cart",
+      "ok": true,
+      "detail": "status=200 overflow=false"
+    },
+    {
+      "pass": 1,
+      "name": "route /checkout",
+      "ok": true,
+      "detail": "status=200 overflow=false"
+    },
+    {
+      "pass": 1,
+      "name": "route /account",
+      "ok": true,
+      "detail": "status=200 overflow=false"
+    },
+    {
+      "pass": 1,
+      "name": "route /orders",
+      "ok": true,
+      "detail": "status=200 overflow=false"
+    },
+    {
+      "pass": 1,
+      "name": "route /addresses",
+      "ok": true,
+      "detail": "status=200 overflow=false"
+    },
+    {
+      "pass": 1,
+      "name": "route /favorites",
+      "ok": true,
+      "detail": "status=200 overflow=false"
+    },
+    {
+      "pass": 1,
+      "name": "route /compare",
+      "ok": true,
+      "detail": "status=200 overflow=false"
+    },
+    {
+      "pass": 1,
+      "name": "route /my-car",
+      "ok": true,
+      "detail": "status=200 overflow=false"
+    },
+    {
+      "pass": 1,
+      "name": "route /faq",
+      "ok": true,
+      "detail": "status=200 overflow=false"
+    },
+    {
+      "pass": 1,
+      "name": "route /contact",
+      "ok": true,
+      "detail": "status=200 overflow=false"
+    },
+    {
+      "pass": 1,
+      "name": "route /guide",
+      "ok": true,
+      "detail": "status=200 overflow=false"
+    },
+    {
+      "pass": 1,
+      "name": "route /article/brake-care",
+      "ok": true,
+      "detail": "status=200 overflow=false"
+    },
+    {
+      "pass": 1,
+      "name": "route /about",
+      "ok": true,
+      "detail": "status=200 overflow=false"
+    },
+    {
+      "pass": 1,
+      "name": "route /returns",
+      "ok": true,
+      "detail": "status=200 overflow=false"
+    },
+    {
+      "pass": 1,
+      "name": "route /warranty",
+      "ok": true,
+      "detail": "status=200 overflow=false"
+    },
+    {
+      "pass": 1,
+      "name": "route /privacy",
+      "ok": true,
+      "detail": "status=200 overflow=false"
+    },
+    {
+      "pass": 1,
+      "name": "route /login",
+      "ok": true,
+      "detail": "status=200 overflow=false"
+    },
+    {
+      "pass": 1,
+      "name": "route /register",
+      "ok": true,
+      "detail": "status=200 overflow=false"
+    },
+    {
+      "pass": 1,
+      "name": "route /pages",
+      "ok": true,
+      "detail": "status=200 overflow=false"
+    },
+    {
+      "pass": 1,
+      "name": "route /404",
+      "ok": true,
+      "detail": "status=404 overflow=false"
+    },
+    {
+      "pass": 1,
+      "name": "no failed asset requests",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "pass": 2,
+      "name": "nav link 0 underline layers",
+      "ok": true,
+      "detail": "{\"bgLine\":false,\"pseudoLine\":false,\"bgSize\":\"100% 1.5px\",\"beforeTf\":\"matrix(1, 0, 0, 1, 0, 0)\"}"
+    },
+    {
+      "pass": 2,
+      "name": "nav link 1 underline layers",
+      "ok": true,
+      "detail": "{\"bgLine\":false,\"pseudoLine\":false,\"bgSize\":\"100% 1.5px\",\"beforeTf\":\"matrix(1, 0, 0, 1, 0, 0)\"}"
+    },
+    {
+      "pass": 2,
+      "name": "nav link 2 underline layers",
+      "ok": true,
+      "detail": "{\"bgLine\":false,\"pseudoLine\":true,\"bgSize\":\"0% 1.5px\",\"beforeTf\":\"matrix(0, 0, 0, 1, 0, 0)\"}"
+    },
+    {
+      "pass": 2,
+      "name": "nav link 3 underline layers",
+      "ok": true,
+      "detail": "{\"bgLine\":false,\"pseudoLine\":true,\"bgSize\":\"13.1633% 1.5px\",\"beforeTf\":\"matrix(0.153266, 0, 0, 1, 0, 0)\"}"
+    },
+    {
+      "pass": 2,
+      "name": "nav link 4 underline layers",
+      "ok": true,
+      "detail": "{\"bgLine\":false,\"pseudoLine\":true,\"bgSize\":\"13.1789% 1.5px\",\"beforeTf\":\"matrix(0.153446, 0, 0, 1, 0, 0)\"}"
+    },
+    {
+      "pass": 2,
+      "name": "nav link 5 underline layers",
+      "ok": true,
+      "detail": "{\"bgLine\":false,\"pseudoLine\":true,\"bgSize\":\"91.4079% 1.5px\",\"beforeTf\":\"matrix(0, 0, 0, 1, 0, 0)\"}"
+    },
+    {
+      "pass": 2,
+      "name": "nav link 6 underline layers",
+      "ok": true,
+      "detail": "{\"bgLine\":false,\"pseudoLine\":true,\"bgSize\":\"85.6323% 1.5px\",\"beforeTf\":\"matrix(0, 0, 0, 1, 0, 0)\"}"
+    },
+    {
+      "pass": 2,
+      "name": "nav link 7 underline layers",
+      "ok": true,
+      "detail": "{\"bgLine\":false,\"pseudoLine\":true,\"bgSize\":\"0% 1.5px\",\"beforeTf\":\"matrix(0, 0, 0, 1, 0, 0)\"}"
+    },
+    {
+      "pass": 2,
+      "name": "navbar has no double underline",
+      "ok": true,
+      "detail": "0 links with two lines"
+    },
+    {
+      "pass": 3,
+      "name": "button hover inventory",
+      "ok": true,
+      "detail": "{\"translate\":\"-0.000264893px -7.32422e-05px\",\"iconAnim\":\"icon-nudge\",\"beforeTf\":\"matrix(1, 0, -0.212557, 1, 200.307, 0)\",\"tf\":\"matrix(1, 0, 0, 1, 0, -2)\"}"
+    },
+    {
+      "pass": 3,
+      "name": "ripple present",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "pass": 4,
+      "name": "product hover edge stable x10",
+      "ok": false,
+      "detail": "1 flickers"
+    },
+    {
+      "pass": 5,
+      "name": "category icon smooth",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "pass": 5,
+      "name": "brand logos contained",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "pass": 5,
+      "name": "marquee pauses",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "pass": 6,
+      "name": "loader show/hide stable x10",
+      "ok": false,
+      "detail": "10 failures"
+    },
+    {
+      "pass": 6,
+      "name": "loader has no progress bar",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "pass": 6,
+      "name": "loader logo animates",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "pass": 6,
+      "name": "curtain covers before navigation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "pass": 6,
+      "name": "arrival curtain hidden",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "pass": 7,
+      "name": "input focus no halo",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "pass": 7,
+      "name": "select dropdown animates",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "pass": 7,
+      "name": "checkbox pop-in",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "pass": 8,
+      "name": "cart count",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "pass": 8,
+      "name": "demo order created",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "pass": 8,
+      "name": "account route overflow /account",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "pass": 8,
+      "name": "account route overflow /orders",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "pass": 8,
+      "name": "account route overflow /addresses",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "pass": 8,
+      "name": "account route overflow /favorites",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "pass": 8,
+      "name": "account route overflow /compare",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "pass": 9,
+      "name": "hero ready",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "pass": 9,
+      "name": "fallback hidden",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "pass": 9,
+      "name": "hero rotates over 10 samples",
+      "ok": true,
+      "detail": "-0.59→-0.54→-0.50→-0.46→-0.40→-0.34→-0.28→-0.22→-0.12→-0.02 delta=0.57"
+    },
+    {
+      "pass": 9,
+      "name": "motion not paused",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "pass": 10,
+      "name": "reduced reveal visible",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "pass": 10,
+      "name": "reduced marquee still",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "pass": 10,
+      "name": "reduced loader static",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "pass": 10,
+      "name": "mobile nav opens",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "pass": 10,
+      "name": "mobile no overflow",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "pass": 10,
+      "name": "no page/console errors",
+      "ok": false,
+      "detail": "console: Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ],
+  "errors": [
+    "console: Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "failed": []
+}

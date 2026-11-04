@@ -1,0 +1,42 @@
+[
+  {
+    "name": "normal link navigation clears loader",
+    "pass": true,
+    "ms": 21121
+  },
+  {
+    "name": "back/forward clears loader",
+    "pass": true,
+    "ms": 16599
+  },
+  {
+    "name": "blocked transition script still releases boot cover",
+    "pass": true,
+    "ms": 8639
+  },
+  {
+    "name": "delayed transition script does not re-stick cover",
+    "pass": true,
+    "ms": 20755
+  },
+  {
+    "name": "broken transition script still releases boot cover",
+    "pass": true,
+    "ms": 8191
+  },
+  {
+    "name": "reduced motion never shows arrival cover",
+    "pass": true,
+    "ms": 4739
+  },
+  {
+    "name": "rapid consecutive navigations clear loader",
+    "pass": true,
+    "ms": 16060
+  },
+  {
+    "name": "GET search form navigation clears loader",
+    "pass": true,
+    "ms": 16232
+  }
+]

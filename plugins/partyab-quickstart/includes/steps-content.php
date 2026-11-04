@@ -286,7 +286,7 @@ function partyab_qs_seed_taxonomies( array &$report ): void {
 		'آریسان'  => array( 'آریسان' ),
 	);
 
-	$brands = array( 'ایساکو', 'سایپا یدک', 'پارس یدک', 'کروز', 'بوش', 'سپاهان باتری', 'وامکو' );
+	$brands = array( 'ایساکو', 'سرکان', 'صبا', 'بوش', 'کوش‌آوران', 'مان', 'دنسو', 'والئو', 'های‌کیو', 'برنا', 'عظام' );
 
 	$created_terms = 0;
 
@@ -332,11 +332,11 @@ function partyab_qs_seed_taxonomies( array &$report ): void {
 	// اتصال محصولات دمو به خودروهای سازگار از روی CSV.
 	$mapping = array(
 		'PB-BRK-001' => 'ایساکو',
-		'PB-FLT-002' => 'ایساکو',
+		'PB-FLT-002' => 'سرکان',
 		'PB-SPK-003' => 'بوش',
-		'PB-BAT-004' => 'سپاهان باتری',
-		'PB-SHK-005' => 'کروز',
-		'PB-WPR-006' => 'وامکو',
+		'PB-BAT-004' => 'صبا',
+		'PB-SHK-005' => 'کوش‌آوران',
+		'PB-WPR-006' => 'والئو',
 	);
 	$linked = 0;
 
@@ -439,7 +439,7 @@ function partyab_qs_step_content( array &$report ): void {
 			'sale'  => 690000,
 			'stock' => 24,
 			'cat'   => 'brake-system',
-			'image' => 'brake-pad.jpg',
+			'image' => 'cut/brake-pad.webp',
 			'short' => 'لنت ترمز جلو، سازگار با پراید ۱۳۱، ۱۱۱ و ۱۴۱ — با ضمانت اصالت کالا.',
 			'desc'  => 'جنس فلاکس با ضریب اصطکاک FF. بدون صدا در ترمز‌های شهری. فروش به‌صورت ست (۴ عدد).',
 		),
@@ -450,7 +450,7 @@ function partyab_qs_step_content( array &$report ): void {
 			'sale'  => 0,
 			'stock' => 60,
 			'cat'   => 'filters',
-			'image' => 'oil-filter.jpg',
+			'image' => 'cut/oil-filter.webp',
 			'short' => 'فیلتر روغن موتور بنزینی، سازگار با پژو ۴۰۵ و پارس.',
 			'desc'  => 'دریچه یک‌طرفه با آب‌بندی کامل. تعویض هر ۱۰ هزار کیلومتر.',
 		),
@@ -461,7 +461,7 @@ function partyab_qs_step_content( array &$report ): void {
 			'sale'  => 0,
 			'stock' => 120,
 			'cat'   => 'electrical',
-			'image' => 'spark-plug.jpg',
+			'image' => 'cut/spark-plug.webp',
 			'short' => 'شمع ایریدیم، سازگار با سمند و دنا EF7 — بسته دو عددی.',
 			'desc'  => 'الکترود ایریدیم با عمر بالای ۶۰ هزار کیلومتر. احتراق کامل‌تر و استارت سریع‌تر.',
 		),
@@ -472,7 +472,7 @@ function partyab_qs_step_content( array &$report ): void {
 			'sale'  => 3900000,
 			'stock' => 8,
 			'cat'   => 'electrical',
-			'image' => 'battery.jpg',
+			'image' => 'cut/battery.webp',
 			'short' => 'باتری سیلد ۵۵ آمپر با گارانتی ۱۸ ماهه — تحویل با باربری.',
 			'desc'  => 'مناسب تیبا و ساینا. جریان راه‌انداز ۴۵۰ آمپر. قیمت شامل باتری فرسوده نیست.',
 		),
@@ -483,7 +483,7 @@ function partyab_qs_step_content( array &$report ): void {
 			'sale'  => 0,
 			'stock' => 12,
 			'cat'   => 'suspension',
-			'image' => 'shock-absorber.jpg',
+			'image' => 'cut/shock-absorber.webp',
 			'short' => 'کمک فنر گازی جلو، مناسب ساینا و تیبا — فروش به‌صورت جفت.',
 			'desc'  => 'میرایی گازی با آب‌بندی دوگانه. تعویض جفتی توصیه می‌شود.',
 		),
@@ -494,7 +494,7 @@ function partyab_qs_step_content( array &$report ): void {
 			'sale'  => 0,
 			'stock' => 0,
 			'cat'   => 'body-glass',
-			'image' => 'wiper-blade.jpg',
+			'image' => 'cut/wiper-blade.webp',
 			'short' => 'تیغه برف‌پاک‌کن تیغه‌ای ۲۴ اینچ — این محصول فعلاً ناموجود است.',
 			'desc'  => 'لاستیک گرافیتی با فریم آیرودینامیک. سازگار با پژو ۴۰۵ و سمند.',
 		),

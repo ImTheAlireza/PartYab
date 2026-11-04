@@ -9,7 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-add_action( 'wp_enqueue_scripts', 'partyab_enqueue_assets', 20 );
+add_action( 'wp_enqueue_scripts', 'partyab_enqueue_assets', 30 );
 
 /**
  * صف‌بندی دارایی‌های فرانت.
@@ -105,6 +105,21 @@ function partyab_enqueue_assets(): void {
 			'cars'         => partyab_cars_map(),
 			'currentModel' => (string) ( $partyab_car['model'] ?? '' ),
 		) );
+	}
+
+	// Shared redesign components load after legacy/plugin styles.
+	wp_enqueue_style( 'partyab-redesign', PARTYAB_URI . '/assets/css/redesign.css', array( 'partyab-layout', 'partyab-content', 'partyab-compat-ui', 'partyab-search' ), partyab_asset_version( 'assets/css/redesign.css' ) );
+	wp_enqueue_style( 'partyab-motion', PARTYAB_URI . '/assets/css/motion.css', array( 'partyab-redesign' ), partyab_asset_version( 'assets/css/motion.css' ) );
+	wp_enqueue_style( 'partyab-interaction', PARTYAB_URI . '/assets/css/interaction.css', array( 'partyab-motion' ), partyab_asset_version( 'assets/css/interaction.css' ) );
+	wp_enqueue_script( 'partyab-ui', PARTYAB_URI . '/assets/js/ui.js', array(), partyab_asset_version( 'assets/js/ui.js' ), array( 'in_footer' => true, 'strategy' => 'defer' ) );
+	wp_enqueue_script( 'partyab-motion', PARTYAB_URI . '/assets/js/motion.js', array( 'partyab-ui', 'partyab-main' ), partyab_asset_version( 'assets/js/motion.js' ), array( 'in_footer' => true, 'strategy' => 'defer' ) );
+	wp_enqueue_script( 'partyab-sound', PARTYAB_URI . '/assets/js/sound.js', array( 'partyab-ui' ), partyab_asset_version( 'assets/js/sound.js' ), array( 'in_footer' => true, 'strategy' => 'defer' ) );
+	wp_localize_script( 'partyab-sound', 'partyabSoundData', array( 'enabled' => '1' === (string) get_option( 'partyab_motion_sound', '1' ) ) );
+	wp_enqueue_script( 'partyab-page-transition', PARTYAB_URI . '/assets/js/page-transition.js', array( 'partyab-motion', 'partyab-sound' ), partyab_asset_version( 'assets/js/page-transition.js' ), array( 'in_footer' => true, 'strategy' => 'defer' ) );
+	wp_enqueue_script( 'partyab-interaction', PARTYAB_URI . '/assets/js/interaction.js', array( 'partyab-ui', 'partyab-motion' ), partyab_asset_version( 'assets/js/interaction.js' ), array( 'in_footer' => true, 'strategy' => 'defer' ) );
+
+	if ( is_front_page() ) {
+		wp_enqueue_script( 'partyab-hero-3d', PARTYAB_URI . '/assets/js/hero-3d.js', array( 'partyab-motion' ), partyab_asset_version( 'assets/js/hero-3d.js' ), array( 'in_footer' => true, 'strategy' => 'defer' ) );
 	}
 
 	// داده‌های لازم در جاوااسکریپت (بدون inline script پراکنده).

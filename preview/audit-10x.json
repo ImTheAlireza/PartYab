@@ -1,0 +1,86 @@
+{
+  "date": "2026-11-04T06:13:49.348Z",
+  "runs": [
+    {
+      "run": 1,
+      "navDouble": 3,
+      "productFlicker": 1,
+      "loaderFail": 0,
+      "heroDelta": 0.194,
+      "overflow": []
+    },
+    {
+      "run": 2,
+      "navDouble": 3,
+      "productFlicker": 2,
+      "loaderFail": 0,
+      "heroDelta": 0.229,
+      "overflow": []
+    },
+    {
+      "run": 3,
+      "navDouble": 2,
+      "productFlicker": 2,
+      "loaderFail": 0,
+      "heroDelta": 0.245,
+      "overflow": []
+    },
+    {
+      "run": 4,
+      "navDouble": 4,
+      "productFlicker": 1,
+      "loaderFail": 0,
+      "heroDelta": 0.227,
+      "overflow": []
+    },
+    {
+      "run": 5,
+      "navDouble": 3,
+      "productFlicker": 1,
+      "loaderFail": 0,
+      "heroDelta": 0.229,
+      "overflow": []
+    },
+    {
+      "run": 6,
+      "navDouble": 2,
+      "productFlicker": 1,
+      "loaderFail": 0,
+      "heroDelta": 0.263,
+      "overflow": []
+    },
+    {
+      "run": 7,
+      "navDouble": 4,
+      "productFlicker": 1,
+      "loaderFail": 0,
+      "heroDelta": 0.25,
+      "overflow": []
+    },
+    {
+      "run": 8,
+      "navDouble": 2,
+      "productFlicker": 1,
+      "loaderFail": 0,
+      "heroDelta": 0.215,
+      "overflow": []
+    },
+    {
+      "run": 9,
+      "navDouble": 2,
+      "productFlicker": 2,
+      "loaderFail": 0,
+      "heroDelta": 0.212,
+      "overflow": []
+    },
+    {
+      "run": 10,
+      "navDouble": 4,
+      "productFlicker": 2,
+      "loaderFail": 0,
+      "heroDelta": 0.207,
+      "overflow": []
+    }
+  ],
+  "issues": []
+}

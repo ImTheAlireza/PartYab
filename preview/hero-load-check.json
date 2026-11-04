@@ -1,0 +1,227 @@
+[
+  {
+    "name": "desktop cold load",
+    "pass": true,
+    "ms": 19596,
+    "state": {
+      "hero": {
+        "ready": true,
+        "status": "ready",
+        "error": null,
+        "yaw": 1.6969616578374735,
+        "idle": 0.1783800000002979,
+        "progress": 0,
+        "reduced": false
+      },
+      "canvasOpacity": "1",
+      "fallbackOpacity": "0",
+      "fallbackVisibility": "hidden",
+      "fallbackLoaded": true,
+      "curtainHidden": true
+    },
+    "requests": [
+      {
+        "url": "http://127.0.0.1:3000/assets/js/hero-3d.js",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3000/assets/models/brick-car.glb",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "failures": []
+  },
+  {
+    "name": "mobile cold load",
+    "pass": true,
+    "ms": 7051,
+    "state": {
+      "hero": {
+        "ready": true,
+        "status": "ready",
+        "error": null,
+        "yaw": 1.6043713921960054,
+        "idle": 0.08000000000044705,
+        "progress": 0,
+        "reduced": false
+      },
+      "canvasOpacity": "1",
+      "fallbackOpacity": "0",
+      "fallbackVisibility": "hidden",
+      "fallbackLoaded": true,
+      "curtainHidden": true
+    },
+    "requests": [
+      {
+        "url": "http://127.0.0.1:3000/assets/js/hero-3d.js",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3000/assets/models/brick-car.glb",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "failures": []
+  },
+  {
+    "name": "legacy decoder blocked",
+    "pass": true,
+    "ms": 12936,
+    "state": {
+      "hero": {
+        "ready": true,
+        "status": "ready",
+        "error": null,
+        "yaw": 1.6038326819934172,
+        "idle": 0.07841999999955297,
+        "progress": 0,
+        "reduced": false
+      },
+      "canvasOpacity": "1",
+      "fallbackOpacity": "0",
+      "fallbackVisibility": "hidden",
+      "fallbackLoaded": true,
+      "curtainHidden": true
+    },
+    "requests": [
+      {
+        "url": "http://127.0.0.1:3000/assets/js/hero-3d.js",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3000/assets/models/brick-car.glb",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "failures": []
+  },
+  {
+    "name": "slow model keeps poster",
+    "pass": true,
+    "ms": 21754,
+    "state": {
+      "hero": {
+        "ready": true,
+        "status": "ready",
+        "error": null,
+        "yaw": 1.6714653165228919,
+        "idle": 0.14859999999970205,
+        "progress": 0,
+        "reduced": false
+      },
+      "canvasOpacity": "1",
+      "fallbackOpacity": "0",
+      "fallbackVisibility": "hidden",
+      "fallbackLoaded": true,
+      "curtainHidden": true
+    },
+    "requests": [
+      {
+        "url": "http://127.0.0.1:3000/assets/js/hero-3d.js",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3000/assets/models/brick-car.glb",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "failures": []
+  },
+  {
+    "name": "script unavailable",
+    "pass": true,
+    "ms": 9473,
+    "state": {
+      "hero": null,
+      "canvasOpacity": "0",
+      "fallbackOpacity": "1",
+      "fallbackVisibility": "visible",
+      "fallbackLoaded": true,
+      "curtainHidden": true
+    },
+    "requests": [
+      {
+        "url": "http://127.0.0.1:3000/assets/js/hero-3d.js",
+        "status": 500
+      }
+    ],
+    "errors": [],
+    "failures": [
+      {
+        "url": "http://127.0.0.1:3000/assets/js/hero-3d.js",
+        "reason": "net::ERR_ABORTED"
+      }
+    ]
+  },
+  {
+    "name": "model unavailable",
+    "pass": true,
+    "ms": 10293,
+    "state": {
+      "hero": {
+        "ready": false,
+        "status": "fallback",
+        "error": "model-http-404",
+        "yaw": 1.55,
+        "idle": 0,
+        "progress": 0,
+        "reduced": false
+      },
+      "canvasOpacity": "0",
+      "fallbackOpacity": "1",
+      "fallbackVisibility": "visible",
+      "fallbackLoaded": true,
+      "curtainHidden": true
+    },
+    "requests": [
+      {
+        "url": "http://127.0.0.1:3000/assets/js/hero-3d.js",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:3000/assets/models/brick-car.glb",
+        "status": 404
+      }
+    ],
+    "errors": [],
+    "failures": [
+      {
+        "url": "http://127.0.0.1:3000/assets/models/brick-car.glb",
+        "reason": "net::ERR_ABORTED"
+      }
+    ]
+  },
+  {
+    "name": "WebGL unavailable",
+    "pass": true,
+    "ms": 9814,
+    "state": {
+      "hero": {
+        "ready": false,
+        "status": "fallback",
+        "error": "webgl2-unavailable",
+        "yaw": 1.55,
+        "idle": 0,
+        "progress": 0,
+        "reduced": false
+      },
+      "canvasOpacity": "0",
+      "fallbackOpacity": "1",
+      "fallbackVisibility": "visible",
+      "fallbackLoaded": true,
+      "curtainHidden": true
+    },
+    "requests": [
+      {
+        "url": "http://127.0.0.1:3000/assets/js/hero-3d.js",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "failures": []
+  }
+]
